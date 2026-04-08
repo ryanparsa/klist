@@ -2,7 +2,7 @@
 
 **Interactive Kubernetes operational checklist.**
 
-klist helps platform and DevOps teams verify that a Kubernetes cluster is correctly configured, hardened, and operationally ready for production. It is not a pure security scanner — it covers the full spectrum of what makes a cluster stable, compliant, and maintainable in the long run.
+klist helps platform and DevOps teams verify that a Kubernetes cluster is correctly configured, hardened, and operationally ready for production. It is not a pure security scanner :  it covers the full spectrum of what makes a cluster stable, compliant, and maintainable in the long run.
 
 Checks are organised around the **4C model** (Cloud, Cluster, Container, Code) and can be filtered by environment, provider, architecture, and compliance framework. Item priorities adjust dynamically based on your selected configurations.
 
@@ -12,14 +12,14 @@ Checks are organised around the **4C model** (Cloud, Cluster, Container, Code) a
 
 ## Features
 
-- **Dynamic priorities** — select your configs (EKS, SOC 2, production…) and items are automatically promoted to Required, Suggested, or Optional
-- **Per-section scoring** — track progress across Cloud, Cluster, Container, and Code layers
-- **Tri-state items** — mark each item as Passed, N/A, or leave it unchecked
-- **Search and tag filter** — quickly find relevant items across all categories
-- **Shareable URL** — active config selections live in the query string (`?configs=baseline,eks`)
-- **Export / Import** — save and restore a full session as JSON
-- **PDF export** — clean print view via `window.print()`
-- **No backend** — fully static, runs in the browser
+- **Dynamic priorities** :  select your configs (EKS, SOC 2, production…) and items are automatically promoted to Required, Suggested, or Optional
+- **Per-section scoring** :  track progress across Cloud, Cluster, Container, and Code layers
+- **Tri-state items** :  mark each item as Passed, N/A, or leave it unchecked
+- **Search and tag filter** :  quickly find relevant items across all categories
+- **Shareable URL** :  active config selections live in the query string (`?configs=baseline,eks`)
+- **Export / Import** :  save and restore a full session as JSON
+- **PDF export** :  clean print view via `window.print()`
+- **No backend** :  fully static, runs in the browser
 
 ---
 
@@ -53,25 +53,13 @@ klist/
 │   └── validate.js     # schema and reference validation
 │
 ├── public/
-│   └── checklist.json  # generated — do not edit manually
+│   └── checklist.json  # generated. do not edit manually
 │
 └── src/                # React application
     ├── hooks/
     └── components/
 ```
 
----
-
-## Tech stack
-
-| | |
-|---|---|
-| Build tool | Vite |
-| Framework | React 19 |
-| Styling | Tailwind CSS v4 |
-| UI components | shadcn/ui primitives |
-| Hosting | GitHub Pages |
-| CI/CD | GitHub Actions |
 
 ---
 
