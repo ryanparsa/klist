@@ -1,0 +1,3007 @@
+{
+  "generated_at": "2026-04-08T21:01:33.033Z",
+  "all_tags": [
+    "access-control",
+    "admission-control",
+    "api-server",
+    "application-development",
+    "architecture",
+    "audit",
+    "auditing",
+    "authentication",
+    "authorization",
+    "availability",
+    "backup",
+    "business",
+    "certificates",
+    "ci-cd",
+    "cis",
+    "cloud",
+    "cluster-autoscaler",
+    "cni",
+    "compliance",
+    "configuration",
+    "container-runtime",
+    "credential-access",
+    "data-protection",
+    "defense-evasion",
+    "dependency-scanning",
+    "developer-tooling",
+    "disaster-recovery",
+    "discovery",
+    "dns",
+    "dockerfile",
+    "dos-prevention",
+    "encryption",
+    "encryption-at-rest",
+    "encryption-in-transit",
+    "etcd",
+    "execution",
+    "falco",
+    "fault-tolerance",
+    "filesystem",
+    "firewall",
+    "governance",
+    "graceful-shutdown",
+    "hardening",
+    "hpa",
+    "iac",
+    "iam",
+    "identity",
+    "image-security",
+    "image-signing",
+    "images",
+    "immutability",
+    "infrastructure",
+    "ingress",
+    "initial-access",
+    "isolation",
+    "kernel-hardening",
+    "kubelet",
+    "lateral-movement",
+    "least-privilege",
+    "limits",
+    "linux",
+    "linux-capabilities",
+    "logging",
+    "metadata",
+    "misconfiguration",
+    "monitoring",
+    "namespaces",
+    "network",
+    "network-policy",
+    "networking",
+    "node-security",
+    "observability",
+    "operations",
+    "os-hardening",
+    "patching",
+    "performance",
+    "persistence",
+    "pki",
+    "pod-security",
+    "policy",
+    "privilege-escalation",
+    "probes",
+    "qos",
+    "rbac",
+    "registry",
+    "reliability",
+    "remote-access",
+    "resilience",
+    "resource-management",
+    "resource-utilisation",
+    "resources",
+    "runtime-security",
+    "sast",
+    "sbom",
+    "sca",
+    "scaling",
+    "scheduling",
+    "seccomp",
+    "secrets",
+    "security",
+    "service-accounts",
+    "stability",
+    "stateful",
+    "static-analysis",
+    "storage",
+    "supply-chain",
+    "tagging",
+    "threat-detection",
+    "tls",
+    "twelve-factor",
+    "vpa",
+    "vulnerability-management",
+    "zero-trust"
+  ],
+  "configs": [
+    {
+      "id": "aks",
+      "label": "Azure AKS",
+      "type": "provider",
+      "description": "Running Kubernetes on Azure Kubernetes Service. Covers AKS-specific controls for managed identity, IMDS access, and Azure Monitor.",
+      "items": {
+        "required": [
+          "CLD-003",
+          "CLD-004",
+          "CLD-009"
+        ],
+        "suggested": [
+          "CLD-005",
+          "CLT-012"
+        ]
+      }
+    },
+    {
+      "id": "baseline",
+      "label": "General Baseline",
+      "type": "baseline",
+      "description": "Core security and operational items recommended for every Kubernetes cluster, regardless of provider or environment.",
+      "items": {
+        "required": [
+          "CLT-001",
+          "CLT-002",
+          "CLT-003",
+          "CLT-005",
+          "CLT-006",
+          "CLT-008",
+          "CLT-009",
+          "CLT-011",
+          "CLT-012",
+          "CNT-001",
+          "CNT-002",
+          "CNT-003",
+          "CNT-004",
+          "CNT-007",
+          "CNT-008"
+        ],
+        "suggested": [
+          "CLD-001",
+          "CLD-002",
+          "CLT-010",
+          "CLT-013",
+          "CNT-005",
+          "CNT-006",
+          "CODE-003"
+        ]
+      }
+    },
+    {
+      "id": "cis-benchmark",
+      "label": "CIS Kubernetes Benchmark v1.8",
+      "type": "compliance",
+      "description": "Controls mapped to the Center for Internet Security Kubernetes Benchmark v1.8, covering API server hardening, etcd, kubelet, and workload configuration.",
+      "items": {
+        "required": [
+          "CLD-001",
+          "CLD-002",
+          "CLD-003",
+          "CLD-004",
+          "CLD-005",
+          "CLD-010",
+          "CLT-001",
+          "CLT-002",
+          "CLT-003",
+          "CLT-004",
+          "CLT-005",
+          "CLT-006",
+          "CLT-007",
+          "CLT-008",
+          "CLT-009",
+          "CLT-010",
+          "CLT-011",
+          "CLT-012",
+          "CLT-013",
+          "CNT-001",
+          "CNT-002",
+          "CNT-003",
+          "CNT-004",
+          "CNT-005",
+          "CNT-006",
+          "CNT-007",
+          "CNT-008"
+        ],
+        "suggested": [
+          "CODE-001",
+          "CODE-002",
+          "CODE-003"
+        ]
+      }
+    },
+    {
+      "id": "eks",
+      "label": "Amazon EKS",
+      "type": "provider",
+      "description": "Running Kubernetes on Amazon Elastic Kubernetes Service. Covers EKS-specific controls for IAM, metadata access, and AWS logging.",
+      "items": {
+        "required": [
+          "CLD-003",
+          "CLD-004",
+          "CLD-009"
+        ],
+        "suggested": [
+          "CLD-005",
+          "CLD-010"
+        ]
+      }
+    },
+    {
+      "id": "gke",
+      "label": "Google GKE",
+      "type": "provider",
+      "description": "Running Kubernetes on Google Kubernetes Engine. Covers GKE-specific controls for Workload Identity, metadata server, and Cloud Audit Logs.",
+      "items": {
+        "required": [
+          "CLD-003",
+          "CLD-004",
+          "CLD-009"
+        ],
+        "suggested": [
+          "CLD-005",
+          "CLT-012"
+        ]
+      }
+    },
+    {
+      "id": "ha",
+      "label": "High Availability",
+      "type": "architecture",
+      "description": "Clusters configured for high availability with multiple control-plane nodes, where uptime and resilience are primary concerns.",
+      "items": {
+        "required": [
+          "CNT-008",
+          "CLT-012"
+        ],
+        "suggested": [
+          "CLD-008",
+          "CLT-006"
+        ]
+      }
+    },
+    {
+      "id": "hipaa",
+      "label": "HIPAA",
+      "type": "compliance",
+      "description": "Controls required to support HIPAA compliance for workloads that store, process, or transmit Protected Health Information (PHI).",
+      "items": {
+        "required": [
+          "CLD-007",
+          "CLD-009",
+          "CLT-006",
+          "CLT-011",
+          "CNT-003",
+          "CNT-007",
+          "CODE-003",
+          "CODE-007"
+        ],
+        "suggested": [
+          "CLD-002",
+          "CLD-003",
+          "CLT-010",
+          "CNT-009",
+          "CODE-005"
+        ]
+      }
+    },
+    {
+      "id": "multi-cluster",
+      "label": "Multi-Cluster",
+      "type": "architecture",
+      "description": "Operating more than one Kubernetes cluster, whether for availability, regional distribution, or environment separation.",
+      "items": {
+        "required": [
+          "CLT-009",
+          "CLT-013"
+        ],
+        "suggested": [
+          "CLT-010",
+          "CLT-012",
+          "CLD-003"
+        ]
+      }
+    },
+    {
+      "id": "pci-dss",
+      "label": "PCI-DSS v4.0",
+      "type": "compliance",
+      "description": "Controls mapped to PCI-DSS v4.0 requirements for clusters that process, store, or transmit cardholder data or are in scope of the Cardholder Data Environment (CDE).",
+      "items": {
+        "required": [
+          "CLD-001",
+          "CLD-002",
+          "CLD-007",
+          "CLT-001",
+          "CLT-002",
+          "CLT-005",
+          "CLT-006",
+          "CLT-011",
+          "CLT-012",
+          "CNT-001",
+          "CNT-002",
+          "CNT-003",
+          "CNT-004",
+          "CNT-007",
+          "CNT-008",
+          "CNT-009",
+          "CODE-001",
+          "CODE-002",
+          "CODE-004",
+          "CODE-007"
+        ],
+        "suggested": [
+          "CLD-004",
+          "CLD-005",
+          "CODE-005",
+          "CODE-006"
+        ]
+      }
+    },
+    {
+      "id": "production",
+      "label": "Production Environment",
+      "type": "baseline",
+      "description": "Additional controls required when operating a production-grade cluster with real user data and uptime expectations.",
+      "items": {
+        "required": [
+          "CLD-001",
+          "CLD-002",
+          "CLD-007",
+          "CLD-008",
+          "CLD-009",
+          "CLT-010",
+          "CLT-013",
+          "CNT-006",
+          "CNT-009",
+          "CODE-001",
+          "CODE-002"
+        ],
+        "suggested": [
+          "CLD-005",
+          "CLD-006",
+          "CLD-010",
+          "CODE-004",
+          "CODE-005"
+        ]
+      }
+    },
+    {
+      "id": "self-managed",
+      "label": "Self-Managed / On-Prem",
+      "type": "provider",
+      "description": "Clusters running on bare metal, VMs, or private infrastructure where the operator is responsible for all control-plane security.",
+      "items": {
+        "required": [
+          "CLD-001",
+          "CLD-002",
+          "CLD-005",
+          "CLD-006",
+          "CLD-007",
+          "CLT-004",
+          "CLT-007",
+          "CLT-012",
+          "CLT-013"
+        ],
+        "suggested": [
+          "CLD-003",
+          "CLD-008",
+          "CLD-010"
+        ]
+      }
+    },
+    {
+      "id": "soc2",
+      "label": "SOC 2",
+      "type": "compliance",
+      "description": "Controls supporting SOC 2 Trust Services Criteria (Security, Availability, Confidentiality) for Kubernetes workloads.",
+      "items": {
+        "required": [
+          "CLD-003",
+          "CLD-009",
+          "CLT-009",
+          "CLT-011",
+          "CLT-012",
+          "CNT-001",
+          "CNT-008",
+          "CODE-001",
+          "CODE-003"
+        ],
+        "suggested": [
+          "CLT-010",
+          "CNT-009",
+          "CODE-002",
+          "CODE-006"
+        ]
+      }
+    }
+  ],
+  "items": [
+    {
+      "id": "CLD-001",
+      "title": "Place Worker Nodes on Private Subnets",
+      "description": "Worker nodes must reside exclusively on private subnets with no directly assigned public IP\naddresses. Inbound traffic should reach workloads only through load balancers or ingress\ncontrollers in the public subnet.\n\n**What to check:** Verify that no worker node has a public IP. In AWS, check the node's\nEC2 instance network interface. In GCP/Azure, verify no external IP is assigned.\n\n**Remediation:** Reconfigure node groups/pools to use private subnets only. Route egress\ntraffic through a NAT gateway. Ensure load balancers handle all external-facing traffic.\n",
+      "tags": [
+        "network",
+        "node-security",
+        "infrastructure"
+      ],
+      "references": [
+        {
+          "title": "PCI-DSS Requirement 1.2 — Network Controls",
+          "url": "https://www.pcisecuritystandards.org/document_library/"
+        },
+        {
+          "title": "Kubernetes Docs — Securing a Cluster",
+          "url": "https://kubernetes.io/docs/tasks/administer-cluster/securing-a-cluster/"
+        },
+        {
+          "title": "AWS EKS Best Practices — Network Security",
+          "url": "https://docs.aws.amazon.com/eks/latest/best-practices/network-security.html"
+        },
+        {
+          "title": "Microsoft Threat Matrix — Using Cloud Credentials",
+          "url": "https://microsoft.github.io/Threat-Matrix-for-Kubernetes/techniques/Using%20Cloud%20Credentials/"
+        }
+      ],
+      "category": "cloud"
+    },
+    {
+      "id": "CLD-002",
+      "title": "Restrict Network Access to API Server and Kubelet",
+      "description": "Limit network access to sensitive control-plane ports — API Server (6443) and Kubelet (10250)\n— to authorised sources only, such as internal VPN ranges or bastion hosts. Exposing these\nports to the public internet is a critical risk.\n\n**What to check:** Run a port scan or review security group / firewall rules. Neither port\nshould be reachable from 0.0.0.0/0.\n\n**Remediation:** Restrict inbound rules to known CIDR ranges. Use a VPN or private link\nservice for operator access. Consider AWS PrivateLink / GCP Private Service Connect for\nmanaged clusters.\n",
+      "tags": [
+        "network",
+        "api-server",
+        "kubelet",
+        "firewall"
+      ],
+      "references": [
+        {
+          "title": "NSA/CISA Kubernetes Hardening Guide",
+          "url": "https://media.defense.gov/2022/Aug/29/2003066362/-1/-1/0/CTR_KUBERNETES_HARDENING_GUIDANCE_1.2_20220829.PDF"
+        },
+        {
+          "title": "HIPAA Transmission Security",
+          "url": "https://www.hhs.gov/hipaa/for-professionals/security/laws-regulations/index.html"
+        },
+        {
+          "title": "CIS Kubernetes Benchmark — API Server",
+          "url": "https://workbench.cisecurity.org/benchmarks/16828"
+        },
+        {
+          "title": "Microsoft Threat Matrix — Using Cloud Credentials",
+          "url": "https://microsoft.github.io/Threat-Matrix-for-Kubernetes/techniques/Using%20Cloud%20Credentials/"
+        },
+        {
+          "title": "Microsoft Threat Matrix — Access Kubelet API",
+          "url": "https://microsoft.github.io/Threat-Matrix-for-Kubernetes/techniques/Access%20Kubelet%20API/"
+        }
+      ],
+      "category": "cloud"
+    },
+    {
+      "id": "CLD-003",
+      "title": "Apply Least-Privilege IAM Roles to Nodes",
+      "description": "IAM roles or service accounts attached to worker nodes must follow the principle of least\nprivilege. Nodes should only have permissions required to pull images, write logs, and\nregister with the control plane. Roles must not be shared across clusters.\n\n**What to check:** Review the IAM role attached to each node group. Look for overly broad\npolicies (e.g., `*` actions or `*` resources). Verify no cross-cluster role sharing.\n\n**Remediation:** Create dedicated, minimal IAM roles per cluster/node group. Use\npermission boundaries. Prefer IRSA (AWS), Workload Identity (GCP), or AAD Pod Identity\n(Azure) to grant per-pod permissions instead of node-level permissions.\n",
+      "tags": [
+        "iam",
+        "node-security",
+        "least-privilege",
+        "cloud"
+      ],
+      "references": [
+        {
+          "title": "OWASP Kubernetes Top 10 — K08: Secrets Management Failures",
+          "url": "https://owasp.org/www-project-kubernetes-top-ten/"
+        },
+        {
+          "title": "AWS IAM Best Practices",
+          "url": "https://docs.aws.amazon.com/IAM/latest/UserGuide/best-practices.html"
+        },
+        {
+          "title": "SOC 2 CC6.1 — Logical Access Controls",
+          "url": "https://www.aicpa.org/resources/article/soc-2-trust-service-principles"
+        },
+        {
+          "title": "Microsoft Threat Matrix — Access Cloud Resources",
+          "url": "https://microsoft.github.io/Threat-Matrix-for-Kubernetes/techniques/Access%20cloud%20resources/"
+        },
+        {
+          "title": "Microsoft Threat Matrix — Mount Service Principal",
+          "url": "https://microsoft.github.io/Threat-Matrix-for-Kubernetes/techniques/Mount%20service%20principal/"
+        }
+      ],
+      "category": "cloud"
+    },
+    {
+      "id": "CLD-004",
+      "title": "Block Pod Access to Cloud Metadata API",
+      "description": "The cloud instance metadata endpoint (e.g., 169.254.169.254 on AWS/GCP/Azure) exposes\nnode-level credentials and identity tokens. A compromised pod that can reach this endpoint\nmay escalate privileges to the underlying node or cloud account.\n\n**What to check:** From inside a test pod, attempt to curl the metadata endpoint. On EKS,\nverify IMDSv2 is enforced (hop limit = 1) so pods cannot reach it.\n\n**Remediation:**\n- **AWS EKS:** Set `httpPutResponseHopLimit: 1` on the node launch template to enforce IMDSv2.\n- **All providers:** Create a NetworkPolicy or host firewall rule blocking egress to\n  169.254.169.254 from pod CIDRs.\n",
+      "tags": [
+        "network",
+        "metadata",
+        "privilege-escalation",
+        "cloud"
+      ],
+      "references": [
+        {
+          "title": "Kubernetes Docs — Protecting Cloud Metadata",
+          "url": "https://kubernetes.io/docs/tasks/administer-cluster/securing-a-cluster/#restricting-cloud-metadata-api-access"
+        },
+        {
+          "title": "AWS EKS — Restrict Metadata Access",
+          "url": "https://docs.aws.amazon.com/eks/latest/best-practices/iam.html"
+        },
+        {
+          "title": "ISO 27001 A.8.8 — Management of Technical Vulnerabilities",
+          "url": "https://www.iso.org/standard/27001"
+        },
+        {
+          "title": "Microsoft Threat Matrix — Instance Metadata API",
+          "url": "https://microsoft.github.io/Threat-Matrix-for-Kubernetes/techniques/Instance%20Metadata%20API/"
+        },
+        {
+          "title": "Microsoft Threat Matrix — Mount Service Principal",
+          "url": "https://microsoft.github.io/Threat-Matrix-for-Kubernetes/techniques/Mount%20service%20principal/"
+        }
+      ],
+      "category": "cloud"
+    },
+    {
+      "id": "CLD-005",
+      "title": "Use a Container-Optimized Node OS",
+      "description": "General-purpose operating systems carry unnecessary tools, shells, and services that expand\nthe attack surface of every node. Container-optimized operating systems remove interactive\nshells, lock the root filesystem read-only, and ship with a minimal package set.\n\n**Recommended options:** Bottlerocket (AWS), Container-Optimized OS (GKE), RHCOS/CoreOS,\nFlatcar Linux.\n\n**What to check:** Inspect the AMI or node image used in the node group launch template.\nVerify it is a purpose-built, hardened OS — not Ubuntu or Amazon Linux 2 general images.\n\n**Remediation:** Migrate node groups to a container-optimised image. Test workload\ncompatibility before rolling out to production.\n",
+      "tags": [
+        "node-security",
+        "os-hardening",
+        "infrastructure"
+      ],
+      "references": [
+        {
+          "title": "CIS Kubernetes Benchmark — Node Configuration",
+          "url": "https://workbench.cisecurity.org/benchmarks/16828"
+        },
+        {
+          "title": "AWS Bottlerocket Security",
+          "url": "https://bottlerocket.dev/en/os/1.20.x/security/threat-model/"
+        },
+        {
+          "title": "PCI-DSS Requirement 2.2 — System Configuration Standards",
+          "url": "https://www.pcisecuritystandards.org/document_library/"
+        }
+      ],
+      "category": "cloud"
+    },
+    {
+      "id": "CLD-006",
+      "title": "Disable Unnecessary Services and Ports on Node OS",
+      "description": "Every unused service or open port on a worker node is a potential entry point. Node\noperating systems should be hardened by removing unnecessary packages and stopping or\nmasking all services not required for Kubernetes operation.\n\n**What to check:** Run `ss -tlnp` or `netstat -tlnp` on a node. Identify any listening\nports that are not required by kubelet, container runtime, or CNI. Check `systemctl list-units`\nfor running services.\n\n**Remediation:** Disable and mask unused systemd services. Remove unnecessary packages.\nApply OS-level firewall rules (iptables/nftables) to block non-essential ports. Automate\nhardening with CIS Benchmark tooling (e.g., `cloud-init`, node configuration management).\n",
+      "tags": [
+        "node-security",
+        "os-hardening",
+        "network"
+      ],
+      "references": [
+        {
+          "title": "SOC 2 CC7.1 — System Monitoring",
+          "url": "https://www.aicpa.org/resources/article/soc-2-trust-service-principles"
+        },
+        {
+          "title": "PCI-DSS Requirement 2.2.4 — Remove Unnecessary Services",
+          "url": "https://www.pcisecuritystandards.org/document_library/"
+        },
+        {
+          "title": "CIS Benchmark — General Server Hardening",
+          "url": "https://www.cisecurity.org/cis-benchmarks"
+        }
+      ],
+      "category": "cloud"
+    },
+    {
+      "id": "CLD-007",
+      "title": "Encrypt Node Storage at Rest",
+      "description": "All persistent volumes and node root disks must be encrypted at rest. Unencrypted disks\nrisk exposure of container data, etcd snapshots, and cached secrets if physical media is\nrecovered or cloud snapshots are shared inadvertently.\n\n**What to check:** In AWS, verify EBS volumes are encrypted (EC2 → Volumes → Encryption).\nIn GCP, verify disk encryption is enabled. Check that the KMS key is customer-managed\n(CMK) if compliance requires it.\n\n**Remediation:** Enable default EBS/persistent disk encryption at the account or project\nlevel. Use a Cloud KMS or HSM-backed key for regulated workloads. Rotate encryption keys\naccording to policy.\n",
+      "tags": [
+        "storage",
+        "encryption",
+        "compliance"
+      ],
+      "references": [
+        {
+          "title": "HIPAA Integrity Controls",
+          "url": "https://www.hhs.gov/hipaa/for-professionals/security/laws-regulations/index.html"
+        },
+        {
+          "title": "PCI-DSS Requirement 3.5 — Protect Stored Account Data",
+          "url": "https://www.pcisecuritystandards.org/document_library/"
+        },
+        {
+          "title": "AWS EKS — Envelope Encryption",
+          "url": "https://docs.aws.amazon.com/eks/latest/userguide/enable-kms.html"
+        }
+      ],
+      "category": "cloud"
+    },
+    {
+      "id": "CLD-008",
+      "title": "Maintain a Patch Management Process for Nodes",
+      "description": "Kubernetes nodes run a full OS stack. Unpatched kernels and system packages are a common\nvector for container-escape and privilege-escalation attacks. Kubernetes minor versions\nalso have a support window of approximately 14 months — clusters must be upgraded before\nend-of-support.\n\n**What to check:** Compare the Kubernetes version of each node against the current release.\nCheck OS package patch dates. Verify a documented patch cadence exists (e.g., monthly OS\npatching, quarterly K8s upgrades).\n\n**Remediation:** Automate node pool rotation on a schedule. Use managed update channels\n(EKS managed node groups, GKE release channels). Enable automated OS security patches via\nthe node OS tooling (e.g., `yum-cron`, `unattended-upgrades`).\n",
+      "tags": [
+        "node-security",
+        "patching",
+        "vulnerability-management"
+      ],
+      "references": [
+        {
+          "title": "PCI-DSS Requirement 6.3 — Security Vulnerabilities Addressed",
+          "url": "https://www.pcisecuritystandards.org/document_library/"
+        },
+        {
+          "title": "SOC 2 CC7.4 — Incident Response and Recovery",
+          "url": "https://www.aicpa.org/resources/article/soc-2-trust-service-principles"
+        },
+        {
+          "title": "Kubernetes Release Cycle",
+          "url": "https://kubernetes.io/releases/"
+        }
+      ],
+      "category": "cloud"
+    },
+    {
+      "id": "CLD-009",
+      "title": "Enable Immutable Infrastructure-Level Audit Logging",
+      "description": "Cloud-provider infrastructure logs (e.g., AWS CloudTrail, GCP Cloud Audit Logs, Azure\nActivity Log) record API calls made to the cloud control plane — node creation, IAM\nchanges, storage access. These logs must be enabled and protected against tampering.\n\n**What to check:** Verify CloudTrail / equivalent is enabled in all regions. Confirm logs\nare delivered to an S3 bucket (or equivalent) with Object Lock (WORM) enabled and MFA\ndelete. Confirm log integrity validation is turned on.\n\n**Remediation:** Enable management and data events. Route logs to a dedicated, centralised\naccount. Enable S3 Object Lock in Compliance mode. Set retention according to regulatory\nrequirements (HIPAA: 6 years, PCI-DSS: 1 year minimum).\n",
+      "tags": [
+        "logging",
+        "audit",
+        "compliance",
+        "infrastructure"
+      ],
+      "references": [
+        {
+          "title": "HIPAA Audit Controls (45 CFR § 164.312)",
+          "url": "https://www.hhs.gov/hipaa/for-professionals/security/laws-regulations/index.html"
+        },
+        {
+          "title": "AWS CloudTrail Best Practices",
+          "url": "https://docs.aws.amazon.com/awscloudtrail/latest/userguide/best-practices-security.html"
+        },
+        {
+          "title": "SOC 2 CC7.2 — Security Event Monitoring",
+          "url": "https://www.aicpa.org/resources/article/soc-2-trust-service-principles"
+        }
+      ],
+      "category": "cloud"
+    },
+    {
+      "id": "CLD-010",
+      "title": "Do Not Mount the Docker Socket into Containers",
+      "description": "Mounting the Docker daemon socket (`/var/run/docker.sock`) into a container grants that\ncontainer full control over the Docker daemon — effectively root on the host node. This is\na common container-escape vector exploited in CI/CD pipelines and build systems.\n\n**What to check:** Search all workloads for volume mounts referencing `/var/run/docker.sock`.\n\n```\nkubectl get pods -A -o json | \\\n  jq '.items[].spec.volumes[]? | select(.hostPath.path == \"/var/run/docker.sock\")'\n```\n\n**Remediation:** Replace Docker-in-Docker approaches with rootless, socket-less alternatives\nsuch as Kaniko, Buildah, or img for image builds. Use OPA/Kyverno admission policies to\nblock hostPath mounts of the Docker socket.\n",
+      "tags": [
+        "node-security",
+        "privilege-escalation",
+        "container-runtime"
+      ],
+      "references": [
+        {
+          "title": "CIS Docker Benchmark v1.5",
+          "url": "https://www.cisecurity.org/benchmark/docker"
+        },
+        {
+          "title": "OWASP Kubernetes Top 10 — K01: Insecure Workload Configurations",
+          "url": "https://owasp.org/www-project-kubernetes-top-ten/"
+        },
+        {
+          "title": "Kubernetes Docs — Volumes / hostPath",
+          "url": "https://kubernetes.io/docs/concepts/storage/volumes/#hostpath"
+        }
+      ],
+      "category": "cloud"
+    },
+    {
+      "id": "CLD-011",
+      "title": "Use the Cluster Autoscaler for Highly Variable Workloads",
+      "description": "For clusters experiencing highly variable workloads that occasionally outpace available node capacity, configure the Cluster Autoscaler. It manages creating new virtual machines/nodes (scale-up) when Pods can't be scheduled, and gracefully evicting empty nodes (scale-down) when resources are under-utilized.\n",
+      "tags": [
+        "application-development",
+        "scaling",
+        "cluster-autoscaler"
+      ],
+      "references": [
+        {
+          "title": "GitHub — Cluster Autoscaler",
+          "url": "https://github.com/kubernetes/autoscaler/tree/master/cluster-autoscaler"
+        },
+        {
+          "title": "Kubernetes Docs — Cluster Management",
+          "url": "https://kubernetes.io/docs/tasks/administer-cluster/cluster-management/"
+        }
+      ],
+      "category": "cloud"
+    },
+    {
+      "id": "CLD-012",
+      "title": "Implement Log Retention and Archival",
+      "description": "Ensure a robust retention policy is set for your cluster and application logs. Maintain sufficient historical active logs \n(typically 30-45 days) for operational troubleshooting, and securely archive older logs to deep storage to meet compliance requirements.\n",
+      "tags": [
+        "configuration",
+        "logging",
+        "compliance"
+      ],
+      "references": [
+        {
+          "title": "Kubernetes Docs — Logging Architecture",
+          "url": "https://kubernetes.io/docs/concepts/cluster-administration/logging/"
+        },
+        {
+          "title": "SOC 2 CC7.2 — Security Event Monitoring",
+          "url": "https://www.aicpa.org/resources/article/soc-2-trust-service-principles"
+        }
+      ],
+      "category": "cloud"
+    },
+    {
+      "id": "CLD-013",
+      "title": "Restrict Pod Access to Cloud Managed Identity",
+      "description": "Cloud providers assign managed identities to VM instances (EC2 Instance Profile on AWS,\nManaged Identity on Azure, Service Account on GCP). Pods running on these VMs can inherit\nthe node's cloud identity and use it to access cloud services — including container\nregistries, secrets managers, and other Kubernetes clusters.\n\nAttackers who compromise any pod can exploit this to escalate privileges to the node's\ncloud identity, potentially gaining cloud-level control beyond the Kubernetes cluster.\n\n**What to check:**\n- Is IMDSv2 enforced with hop limit = 1 on AWS to prevent pod access to IMDS?\n  ```\n  aws ec2 describe-instances --query 'Reservations[].Instances[].MetadataOptions'\n  ```\n- Are workloads using pod-level identity (IRSA, Workload Identity, AAD Workload Identity)\n  instead of relying on node-level identity?\n\n**Remediation:**\n- **AWS:** Enable IRSA (IAM Roles for Service Accounts) so only specific pods get\n  scoped cloud permissions. Set IMDS hop limit to 1.\n- **GCP:** Use Workload Identity Federation.\n- **Azure:** Use AAD Workload Identity.\n- Do not assign broad IAM roles to node groups; grant pod-level permissions only.\n",
+      "tags": [
+        "cloud",
+        "identity",
+        "privilege-escalation",
+        "iam"
+      ],
+      "references": [
+        {
+          "title": "AWS EKS — IAM Roles for Service Accounts",
+          "url": "https://docs.aws.amazon.com/eks/latest/userguide/iam-roles-for-service-accounts.html"
+        },
+        {
+          "title": "Microsoft Threat Matrix — Access Managed Identity Credentials",
+          "url": "https://microsoft.github.io/Threat-Matrix-for-Kubernetes/techniques/Access%20managed%20identity%20credentials/"
+        },
+        {
+          "title": "GCP — Workload Identity",
+          "url": "https://cloud.google.com/kubernetes-engine/docs/how-to/workload-identity"
+        }
+      ],
+      "category": "cloud"
+    },
+    {
+      "id": "CLD-014",
+      "title": "Restrict Cloud Account Permissions for Container Registry Access",
+      "description": "In cloud-managed Kubernetes (EKS, GKE, AKS), node IAM roles often include permissions\nto pull images from the cloud's container registry (ECR, GCR, ACR). An attacker who\ncompromises any pod can abuse the node's cloud identity (via IMDS or Workload Identity)\nto read images from private registries — potentially discovering proprietary code,\nembedded secrets, or other sensitive assets.\n\n**What to check:**\n- Does the node IAM role include `AmazonEC2ContainerRegistryReadOnly` or equivalent?\n  ```\n  aws iam list-attached-role-policies --role-name <node-role>\n  ```\n- Is IMDS access from pods blocked (see CLD-004)?\n- Are pod-level registry credentials scoped to only the registries each workload needs?\n\n**Remediation:** Use pod-level identity (IRSA / Workload Identity) to grant registry pull\naccess only to specific service accounts that need it. Remove broad registry read policies\nfrom node roles. Use separate private registries per team/environment with distinct access\ncontrols to contain the blast radius of a compromised node.\n",
+      "tags": [
+        "cloud",
+        "registry",
+        "credential-access",
+        "iam"
+      ],
+      "references": [
+        {
+          "title": "AWS ECR — Private Registry Authentication",
+          "url": "https://docs.aws.amazon.com/AmazonECR/latest/userguide/registry_auth.html"
+        },
+        {
+          "title": "Microsoft Threat Matrix — Images from a Private Registry",
+          "url": "https://microsoft.github.io/Threat-Matrix-for-Kubernetes/techniques/images%20from%20a%20private%20registry/"
+        },
+        {
+          "title": "GCP — Artifact Registry Access Control",
+          "url": "https://cloud.google.com/artifact-registry/docs/access-control"
+        }
+      ],
+      "category": "cloud"
+    },
+    {
+      "id": "CLD-015",
+      "title": "Use a Cloud-Native Secret Manager for Sensitive Credentials",
+      "description": "Kubernetes Secrets are base64-encoded (not encrypted by default) and accessible to anyone\nwith RBAC read access. For high-value credentials — database passwords, API keys, TLS\nprivate keys, third-party tokens — prefer cloud-native secret managers (AWS Secrets Manager,\nGCP Secret Manager, Azure Key Vault) which provide encryption, access auditing, automatic\nrotation, and fine-grained IAM access control.\n\nIntegration with Kubernetes is achieved via the Secrets Store CSI Driver, which mounts\nsecrets from the cloud store directly into pod filesystems without creating Kubernetes\nSecret objects.\n\n**What to check:**\n- Are high-value credentials stored as Kubernetes Secrets in plaintext?\n  ```\n  kubectl get secrets -A -o json | jq '.items[] | select(.type == \"Opaque\")'\n  ```\n- Is the Secrets Store CSI Driver installed?\n  ```\n  kubectl get pods -n kube-system | grep secrets-store\n  ```\n\n**Remediation:** Migrate sensitive credentials to the cloud secret manager. Use the\nSecrets Store CSI Driver with a `SecretProviderClass` to mount them as volumes.\nRetain Kubernetes Secrets only for non-sensitive config values.\n",
+      "tags": [
+        "secrets",
+        "cloud",
+        "credential-access",
+        "compliance"
+      ],
+      "references": [
+        {
+          "title": "Kubernetes Secrets Store CSI Driver",
+          "url": "https://secrets-store-csi-driver.sigs.k8s.io/"
+        },
+        {
+          "title": "Microsoft Threat Matrix — Application Credentials in Configuration Files",
+          "url": "https://microsoft.github.io/Threat-Matrix-for-Kubernetes/techniques/Application%20credentials%20in%20configuration%20files/"
+        },
+        {
+          "title": "AWS Secrets Manager — Kubernetes Integration",
+          "url": "https://docs.aws.amazon.com/secretsmanager/latest/userguide/integrating_csi_driver.html"
+        }
+      ],
+      "category": "cloud"
+    },
+    {
+      "id": "CLD-016",
+      "title": "Enable the NodeRestriction Admission Controller",
+      "description": "The NodeRestriction admission controller limits the API objects that kubelets can modify.\nWithout it, a compromised kubelet (or a node-level attacker with kubelet credentials) can\nmodify any node or pod object in the cluster — potentially evicting workloads, reading\nsecrets from other nodes, or escalating privileges across the cluster.\n\nWith NodeRestriction enabled, a kubelet can only modify its own `Node` object and pods\nscheduled to its own node. It cannot modify objects belonging to other nodes.\n\n**What to check:**\n```\nps aux | grep kube-apiserver | grep enable-admission-plugins\n```\n\n`NodeRestriction` must appear in the `--enable-admission-plugins` list.\n\nOn managed clusters (EKS, GKE, AKS), this is enabled by default. Verify via the cloud\ncluster configuration or CloudTrail/Audit logs.\n\n**Remediation:** Add `NodeRestriction` to `--enable-admission-plugins` in the API server\nmanifest. Ensure kubelets authenticate with node-scoped credentials (bootstrap tokens or\nsigned certificates with system:node CN).\n",
+      "tags": [
+        "api-server",
+        "admission-control",
+        "node-security",
+        "hardening"
+      ],
+      "references": [
+        {
+          "title": "Kubernetes Docs — NodeRestriction Admission Controller",
+          "url": "https://kubernetes.io/docs/reference/access-authn-authz/admission-controllers/#noderestriction"
+        },
+        {
+          "title": "Microsoft Threat Matrix — Access Kubelet API",
+          "url": "https://microsoft.github.io/Threat-Matrix-for-Kubernetes/techniques/Access%20Kubelet%20API/"
+        },
+        {
+          "title": "CIS Kubernetes Benchmark 1.2.17",
+          "url": "https://workbench.cisecurity.org/benchmarks/16828"
+        }
+      ],
+      "category": "cloud"
+    },
+    {
+      "id": "CLT-001",
+      "title": "Disable Anonymous Authentication on the API Server",
+      "description": "By default, Kubernetes may allow unauthenticated requests to reach the API server. Setting\n`--anonymous-auth=false` ensures every request must carry valid credentials, eliminating\na class of unauthenticated access attacks.\n\n**What to check:** On the control-plane node, inspect the kube-apiserver static pod manifest\nor process arguments:\n\n```\nps aux | grep kube-apiserver | grep anonymous-auth\n```\n\nThe flag must be `--anonymous-auth=false`. If the flag is absent, the default is `true`\n(insecure).\n\n**Remediation:** Add `--anonymous-auth=false` to the kube-apiserver command arguments in\n`/etc/kubernetes/manifests/kube-apiserver.yaml`. On managed clusters (EKS/GKE/AKS), this\nis typically controlled through cluster configuration options.\n",
+      "tags": [
+        "api-server",
+        "authentication",
+        "hardening"
+      ],
+      "references": [
+        {
+          "title": "CIS Kubernetes Benchmark 1.2.1",
+          "url": "https://workbench.cisecurity.org/benchmarks/16828"
+        },
+        {
+          "title": "NSA/CISA Kubernetes Hardening Guide",
+          "url": "https://media.defense.gov/2022/Aug/29/2003066362/-1/-1/0/CTR_KUBERNETES_HARDENING_GUIDANCE_1.2_20220829.PDF"
+        },
+        {
+          "title": "Kubernetes Docs — API Server Flags",
+          "url": "https://kubernetes.io/docs/reference/command-line-tools-reference/kube-apiserver/"
+        },
+        {
+          "title": "Microsoft Threat Matrix — Access Kubernetes API Server",
+          "url": "https://microsoft.github.io/Threat-Matrix-for-Kubernetes/techniques/Access%20the%20K8S%20API%20server/"
+        },
+        {
+          "title": "Microsoft Threat Matrix — Connect from Proxy Server",
+          "url": "https://microsoft.github.io/Threat-Matrix-for-Kubernetes/techniques/Connect%20from%20Proxy%20server/"
+        }
+      ],
+      "category": "cluster"
+    },
+    {
+      "id": "CLT-002",
+      "title": "Set Authorization Mode to RBAC and Node",
+      "description": "The API server's `--authorization-mode` flag must be set to `RBAC,Node`. The `AlwaysAllow`\nmode grants every request full access regardless of identity, which is never acceptable\nin any environment.\n\n**What to check:**\n\n```\nps aux | grep kube-apiserver | grep authorization-mode\n```\n\nThe value must include `RBAC` and `Node`. It must not include `AlwaysAllow`.\n\n**Remediation:** Set `--authorization-mode=Node,RBAC` in the kube-apiserver manifest.\nVerify all existing RBAC policies are correct before removing AlwaysAllow if it was\npreviously in use.\n",
+      "tags": [
+        "api-server",
+        "rbac",
+        "authorization",
+        "hardening"
+      ],
+      "references": [
+        {
+          "title": "CIS Kubernetes Benchmark 1.2.7",
+          "url": "https://workbench.cisecurity.org/benchmarks/16828"
+        },
+        {
+          "title": "PCI-DSS Requirement 7 — Restrict Access to System Components",
+          "url": "https://www.pcisecuritystandards.org/document_library/"
+        },
+        {
+          "title": "Kubernetes Docs — Authorization Modes",
+          "url": "https://kubernetes.io/docs/reference/access-authn-authz/authorization/"
+        },
+        {
+          "title": "Microsoft Threat Matrix — Access Kubernetes API Server",
+          "url": "https://microsoft.github.io/Threat-Matrix-for-Kubernetes/techniques/Access%20the%20K8S%20API%20server/"
+        }
+      ],
+      "category": "cluster"
+    },
+    {
+      "id": "CLT-003",
+      "title": "Ensure the API Server Secure Port is Not Disabled",
+      "description": "The `--secure-port` flag controls which port the API server listens on for HTTPS traffic.\nSetting it to `0` disables TLS entirely, causing all API traffic to be unencrypted. This\nmust never be set to `0` in any environment.\n\n**What to check:**\n\n```\nps aux | grep kube-apiserver | grep secure-port\n```\n\nIf the flag is absent, the default (6443) is used, which is correct. A value of `0` is a\ncritical misconfiguration.\n\n**Remediation:** Remove `--secure-port=0` if present, or set it to the desired port (default\n6443). Ensure `--insecure-port=0` (the insecure port) is also disabled.\n",
+      "tags": [
+        "api-server",
+        "tls",
+        "network",
+        "hardening"
+      ],
+      "references": [
+        {
+          "title": "CIS Kubernetes Benchmark 1.2.16",
+          "url": "https://workbench.cisecurity.org/benchmarks/16828"
+        },
+        {
+          "title": "Kubernetes Docs — API Server TLS",
+          "url": "https://kubernetes.io/docs/reference/command-line-tools-reference/kube-apiserver/"
+        },
+        {
+          "title": "NSA/CISA Kubernetes Hardening Guide",
+          "url": "https://media.defense.gov/2022/Aug/29/2003066362/-1/-1/0/CTR_KUBERNETES_HARDENING_GUIDANCE_1.2_20220829.PDF"
+        },
+        {
+          "title": "Microsoft Threat Matrix — Access Kubernetes API Server",
+          "url": "https://microsoft.github.io/Threat-Matrix-for-Kubernetes/techniques/Access%20the%20K8S%20API%20server/"
+        }
+      ],
+      "category": "cluster"
+    },
+    {
+      "id": "CLT-004",
+      "title": "Enable TLS for API Server to Kubelet Communication",
+      "description": "The API server communicates with kubelets on every worker node. This channel must use TLS\nto prevent eavesdropping and man-in-the-middle attacks within the cluster network.\n\n**What to check:**\n\n```\nps aux | grep kube-apiserver | grep kubelet-certificate-authority\n```\n\nThe flags `--kubelet-certificate-authority`, `--kubelet-client-certificate`, and\n`--kubelet-client-key` should all be set.\n\n**Remediation:** Configure the API server with a kubelet client certificate signed by the\ncluster CA. Ensure kubelets are configured with `--tls-cert-file` and `--tls-private-key-file`.\n",
+      "tags": [
+        "api-server",
+        "kubelet",
+        "tls",
+        "encryption-in-transit"
+      ],
+      "references": [
+        {
+          "title": "SOC 2 CC6.6 — Logical and Physical Access Controls",
+          "url": "https://www.aicpa.org/resources/article/soc-2-trust-service-principles"
+        },
+        {
+          "title": "CIS Kubernetes Benchmark 1.2.5",
+          "url": "https://workbench.cisecurity.org/benchmarks/16828"
+        },
+        {
+          "title": "Kubernetes Docs — Kubelet TLS",
+          "url": "https://kubernetes.io/docs/reference/access-authn-authz/kubelet-tls-bootstrapping/"
+        }
+      ],
+      "category": "cluster"
+    },
+    {
+      "id": "CLT-005",
+      "title": "Enable Required Admission Controllers",
+      "description": "Admission controllers intercept API requests before objects are persisted, providing the\nlast line of defence against misconfigured workloads. The following must be enabled:\n`NodeRestriction`, `PodSecurity`, and `LimitRanger`.\n\n- **NodeRestriction:** Prevents kubelets from modifying objects outside their own node.\n- **PodSecurity:** Enforces Pod Security Standards (baseline/restricted) at the namespace level.\n- **LimitRanger:** Ensures pods cannot be created without resource limits.\n\n**What to check:**\n\n```\nps aux | grep kube-apiserver | grep enable-admission-plugins\n```\n\n**Remediation:** Add the required plugins to `--enable-admission-plugins` in the API server\nmanifest. Verify existing workloads comply before enabling PodSecurity in Enforce mode.\n",
+      "tags": [
+        "api-server",
+        "admission-control",
+        "pod-security",
+        "hardening"
+      ],
+      "references": [
+        {
+          "title": "CIS Kubernetes Benchmark 1.2.15",
+          "url": "https://workbench.cisecurity.org/benchmarks/16828"
+        },
+        {
+          "title": "Kubernetes Docs — Admission Controllers",
+          "url": "https://kubernetes.io/docs/reference/access-authn-authz/admission-controllers/"
+        },
+        {
+          "title": "NSA/CISA Kubernetes Hardening Guide",
+          "url": "https://media.defense.gov/2022/Aug/29/2003066362/-1/-1/0/CTR_KUBERNETES_HARDENING_GUIDANCE_1.2_20220829.PDF"
+        },
+        {
+          "title": "Microsoft Threat Matrix — Malicious Admission Controller",
+          "url": "https://microsoft.github.io/Threat-Matrix-for-Kubernetes/techniques/Malicious%20admission%20controller/"
+        }
+      ],
+      "category": "cluster"
+    },
+    {
+      "id": "CLT-006",
+      "title": "Encrypt Secrets at Rest in etcd",
+      "description": "Kubernetes Secrets are base64-encoded by default, which is not encryption. Anyone with\nread access to etcd can trivially decode all secrets. Enabling `EncryptionConfiguration`\nwith a KMS or strong AES provider ensures secrets are encrypted before being written to disk.\n\n**What to check:**\n\n```\nps aux | grep kube-apiserver | grep encryption-provider-config\n```\n\nThe flag `--encryption-provider-config` must point to a valid EncryptionConfiguration file.\nVerify the provider is `kms` (preferred) or `aescbc` — not `identity` (which is no-op).\n\n**Remediation:** Create an EncryptionConfiguration manifest specifying the KMS provider\n(AWS KMS, GCP KMS, Azure Key Vault) or a generated AES-CBC key. Restart the API server\nand run `kubectl get secret -o json | etcdctl get ...` to confirm encryption.\n",
+      "tags": [
+        "etcd",
+        "encryption-at-rest",
+        "secrets",
+        "compliance"
+      ],
+      "references": [
+        {
+          "title": "Kubernetes Docs — Encrypting Secret Data at Rest",
+          "url": "https://kubernetes.io/docs/tasks/administer-cluster/encrypt-data/"
+        },
+        {
+          "title": "HIPAA Integrity Controls",
+          "url": "https://www.hhs.gov/hipaa/for-professionals/security/laws-regulations/index.html"
+        },
+        {
+          "title": "PCI-DSS Requirement 3 — Protect Stored Account Data",
+          "url": "https://www.pcisecuritystandards.org/document_library/"
+        },
+        {
+          "title": "Microsoft Threat Matrix — List Kubernetes Secrets",
+          "url": "https://microsoft.github.io/Threat-Matrix-for-Kubernetes/techniques/List%20K8S%20secrets/"
+        }
+      ],
+      "category": "cluster"
+    },
+    {
+      "id": "CLT-007",
+      "title": "Use a Dedicated Certificate Authority for etcd",
+      "description": "etcd is the backing store for all cluster state and secrets. Its certificate authority\nmust be separate from the main Kubernetes CA so that a compromised Kubernetes component\ncannot forge etcd client certificates.\n\n**What to check:**\n\n```\nps aux | grep etcd | grep trusted-ca-file\n```\n\nVerify the CA file referenced by `--trusted-ca-file` is different from the Kubernetes\ncluster CA (`/etc/kubernetes/pki/ca.crt`).\n\n**Remediation:** Generate a separate CA for etcd during cluster bootstrap (e.g., kubeadm\ndoes this by default via `/etc/kubernetes/pki/etcd/ca.crt`). Do not reuse the cluster CA\nfor etcd peer and client certificates.\n",
+      "tags": [
+        "etcd",
+        "pki",
+        "tls",
+        "certificates"
+      ],
+      "references": [
+        {
+          "title": "CIS Kubernetes Benchmark 2.7",
+          "url": "https://workbench.cisecurity.org/benchmarks/16828"
+        },
+        {
+          "title": "Kubernetes Docs — etcd Security",
+          "url": "https://etcd.io/docs/v3.5/op-guide/security/"
+        },
+        {
+          "title": "NSA/CISA Kubernetes Hardening Guide",
+          "url": "https://media.defense.gov/2022/Aug/29/2003066362/-1/-1/0/CTR_KUBERNETES_HARDENING_GUIDANCE_1.2_20220829.PDF"
+        }
+      ],
+      "category": "cluster"
+    },
+    {
+      "id": "CLT-008",
+      "title": "Disable Anonymous Access to the Kubelet API",
+      "description": "The Kubelet exposes an HTTP API on port 10250 for the API server and debugging tools.\nIf anonymous access is enabled, unauthenticated users can execute commands in pods, read\nlogs, and retrieve sensitive runtime information.\n\n**What to check:** On each node, inspect the kubelet configuration:\n\n```\ncat /var/lib/kubelet/config.yaml | grep -A2 anonymous\n```\n\n`authentication.anonymous.enabled` must be `false`.\n`authorization.mode` must be `Webhook` (not `AlwaysAllow`).\n\n**Remediation:** Set `authentication.anonymous.enabled: false` and\n`authorization.mode: Webhook` in the KubeletConfiguration. Restart the kubelet.\n",
+      "tags": [
+        "kubelet",
+        "authentication",
+        "authorization",
+        "hardening"
+      ],
+      "references": [
+        {
+          "title": "OWASP Kubernetes Top 10 — K09: Misconfigured Cluster Components",
+          "url": "https://owasp.org/www-project-kubernetes-top-ten/"
+        },
+        {
+          "title": "CIS Kubernetes Benchmark 4.2.1",
+          "url": "https://workbench.cisecurity.org/benchmarks/16828"
+        },
+        {
+          "title": "Kubernetes Docs — Kubelet Authentication/Authorization",
+          "url": "https://kubernetes.io/docs/reference/access-authn-authz/kubelet-authn-authz/"
+        }
+      ],
+      "category": "cluster"
+    },
+    {
+      "id": "CLT-009",
+      "title": "Audit and Remove Wildcard RBAC Permissions",
+      "description": "RBAC roles that use wildcard (`*`) verbs or resources grant far broader access than intended.\nA single compromised service account with wildcard access can read all secrets, modify any\nworkload, or escalate privileges cluster-wide.\n\n**What to check:**\n\n```\nkubectl get clusterrolebindings,rolebindings -A -o json | \\\n  jq '.items[].rules[]? | select(.verbs[] == \"*\" or .resources[] == \"*\")'\n```\n\n**Remediation:** Replace wildcard rules with explicit, minimal permissions. Conduct a\nquarterly review of all RoleBindings and ClusterRoleBindings. Remove any bindings that are\nno longer required. Automate detection with tools such as RBAC Lookup, Krane, or Audit2RBAC.\n",
+      "tags": [
+        "rbac",
+        "least-privilege",
+        "authorization"
+      ],
+      "references": [
+        {
+          "title": "SOC 2 CC6.1 — Logical Access Controls",
+          "url": "https://www.aicpa.org/resources/article/soc-2-trust-service-principles"
+        },
+        {
+          "title": "PCI-DSS Requirement 7 — Restrict Access",
+          "url": "https://www.pcisecuritystandards.org/document_library/"
+        },
+        {
+          "title": "OWASP Kubernetes Top 10 — K03: Overly Permissive RBAC",
+          "url": "https://owasp.org/www-project-kubernetes-top-ten/"
+        },
+        {
+          "title": "Microsoft Threat Matrix — Exec into Container",
+          "url": "https://microsoft.github.io/Threat-Matrix-for-Kubernetes/techniques/Exec%20into%20container/"
+        },
+        {
+          "title": "Microsoft Threat Matrix — Cluster-Admin Binding",
+          "url": "https://microsoft.github.io/Threat-Matrix-for-Kubernetes/techniques/Cluster-admin%20binding/"
+        }
+      ],
+      "category": "cluster"
+    },
+    {
+      "id": "CLT-010",
+      "title": "Disable Automatic ServiceAccount Token Mounting",
+      "description": "By default, Kubernetes automatically mounts a ServiceAccount token into every pod. Most\napplication pods do not need to call the Kubernetes API, so this token is unnecessary and\nbecomes an attack surface — a compromised container can use it to probe the cluster.\n\n**What to check:**\n\n```\nkubectl get pods -A -o json | \\\n  jq '.items[] | select(.spec.automountServiceAccountToken != false) | .metadata.name'\n```\n\nAlso check ServiceAccount objects:\n\n```\nkubectl get serviceaccounts -A -o json | \\\n  jq '.items[] | select(.automountServiceAccountToken != false) | .metadata.name'\n```\n\n**Remediation:** Set `automountServiceAccountToken: false` on ServiceAccount objects and\noverride to `true` only in pods that explicitly require API access. Enforce this with an\nadmission policy (OPA Gatekeeper / Kyverno).\n",
+      "tags": [
+        "rbac",
+        "service-accounts",
+        "least-privilege"
+      ],
+      "references": [
+        {
+          "title": "OWASP Kubernetes Top 10 — K03: Overly Permissive RBAC",
+          "url": "https://owasp.org/www-project-kubernetes-top-ten/"
+        },
+        {
+          "title": "CIS Kubernetes Benchmark 5.1.6",
+          "url": "https://workbench.cisecurity.org/benchmarks/16828"
+        },
+        {
+          "title": "Kubernetes Docs — Configure Service Accounts",
+          "url": "https://kubernetes.io/docs/tasks/configure-pod-container/configure-service-account/"
+        },
+        {
+          "title": "Microsoft Threat Matrix — Container Service Account",
+          "url": "https://microsoft.github.io/Threat-Matrix-for-Kubernetes/techniques/container%20service%20account/"
+        }
+      ],
+      "category": "cluster"
+    },
+    {
+      "id": "CLT-011",
+      "title": "Enable API Server Audit Logging",
+      "description": "Kubernetes audit logs record every request to the API server — who made it, what resource\nwas accessed, and what the outcome was. Without audit logging, detecting breaches,\nsatisfying compliance audits, and investigating incidents is impossible.\n\n**What to check:**\n\n```\nps aux | grep kube-apiserver | grep audit-policy-file\n```\n\nFlags `--audit-policy-file` and `--audit-log-path` must be set. The policy file must\ncapture at least `Metadata` level for all requests and `RequestResponse` for sensitive\nresources (Secrets, ConfigMaps, ServiceAccounts).\n\n**Remediation:** Create an audit policy YAML and pass it via `--audit-policy-file`. Configure\nlog rotation (`--audit-log-maxage`, `--audit-log-maxbackup`). Ship logs to a SIEM or\ncloud-native logging service.\n",
+      "tags": [
+        "audit",
+        "logging",
+        "compliance",
+        "api-server"
+      ],
+      "references": [
+        {
+          "title": "HIPAA Audit Controls (45 CFR § 164.312)",
+          "url": "https://www.hhs.gov/hipaa/for-professionals/security/laws-regulations/index.html"
+        },
+        {
+          "title": "SOC 2 CC7.2 — Security Event Monitoring",
+          "url": "https://www.aicpa.org/resources/article/soc-2-trust-service-principles"
+        },
+        {
+          "title": "Kubernetes Docs — Auditing",
+          "url": "https://kubernetes.io/docs/tasks/debug/debug-cluster/audit/"
+        },
+        {
+          "title": "Microsoft Threat Matrix — Delete Kubernetes Events",
+          "url": "https://microsoft.github.io/Threat-Matrix-for-Kubernetes/techniques/Delete%20K8S%20events/"
+        }
+      ],
+      "category": "cluster"
+    },
+    {
+      "id": "CLT-012",
+      "title": "Apply Default-Deny NetworkPolicies in All Namespaces",
+      "description": "Without NetworkPolicies, every pod in a cluster can reach any other pod on any port.\nA single compromised workload can freely probe databases, internal services, and the\nmetadata API. A default-deny policy in every namespace closes this attack path.\n\n**What to check:**\n\n```\nkubectl get networkpolicy -A\n```\n\nEvery namespace must contain a default-deny-all ingress and egress policy. Verify with:\n\n```\nkubectl get networkpolicy -n <namespace> -o yaml | grep policyTypes\n```\n\n**Remediation:** Create a default-deny policy in every namespace, then selectively open\ntraffic with additional NetworkPolicies for legitimate flows. Use a CNI plugin that\nenforces NetworkPolicies (Calico, Cilium, Weave Net — not flannel alone).\n",
+      "tags": [
+        "network",
+        "network-policy",
+        "lateral-movement",
+        "zero-trust"
+      ],
+      "references": [
+        {
+          "title": "PCI-DSS Requirement 1.2 — Network Access Controls",
+          "url": "https://www.pcisecuritystandards.org/document_library/"
+        },
+        {
+          "title": "CIS Kubernetes Benchmark 5.3.2",
+          "url": "https://workbench.cisecurity.org/benchmarks/16828"
+        },
+        {
+          "title": "Kubernetes Docs — Network Policies",
+          "url": "https://kubernetes.io/docs/concepts/services-networking/network-policies/"
+        },
+        {
+          "title": "Microsoft Threat Matrix — Network Mapping",
+          "url": "https://microsoft.github.io/Threat-Matrix-for-Kubernetes/techniques/Network%20mapping/"
+        },
+        {
+          "title": "Microsoft Threat Matrix — Cluster Internal Networking",
+          "url": "https://microsoft.github.io/Threat-Matrix-for-Kubernetes/techniques/Cluster%20internal%20networking/"
+        },
+        {
+          "title": "Microsoft Threat Matrix — Collecting Data from Pod",
+          "url": "https://microsoft.github.io/Threat-Matrix-for-Kubernetes/techniques/Collecting%20Data%20from%20Pod/"
+        },
+        {
+          "title": "Microsoft Threat Matrix — Connect from Proxy Server",
+          "url": "https://microsoft.github.io/Threat-Matrix-for-Kubernetes/techniques/Connect%20from%20Proxy%20server/"
+        }
+      ],
+      "category": "cluster"
+    },
+    {
+      "id": "CLT-013",
+      "title": "Do Not Use the Default Namespace for Workloads",
+      "description": "The `default` namespace has no resource quotas, no NetworkPolicies, and no PSS labels\napplied by default. Deploying workloads into it bypasses namespace-level controls and\nmakes RBAC and network isolation harder to reason about.\n\n**What to check:**\n\n```\nkubectl get all -n default\n```\n\nOnly system or test resources should ever be in the default namespace.\n\n**Remediation:** Create dedicated namespaces per team, environment, or application.\nApply ResourceQuotas, LimitRanges, and NetworkPolicies to each namespace. Enforce this\nwith an admission policy that rejects workloads targeting the default namespace.\n",
+      "tags": [
+        "namespaces",
+        "isolation",
+        "hardening"
+      ],
+      "references": [
+        {
+          "title": "CIS Kubernetes Benchmark 5.7.4",
+          "url": "https://workbench.cisecurity.org/benchmarks/16828"
+        },
+        {
+          "title": "Kubernetes Docs — Namespaces",
+          "url": "https://kubernetes.io/docs/concepts/overview/working-with-objects/namespaces/"
+        },
+        {
+          "title": "NSA/CISA Kubernetes Hardening Guide",
+          "url": "https://media.defense.gov/2022/Aug/29/2003066362/-1/-1/0/CTR_KUBERNETES_HARDENING_GUIDANCE_1.2_20220829.PDF"
+        }
+      ],
+      "category": "cluster"
+    },
+    {
+      "id": "CLT-014",
+      "title": "Run Multiple Replicas for Deployments",
+      "description": "Never run a single Pod individually. A hardware failure of the physical machine, a kernel panic, or a node drain could cause your single Pod to be deleted and cause downtime. Instead, deploy your Pod as part of a Deployment, DaemonSet, ReplicaSet, or StatefulSet with more than one replica to guarantee availability.\n",
+      "tags": [
+        "application-development",
+        "reliability",
+        "fault-tolerance"
+      ],
+      "references": [
+        {
+          "title": "Kubernetes Docs — Deployments",
+          "url": "https://kubernetes.io/docs/concepts/workloads/controllers/deployment/"
+        },
+        {
+          "title": "Kubernetes Docs — ReplicaSets",
+          "url": "https://kubernetes.io/docs/concepts/workloads/controllers/replicaset/"
+        }
+      ],
+      "category": "cluster"
+    },
+    {
+      "id": "CLT-015",
+      "title": "Use Pod Anti-Affinity Rules to Spread Workload",
+      "description": "Even if you run several replicas of your Pods, a node failure will take down all replicas if they are scheduled on the same node. Use Pod anti-affinity rules to enforce that Pods from the same Deployment are spread across different nodes in the cluster.\n",
+      "tags": [
+        "application-development",
+        "fault-tolerance",
+        "scheduling"
+      ],
+      "references": [
+        {
+          "title": "Kubernetes Docs — Inter-Pod Affinity and Anti-Affinity",
+          "url": "https://kubernetes.io/docs/concepts/scheduling-eviction/assign-pod-node/#inter-pod-affinity-and-anti-affinity"
+        },
+        {
+          "title": "Kubernetes Docs — Assigning Pods to Nodes",
+          "url": "https://kubernetes.io/docs/concepts/scheduling-eviction/assign-pod-node/"
+        }
+      ],
+      "category": "cluster"
+    },
+    {
+      "id": "CLT-016",
+      "title": "Set Pod Disruption Budgets",
+      "description": "When a node is drained, all Pods on that node are deleted and rescheduled, which could affect availability under heavy load. To protect Deployments from unexpected events that delete several Pods simultaneously, define a Pod Disruption Budget (e.g. guaranteeing at least N Pods are always running).\n",
+      "tags": [
+        "application-development",
+        "fault-tolerance",
+        "availability"
+      ],
+      "references": [
+        {
+          "title": "Kubernetes Docs — Disruptions",
+          "url": "https://kubernetes.io/docs/concepts/workloads/pods/disruptions/"
+        },
+        {
+          "title": "Kubernetes Docs — Configure Pod Disruption Budgets",
+          "url": "https://kubernetes.io/docs/tasks/run-application/configure-pdb/"
+        }
+      ],
+      "category": "cluster"
+    },
+    {
+      "id": "CLT-017",
+      "title": "Define a LimitRange for Each Namespace",
+      "description": "To prevent accidental deployment of Pods without explicit memory and CPU configurations, define a LimitRange object in each namespace. This enforce standard sizes or minimums/maximums for containers deployed in a namespace, acting as an automated safety net for resource utilization.\n",
+      "tags": [
+        "application-development",
+        "resource-management",
+        "namespaces"
+      ],
+      "references": [
+        {
+          "title": "Kubernetes Docs — LimitRange",
+          "url": "https://kubernetes.io/docs/concepts/policy/limit-range/"
+        },
+        {
+          "title": "CIS Kubernetes Benchmark 5.2.3",
+          "url": "https://workbench.cisecurity.org/benchmarks/16828"
+        },
+        {
+          "title": "Microsoft Threat Matrix — Denial of Service",
+          "url": "https://microsoft.github.io/Threat-Matrix-for-Kubernetes/techniques/Denial%20of%20service/"
+        }
+      ],
+      "category": "cluster"
+    },
+    {
+      "id": "CLT-018",
+      "title": "Apply Technical Labels to Resources",
+      "description": "Use technical labels to organize Kubernetes objects and assist in automation. Examples include grouping by application name (`app.kubernetes.io/name`), application instance (`app.kubernetes.io/instance`), version, architecture component, and management tool (`app.kubernetes.io/managed-by`). Apply them to all relevant workloads.\n",
+      "tags": [
+        "application-development",
+        "tagging",
+        "metadata"
+      ],
+      "references": [
+        {
+          "title": "Kubernetes Docs — Recommended Labels",
+          "url": "https://kubernetes.io/docs/concepts/overview/working-with-objects/common-labels/"
+        },
+        {
+          "title": "Kubernetes Docs — Labels and Selectors",
+          "url": "https://kubernetes.io/docs/concepts/overview/working-with-objects/labels/"
+        }
+      ],
+      "category": "cluster"
+    },
+    {
+      "id": "CLT-019",
+      "title": "Apply Business Labels to Resources",
+      "description": "To facilitate cost-allocation and tracking, map business logic into Kubernetes metadata. Common examples include identifying the assigned owner (`owner`), the project context (`project`), and the business unit (`business-unit`). Set these labels on your workloads to support external aggregation tools.\n",
+      "tags": [
+        "application-development",
+        "tagging",
+        "business"
+      ],
+      "references": [
+        {
+          "title": "AWS Tagging Strategies",
+          "url": "https://aws.amazon.com/answers/account-management/aws-tagging-strategies/"
+        },
+        {
+          "title": "Kubernetes Docs — Labels and Selectors",
+          "url": "https://kubernetes.io/docs/concepts/overview/working-with-objects/labels/"
+        }
+      ],
+      "category": "cluster"
+    },
+    {
+      "id": "CLT-020",
+      "title": "Apply Security Labels to Resources",
+      "description": "Group resources by compliance demands and security requirements using labels. Key labels could represent the data-confidentiality level (`confidentiality`) or the compliance standard the workload must adhere to (`compliance: pci`). These metadata markers can simplify security assessments and auditing.\n",
+      "tags": [
+        "application-development",
+        "tagging",
+        "security"
+      ],
+      "references": [
+        {
+          "title": "AWS Tagging Strategies",
+          "url": "https://aws.amazon.com/answers/account-management/aws-tagging-strategies/"
+        },
+        {
+          "title": "Kubernetes Docs — Labels and Selectors",
+          "url": "https://kubernetes.io/docs/concepts/overview/working-with-objects/labels/"
+        }
+      ],
+      "category": "cluster"
+    },
+    {
+      "id": "CLT-021",
+      "title": "Avoid Sidecars for Logging",
+      "description": "Instead of deploying a sidecar container in every Pod to capture or transform logs, applications should emit natively formatted logs directly to standard outputs. Avoiding unnecessary sidecars reduces cluster overhead and memory pressure. Prefer node-level logging daemons for aggregation.\n",
+      "tags": [
+        "application-development",
+        "logging",
+        "resources"
+      ],
+      "references": [
+        {
+          "title": "Twelve-Factor App — Logs",
+          "url": "https://12factor.net/logs"
+        },
+        {
+          "title": "Kubernetes Docs — Logging Architecture",
+          "url": "https://kubernetes.io/docs/concepts/cluster-administration/logging/"
+        }
+      ],
+      "category": "cluster"
+    },
+    {
+      "id": "CLT-022",
+      "title": "Use Horizontal Pod Autoscaler for Variable Workloads",
+      "description": "Rely on the Horizontal Pod Autoscaler (HPA) to automatically add or remove Pod replicas based on current usage metrics (e.g. CPU, memory, custom metrics). This ensures the application remains responsive during traffic spikes without wasting resources during quiet periods.\n",
+      "tags": [
+        "application-development",
+        "scaling",
+        "hpa"
+      ],
+      "references": [
+        {
+          "title": "Kubernetes Docs — Horizontal Pod Autoscaling",
+          "url": "https://kubernetes.io/docs/tasks/run-application/horizontal-pod-autoscale/"
+        },
+        {
+          "title": "Kubernetes Docs — HorizontalPodAutoscaler API",
+          "url": "https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.29/#horizontalpodautoscaler-v2-autoscaling"
+        }
+      ],
+      "category": "cluster"
+    },
+    {
+      "id": "CLT-023",
+      "title": "Evaluate the Vertical Pod Autoscaler Carefully Before Using in Production",
+      "description": "The Vertical Pod Autoscaler (VPA) automatically adjusts the CPU and memory requests and\nlimits of Pods based on observed usage. Unlike the HPA (which adds more replicas), the VPA\nscales a single Pod's resources — useful for workloads that cannot scale horizontally.\n\n**Key limitations to understand before adopting VPA in production:**\n- Applying a resource change requires evicting and restarting the Pod (in-place resizing\n  support via `InPlacePodVerticalScaling` is available as an alpha/beta feature gate —\n  check your Kubernetes version).\n- VPA and HPA must not target the same metric (e.g., both targeting CPU); only combine\n  them using custom or external metrics for HPA.\n- VPA recommendation mode (no automatic changes) is safe and useful for right-sizing.\n\n**Recommended approach:** Run VPA in `Off` or `Initial` mode first to collect\nrecommendations. Validate the suggested values. Only switch to `Auto` mode after\nconfirming there are no disruption concerns for the workload.\n",
+      "tags": [
+        "application-development",
+        "scaling",
+        "vpa"
+      ],
+      "references": [
+        {
+          "title": "Kubernetes Autoscaler — VPA",
+          "url": "https://github.com/kubernetes/autoscaler/tree/master/vertical-pod-autoscaler"
+        },
+        {
+          "title": "Kubernetes Docs — Vertical Pod Autoscaling",
+          "url": "https://kubernetes.io/docs/concepts/workloads/autoscaling/"
+        }
+      ],
+      "category": "cluster"
+    },
+    {
+      "id": "CLT-024",
+      "title": "Ensure Cluster Passes CIS Benchmark",
+      "description": "Check if your cluster complies with the Centre for Internet Security (CIS) benchmark for Kubernetes.\nYou can run tools like `kube-bench` to automate this process and report on misconfigurations. Note\nthat for managed clusters (like EKS, GKE, AKS), you won't be able to inspect the master nodes, but you\ncan still verify worker nodes.\n",
+      "tags": [
+        "configuration",
+        "security",
+        "cis"
+      ],
+      "references": [
+        {
+          "title": "CIS Kubernetes Benchmark",
+          "url": "https://www.cisecurity.org/benchmark/kubernetes/"
+        },
+        {
+          "title": "kube-bench — CIS Kubernetes Benchmark Tool",
+          "url": "https://github.com/aquasecurity/kube-bench"
+        }
+      ],
+      "category": "cluster"
+    },
+    {
+      "id": "CLT-025",
+      "title": "Restrict Access to Alpha or Beta Features",
+      "description": "Alpha and beta Kubernetes features are in active development and may have limitations or bugs that result in security\nvulnerabilities. Evaluate the trade-off of using these features. When in doubt, disable alpha/beta features you do not explicitly need.\n",
+      "tags": [
+        "configuration",
+        "security",
+        "stability"
+      ],
+      "references": [
+        {
+          "title": "Kubernetes Docs — Feature Gates",
+          "url": "https://kubernetes.io/docs/reference/command-line-tools-reference/feature-gates/"
+        },
+        {
+          "title": "NSA/CISA Kubernetes Hardening Guide",
+          "url": "https://media.defense.gov/2022/Aug/29/2003066362/-1/-1/0/CTR_KUBERNETES_HARDENING_GUIDANCE_1.2_20220829.PDF"
+        }
+      ],
+      "category": "cluster"
+    },
+    {
+      "id": "CLT-026",
+      "title": "Use OIDC for User Authentication",
+      "description": "Avoid static tokens or basic authentication for human users. Integrate OpenID Connect (OIDC) to allow single sign-on (SSO) \nfrom trusted identity providers (like Google Identity, AWS IAM, or traditional AD) to authenticate with the Kubernetes API.\n",
+      "tags": [
+        "configuration",
+        "authentication",
+        "security"
+      ],
+      "references": [
+        {
+          "title": "Kubernetes Docs — Authentication Strategies",
+          "url": "https://kubernetes.io/docs/reference/access-authn-authz/authentication/"
+        },
+        {
+          "title": "The New Stack — Kubernetes Single Sign-On",
+          "url": "https://thenewstack.io/kubernetes-single-sign-one-less-identity/"
+        },
+        {
+          "title": "Microsoft Threat Matrix — Using Cloud Credentials",
+          "url": "https://microsoft.github.io/Threat-Matrix-for-Kubernetes/techniques/Using%20Cloud%20Credentials/"
+        }
+      ],
+      "category": "cluster"
+    },
+    {
+      "id": "CLT-027",
+      "title": "Restrict ServiceAccount Tokens to Workloads",
+      "description": "ServiceAccount tokens are the preferred authentication strategy for applications and controllers running inside the cluster.\nDo not distribute them or use them for human end-users trying to interact with the Kubernetes cluster API (use OIDC instead).\n",
+      "tags": [
+        "configuration",
+        "authentication",
+        "rbac"
+      ],
+      "references": [
+        {
+          "title": "Kubernetes Docs — Configure Service Accounts",
+          "url": "https://kubernetes.io/docs/tasks/configure-pod-container/configure-service-account/"
+        },
+        {
+          "title": "CIS Kubernetes Benchmark 5.1.6",
+          "url": "https://workbench.cisecurity.org/benchmarks/16828"
+        }
+      ],
+      "category": "cluster"
+    },
+    {
+      "id": "CLT-028",
+      "title": "Collect Comprehensive Cluster Logs",
+      "description": "Gather logs across all functional levels of your cluster, including Nodes (kubelet, container runtime), Control Plane (API server,\nscheduler, controller manager), and Kubernetes API auditing. Ensure log entries capture essential metadata like application name,\nnamespace, Pod name, container name, and node.\n",
+      "tags": [
+        "configuration",
+        "logging",
+        "auditing"
+      ],
+      "references": [
+        {
+          "title": "Kubernetes Docs — Logging Architecture",
+          "url": "https://kubernetes.io/docs/concepts/cluster-administration/logging/"
+        },
+        {
+          "title": "NSA/CISA Kubernetes Hardening Guide",
+          "url": "https://media.defense.gov/2022/Aug/29/2003066362/-1/-1/0/CTR_KUBERNETES_HARDENING_GUIDANCE_1.2_20220829.PDF"
+        },
+        {
+          "title": "Microsoft Threat Matrix — Delete Kubernetes Events",
+          "url": "https://microsoft.github.io/Threat-Matrix-for-Kubernetes/techniques/Delete%20K8S%20events/"
+        },
+        {
+          "title": "Microsoft Threat Matrix — Clear Container Logs",
+          "url": "https://microsoft.github.io/Threat-Matrix-for-Kubernetes/techniques/Clear%20container%20logs/"
+        }
+      ],
+      "category": "cluster"
+    },
+    {
+      "id": "CLT-029",
+      "title": "Provision a Log Aggregation Tool",
+      "description": "Use a log aggregation tool (like the EFK stack, DataDog, Sumo Logic, Stackdriver, or AWS CloudWatch) to gather and process logs. \nLogs scattered across ephemeral nodes will be lost when those nodes are naturally recycled; centralizing them is crucial for visibility and debugging.\n",
+      "tags": [
+        "configuration",
+        "logging",
+        "observability"
+      ],
+      "references": [
+        {
+          "title": "Kubernetes Docs — Logging Architecture",
+          "url": "https://kubernetes.io/docs/concepts/cluster-administration/logging/"
+        },
+        {
+          "title": "Fluentd — Open Source Data Collector",
+          "url": "https://www.fluentd.org/"
+        },
+        {
+          "title": "Microsoft Threat Matrix — Delete Kubernetes Events",
+          "url": "https://microsoft.github.io/Threat-Matrix-for-Kubernetes/techniques/Delete%20K8S%20events/"
+        },
+        {
+          "title": "Microsoft Threat Matrix — Clear Container Logs",
+          "url": "https://microsoft.github.io/Threat-Matrix-for-Kubernetes/techniques/Clear%20container%20logs/"
+        }
+      ],
+      "category": "cluster"
+    },
+    {
+      "id": "CLT-030",
+      "title": "Enforce ResourceQuotas for Namespaces",
+      "description": "While LimitRanges ensure individual Pods have sensible sizes, they don't stop someone from deploying 20,000 Pods or ConfigMaps.\nApply a ResourceQuota to every namespace to limit the total amount of CPU, memory, storage, and API objects (like Pods) that can be consumed across the entire namespace.\n",
+      "tags": [
+        "governance",
+        "resource-management",
+        "limits"
+      ],
+      "references": [
+        {
+          "title": "Kubernetes Docs — Resource Quotas",
+          "url": "https://kubernetes.io/docs/concepts/policy/resource-quotas/"
+        },
+        {
+          "title": "CIS Kubernetes Benchmark 5.7.1",
+          "url": "https://workbench.cisecurity.org/benchmarks/16828"
+        },
+        {
+          "title": "Microsoft Threat Matrix — Denial of Service",
+          "url": "https://microsoft.github.io/Threat-Matrix-for-Kubernetes/techniques/Denial%20of%20service/"
+        }
+      ],
+      "category": "cluster"
+    },
+    {
+      "id": "CLT-031",
+      "title": "Enforce Pod Security Standards via Pod Security Admission",
+      "description": "Kubernetes provides Pod Security Standards (PSS) — three predefined security profiles\n(Privileged, Baseline, Restricted) — enforced at the namespace level by the built-in\nPod Security Admission (PSA) controller (available since Kubernetes 1.23, stable in 1.25).\n\n> Note: PodSecurityPolicy (PSP) was removed in Kubernetes 1.25. If you are running an\n> older cluster still using PSP, migrating to PSA or a policy engine (Kyverno, OPA\n> Gatekeeper) is required before upgrading.\n\n**Profiles:**\n- `Privileged` — no restrictions (only for system/infrastructure namespaces)\n- `Baseline` — prevents the most egregious misconfigurations (no privileged containers, no host namespaces)\n- `Restricted` — follows current pod hardening best practices (non-root, read-only FS, seccomp)\n\n**What to check:** Verify namespaces have a PSA label:\n```\nkubectl get namespaces -o json | jq '.items[].metadata.labels | select(.\"pod-security.kubernetes.io/enforce\" != null)'\n```\n\n**Remediation:** Label production namespaces with `pod-security.kubernetes.io/enforce: restricted`\n(or `baseline` at minimum). Use `warn` and `audit` modes first to surface violations before\nswitching to `enforce`. Supplement with Kyverno or OPA Gatekeeper for fine-grained policies.\n",
+      "tags": [
+        "governance",
+        "security",
+        "admission-control",
+        "pod-security"
+      ],
+      "references": [
+        {
+          "title": "Kubernetes Docs — Pod Security Admission",
+          "url": "https://kubernetes.io/docs/concepts/security/pod-security-admission/"
+        },
+        {
+          "title": "Kubernetes Docs — Pod Security Standards",
+          "url": "https://kubernetes.io/docs/concepts/security/pod-security-standards/"
+        },
+        {
+          "title": "CIS Kubernetes Benchmark 5.2",
+          "url": "https://workbench.cisecurity.org/benchmarks/16828"
+        },
+        {
+          "title": "Microsoft Threat Matrix — Privileged Container",
+          "url": "https://microsoft.github.io/Threat-Matrix-for-Kubernetes/techniques/Privileged%20container/"
+        }
+      ],
+      "category": "cluster"
+    },
+    {
+      "id": "CLT-032",
+      "title": "Enforce Principle of Least Privilege in RBAC Policies",
+      "description": "Grant the least permissions needed for an entity to function. While broader grants can give unnecessary API access \nand might seem easier to manage initially, they pose a significant security risk. Start with an empty Role and \nadd only the specific resources and verbs required for the ServiceAccount or User.\n",
+      "tags": [
+        "governance",
+        "rbac",
+        "security"
+      ],
+      "references": [
+        {
+          "title": "Kubernetes Docs — RBAC Authorization",
+          "url": "https://kubernetes.io/docs/reference/access-authn-authz/rbac/"
+        },
+        {
+          "title": "OWASP Kubernetes Top 10 — K03: Overly Permissive RBAC",
+          "url": "https://owasp.org/www-project-kubernetes-top-ten/"
+        },
+        {
+          "title": "Microsoft Threat Matrix — Exec into Container",
+          "url": "https://microsoft.github.io/Threat-Matrix-for-Kubernetes/techniques/Exec%20into%20container/"
+        },
+        {
+          "title": "Microsoft Threat Matrix — Cluster-Admin Binding",
+          "url": "https://microsoft.github.io/Threat-Matrix-for-Kubernetes/techniques/Cluster-admin%20binding/"
+        }
+      ],
+      "category": "cluster"
+    },
+    {
+      "id": "CLT-033",
+      "title": "Create Granular, Non-Shared RBAC Roles",
+      "description": "Avoid sharing generic, broad policies across diverse workloads. Define custom, fine-grained roles based on distinct \njob functions or requirements (e.g., ReadOnly, PowerUser, Operator, Controller). This contains breaches by ensuring \na compromised service account cannot affect unrelated namespaces or resource types.\n",
+      "tags": [
+        "governance",
+        "rbac",
+        "architecture"
+      ],
+      "references": [
+        {
+          "title": "Kubernetes Docs — RBAC Authorization",
+          "url": "https://kubernetes.io/docs/reference/access-authn-authz/rbac/"
+        },
+        {
+          "title": "Zalando — Kubernetes RBAC Roles",
+          "url": "https://kubernetes-on-aws.readthedocs.io/en/latest/dev-guide/arch/access-control/adr-004-roles-and-service-accounts.html"
+        },
+        {
+          "title": "Microsoft Threat Matrix — Cluster-Admin Binding",
+          "url": "https://microsoft.github.io/Threat-Matrix-for-Kubernetes/techniques/Cluster-admin%20binding/"
+        }
+      ],
+      "category": "cluster"
+    },
+    {
+      "id": "CLT-034",
+      "title": "Enable Network Policies via CNI Plugin",
+      "description": "By default, Kubernetes allows open communication between all Pods and nodes in the cluster. To enforce network \nsegmentation, ensure you've installed a Container Network Interface (CNI) plugin (like Calico or Cilium) that \nactually supports Network Policies so your firewall rules can be honored.\n",
+      "tags": [
+        "governance",
+        "networking",
+        "security"
+      ],
+      "references": [
+        {
+          "title": "Kubernetes Docs — Network Policies",
+          "url": "https://kubernetes.io/docs/concepts/services-networking/network-policies/"
+        },
+        {
+          "title": "Kubernetes Docs — Cluster Networking",
+          "url": "https://kubernetes.io/docs/concepts/cluster-administration/networking/"
+        },
+        {
+          "title": "Microsoft Threat Matrix — Network Mapping",
+          "url": "https://microsoft.github.io/Threat-Matrix-for-Kubernetes/techniques/Network%20mapping/"
+        },
+        {
+          "title": "Microsoft Threat Matrix — Cluster Internal Networking",
+          "url": "https://microsoft.github.io/Threat-Matrix-for-Kubernetes/techniques/Cluster%20internal%20networking/"
+        }
+      ],
+      "category": "cluster"
+    },
+    {
+      "id": "CLT-035",
+      "title": "Restrict kubectl exec on Production Pods",
+      "description": "The `kubectl exec` command allows running arbitrary processes inside a running container.\nIn production, this capability should be restricted to break-glass scenarios only. An\nattacker or compromised operator account with exec permissions can run malicious commands,\nexfiltrate data, or install backdoors without deploying new workloads.\n\n**What to check:** Audit which RBAC users and service accounts have `pods/exec` permissions:\n\n```\nkubectl auth can-i create pods/exec --all-namespaces --as <user-or-sa>\nkubectl get clusterrolebindings,rolebindings -A -o json | \\\n  jq '.items[] | select(.rules[]?.resources[]? == \"pods/exec\") | .metadata.name'\n```\n\n**Remediation:** Remove `pods/exec` from all non-operator roles. If exec is needed for\ndebugging, grant it via a time-limited RoleBinding (e.g., via JIT access tooling) rather\nthan a permanent grant. Use an admission controller (OPA Gatekeeper / Kyverno) to restrict\nexec to specific namespaces or labels.\n",
+      "tags": [
+        "rbac",
+        "security",
+        "least-privilege",
+        "operations"
+      ],
+      "references": [
+        {
+          "title": "Kubernetes Docs — RBAC Authorization",
+          "url": "https://kubernetes.io/docs/reference/access-authn-authz/rbac/"
+        },
+        {
+          "title": "Microsoft Threat Matrix — Exec into Container",
+          "url": "https://microsoft.github.io/Threat-Matrix-for-Kubernetes/techniques/Exec%20into%20container/"
+        },
+        {
+          "title": "NSA/CISA Kubernetes Hardening Guide",
+          "url": "https://media.defense.gov/2022/Aug/29/2003066362/-1/-1/0/CTR_KUBERNETES_HARDENING_GUIDANCE_1.2_20220829.PDF"
+        }
+      ],
+      "category": "cluster"
+    },
+    {
+      "id": "CLT-036",
+      "title": "Audit and Restrict CronJob Creation Permissions",
+      "description": "Kubernetes CronJobs can be used by attackers with sufficient RBAC permissions to schedule\npersistent execution of malicious code inside the cluster. Unlike a standalone pod,\na CronJob survives restarts and continues executing on a schedule, making it an ideal\npersistence mechanism.\n\n**What to check:** Identify which accounts can create CronJobs or Jobs:\n\n```\nkubectl auth can-i create cronjobs --all-namespaces --as <user-or-sa>\nkubectl get clusterrolebindings,rolebindings -A -o json | \\\n  jq '.items[] | select(.rules[]?.resources[]? | test(\"cronjobs|jobs\")) | .metadata.name'\n```\n\nAlso review existing CronJobs for suspicious or unexpected entries:\n```\nkubectl get cronjobs -A\n```\n\n**Remediation:** Restrict `create`, `patch`, and `update` permissions on `cronjobs`\nresources to only CI/CD service accounts that legitimately manage them. Alert on\nunexpected CronJob creation via audit log analysis.\n",
+      "tags": [
+        "rbac",
+        "persistence",
+        "security",
+        "audit"
+      ],
+      "references": [
+        {
+          "title": "Kubernetes Docs — CronJobs",
+          "url": "https://kubernetes.io/docs/concepts/workloads/controllers/cron-jobs/"
+        },
+        {
+          "title": "Microsoft Threat Matrix — Kubernetes CronJob",
+          "url": "https://microsoft.github.io/Threat-Matrix-for-Kubernetes/techniques/Kubernetes%20CronJob/"
+        },
+        {
+          "title": "OWASP Kubernetes Top 10 — K03: Overly Permissive RBAC",
+          "url": "https://owasp.org/www-project-kubernetes-top-ten/"
+        }
+      ],
+      "category": "cluster"
+    },
+    {
+      "id": "CLT-037",
+      "title": "Protect Static Pod Manifests Directory",
+      "description": "Static pods are managed directly by kubelet on each node by reading YAML manifests from a\nlocal directory (typically `/etc/kubernetes/manifests/`). Attackers who gain write access\nto this directory can create or modify pods that run outside the Kubernetes API server's\ncontrol — bypassing admission controllers, RBAC, and audit logging.\n\nKubelet also supports a `--manifest-url` flag that loads manifests from a remote URL.\nBoth vectors must be locked down.\n\n**What to check:**\n- Verify `/etc/kubernetes/manifests/` is only writable by root:\n  ```\n  stat -c \"%a %U\" /etc/kubernetes/manifests\n  ```\n- Verify kubelet is not started with `--manifest-url`:\n  ```\n  ps aux | grep kubelet | grep manifest-url\n  ```\n\n**Remediation:** Set directory permissions to `700` owned by `root`. Disable `--manifest-url`\non all kubelets if not in use. Monitor the directory for unexpected file changes using a\nfile integrity monitoring (FIM) tool.\n",
+      "tags": [
+        "node-security",
+        "hardening",
+        "persistence",
+        "kubelet"
+      ],
+      "references": [
+        {
+          "title": "Kubernetes Docs — Static Pods",
+          "url": "https://kubernetes.io/docs/tasks/configure-pod-container/static-pod/"
+        },
+        {
+          "title": "Microsoft Threat Matrix — Static Pods",
+          "url": "https://microsoft.github.io/Threat-Matrix-for-Kubernetes/techniques/Static%20Pods/"
+        },
+        {
+          "title": "CIS Kubernetes Benchmark 4.1.9",
+          "url": "https://workbench.cisecurity.org/benchmarks/16828"
+        }
+      ],
+      "category": "cluster"
+    },
+    {
+      "id": "CLT-038",
+      "title": "Detect and Alert on Kubernetes Event Deletion",
+      "description": "Kubernetes events record state changes and failures across cluster resources (pod scheduling,\nimage pulls, OOMKills, etc.). Attackers who have gained cluster access may delete these\nevents to erase evidence of their activity — for example via `kubectl delete events --all`.\n\nAPI server audit logs record event deletion and must be routed to tamper-resistant external\nstorage so the audit trail cannot be erased alongside the events themselves.\n\n**What to check:** Verify audit logging is enabled and captures event delete actions:\n```\nps aux | grep kube-apiserver | grep audit-policy-file\n```\n\nConfirm the audit policy captures `delete` on `events` at `RequestResponse` level.\nVerify logs are shipped to external storage (not only local disk).\n\n**Remediation:** Update the audit policy to capture `delete` on resource `events` in\nthe `\"\"` and `events.k8s.io` API groups. Ship audit logs to an immutable sink (S3,\nCloudWatch, Splunk). Alert on `kubectl delete events` patterns in the SIEM.\n",
+      "tags": [
+        "audit",
+        "logging",
+        "defense-evasion",
+        "monitoring"
+      ],
+      "references": [
+        {
+          "title": "Kubernetes Docs — Auditing",
+          "url": "https://kubernetes.io/docs/tasks/debug/debug-cluster/audit/"
+        },
+        {
+          "title": "Microsoft Threat Matrix — Delete Kubernetes Events",
+          "url": "https://microsoft.github.io/Threat-Matrix-for-Kubernetes/techniques/Delete%20K8S%20events/"
+        },
+        {
+          "title": "SOC 2 CC7.2 — Security Event Monitoring",
+          "url": "https://www.aicpa.org/resources/article/soc-2-trust-service-principles"
+        }
+      ],
+      "category": "cluster"
+    },
+    {
+      "id": "CLT-039",
+      "title": "Restrict CoreDNS Configuration Write Access",
+      "description": "CoreDNS is the cluster's built-in DNS server. Its configuration is stored in the `coredns`\nConfigMap in the `kube-system` namespace. An attacker with write access to this ConfigMap\ncan inject malicious DNS rewrites, redirecting cluster-internal traffic to adversary-controlled\nendpoints — a technique known as CoreDNS poisoning.\n\n**What to check:** Verify who can patch or update the CoreDNS ConfigMap:\n```\nkubectl auth can-i update configmap/coredns -n kube-system --as <user-or-sa>\n```\n\nReview all RoleBindings and ClusterRoleBindings that grant `update`/`patch`/`create`\non ConfigMaps in `kube-system`.\n\n**Remediation:** Remove ConfigMap write permissions from non-infrastructure service accounts.\nUse a Kyverno or OPA policy to protect the `coredns` ConfigMap specifically. Monitor the\nConfigMap for unexpected changes via audit logging or GitOps drift detection.\n",
+      "tags": [
+        "dns",
+        "network",
+        "lateral-movement",
+        "hardening"
+      ],
+      "references": [
+        {
+          "title": "Kubernetes Docs — DNS for Services and Pods",
+          "url": "https://kubernetes.io/docs/concepts/services-networking/dns-pod-service/"
+        },
+        {
+          "title": "Microsoft Threat Matrix — CoreDNS Poisoning",
+          "url": "https://microsoft.github.io/Threat-Matrix-for-Kubernetes/techniques/CoreDNS%20poisoning/"
+        },
+        {
+          "title": "CIS Kubernetes Benchmark 5.1.3",
+          "url": "https://workbench.cisecurity.org/benchmarks/16828"
+        }
+      ],
+      "category": "cluster"
+    },
+    {
+      "id": "CLT-040",
+      "title": "Use a CNI Plugin That Prevents ARP Spoofing",
+      "description": "Kubernetes' default networking (kubenet) relies on ARP for pod-to-pod communication and is\nsusceptible to ARP poisoning/IP spoofing attacks. A compromised pod can broadcast fake ARP\nreplies to intercept or impersonate traffic from other pods on the same node.\n\nCNI plugins that use eBPF or enforce strict ARP behaviour (e.g., Cilium, Calico with eBPF\ndataplane) eliminate this attack vector at the network level.\n\n**What to check:** Identify which CNI plugin is installed:\n```\nkubectl get pods -n kube-system -o wide | grep -E 'calico|cilium|flannel|weave'\nls /etc/cni/net.d/\n```\n\nFlannel alone does **not** prevent ARP poisoning. Calico in standard mode uses BGP routing\nand is not susceptible; Cilium in eBPF mode fully prevents it.\n\n**Remediation:** If using a CNI prone to ARP poisoning (e.g., flannel), plan a migration\nto Cilium or Calico. If staying on Calico, enable WireGuard encryption for in-cluster\ntraffic to prevent interception even if ARP is spoofed.\n",
+      "tags": [
+        "network",
+        "cni",
+        "lateral-movement",
+        "hardening"
+      ],
+      "references": [
+        {
+          "title": "Cilium Docs — eBPF-based Networking",
+          "url": "https://docs.cilium.io/en/latest/overview/intro/"
+        },
+        {
+          "title": "Microsoft Threat Matrix — ARP Poisoning and IP Spoofing",
+          "url": "https://microsoft.github.io/Threat-Matrix-for-Kubernetes/techniques/ARP%20poisoning%20and%20IP%20spoofing/"
+        },
+        {
+          "title": "Calico Docs — WireGuard Encryption",
+          "url": "https://docs.tigera.io/calico/latest/network-policy/encrypt-cluster-pod-traffic"
+        }
+      ],
+      "category": "cluster"
+    },
+    {
+      "id": "CLT-041",
+      "title": "Restrict Access to Kubernetes Dashboard and Sensitive Interfaces",
+      "description": "Management UIs such as the Kubernetes Dashboard, Argo Workflows, Kubeflow, and Weave Scope\nprovide broad cluster visibility and control. If exposed to the internet or accessible inside\nthe cluster without strong authentication, they become high-value attack targets. Attackers\nwho gain access can enumerate resources, create workloads, and exfiltrate data using the\ndashboard's service account permissions.\n\n**What to check:**\n- Is the Kubernetes Dashboard reachable from the internet?\n  ```\n  kubectl get svc -n kubernetes-dashboard\n  ```\n- Does the dashboard's service account have overly broad ClusterRole bindings?\n  ```\n  kubectl get clusterrolebinding kubernetes-dashboard -o yaml 2>/dev/null\n  ```\n- Are management interfaces accessible within the cluster without authentication?\n\n**Remediation:** Never expose management UIs via a public LoadBalancer or NodePort.\nRequire authentication (OIDC, SSO) for all such interfaces. Apply least-privilege RBAC\nto dashboard service accounts. Prefer `kubectl port-forward` for operator access.\n",
+      "tags": [
+        "network",
+        "access-control",
+        "hardening",
+        "discovery"
+      ],
+      "references": [
+        {
+          "title": "Kubernetes Docs — Web UI (Dashboard)",
+          "url": "https://kubernetes.io/docs/tasks/access-application-cluster/web-ui-dashboard/"
+        },
+        {
+          "title": "Microsoft Threat Matrix — Exposed Sensitive Interfaces",
+          "url": "https://microsoft.github.io/Threat-Matrix-for-Kubernetes/techniques/Exposed%20sensitive%20interfaces/"
+        },
+        {
+          "title": "NSA/CISA Kubernetes Hardening Guide",
+          "url": "https://media.defense.gov/2022/Aug/29/2003066362/-1/-1/0/CTR_KUBERNETES_HARDENING_GUIDANCE_1.2_20220829.PDF"
+        }
+      ],
+      "category": "cluster"
+    },
+    {
+      "id": "CLT-042",
+      "title": "Restrict Creation of ClusterRoleBindings to cluster-admin",
+      "description": "The built-in `cluster-admin` ClusterRole grants unrestricted access to every resource and\noperation in the cluster. An attacker or compromised account with permission to create\n`ClusterRoleBindings` can escalate their own privileges by binding any identity to\n`cluster-admin`, effectively taking over the cluster.\n\n**What to check:** Identify who can create or modify ClusterRoleBindings:\n```\nkubectl auth can-i create clusterrolebindings --all-namespaces --as <user-or-sa>\nkubectl get clusterrolebindings -o json | \\\n  jq '.items[] | select(.roleRef.name == \"cluster-admin\") | .subjects'\n```\n\n**Remediation:** Restrict `create`, `update`, `patch`, and `delete` on `clusterrolebindings`\nto a very small set of break-glass admin accounts only. Regularly audit and trim the list\nof cluster-admin bindings. Alert via audit logs whenever a new ClusterRoleBinding is created\ntargeting `cluster-admin`.\n",
+      "tags": [
+        "rbac",
+        "privilege-escalation",
+        "security",
+        "audit"
+      ],
+      "references": [
+        {
+          "title": "Kubernetes Docs — RBAC Authorization",
+          "url": "https://kubernetes.io/docs/reference/access-authn-authz/rbac/"
+        },
+        {
+          "title": "Microsoft Threat Matrix — Cluster-Admin Binding",
+          "url": "https://microsoft.github.io/Threat-Matrix-for-Kubernetes/techniques/Cluster-admin%20binding/"
+        },
+        {
+          "title": "CIS Kubernetes Benchmark 5.1.1",
+          "url": "https://workbench.cisecurity.org/benchmarks/16828"
+        }
+      ],
+      "category": "cluster"
+    },
+    {
+      "id": "CLT-043",
+      "title": "Restrict Kubeconfig File Permissions and Distribution",
+      "description": "The kubeconfig file contains cluster endpoint URLs and credentials (certificates, tokens)\nthat grant API access. If an attacker obtains a kubeconfig file from a compromised developer\nmachine, CI/CD system, or cloud storage, they can gain access to the cluster from outside\nthe network perimeter without any additional authentication.\n\n**What to check:**\n- Is the kubeconfig file stored on shared or poorly secured systems?\n- Are kubeconfig files committed to version control?\n  ```\n  git log --all --full-history -- \"**kubeconfig*\" \"**kube/config*\"\n  ```\n- Are CI/CD secrets containing kubeconfig rotated regularly?\n- Do kubeconfig files contain cluster-admin level credentials?\n\n**Remediation:** Store kubeconfig files only on trusted operator workstations with OS-level\nencryption. Use short-lived credentials (OIDC tokens, `aws eks get-token`) rather than\nlong-lived certs. Rotate kubeconfig credentials on a schedule. Scan CI/CD secrets for\nstale or over-privileged kubeconfig entries.\n",
+      "tags": [
+        "authentication",
+        "access-control",
+        "initial-access",
+        "hardening"
+      ],
+      "references": [
+        {
+          "title": "Kubernetes Docs — Organizing Cluster Access Using kubeconfig",
+          "url": "https://kubernetes.io/docs/concepts/configuration/organize-cluster-access-kubeconfig/"
+        },
+        {
+          "title": "Microsoft Threat Matrix — Kubeconfig File",
+          "url": "https://microsoft.github.io/Threat-Matrix-for-Kubernetes/techniques/Kubeconfig%20file/"
+        },
+        {
+          "title": "NSA/CISA Kubernetes Hardening Guide",
+          "url": "https://media.defense.gov/2022/Aug/29/2003066362/-1/-1/0/CTR_KUBERNETES_HARDENING_GUIDANCE_1.2_20220829.PDF"
+        }
+      ],
+      "category": "cluster"
+    },
+    {
+      "id": "CLT-044",
+      "title": "Audit Secret Access and Remove Unused Secrets",
+      "description": "Kubernetes Secrets store sensitive data such as passwords, API keys, and TLS certificates.\nAttackers with access to a pod's service account or direct etcd access can list and read\nSecrets, exposing credentials that enable lateral movement and privilege escalation.\n\n**What to check:**\n- Audit who can list or get Secrets cluster-wide:\n  ```\n  kubectl auth can-i list secrets --all-namespaces --as <user-or-sa>\n  kubectl get clusterrolebindings,rolebindings -A -o json | \\\n    jq '.items[] | select(.rules[]?.resources[]? == \"secrets\") | .metadata.name'\n  ```\n- List all Secrets and identify unused ones:\n  ```\n  kubectl get secrets -A\n  ```\n\n**Remediation:** Restrict `list` and `get` on `secrets` to only the service accounts\nthat require them. Remove all orphaned secrets (not mounted by any pod or volume).\nPrefer cloud-native secret managers (AWS Secrets Manager, GCP Secret Manager, Azure Key\nVault) over Kubernetes Secrets for high-value credentials. Rotate leaked secrets immediately.\n",
+      "tags": [
+        "secrets",
+        "rbac",
+        "credential-access",
+        "audit"
+      ],
+      "references": [
+        {
+          "title": "Kubernetes Docs — Secrets",
+          "url": "https://kubernetes.io/docs/concepts/configuration/secret/"
+        },
+        {
+          "title": "Microsoft Threat Matrix — List Kubernetes Secrets",
+          "url": "https://microsoft.github.io/Threat-Matrix-for-Kubernetes/techniques/List%20K8S%20secrets/"
+        },
+        {
+          "title": "CIS Kubernetes Benchmark 5.4",
+          "url": "https://workbench.cisecurity.org/benchmarks/16828"
+        }
+      ],
+      "category": "cluster"
+    },
+    {
+      "id": "CLT-045",
+      "title": "Enforce Pod Naming Conventions to Detect Masquerading",
+      "description": "Attackers may name backdoor pods to resemble legitimate system pods — for example, naming\na malicious pod `coredns-a1b2c3` to blend in with CoreDNS pods, or deploying to `kube-system`\nto appear as infrastructure. This masquerading technique makes detection harder in manual\ninspection and noisy dashboards.\n\n**What to check:**\n- Are all pods in `kube-system` and other system namespaces created by known controllers?\n  ```\n  kubectl get pods -n kube-system -o json | \\\n    jq '.items[] | select(.metadata.ownerReferences == null) | .metadata.name'\n  ```\n- Do any pods have suspicious names mimicking system components in non-system namespaces?\n\n**Remediation:** Use admission policies (Kyverno/OPA) to enforce naming conventions and\nlabel requirements for all pods. Restrict pod creation in `kube-system` to cluster\ninfrastructure service accounts only. Alert on orphaned pods (no ownerReference) in system\nnamespaces. Use GitOps drift detection to catch unmanaged resources.\n",
+      "tags": [
+        "defense-evasion",
+        "monitoring",
+        "governance",
+        "admission-control"
+      ],
+      "references": [
+        {
+          "title": "Kubernetes Docs — Namespaces",
+          "url": "https://kubernetes.io/docs/concepts/overview/working-with-objects/namespaces/"
+        },
+        {
+          "title": "Microsoft Threat Matrix — Pod or Container Name Similarity",
+          "url": "https://microsoft.github.io/Threat-Matrix-for-Kubernetes/techniques/Pod%20or%20container%20name%20similarily/"
+        },
+        {
+          "title": "Kyverno — Policy Library",
+          "url": "https://kyverno.io/policies/"
+        }
+      ],
+      "category": "cluster"
+    },
+    {
+      "id": "CLT-046",
+      "title": "Implement Data Backup Strategy for Persistent Volumes",
+      "description": "Attackers with sufficient permissions may destroy persistent data by deleting PersistentVolumes,\nPersistentVolumeClaims, or the underlying cloud storage. Without a tested backup strategy,\ndata destruction results in permanent data loss and severe availability incidents.\n\n**What to check:**\n- Are backups taken for each PersistentVolumeClaim used by stateful workloads?\n- Are backups stored in a separate account, region, or storage tier from the cluster?\n- Is the restore path tested regularly?\n  ```\n  kubectl get pvc -A\n  kubectl get volumesnapshots -A 2>/dev/null\n  ```\n\n**Remediation:** Use cloud-native volume snapshot APIs (AWS EBS Snapshots, GCP Persistent\nDisk Snapshots, Azure Disk Snapshots) scheduled via Kubernetes VolumeSnapshot objects or\ntools like Velero. Store snapshots in a separate, restricted account. Test restore procedures\nat least quarterly. Apply RBAC to restrict who can delete PVCs and PVs.\n",
+      "tags": [
+        "backup",
+        "data-protection",
+        "disaster-recovery",
+        "stateful"
+      ],
+      "references": [
+        {
+          "title": "Kubernetes Docs — Persistent Volumes",
+          "url": "https://kubernetes.io/docs/concepts/storage/persistent-volumes/"
+        },
+        {
+          "title": "Microsoft Threat Matrix — Data Destruction",
+          "url": "https://microsoft.github.io/Threat-Matrix-for-Kubernetes/techniques/Data%20destruction/"
+        },
+        {
+          "title": "Velero — Backup and Restore for Kubernetes",
+          "url": "https://velero.io/docs/"
+        }
+      ],
+      "category": "cluster"
+    },
+    {
+      "id": "CNT-001",
+      "title": "Enforce Pod Security Standards at Namespace Level",
+      "description": "Pod Security Standards (PSS) define three profiles — Privileged, Baseline, and Restricted —\nthat control which security-sensitive fields pods may set. Namespaces must be labelled to\nenforce at least the Baseline profile; production namespaces should target Restricted.\n\n**What to check:**\n\n```\nkubectl get namespaces -o json | \\\n  jq '.items[].metadata.labels | with_entries(select(.key | startswith(\"pod-security.kubernetes.io\")))'\n```\n\nEvery non-system namespace should have `pod-security.kubernetes.io/enforce` set to\n`baseline` or `restricted`.\n\n**Remediation:** Add PSS labels to all namespaces. Use `warn` and `audit` modes first to\ndetect violations before switching to `enforce`. Consider OPA Gatekeeper or Kyverno for\nmore fine-grained policies.\n",
+      "tags": [
+        "pod-security",
+        "admission-control",
+        "hardening"
+      ],
+      "references": [
+        {
+          "title": "Kubernetes Docs — Pod Security Standards",
+          "url": "https://kubernetes.io/docs/concepts/security/pod-security-standards/"
+        },
+        {
+          "title": "NSA/CISA Kubernetes Hardening Guide",
+          "url": "https://media.defense.gov/2022/Aug/29/2003066362/-1/-1/0/CTR_KUBERNETES_HARDENING_GUIDANCE_1.2_20220829.PDF"
+        },
+        {
+          "title": "PCI-DSS Requirement 2 — Apply Secure Configurations",
+          "url": "https://www.pcisecuritystandards.org/document_library/"
+        },
+        {
+          "title": "Microsoft Threat Matrix — Privileged Container",
+          "url": "https://microsoft.github.io/Threat-Matrix-for-Kubernetes/techniques/Privileged%20container/"
+        }
+      ],
+      "category": "container"
+    },
+    {
+      "id": "CNT-002",
+      "title": "Prohibit Privileged Containers",
+      "description": "A container running with `privileged: true` has unrestricted access to the host kernel and\ndevices. It can load kernel modules, modify host networking, and escape the container\nboundary entirely. No production workload should require privileged mode.\n\n**What to check:**\n\n```\nkubectl get pods -A -o json | \\\n  jq '.items[] | select(.spec.containers[].securityContext.privileged == true) | .metadata.name'\n```\n\n**Remediation:** Remove `privileged: true` from all container security contexts. If a\nworkload legitimately needs elevated capabilities, grant only the specific Linux capabilities\nrequired via `capabilities.add` rather than full privileged mode. Block this with a PSS\nBaseline/Restricted label or a Kyverno policy.\n",
+      "tags": [
+        "pod-security",
+        "privilege-escalation",
+        "container-runtime"
+      ],
+      "references": [
+        {
+          "title": "CIS Kubernetes Benchmark 5.2.1",
+          "url": "https://workbench.cisecurity.org/benchmarks/16828"
+        },
+        {
+          "title": "SOC 2 CC6.1 — Logical Access Controls",
+          "url": "https://www.aicpa.org/resources/article/soc-2-trust-service-principles"
+        },
+        {
+          "title": "OWASP Kubernetes Top 10 — K01: Insecure Workload Configurations",
+          "url": "https://owasp.org/www-project-kubernetes-top-ten/"
+        },
+        {
+          "title": "Microsoft Threat Matrix — Privileged Container",
+          "url": "https://microsoft.github.io/Threat-Matrix-for-Kubernetes/techniques/Privileged%20container/"
+        }
+      ],
+      "category": "container"
+    },
+    {
+      "id": "CNT-003",
+      "title": "Run Containers as Non-Root",
+      "description": "Containers running as UID 0 (root) can exploit vulnerabilities to gain root access on the\nhost node. Setting `runAsNonRoot: true` ensures the container's process runs as an\nunprivileged user, limiting blast radius if the container is compromised.\n\n**What to check:**\n\n```\nkubectl get pods -A -o json | \\\n  jq '.items[] | select(\n    (.spec.securityContext.runAsNonRoot != true) and\n    (.spec.containers[].securityContext.runAsNonRoot != true)\n  ) | .metadata.name'\n```\n\n**Remediation:** Add `securityContext.runAsNonRoot: true` and `securityContext.runAsUser: <non-zero UID>`\nto pod and container specs. Update base images to create and use a non-root user via\n`USER <uid>` in the Dockerfile.\n",
+      "tags": [
+        "pod-security",
+        "least-privilege",
+        "container-runtime"
+      ],
+      "references": [
+        {
+          "title": "CIS Kubernetes Benchmark 5.2.7",
+          "url": "https://workbench.cisecurity.org/benchmarks/16828"
+        },
+        {
+          "title": "Kubernetes Docs — Security Context",
+          "url": "https://kubernetes.io/docs/tasks/configure-pod-container/security-context/"
+        },
+        {
+          "title": "NSA/CISA Kubernetes Hardening Guide",
+          "url": "https://media.defense.gov/2022/Aug/29/2003066362/-1/-1/0/CTR_KUBERNETES_HARDENING_GUIDANCE_1.2_20220829.PDF"
+        }
+      ],
+      "category": "container"
+    },
+    {
+      "id": "CNT-004",
+      "title": "Disable Privilege Escalation",
+      "description": "The `allowPrivilegeEscalation` flag controls whether a process can gain more privileges\nthan its parent. Even when a container starts as non-root, a vulnerability in the binary\ncould trigger a setuid/setgid elevation if this flag is not explicitly disabled.\n\n**What to check:**\n\n```\nkubectl get pods -A -o json | \\\n  jq '.items[] | select(\n    .spec.containers[].securityContext.allowPrivilegeEscalation != false\n  ) | .metadata.name'\n```\n\n**Remediation:** Explicitly set `allowPrivilegeEscalation: false` in every container's\n`securityContext`. This is required by the PSS Restricted profile and can be enforced\nwith a Kyverno ClusterPolicy or OPA constraint.\n",
+      "tags": [
+        "pod-security",
+        "privilege-escalation",
+        "hardening"
+      ],
+      "references": [
+        {
+          "title": "OWASP Kubernetes Top 10 — K01: Insecure Workload Configurations",
+          "url": "https://owasp.org/www-project-kubernetes-top-ten/"
+        },
+        {
+          "title": "CIS Kubernetes Benchmark 5.2.5",
+          "url": "https://workbench.cisecurity.org/benchmarks/16828"
+        },
+        {
+          "title": "Kubernetes Docs — Security Context",
+          "url": "https://kubernetes.io/docs/tasks/configure-pod-container/security-context/"
+        }
+      ],
+      "category": "container"
+    },
+    {
+      "id": "CNT-005",
+      "title": "Drop All Linux Capabilities",
+      "description": "Linux capabilities are fine-grained subsets of root privileges. Containers inherit a\ndefault set that includes dangerous capabilities like `NET_RAW`, `SYS_CHROOT`, and others.\nDropping all capabilities and adding back only what is strictly needed reduces the blast\nradius of a container compromise.\n\n**What to check:**\n\n```\nkubectl get pods -A -o json | \\\n  jq '.items[] | select(\n    .spec.containers[].securityContext.capabilities.drop | index(\"ALL\") | not\n  ) | .metadata.name'\n```\n\n**Remediation:** Add the following to every container's `securityContext`:\n\n```yaml\ncapabilities:\n  drop: [\"ALL\"]\n  add: []   # only add specific caps if truly required, e.g. NET_BIND_SERVICE\n```\n",
+      "tags": [
+        "pod-security",
+        "linux-capabilities",
+        "hardening"
+      ],
+      "references": [
+        {
+          "title": "CIS Kubernetes Benchmark 5.2.10",
+          "url": "https://workbench.cisecurity.org/benchmarks/16828"
+        },
+        {
+          "title": "Kubernetes Docs — Capabilities",
+          "url": "https://kubernetes.io/docs/tasks/configure-pod-container/security-context/#set-capabilities-for-a-container"
+        },
+        {
+          "title": "NSA/CISA Kubernetes Hardening Guide",
+          "url": "https://media.defense.gov/2022/Aug/29/2003066362/-1/-1/0/CTR_KUBERNETES_HARDENING_GUIDANCE_1.2_20220829.PDF"
+        }
+      ],
+      "category": "container"
+    },
+    {
+      "id": "CNT-006",
+      "title": "Apply a Seccomp Profile to All Containers",
+      "description": "Seccomp (Secure Computing Mode) filters the system calls a container can make to the\nLinux kernel. Without a seccomp profile, a compromised container can invoke dangerous\nsyscalls (e.g., `ptrace`, `mount`, `keyctl`) that may lead to container escape.\n\n**What to check:**\n\n```\nkubectl get pods -A -o json | \\\n  jq '.items[] | select(\n    .spec.securityContext.seccompProfile.type == null and\n    .spec.containers[].securityContext.seccompProfile.type == null\n  ) | .metadata.name'\n```\n\n**Remediation:** Set `seccompProfile.type: RuntimeDefault` (or `Localhost` with a custom\nprofile) at the pod `securityContext` level. The RuntimeDefault profile is safe for\nvirtually all workloads and is required by PSS Restricted.\n\n```yaml\nsecurityContext:\n  seccompProfile:\n    type: RuntimeDefault\n```\n",
+      "tags": [
+        "pod-security",
+        "seccomp",
+        "kernel-hardening",
+        "linux"
+      ],
+      "references": [
+        {
+          "title": "CIS Kubernetes Benchmark 5.7.2",
+          "url": "https://workbench.cisecurity.org/benchmarks/16828"
+        },
+        {
+          "title": "Kubernetes Docs — Seccomp",
+          "url": "https://kubernetes.io/docs/tutorials/security/seccomp/"
+        },
+        {
+          "title": "NSA/CISA Kubernetes Hardening Guide",
+          "url": "https://media.defense.gov/2022/Aug/29/2003066362/-1/-1/0/CTR_KUBERNETES_HARDENING_GUIDANCE_1.2_20220829.PDF"
+        }
+      ],
+      "category": "container"
+    },
+    {
+      "id": "CNT-007",
+      "title": "Use a Read-Only Root Filesystem",
+      "description": "A writable root filesystem allows an attacker who gains code execution inside a container\nto write malicious scripts, modify binaries, or persist backdoors across restarts. Setting\n`readOnlyRootFilesystem: true` closes this vector.\n\n**What to check:**\n\n```\nkubectl get pods -A -o json | \\\n  jq '.items[] | select(\n    .spec.containers[].securityContext.readOnlyRootFilesystem != true\n  ) | .metadata.name'\n```\n\n**Remediation:** Add `readOnlyRootFilesystem: true` to every container's `securityContext`.\nMount `emptyDir` volumes for paths that legitimately need write access (e.g., `/tmp`,\napplication cache directories). Update Dockerfiles to not write to the image root at runtime.\n",
+      "tags": [
+        "pod-security",
+        "filesystem",
+        "immutability",
+        "hardening"
+      ],
+      "references": [
+        {
+          "title": "PCI-DSS Requirement 5 — Protect All Systems Against Malware",
+          "url": "https://www.pcisecuritystandards.org/document_library/"
+        },
+        {
+          "title": "SOC 2 CC6.8 — Change Management",
+          "url": "https://www.aicpa.org/resources/article/soc-2-trust-service-principles"
+        },
+        {
+          "title": "CIS Kubernetes Benchmark 5.2.4",
+          "url": "https://workbench.cisecurity.org/benchmarks/16828"
+        },
+        {
+          "title": "Microsoft Threat Matrix — Writable hostPath Mount",
+          "url": "https://microsoft.github.io/Threat-Matrix-for-Kubernetes/techniques/Writable%20hostPath%20mount/"
+        }
+      ],
+      "category": "container"
+    },
+    {
+      "id": "CNT-008",
+      "title": "Set Memory Limits and Resource Requests on All Containers",
+      "description": "> **Memory limits** are strongly recommended for all containers.\n> **CPU limits** require careful consideration — see CNT-017 before enabling them.\n\nContainers without resource limits can consume unbounded CPU and memory, causing resource\nstarvation for co-located workloads (noisy-neighbour problem) or enabling denial-of-service\nthrough resource exhaustion. This directly violates the Availability criteria in SOC 2.\n\n**What to check:**\n\n```\nkubectl get pods -A -o json | \\\n  jq '.items[] | select(\n    .spec.containers[] | (.resources.limits.cpu == null or .resources.limits.memory == null)\n  ) | .metadata.name'\n```\n\n**Remediation:** Define `resources.requests` and `resources.limits` for CPU and memory on\nevery container. Use `LimitRange` objects to set namespace-wide defaults and maxima.\nUse VPA (Vertical Pod Autoscaler) in recommendation mode to size limits accurately.\n",
+      "tags": [
+        "resource-management",
+        "availability",
+        "dos-prevention"
+      ],
+      "references": [
+        {
+          "title": "SOC 2 Availability Principle",
+          "url": "https://www.aicpa.org/resources/article/soc-2-trust-service-principles"
+        },
+        {
+          "title": "Kubernetes Docs — Resource Management",
+          "url": "https://kubernetes.io/docs/concepts/configuration/manage-resources-containers/"
+        },
+        {
+          "title": "CIS Kubernetes Benchmark 5.2.3",
+          "url": "https://workbench.cisecurity.org/benchmarks/16828"
+        },
+        {
+          "title": "Microsoft Threat Matrix — Resource Hijacking",
+          "url": "https://microsoft.github.io/Threat-Matrix-for-Kubernetes/techniques/Resource%20hijacking/"
+        },
+        {
+          "title": "Microsoft Threat Matrix — Denial of Service",
+          "url": "https://microsoft.github.io/Threat-Matrix-for-Kubernetes/techniques/Denial%20of%20service/"
+        }
+      ],
+      "category": "container"
+    },
+    {
+      "id": "CNT-009",
+      "title": "Deploy Runtime Threat Detection",
+      "description": "Static controls (PSS, RBAC, NetworkPolicies) cannot detect threats that occur after a\ncontainer has started. Runtime security tools such as Falco (CNCF), Tetragon, or AWS\nGuardDuty for EKS monitor system calls and network activity in real time to detect\nanomalous behaviour — such as a shell being opened inside a production container or\nsensitive files being read.\n\n**What to check:** Verify a runtime security agent is deployed as a DaemonSet on all nodes:\n\n```\nkubectl get daemonset -A | grep -E 'falco|tetragon|guardduty'\n```\n\nConfirm alerting rules are active and integrated with a SIEM or alerting pipeline.\n\n**Remediation:** Deploy Falco via Helm. Configure rules to alert on: shells in containers,\nunexpected outbound connections, writes to sensitive paths, and privilege changes. Wire\nalerts to PagerDuty, Slack, or a SIEM.\n",
+      "tags": [
+        "runtime-security",
+        "monitoring",
+        "threat-detection",
+        "falco"
+      ],
+      "references": [
+        {
+          "title": "PCI-DSS Requirement 11.5 — Detect and Respond to Threats",
+          "url": "https://www.pcisecuritystandards.org/document_library/"
+        },
+        {
+          "title": "Falco — CNCF Runtime Security",
+          "url": "https://falco.org/docs/"
+        },
+        {
+          "title": "SOC 2 CC7.2 — Security Event Monitoring",
+          "url": "https://www.aicpa.org/resources/article/soc-2-trust-service-principles"
+        },
+        {
+          "title": "Microsoft Threat Matrix — Application Exploit (RCE)",
+          "url": "https://microsoft.github.io/Threat-Matrix-for-Kubernetes/techniques/Application%20Exploit%20(RCE)/"
+        },
+        {
+          "title": "Microsoft Threat Matrix — Bash or Cmd Inside Container",
+          "url": "https://microsoft.github.io/Threat-Matrix-for-Kubernetes/techniques/bash%20or%20cmd%20inside%20container/"
+        },
+        {
+          "title": "Microsoft Threat Matrix — New Container",
+          "url": "https://microsoft.github.io/Threat-Matrix-for-Kubernetes/techniques/New%20Container/"
+        }
+      ],
+      "category": "container"
+    },
+    {
+      "id": "CNT-010",
+      "title": "Configure Readiness Probes for All Containers",
+      "description": "Kubernetes routes traffic to a pod only when its readiness probe succeeds. Without a\nreadiness probe, the kubelet assumes the app is ready the moment the container starts —\nwhich means requests may be sent to a pod that hasn't finished initialising, causing errors.\n\n**Key rules:**\n- The readiness probe must not check downstream dependencies (databases, APIs). Only check\n  local state. A failing dependency should not make your pod unreachable — that spreads\n  the failure upstream. See also CNT-013.\n- Use a separate endpoint from the liveness probe (e.g., `/readyz`).\n- Set `initialDelaySeconds` and `failureThreshold` appropriate to your app's startup time.\n\n**What to check:**\n```\nkubectl get pods -A -o json | \\\n  jq '.items[] | select(.spec.containers[].readinessProbe == null) | .metadata.name'\n```\n",
+      "tags": [
+        "application-development",
+        "probes",
+        "reliability"
+      ],
+      "references": [
+        {
+          "title": "Kubernetes Docs — Configure Liveness, Readiness and Startup Probes",
+          "url": "https://kubernetes.io/docs/tasks/configure-pod-container/configure-liveness-readiness-startup-probes/"
+        },
+        {
+          "title": "Liveness Probes are Dangerous",
+          "url": "https://srcco.de/posts/kubernetes-liveness-probes-are-dangerous.html"
+        },
+        {
+          "title": "Blog — Readiness Probes Best Practices",
+          "url": "https://blog.colinbreck.com/kubernetes-liveness-and-readiness-probes-how-to-avoid-shooting-yourself-in-the-foot/"
+        }
+      ],
+      "category": "container"
+    },
+    {
+      "id": "CNT-011",
+      "title": "Let the Container Crash on Fatal Errors",
+      "description": "When an application reaches an unrecoverable error — an uncaught exception, a missing\ndependency, or a corrupted configuration — it should exit immediately and let the kubelet\nrestart the container. Do not suppress fatal errors, swallow panics, or use the liveness\nprobe to signal fatal conditions.\n\nKubernetes is designed around the assumption that containers are ephemeral and\nrestartable. An application that catches fatal errors and keeps running causes several\nproblems:\n- The pod appears healthy but is not serving traffic correctly.\n- Debug logs and crash information are lost.\n- The liveness probe may aggressively restart the container instead of the process\n  cleanly exiting, leading to connection disruption.\n\n**What to check:**\n- Does the application exit with a non-zero status code on unrecoverable errors?\n- Is `restartPolicy: Always` set (this is the default)?\n- Are liveness probe handlers *not* checking application logic conditions?\n\n**Remediation:** In your framework, let unhandled exceptions propagate to the top-level\nprocess and exit with a non-zero code. Do not write liveness probe handlers that fail on\napplication logic errors (e.g., \"cannot connect to DB\"). Reserve liveness for deadlock\ndetection only (see CNT-012).\n",
+      "tags": [
+        "application-development",
+        "probes",
+        "reliability",
+        "graceful-shutdown"
+      ],
+      "references": [
+        {
+          "title": "Kubernetes Docs — Configure Liveness, Readiness and Startup Probes",
+          "url": "https://kubernetes.io/docs/tasks/configure-pod-container/configure-liveness-readiness-startup-probes/"
+        },
+        {
+          "title": "Liveness Probes are Dangerous",
+          "url": "https://srcco.de/posts/kubernetes-liveness-probes-are-dangerous.html"
+        },
+        {
+          "title": "Blog — Let it Crash",
+          "url": "https://blog.colinbreck.com/kubernetes-liveness-and-readiness-probes-revisited-how-to-avoid-shooting-yourself-in-the-other-foot/#letitcrash"
+        }
+      ],
+      "category": "container"
+    },
+    {
+      "id": "CNT-012",
+      "title": "Configure a Passive Liveness Probe",
+      "description": "The liveness probe is a deadlock-detection mechanism — not a health check for application\nlogic. Its sole purpose is to detect a process that is still running but no longer\nresponsive (e.g., stuck in an infinite loop, deadlocked threads). The liveness probe\nendpoint must always return success as long as the process can respond at all.\n\n**Rules for a correct liveness probe:**\n- Use a dedicated, lightweight endpoint (e.g., `/livez`) that returns HTTP 200 unconditionally.\n- Never include downstream dependency checks (database, cache, APIs) in this endpoint.\n- Never use the same endpoint as the readiness probe — see CNT-013.\n- Set a generous `initialDelaySeconds` and `failureThreshold` to avoid premature restarts\n  during slow application startups.\n\n**What to check:**\n```\nkubectl get pods -A -o json | \\\n  jq '.items[] | select(.spec.containers[].livenessProbe == null) | .metadata.name'\n```\n\n**Remediation:** Add a `/livez` route to your application server that returns `200 OK`\nwithout performing any work. Configure `livenessProbe.httpGet.path: /livez` in the pod\nspec with appropriate thresholds for your workload's startup time.\n",
+      "tags": [
+        "application-development",
+        "probes",
+        "reliability"
+      ],
+      "references": [
+        {
+          "title": "Kubernetes Docs — Configure Liveness, Readiness and Startup Probes",
+          "url": "https://kubernetes.io/docs/tasks/configure-pod-container/configure-liveness-readiness-startup-probes/"
+        },
+        {
+          "title": "Liveness Probes are Dangerous",
+          "url": "https://srcco.de/posts/kubernetes-liveness-probes-are-dangerous.html"
+        }
+      ],
+      "category": "container"
+    },
+    {
+      "id": "CNT-013",
+      "title": "Use Separate Endpoints for Liveness and Readiness Probes",
+      "description": "When liveness and readiness probes point to the same endpoint, the kubelet simultaneously\nremoves the pod from the Service load balancer *and* restarts it. This combines the\neffects of both probes and leaves no window for connections to drain, causing dropped\nrequests.\n\n- **Readiness probe** (`/readyz`): checks if the app can serve traffic right now.\n  May check local warm-up state or required configuration. Must not check downstream\n  services (see CNT-010).\n- **Liveness probe** (`/livez`): checks if the process is still responsive.\n  Must be a trivial endpoint that always succeeds unless the process is deadlocked.\n\n**What to check:** Identify pods where both probes share the same path:\n```\nkubectl get pods -A -o json | \\\n  jq '.items[].spec.containers[] | select(\n    .livenessProbe.httpGet.path == .readinessProbe.httpGet.path\n  ) | .name'\n```\n\n**Remediation:** Expose two distinct endpoints (`/livez` and `/readyz`). Configure each\nprobe independently. The liveness endpoint must be simpler and lighter-weight than the\nreadiness endpoint.\n",
+      "tags": [
+        "application-development",
+        "probes",
+        "reliability"
+      ],
+      "references": [
+        {
+          "title": "Kubernetes Docs — Configure Liveness, Readiness and Startup Probes",
+          "url": "https://kubernetes.io/docs/tasks/configure-pod-container/configure-liveness-readiness-startup-probes/"
+        },
+        {
+          "title": "Handling Client Requests Properly with Kubernetes",
+          "url": "https://freecontent.manning.com/handling-client-requests-properly-with-kubernetes/"
+        }
+      ],
+      "category": "container"
+    },
+    {
+      "id": "CNT-014",
+      "title": "Gracefully Drain Connections on SIGTERM",
+      "description": "When Kubernetes terminates a pod, it sends SIGTERM to the container and waits for\n`terminationGracePeriodSeconds` (default: 30s) before sending SIGKILL. During this window,\ntraffic may still arrive because endpoint propagation to kube-proxy and Ingress controllers\nis asynchronous — the pod address may still be in active use.\n\nThe application must handle SIGTERM by:\n1. Stopping acceptance of new incoming connections.\n2. Completing all active in-flight requests.\n3. Closing idle keep-alive connections.\n4. Exiting cleanly.\n\n**What to check:**\n- Does the app implement a SIGTERM handler?\n- Is `terminationGracePeriodSeconds` set long enough to drain requests for your workload?\n- Is a `preStop` sleep hook used to allow endpoint propagation before shutdown begins?\n\n**Remediation:** Implement a SIGTERM handler in the application. Consider adding a\n`preStop: exec: command: [\"sleep\", \"5\"]` lifecycle hook to give kube-proxy time to remove\nthe pod from endpoints before the app starts draining. Adjust `terminationGracePeriodSeconds`\nto match the maximum expected request duration.\n\n```yaml\nlifecycle:\n  preStop:\n    exec:\n      command: [\"sleep\", \"5\"]\n```\n",
+      "tags": [
+        "application-development",
+        "graceful-shutdown",
+        "reliability"
+      ],
+      "references": [
+        {
+          "title": "Kubernetes Docs — Pod Lifecycle",
+          "url": "https://kubernetes.io/docs/concepts/workloads/pods/pod-lifecycle/"
+        },
+        {
+          "title": "Handling Client Requests Properly with Kubernetes",
+          "url": "https://freecontent.manning.com/handling-client-requests-properly-with-kubernetes/"
+        },
+        {
+          "title": "Kubernetes Docs — preStop Handlers",
+          "url": "https://kubernetes.io/docs/tasks/configure-pod-container/attach-handler-lifecycle-event/"
+        }
+      ],
+      "category": "container"
+    },
+    {
+      "id": "CNT-015",
+      "title": "Forward SIGTERM to the Application Process in Dockerfile",
+      "description": "When a container's `CMD` or `ENTRYPOINT` uses **shell form** rather than **exec form**,\nthe shell (`/bin/sh`) becomes PID 1. Shells do not forward signals to child processes by\ndefault. As a result, SIGTERM sent by Kubernetes is silently swallowed, and the app waits\nthe full `terminationGracePeriodSeconds` before being force-killed — causing connection\ndrops and slow rollouts.\n\n**Shell form (incorrect):**\n```dockerfile\nCMD node server.js          # PID 1 = /bin/sh -c, does not forward SIGTERM\nENTRYPOINT ./start.sh       # same issue\n```\n\n**Exec form (correct):**\n```dockerfile\nCMD [\"node\", \"server.js\"]   # PID 1 = node, receives SIGTERM directly\nENTRYPOINT [\"/app/start\"]\n```\n\n**If a wrapper script is required,** end the script with `exec \"$@\"` so the shell is\nreplaced by the target process:\n```bash\n#!/bin/sh\n# ... pre-start setup ...\nexec \"$@\"\n```\n\n**What to check:** Review all Dockerfiles in your repositories. Verify that the final\n`CMD` and `ENTRYPOINT` instructions use JSON array (exec) form.\n",
+      "tags": [
+        "application-development",
+        "graceful-shutdown",
+        "dockerfile",
+        "reliability"
+      ],
+      "references": [
+        {
+          "title": "Kubernetes Docs — Pod Lifecycle",
+          "url": "https://kubernetes.io/docs/concepts/workloads/pods/pod-lifecycle/"
+        },
+        {
+          "title": "Graceful Shutdown of Kubernetes Pods",
+          "url": "https://pracucci.com/graceful-shutdown-of-kubernetes-pods.html"
+        },
+        {
+          "title": "Docker Docs — CMD",
+          "url": "https://docs.docker.com/reference/dockerfile/#cmd"
+        }
+      ],
+      "category": "container"
+    },
+    {
+      "id": "CNT-016",
+      "title": "Keep CPU Requests to 1 CPU or Below",
+      "description": "Unless running computational intensive jobs, it is recommended to set your CPU requests to 1 CPU or below. Excessive CPU requests constrain the scheduler and may prevent Pods from being optimally binned and packed on available nodes.\n",
+      "tags": [
+        "application-development",
+        "resource-utilisation",
+        "performance"
+      ],
+      "references": [
+        {
+          "title": "Understanding Resource Limits in Kubernetes: CPU Time",
+          "url": "https://medium.com/@betz.mark/understanding-resource-limits-in-kubernetes-cpu-time-9eff74d3161b"
+        },
+        {
+          "title": "Kubernetes Docs — Resource Management",
+          "url": "https://kubernetes.io/docs/concepts/configuration/manage-resources-containers/"
+        }
+      ],
+      "category": "container"
+    },
+    {
+      "id": "CNT-017",
+      "title": "Avoid CPU Limits Unless Necessary",
+      "description": "Because CPU is a compressible resource, hitting a CPU limit will cause the process to be throttled, possibly prematurely. In the case of multithreaded applications, throttling can degrade performance unexpectedly. Consider relying on CPU requests instead, and keep CPU limits removed unless you have a specific and well-justified use case.\n",
+      "tags": [
+        "application-development",
+        "resource-utilisation",
+        "performance"
+      ],
+      "references": [
+        {
+          "title": "Understanding Resource Limits in Kubernetes: CPU Time",
+          "url": "https://medium.com/@betz.mark/understanding-resource-limits-in-kubernetes-cpu-time-9eff74d3161b"
+        },
+        {
+          "title": "CPU Limits and Throttling in Kubernetes",
+          "url": "https://medium.com/omio-engineering/cpu-limits-and-aggressive-throttling-in-kubernetes-c5b20bd8a718"
+        }
+      ],
+      "category": "container"
+    },
+    {
+      "id": "CNT-018",
+      "title": "Configure the Appropriate Quality of Service (QoS)",
+      "description": "When a node goes into an overcommitted state, Kubernetes evicts Pods based on their QoS class (Guaranteed, Burstable, BestEffort). By correctly configuring CPU/Memory requests and limits, you dictate the QoS for your Pods and determine their eviction priority.\n",
+      "tags": [
+        "application-development",
+        "resource-utilisation",
+        "qos"
+      ],
+      "references": [
+        {
+          "title": "Kubernetes Docs — Configure Quality of Service for Pods",
+          "url": "https://kubernetes.io/docs/tasks/configure-pod-container/quality-service-pod/"
+        },
+        {
+          "title": "Kubernetes Docs — Resource Management",
+          "url": "https://kubernetes.io/docs/concepts/configuration/manage-resources-containers/"
+        }
+      ],
+      "category": "container"
+    },
+    {
+      "id": "CNT-019",
+      "title": "Use Ephemeral Local Filesystems",
+      "description": "Containers should not store persistent state in their local filesystem. Local state prevents horizontal scaling and causes discrepancies between Pod replicas over time. Use an external storage service or a PersistentVolume mounted in the Pod to ensure state persists reliably and independent of the container lifecycle.\n",
+      "tags": [
+        "application-development",
+        "storage",
+        "scaling"
+      ],
+      "references": [
+        {
+          "title": "Kubernetes Docs — Persistent Volumes",
+          "url": "https://kubernetes.io/docs/concepts/storage/persistent-volumes/"
+        },
+        {
+          "title": "Twelve-Factor App — Processes",
+          "url": "https://12factor.net/processes"
+        }
+      ],
+      "category": "container"
+    },
+    {
+      "id": "CNT-020",
+      "title": "Mount Secrets as Volumes Rather Than Environment Variables",
+      "description": "Avoid storing sensitive configurations (credentials, tokens, certificates) as environment variables in containers. Environment variables can sometimes be inspected via system tools, crash dumps, or error logs. Always mount Secret objects securely as temporary tmpfs volumes.\n",
+      "tags": [
+        "application-development",
+        "secrets",
+        "security"
+      ],
+      "references": [
+        {
+          "title": "Kubernetes Docs — Secrets",
+          "url": "https://kubernetes.io/docs/concepts/configuration/secret/"
+        },
+        {
+          "title": "CIS Kubernetes Benchmark 5.4.1",
+          "url": "https://workbench.cisecurity.org/benchmarks/16828"
+        },
+        {
+          "title": "Microsoft Threat Matrix — Application Credentials in Configuration Files",
+          "url": "https://microsoft.github.io/Threat-Matrix-for-Kubernetes/techniques/Application%20credentials%20in%20configuration%20files/"
+        }
+      ],
+      "category": "container"
+    },
+    {
+      "id": "CNT-021",
+      "title": "Do Not Run SSH Daemon Inside Containers",
+      "description": "Running an SSH server inside a container violates the principle of single-process containers\nand creates an independent authentication surface. Attackers who obtain valid SSH credentials\n— through brute force, leaked keys, or phishing — can use this to gain persistent remote\naccess to the container, bypassing Kubernetes RBAC entirely.\n\n**What to check:** Scan running containers for listening SSH daemons:\n```\nkubectl get pods -A -o json | \\\n  jq -r '.items[] | \"\\(.metadata.namespace)/\\(.metadata.name)\"' | \\\n  xargs -I {} kubectl exec -n $(echo {} | cut -d/ -f1) $(echo {} | cut -d/ -f2) \\\n  -- ss -tlnp 2>/dev/null | grep ':22'\n```\n\nAlso scan container images in the pipeline:\n```\ntrivy image --severity HIGH,CRITICAL <image> | grep -i ssh\n```\n\n**Remediation:** Remove SSH daemon packages from all container images. Use `kubectl exec`\n(restricted via RBAC — see CLT-035) for legitimate operator access. Never expose port 22\nfrom any container. Use distroless or minimal base images that do not include SSH by default.\n",
+      "tags": [
+        "container-runtime",
+        "hardening",
+        "execution",
+        "remote-access"
+      ],
+      "references": [
+        {
+          "title": "Kubernetes Docs — Configure Containers",
+          "url": "https://kubernetes.io/docs/tasks/inject-data-application/"
+        },
+        {
+          "title": "Microsoft Threat Matrix — SSH Server Running Inside Container",
+          "url": "https://microsoft.github.io/Threat-Matrix-for-Kubernetes/techniques/SSH%20server%20running%20inside%20container/"
+        },
+        {
+          "title": "OWASP Kubernetes Top 10 — K01: Insecure Workload Configurations",
+          "url": "https://owasp.org/www-project-kubernetes-top-ten/"
+        }
+      ],
+      "category": "container"
+    },
+    {
+      "id": "CNT-022",
+      "title": "Restrict hostPath Volume Mounts",
+      "description": "A `hostPath` volume mounts a file or directory from the host node's filesystem into the\ncontainer. This creates a direct bridge between the container and the host — allowing\nattackers who compromise the container to read sensitive host files, write to host paths\n(including cron directories and init scripts), or escape the container boundary entirely.\n\nWritable hostPath mounts are one of the most common container escape vectors.\n\n**What to check:** Find all pods using hostPath volumes:\n```\nkubectl get pods -A -o json | \\\n  jq '.items[] | select(.spec.volumes[]?.hostPath != null) |\n    {name: .metadata.name, ns: .metadata.namespace,\n     paths: [.spec.volumes[].hostPath.path? | select(.)]}'\n```\n\n**Remediation:**\n- Block hostPath mounts via Pod Security Standards (`restricted` profile disallows them).\n- Use Kyverno or OPA Gatekeeper to create an allow-list of approved hostPath paths (e.g., `/var/log`).\n- Any permitted hostPath must be mounted `readOnly: true`.\n- Prefer `emptyDir`, ConfigMap, or PVC volumes for container data needs.\n",
+      "tags": [
+        "pod-security",
+        "privilege-escalation",
+        "filesystem",
+        "persistence"
+      ],
+      "references": [
+        {
+          "title": "Kubernetes Docs — Volumes",
+          "url": "https://kubernetes.io/docs/concepts/storage/volumes/#hostpath"
+        },
+        {
+          "title": "Microsoft Threat Matrix — Writable hostPath Mount",
+          "url": "https://microsoft.github.io/Threat-Matrix-for-Kubernetes/techniques/Writable%20hostPath%20mount/"
+        },
+        {
+          "title": "CIS Kubernetes Benchmark 5.2.4",
+          "url": "https://workbench.cisecurity.org/benchmarks/16828"
+        }
+      ],
+      "category": "container"
+    },
+    {
+      "id": "CNT-023",
+      "title": "Detect and Block Backdoor Container Images",
+      "description": "A backdoor container is a legitimate-looking container image that has been tampered with\nto include malicious code — such as a reverse shell, cryptominer, or data exfiltration\nagent. This can happen through compromised base images, CI/CD supply chain attacks, or\nregistry hijacking.\n\n**What to check:**\n1. Are all images signed and verified at admission? (see CODE-005)\n2. Does the CI pipeline scan images for malware and unexpected processes?\n   ```\n   trivy image --scanners vuln,secret,misconfig <image>\n   ```\n3. Are runtime processes monitored for anomalous behaviour?\n   ```\n   kubectl get daemonset -n falco  # or equivalent runtime detection\n   ```\n\n**Remediation:** Enforce image signing with Cosign + a Kyverno/Connaisseur admission\npolicy that rejects unsigned images. Scan all images in CI before push and at admission.\nDeploy Falco rules that alert on unexpected outbound connections or new processes in\ncontainers. Use distroless or minimal base images to reduce the blast radius.\n",
+      "tags": [
+        "supply-chain",
+        "persistence",
+        "image-security",
+        "runtime-security"
+      ],
+      "references": [
+        {
+          "title": "Sigstore / Cosign — Image Signing",
+          "url": "https://docs.sigstore.dev/"
+        },
+        {
+          "title": "Microsoft Threat Matrix — Backdoor Container",
+          "url": "https://microsoft.github.io/Threat-Matrix-for-Kubernetes/techniques/Backdoor%20container/"
+        },
+        {
+          "title": "SLSA Framework v1.0",
+          "url": "https://slsa.dev/spec/v1.0/"
+        }
+      ],
+      "category": "container"
+    },
+    {
+      "id": "CNT-024",
+      "title": "Block Sidecar Injection from Untrusted Sources",
+      "description": "Sidecar containers share the network namespace and pod lifecycle of the main container,\nmaking them a powerful injection point. Attackers with permissions to modify pod definitions\n(e.g., via a compromised service account or mutating admission webhook) can inject malicious\nsidecars into legitimate pods to intercept traffic, exfiltrate data, or maintain persistence\nwithout the main container being modified.\n\n**What to check:**\n- Are mutating admission webhooks audited and restricted?\n  ```\n  kubectl get mutatingwebhookconfigurations\n  ```\n- Can non-admin service accounts patch running pod specs?\n  ```\n  kubectl auth can-i patch pods --all-namespaces --as <service-account>\n  ```\n- Are all containers in pods validated against an image allow-list?\n\n**Remediation:** Restrict `patch` and `update` on pods to only trusted service accounts\n(e.g., Istio operator, approved service mesh). Audit all MutatingWebhookConfigurations —\neach webhook should have a narrow `namespaceSelector` and be from a trusted source.\nUse image admission policies (CODE-014) to ensure injected images come from approved registries.\n",
+      "tags": [
+        "pod-security",
+        "execution",
+        "persistence",
+        "admission-control"
+      ],
+      "references": [
+        {
+          "title": "Kubernetes Docs — Admission Webhooks",
+          "url": "https://kubernetes.io/docs/reference/access-authn-authz/extensible-admission-controllers/"
+        },
+        {
+          "title": "Microsoft Threat Matrix — Sidecar Injection",
+          "url": "https://microsoft.github.io/Threat-Matrix-for-Kubernetes/techniques/Sidecar%20Injection/"
+        },
+        {
+          "title": "NSA/CISA Kubernetes Hardening Guide",
+          "url": "https://media.defense.gov/2022/Aug/29/2003066362/-1/-1/0/CTR_KUBERNETES_HARDENING_GUIDANCE_1.2_20220829.PDF"
+        }
+      ],
+      "category": "container"
+    },
+    {
+      "id": "CODE-001",
+      "title": "Run SAST Scanning on Every Pull Request",
+      "description": "Static Application Security Testing (SAST) tools analyse source code for security\nvulnerabilities without executing it. Running SAST on every PR as a blocking gate prevents\ncritical vulnerabilities from reaching the main branch.\n\n**What to check:** Verify that a SAST tool (e.g., Semgrep, CodeQL, Snyk Code, Checkov\nfor IaC) is configured in the CI pipeline. Confirm that PR merges are blocked when\nHigh or Critical severity findings are reported.\n\n**Remediation:** Add a SAST step to the CI workflow (GitHub Actions, GitLab CI, Jenkins).\nConfigure branch protection rules to require the SAST check to pass. Triage and remediate\nfindings before merging.\n",
+      "tags": [
+        "ci-cd",
+        "sast",
+        "static-analysis",
+        "supply-chain"
+      ],
+      "references": [
+        {
+          "title": "NIST SP 800-218 — Secure Software Development Framework (SSDF)",
+          "url": "https://csrc.nist.gov/publications/detail/sp/800-218/final"
+        },
+        {
+          "title": "OWASP Kubernetes Top 10 — K02: Supply Chain Vulnerabilities",
+          "url": "https://owasp.org/www-project-kubernetes-top-ten/"
+        },
+        {
+          "title": "Semgrep — Open Source SAST",
+          "url": "https://semgrep.dev/"
+        },
+        {
+          "title": "Microsoft Threat Matrix — Application Vulnerability",
+          "url": "https://microsoft.github.io/Threat-Matrix-for-Kubernetes/techniques/Application%20Vulnerability/"
+        }
+      ],
+      "category": "code"
+    },
+    {
+      "id": "CODE-002",
+      "title": "Scan Dependencies for Known Vulnerabilities",
+      "description": "Third-party libraries and container base images frequently contain CVEs. Software\nComposition Analysis (SCA) tools identify vulnerable dependencies before they are shipped\nto production. The Log4Shell (Log4j) and XZ Utils incidents demonstrated the catastrophic\nimpact of unscanned supply chains.\n\n**What to check:** Verify an SCA tool is wired into the CI pipeline (e.g., Trivy, Grype,\nSnyk, Dependabot). Confirm High/Critical CVEs block deployment. Confirm base image scans\nare included, not just application dependencies.\n\n**Remediation:** Add `trivy fs .` or equivalent to the CI workflow. Enable Dependabot or\nRenovate for automated dependency PRs. Set policy thresholds to block on CVSS ≥ 7.0 (High).\n",
+      "tags": [
+        "ci-cd",
+        "sca",
+        "dependency-scanning",
+        "supply-chain",
+        "vulnerability-management"
+      ],
+      "references": [
+        {
+          "title": "PCI-DSS Requirement 6.2 — Manage Security Vulnerabilities",
+          "url": "https://www.pcisecuritystandards.org/document_library/"
+        },
+        {
+          "title": "OWASP Kubernetes Top 10 — K02: Supply Chain Vulnerabilities",
+          "url": "https://owasp.org/www-project-kubernetes-top-ten/"
+        },
+        {
+          "title": "Trivy — Container and Filesystem Scanner",
+          "url": "https://trivy.dev/"
+        },
+        {
+          "title": "Microsoft Threat Matrix — Application Vulnerability",
+          "url": "https://microsoft.github.io/Threat-Matrix-for-Kubernetes/techniques/Application%20Vulnerability/"
+        }
+      ],
+      "category": "code"
+    },
+    {
+      "id": "CODE-003",
+      "title": "Scan Repositories for Hardcoded Secrets",
+      "description": "Developers occasionally commit API keys, database passwords, and private keys directly\ninto source code. Once in git history, these credentials are extremely difficult to fully\nremove and may already have been exfiltrated. Secret scanning tools detect these commits\nbefore or immediately after they land.\n\n**What to check:** Verify a secret scanning tool is active on all repositories:\n- GitHub: GitHub Advanced Security / Secret Scanning alerts enabled\n- GitLab: Secret Detection CI job enabled\n- Self-hosted: GitGuardian, TruffleHog, or gitleaks wired into CI\n\nConfirm pre-commit hooks are deployed to developer workstations to catch secrets before push.\n\n**Remediation:** Enable native secret scanning in the SCM. Add a pre-commit hook with\n`gitleaks` or `detect-secrets`. Rotate any detected credentials immediately. Invalidate\nold git history with `git-filter-repo` if necessary.\n",
+      "tags": [
+        "secrets",
+        "ci-cd",
+        "supply-chain",
+        "developer-tooling"
+      ],
+      "references": [
+        {
+          "title": "SOC 2 CC6.1 — Logical Access Controls",
+          "url": "https://www.aicpa.org/resources/article/soc-2-trust-service-principles"
+        },
+        {
+          "title": "ISO 27001 A.9 — Access Control",
+          "url": "https://www.iso.org/standard/27001"
+        },
+        {
+          "title": "GitLeaks — Secret Scanner",
+          "url": "https://github.com/gitleaks/gitleaks"
+        }
+      ],
+      "category": "code"
+    },
+    {
+      "id": "CODE-004",
+      "title": "Scan IaC Files for Security Misconfigurations",
+      "description": "Terraform, Helm charts, and Kubernetes YAML manifests are code that defines infrastructure\nand workload configuration. Misconfigurations in these files — such as open security groups,\nmissing encryption, or permissive RBAC — are common root causes of cloud breaches.\n\n**What to check:** Verify an IaC scanner is integrated into CI:\n- Terraform: `tfsec`, `checkov`, or `terrascan`\n- Helm charts: `helm lint` + `trivy config` or `polaris`\n- YAML manifests: `kube-score`, `kubeconform`, `checkov`\n\n**Remediation:** Add a scanning step to CI that fails on High/Critical findings. Add\npre-commit hooks for local feedback. Integrate with PR comments for developer visibility.\n",
+      "tags": [
+        "ci-cd",
+        "iac",
+        "misconfiguration",
+        "supply-chain"
+      ],
+      "references": [
+        {
+          "title": "OWASP Kubernetes Top 10 — K01: Insecure Workload Configurations",
+          "url": "https://owasp.org/www-project-kubernetes-top-ten/"
+        },
+        {
+          "title": "ISO 27001 A.14 — System Acquisition and Development",
+          "url": "https://www.iso.org/standard/27001"
+        },
+        {
+          "title": "Checkov — IaC Security Scanner",
+          "url": "https://www.checkov.io/"
+        }
+      ],
+      "category": "code"
+    },
+    {
+      "id": "CODE-005",
+      "title": "Sign Container Images and Verify at Admission",
+      "description": "Container image signing creates a cryptographic attestation that an image was built by a\ntrusted pipeline and has not been tampered with. Combined with an admission webhook that\nvalidates signatures, this prevents unsigned or compromised images from running in the cluster.\n\n**What to check:**\n1. Are images signed in CI? (Cosign + Sigstore / Notary v2)\n2. Is an admission controller verifying signatures before pods are scheduled?\n   - Policy controllers: Kyverno `verifyImages`, Connaisseur, Ratify\n\n```\ncosign verify --key cosign.pub <registry>/<image>:<tag>\n```\n\n**Remediation:** Integrate `cosign sign` into the CI pipeline after image push. Deploy a\nverification admission policy that rejects unsigned images. Store signing keys in a KMS.\n",
+      "tags": [
+        "supply-chain",
+        "image-signing",
+        "admission-control",
+        "ci-cd"
+      ],
+      "references": [
+        {
+          "title": "CIS Kubernetes Benchmark 5.5.1",
+          "url": "https://workbench.cisecurity.org/benchmarks/16828"
+        },
+        {
+          "title": "Sigstore / Cosign",
+          "url": "https://docs.sigstore.dev/"
+        },
+        {
+          "title": "SLSA Framework v1.0",
+          "url": "https://slsa.dev/spec/v1.0/"
+        },
+        {
+          "title": "Microsoft Threat Matrix — Compromised Image in Registry",
+          "url": "https://microsoft.github.io/Threat-Matrix-for-Kubernetes/techniques/Compromised%20Image%20In%20Registry/"
+        }
+      ],
+      "category": "code"
+    },
+    {
+      "id": "CODE-006",
+      "title": "Generate an SBOM for Every Container Image",
+      "description": "A Software Bill of Materials (SBOM) is a machine-readable inventory of all components in a\ncontainer image — OS packages, language libraries, and their versions. SBOMs enable rapid\ntriage when a new CVE is disclosed (e.g., Log4Shell): instead of scanning all images\nreactively, you query the SBOM index for affected packages in seconds.\n\n**What to check:** Verify that SBOM generation is part of the CI/CD pipeline and that\nSBOMs are stored alongside image artifacts (e.g., as OCI attestations or in an artifact\nregistry):\n\n```\nsyft <image> -o spdx-json > sbom.json\ncosign attest --predicate sbom.json --type spdxjson <image>\n```\n\n**Remediation:** Add Syft or Trivy SBOM generation to the CI workflow. Attach the SBOM as\nan OCI attestation. Integrate with a vulnerability management platform that indexes SBOMs.\n",
+      "tags": [
+        "supply-chain",
+        "sbom",
+        "vulnerability-management",
+        "ci-cd"
+      ],
+      "references": [
+        {
+          "title": "US Executive Order 14028 — Software Supply Chain Security",
+          "url": "https://www.whitehouse.gov/briefing-room/presidential-actions/2021/05/12/executive-order-on-improving-the-nations-cybersecurity/"
+        },
+        {
+          "title": "CISA — SBOM Resources",
+          "url": "https://www.cisa.gov/sbom"
+        },
+        {
+          "title": "Syft — SBOM Generator",
+          "url": "https://github.com/anchore/syft"
+        }
+      ],
+      "category": "code"
+    },
+    {
+      "id": "CODE-007",
+      "title": "Use Private Container Registries with Authentication",
+      "description": "Pulling container images from public registries without authentication or storing images in\npublic repositories exposes workloads to image substitution attacks and leaks proprietary\ncode. All production images must be stored in private registries with access controls.\n\n**What to check:**\n- Are all image references pointing to a private registry (not `docker.io` public)?\n- Are registry credentials stored as Kubernetes image pull secrets, not hardcoded?\n- Is anonymous pull disabled on the registry?\n\n```\nkubectl get pods -A -o json | jq '.items[].spec.containers[].image' | grep -v '<your-private-registry>'\n```\n\n**Remediation:** Migrate images to a private registry (ECR, GCR, ACR, Harbor). Create\n`imagePullSecrets` referencing registry credentials. Disable anonymous pull in registry\nsettings. Scan images on push.\n",
+      "tags": [
+        "supply-chain",
+        "registry",
+        "image-security",
+        "authentication"
+      ],
+      "references": [
+        {
+          "title": "SOC 2 CC6.1 — Logical Access Controls",
+          "url": "https://www.aicpa.org/resources/article/soc-2-trust-service-principles"
+        },
+        {
+          "title": "HIPAA Technical Safeguards",
+          "url": "https://www.hhs.gov/hipaa/for-professionals/security/laws-regulations/index.html"
+        },
+        {
+          "title": "Kubernetes Docs — Pull an Image from a Private Registry",
+          "url": "https://kubernetes.io/docs/tasks/configure-pod-container/pull-image-private-registry/"
+        },
+        {
+          "title": "Microsoft Threat Matrix — Compromised Image in Registry",
+          "url": "https://microsoft.github.io/Threat-Matrix-for-Kubernetes/techniques/Compromised%20Image%20In%20Registry/"
+        },
+        {
+          "title": "Microsoft Threat Matrix — Images from a Private Registry",
+          "url": "https://microsoft.github.io/Threat-Matrix-for-Kubernetes/techniques/images%20from%20a%20private%20registry/"
+        }
+      ],
+      "category": "code"
+    },
+    {
+      "id": "CODE-008",
+      "title": "Implement Retry Logic for Dependent Services",
+      "description": "Kubernetes starts containers in any order. A pod may be scheduled before its dependencies\n(database, message broker, downstream API) are ready. Applications that crash immediately\non `ECONNREFUSED` or similar startup errors create fragile deployment sequences that\nrequire manual restarts or complex `initContainers` workarounds.\n\nInstead, the application should retry the dependency connection with exponential backoff\nuntil it succeeds or a configurable deadline is exceeded. This applies to both initial\nstartup connections and transient mid-runtime failures.\n\n**What to check:**\n- Does the app crash (non-zero exit) immediately when a dependency is unreachable at startup?\n- Is there a retry loop with configurable max attempts and backoff for database/service connections?\n- Does the application recover automatically if a dependency becomes temporarily unavailable?\n\n**Remediation:** Wrap dependency initialisation in a retry loop with exponential backoff\nand jitter (start at 1s, double up to 30s). Suitable libraries:\n- Python: `tenacity`\n- JVM: `resilience4j`, `spring-retry`\n- Go: `github.com/cenkalti/backoff`\n- Node.js: `async-retry`\n\nDo not rely solely on `initContainers` for this — they only handle startup order, not\nmid-runtime reconnection.\n",
+      "tags": [
+        "application-development",
+        "reliability",
+        "resilience",
+        "twelve-factor"
+      ],
+      "references": [
+        {
+          "title": "Twelve-Factor App — Backing Services",
+          "url": "https://12factor.net/backing-services"
+        },
+        {
+          "title": "AWS — Exponential Backoff and Jitter",
+          "url": "https://aws.amazon.com/blogs/architecture/exponential-backoff-and-jitter/"
+        },
+        {
+          "title": "Kubernetes Docs — Init Containers",
+          "url": "https://kubernetes.io/docs/concepts/workloads/pods/init-containers/"
+        }
+      ],
+      "category": "code"
+    },
+    {
+      "id": "CODE-012",
+      "title": "Log to stdout and stderr",
+      "description": "Applications should perform passive logging: they should print log output directly to `stdout` and `stderr` instead of making network connections to intermediate aggregators or writing to database/index sinks directly. This allows external tools or daemonsets to collect, format, and route the logs cleanly.\n",
+      "tags": [
+        "application-development",
+        "logging",
+        "observability"
+      ],
+      "references": [
+        {
+          "title": "Twelve-Factor App — Logs",
+          "url": "https://12factor.net/logs"
+        },
+        {
+          "title": "Kubernetes Docs — Logging Architecture",
+          "url": "https://kubernetes.io/docs/concepts/cluster-administration/logging/"
+        }
+      ],
+      "category": "code"
+    },
+    {
+      "id": "CODE-013",
+      "title": "Externalise Application Configuration",
+      "description": "Configuration logic should be abstracted away from the application code itself to facilitate updates without recompilation. Hardcoded settings inhibit portability. Supply environment-specific configurations via ConfigMaps, and pass them down as either mounted files or environment variables.\n",
+      "tags": [
+        "application-development",
+        "configuration",
+        "twelve-factor"
+      ],
+      "references": [
+        {
+          "title": "Twelve-Factor App — Config",
+          "url": "https://12factor.net/config"
+        },
+        {
+          "title": "Kubernetes Docs — ConfigMaps",
+          "url": "https://kubernetes.io/docs/concepts/configuration/configmap/"
+        }
+      ],
+      "category": "code"
+    },
+    {
+      "id": "CODE-014",
+      "title": "Allow Deploying Containers Only from Known Registries",
+      "description": "Prevent arbitrary code execution by restricting the container registries from which Kubernetes can pull images. \nUse a custom policy engine (like Open Policy Agent or Kyverno) to enforce that workloads only run images sourced \nfrom approved, internal, or trusted external registries.\n",
+      "tags": [
+        "governance",
+        "admission-control",
+        "images"
+      ],
+      "references": [
+        {
+          "title": "Open Policy Agent — Kubernetes Tutorial",
+          "url": "https://www.openpolicyagent.org/docs/latest/kubernetes-tutorial/"
+        },
+        {
+          "title": "Kyverno — Policy Library",
+          "url": "https://kyverno.io/policies/"
+        },
+        {
+          "title": "Microsoft Threat Matrix — Compromised Image in Registry",
+          "url": "https://microsoft.github.io/Threat-Matrix-for-Kubernetes/techniques/Compromised%20Image%20In%20Registry/"
+        },
+        {
+          "title": "Microsoft Threat Matrix — New Container",
+          "url": "https://microsoft.github.io/Threat-Matrix-for-Kubernetes/techniques/New%20Container/"
+        }
+      ],
+      "category": "code"
+    },
+    {
+      "id": "CODE-015",
+      "title": "Enforce Uniqueness in Ingress Hostnames",
+      "description": "Without proper validation, a user might create an Ingress manifest that reuses an existing hostname, potentially \nhijacking or overriding traffic for an established service. Implement a validation webhook (e.g., via OPA) to \ncheck existing Ingress resources and deny the creation of duplicate hostnames across the cluster.\n",
+      "tags": [
+        "governance",
+        "ingress",
+        "networking"
+      ],
+      "references": [
+        {
+          "title": "Open Policy Agent — Kubernetes Ingress Tutorial",
+          "url": "https://www.openpolicyagent.org/docs/latest/kubernetes-tutorial/#4-define-a-policy-and-load-it-into-opa-via-kubernetes"
+        },
+        {
+          "title": "Kyverno — Unique Ingress Host",
+          "url": "https://kyverno.io/policies/ingress/unique-ingress-host/"
+        }
+      ],
+      "category": "code"
+    },
+    {
+      "id": "CODE-016",
+      "title": "Use Only Approved Domain Names in Ingress Hostnames",
+      "description": "Block the usage of arbitrary or unauthorized domain names in Ingress manifests. Implement a custom admission \npolicy that rejects Ingress resources attempting to route traffic through invalid or unapproved hostnames, \nensuring all external routing aligns with corporate DNS policies.\n",
+      "tags": [
+        "governance",
+        "ingress",
+        "policy"
+      ],
+      "references": [
+        {
+          "title": "Open Policy Agent — Kubernetes Ingress Tutorial",
+          "url": "https://www.openpolicyagent.org/docs/latest/kubernetes-tutorial/#4-define-a-policy-and-load-it-into-opa-via-kubernetes"
+        },
+        {
+          "title": "Kyverno — Restrict Ingress Host",
+          "url": "https://kyverno.io/policies/ingress/"
+        }
+      ],
+      "category": "code"
+    }
+  ]
+}
