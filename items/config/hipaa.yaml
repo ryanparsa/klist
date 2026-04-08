@@ -1,0 +1,20 @@
+id: hipaa
+label: "HIPAA"
+type: compliance
+description: "Controls required to support HIPAA compliance for workloads that store, process, or transmit Protected Health Information (PHI)."
+items:
+  required:
+    - CLD-007
+    - CLD-009
+    - CLT-006
+    - CLT-011
+    - CNT-003
+    - CNT-007
+    - CODE-003
+    - CODE-007
+  suggested:
+    - CLD-002
+    - CLD-003
+    - CLT-010
+    - CNT-009
+    - CODE-005

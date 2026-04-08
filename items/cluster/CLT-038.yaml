@@ -1,0 +1,29 @@
+id: CLT-038
+title: "Detect and Alert on Kubernetes Event Deletion"
+description: |
+  Kubernetes events record state changes and failures across cluster resources (pod scheduling,
+  image pulls, OOMKills, etc.). Attackers who have gained cluster access may delete these
+  events to erase evidence of their activity — for example via `kubectl delete events --all`.
+
+  API server audit logs record event deletion and must be routed to tamper-resistant external
+  storage so the audit trail cannot be erased alongside the events themselves.
+
+  **What to check:** Verify audit logging is enabled and captures event delete actions:
+  ```
+  ps aux | grep kube-apiserver | grep audit-policy-file
+  ```
+
+  Confirm the audit policy captures `delete` on `events` at `RequestResponse` level.
+  Verify logs are shipped to external storage (not only local disk).
+
+  **Remediation:** Update the audit policy to capture `delete` on resource `events` in
+  the `""` and `events.k8s.io` API groups. Ship audit logs to an immutable sink (S3,
+  CloudWatch, Splunk). Alert on `kubectl delete events` patterns in the SIEM.
+tags: [audit, logging, defense-evasion, monitoring]
+references:
+  - title: "Kubernetes Docs — Auditing"
+    url: "https://kubernetes.io/docs/tasks/debug/debug-cluster/audit/"
+  - title: "Microsoft Threat Matrix — Delete Kubernetes Events"
+    url: "https://microsoft.github.io/Threat-Matrix-for-Kubernetes/techniques/Delete%20K8S%20events/"
+  - title: "SOC 2 CC7.2 — Security Event Monitoring"
+    url: "https://www.aicpa.org/resources/article/soc-2-trust-service-principles"

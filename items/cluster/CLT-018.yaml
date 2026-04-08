@@ -1,0 +1,10 @@
+id: CLT-018
+title: "Apply Technical Labels to Resources"
+description: |
+  Use technical labels to organize Kubernetes objects and assist in automation. Examples include grouping by application name (`app.kubernetes.io/name`), application instance (`app.kubernetes.io/instance`), version, architecture component, and management tool (`app.kubernetes.io/managed-by`). Apply them to all relevant workloads.
+tags: [application-development, tagging, metadata]
+references:
+  - title: "Kubernetes Docs — Recommended Labels"
+    url: "https://kubernetes.io/docs/concepts/overview/working-with-objects/common-labels/"
+  - title: "Kubernetes Docs — Labels and Selectors"
+    url: "https://kubernetes.io/docs/concepts/overview/working-with-objects/labels/"

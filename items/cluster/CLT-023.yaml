@@ -1,0 +1,24 @@
+id: CLT-023
+title: "Evaluate the Vertical Pod Autoscaler Carefully Before Using in Production"
+description: |
+  The Vertical Pod Autoscaler (VPA) automatically adjusts the CPU and memory requests and
+  limits of Pods based on observed usage. Unlike the HPA (which adds more replicas), the VPA
+  scales a single Pod's resources — useful for workloads that cannot scale horizontally.
+
+  **Key limitations to understand before adopting VPA in production:**
+  - Applying a resource change requires evicting and restarting the Pod (in-place resizing
+    support via `InPlacePodVerticalScaling` is available as an alpha/beta feature gate —
+    check your Kubernetes version).
+  - VPA and HPA must not target the same metric (e.g., both targeting CPU); only combine
+    them using custom or external metrics for HPA.
+  - VPA recommendation mode (no automatic changes) is safe and useful for right-sizing.
+
+  **Recommended approach:** Run VPA in `Off` or `Initial` mode first to collect
+  recommendations. Validate the suggested values. Only switch to `Auto` mode after
+  confirming there are no disruption concerns for the workload.
+tags: [application-development, scaling, vpa]
+references:
+  - title: "Kubernetes Autoscaler — VPA"
+    url: "https://github.com/kubernetes/autoscaler/tree/master/vertical-pod-autoscaler"
+  - title: "Kubernetes Docs — Vertical Pod Autoscaling"
+    url: "https://kubernetes.io/docs/concepts/workloads/autoscaling/"

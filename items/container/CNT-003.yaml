@@ -1,0 +1,28 @@
+id: CNT-003
+title: "Run Containers as Non-Root"
+description: |
+  Containers running as UID 0 (root) can exploit vulnerabilities to gain root access on the
+  host node. Setting `runAsNonRoot: true` ensures the container's process runs as an
+  unprivileged user, limiting blast radius if the container is compromised.
+
+  **What to check:**
+
+  ```
+  kubectl get pods -A -o json | \
+    jq '.items[] | select(
+      (.spec.securityContext.runAsNonRoot != true) and
+      (.spec.containers[].securityContext.runAsNonRoot != true)
+    ) | .metadata.name'
+  ```
+
+  **Remediation:** Add `securityContext.runAsNonRoot: true` and `securityContext.runAsUser: <non-zero UID>`
+  to pod and container specs. Update base images to create and use a non-root user via
+  `USER <uid>` in the Dockerfile.
+tags: [pod-security, least-privilege, container-runtime]
+references:
+  - title: "CIS Kubernetes Benchmark 5.2.7"
+    url: "https://workbench.cisecurity.org/benchmarks/16828"
+  - title: "Kubernetes Docs — Security Context"
+    url: "https://kubernetes.io/docs/tasks/configure-pod-container/security-context/"
+  - title: "NSA/CISA Kubernetes Hardening Guide"
+    url: "https://media.defense.gov/2022/Aug/29/2003066362/-1/-1/0/CTR_KUBERNETES_HARDENING_GUIDANCE_1.2_20220829.PDF"

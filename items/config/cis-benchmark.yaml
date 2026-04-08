@@ -1,0 +1,37 @@
+id: cis-benchmark
+label: "CIS Kubernetes Benchmark v1.8"
+type: compliance
+description: "Controls mapped to the Center for Internet Security Kubernetes Benchmark v1.8, covering API server hardening, etcd, kubelet, and workload configuration."
+items:
+  required:
+    - CLD-001
+    - CLD-002
+    - CLD-003
+    - CLD-004
+    - CLD-005
+    - CLD-010
+    - CLT-001
+    - CLT-002
+    - CLT-003
+    - CLT-004
+    - CLT-005
+    - CLT-006
+    - CLT-007
+    - CLT-008
+    - CLT-009
+    - CLT-010
+    - CLT-011
+    - CLT-012
+    - CLT-013
+    - CNT-001
+    - CNT-002
+    - CNT-003
+    - CNT-004
+    - CNT-005
+    - CNT-006
+    - CNT-007
+    - CNT-008
+  suggested:
+    - CODE-001
+    - CODE-002
+    - CODE-003

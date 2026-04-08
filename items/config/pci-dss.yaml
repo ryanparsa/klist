@@ -1,0 +1,31 @@
+id: pci-dss
+label: "PCI-DSS v4.0"
+type: compliance
+description: "Controls mapped to PCI-DSS v4.0 requirements for clusters that process, store, or transmit cardholder data or are in scope of the Cardholder Data Environment (CDE)."
+items:
+  required:
+    - CLD-001
+    - CLD-002
+    - CLD-007
+    - CLT-001
+    - CLT-002
+    - CLT-005
+    - CLT-006
+    - CLT-011
+    - CLT-012
+    - CNT-001
+    - CNT-002
+    - CNT-003
+    - CNT-004
+    - CNT-007
+    - CNT-008
+    - CNT-009
+    - CODE-001
+    - CODE-002
+    - CODE-004
+    - CODE-007
+  suggested:
+    - CLD-004
+    - CLD-005
+    - CODE-005
+    - CODE-006

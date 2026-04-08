@@ -1,0 +1,25 @@
+id: CLD-010
+title: "Do Not Mount the Docker Socket into Containers"
+description: |
+  Mounting the Docker daemon socket (`/var/run/docker.sock`) into a container grants that
+  container full control over the Docker daemon — effectively root on the host node. This is
+  a common container-escape vector exploited in CI/CD pipelines and build systems.
+
+  **What to check:** Search all workloads for volume mounts referencing `/var/run/docker.sock`.
+
+  ```
+  kubectl get pods -A -o json | \
+    jq '.items[].spec.volumes[]? | select(.hostPath.path == "/var/run/docker.sock")'
+  ```
+
+  **Remediation:** Replace Docker-in-Docker approaches with rootless, socket-less alternatives
+  such as Kaniko, Buildah, or img for image builds. Use OPA/Kyverno admission policies to
+  block hostPath mounts of the Docker socket.
+tags: [node-security, privilege-escalation, container-runtime]
+references:
+  - title: "CIS Docker Benchmark v1.5"
+    url: "https://www.cisecurity.org/benchmark/docker"
+  - title: "OWASP Kubernetes Top 10 — K01: Insecure Workload Configurations"
+    url: "https://owasp.org/www-project-kubernetes-top-ten/"
+  - title: "Kubernetes Docs — Volumes / hostPath"
+    url: "https://kubernetes.io/docs/concepts/storage/volumes/#hostpath"

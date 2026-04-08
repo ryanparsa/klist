@@ -1,0 +1,10 @@
+id: CLD-011
+title: "Use the Cluster Autoscaler for Highly Variable Workloads"
+description: |
+  For clusters experiencing highly variable workloads that occasionally outpace available node capacity, configure the Cluster Autoscaler. It manages creating new virtual machines/nodes (scale-up) when Pods can't be scheduled, and gracefully evicting empty nodes (scale-down) when resources are under-utilized.
+tags: [application-development, scaling, cluster-autoscaler]
+references:
+  - title: "GitHub — Cluster Autoscaler"
+    url: "https://github.com/kubernetes/autoscaler/tree/master/cluster-autoscaler"
+  - title: "Kubernetes Docs — Cluster Management"
+    url: "https://kubernetes.io/docs/tasks/administer-cluster/cluster-management/"

@@ -1,0 +1,12 @@
+id: multi-cluster
+label: "Multi-Cluster"
+type: architecture
+description: "Operating more than one Kubernetes cluster, whether for availability, regional distribution, or environment separation."
+items:
+  required:
+    - CLT-009
+    - CLT-013
+  suggested:
+    - CLT-010
+    - CLT-012
+    - CLD-003

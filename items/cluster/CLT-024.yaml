@@ -1,0 +1,13 @@
+id: CLT-024
+title: "Ensure Cluster Passes CIS Benchmark"
+description: |
+  Check if your cluster complies with the Centre for Internet Security (CIS) benchmark for Kubernetes.
+  You can run tools like `kube-bench` to automate this process and report on misconfigurations. Note
+  that for managed clusters (like EKS, GKE, AKS), you won't be able to inspect the master nodes, but you
+  can still verify worker nodes.
+tags: [configuration, security, cis]
+references:
+  - title: "CIS Kubernetes Benchmark"
+    url: "https://www.cisecurity.org/benchmark/kubernetes/"
+  - title: "kube-bench — CIS Kubernetes Benchmark Tool"
+    url: "https://github.com/aquasecurity/kube-bench"

@@ -1,0 +1,10 @@
+id: CLT-014
+title: "Run Multiple Replicas for Deployments"
+description: |
+  Never run a single Pod individually. A hardware failure of the physical machine, a kernel panic, or a node drain could cause your single Pod to be deleted and cause downtime. Instead, deploy your Pod as part of a Deployment, DaemonSet, ReplicaSet, or StatefulSet with more than one replica to guarantee availability.
+tags: [application-development, reliability, fault-tolerance]
+references:
+  - title: "Kubernetes Docs — Deployments"
+    url: "https://kubernetes.io/docs/concepts/workloads/controllers/deployment/"
+  - title: "Kubernetes Docs — ReplicaSets"
+    url: "https://kubernetes.io/docs/concepts/workloads/controllers/replicaset/"

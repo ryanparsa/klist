@@ -1,0 +1,16 @@
+id: CLT-028
+title: "Collect Comprehensive Cluster Logs"
+description: |
+  Gather logs across all functional levels of your cluster, including Nodes (kubelet, container runtime), Control Plane (API server,
+  scheduler, controller manager), and Kubernetes API auditing. Ensure log entries capture essential metadata like application name,
+  namespace, Pod name, container name, and node.
+tags: [configuration, logging, auditing]
+references:
+  - title: "Kubernetes Docs — Logging Architecture"
+    url: "https://kubernetes.io/docs/concepts/cluster-administration/logging/"
+  - title: "NSA/CISA Kubernetes Hardening Guide"
+    url: "https://media.defense.gov/2022/Aug/29/2003066362/-1/-1/0/CTR_KUBERNETES_HARDENING_GUIDANCE_1.2_20220829.PDF"
+  - title: "Microsoft Threat Matrix — Delete Kubernetes Events"
+    url: "https://microsoft.github.io/Threat-Matrix-for-Kubernetes/techniques/Delete%20K8S%20events/"
+  - title: "Microsoft Threat Matrix — Clear Container Logs"
+    url: "https://microsoft.github.io/Threat-Matrix-for-Kubernetes/techniques/Clear%20container%20logs/"

@@ -1,0 +1,32 @@
+id: CLT-036
+title: "Audit and Restrict CronJob Creation Permissions"
+description: |
+  Kubernetes CronJobs can be used by attackers with sufficient RBAC permissions to schedule
+  persistent execution of malicious code inside the cluster. Unlike a standalone pod,
+  a CronJob survives restarts and continues executing on a schedule, making it an ideal
+  persistence mechanism.
+
+  **What to check:** Identify which accounts can create CronJobs or Jobs:
+
+  ```
+  kubectl auth can-i create cronjobs --all-namespaces --as <user-or-sa>
+  kubectl get clusterrolebindings,rolebindings -A -o json | \
+    jq '.items[] | select(.rules[]?.resources[]? | test("cronjobs|jobs")) | .metadata.name'
+  ```
+
+  Also review existing CronJobs for suspicious or unexpected entries:
+  ```
+  kubectl get cronjobs -A
+  ```
+
+  **Remediation:** Restrict `create`, `patch`, and `update` permissions on `cronjobs`
+  resources to only CI/CD service accounts that legitimately manage them. Alert on
+  unexpected CronJob creation via audit log analysis.
+tags: [rbac, persistence, security, audit]
+references:
+  - title: "Kubernetes Docs — CronJobs"
+    url: "https://kubernetes.io/docs/concepts/workloads/controllers/cron-jobs/"
+  - title: "Microsoft Threat Matrix — Kubernetes CronJob"
+    url: "https://microsoft.github.io/Threat-Matrix-for-Kubernetes/techniques/Kubernetes%20CronJob/"
+  - title: "OWASP Kubernetes Top 10 — K03: Overly Permissive RBAC"
+    url: "https://owasp.org/www-project-kubernetes-top-ten/"

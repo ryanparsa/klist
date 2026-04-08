@@ -1,0 +1,10 @@
+id: CODE-013
+title: "Externalise Application Configuration"
+description: |
+  Configuration logic should be abstracted away from the application code itself to facilitate updates without recompilation. Hardcoded settings inhibit portability. Supply environment-specific configurations via ConfigMaps, and pass them down as either mounted files or environment variables.
+tags: [application-development, configuration, twelve-factor]
+references:
+  - title: "Twelve-Factor App — Config"
+    url: "https://12factor.net/config"
+  - title: "Kubernetes Docs — ConfigMaps"
+    url: "https://kubernetes.io/docs/concepts/configuration/configmap/"

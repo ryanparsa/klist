@@ -1,0 +1,10 @@
+id: CODE-012
+title: "Log to stdout and stderr"
+description: |
+  Applications should perform passive logging: they should print log output directly to `stdout` and `stderr` instead of making network connections to intermediate aggregators or writing to database/index sinks directly. This allows external tools or daemonsets to collect, format, and route the logs cleanly.
+tags: [application-development, logging, observability]
+references:
+  - title: "Twelve-Factor App — Logs"
+    url: "https://12factor.net/logs"
+  - title: "Kubernetes Docs — Logging Architecture"
+    url: "https://kubernetes.io/docs/concepts/cluster-administration/logging/"

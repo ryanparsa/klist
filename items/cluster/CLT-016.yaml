@@ -1,0 +1,10 @@
+id: CLT-016
+title: "Set Pod Disruption Budgets"
+description: |
+  When a node is drained, all Pods on that node are deleted and rescheduled, which could affect availability under heavy load. To protect Deployments from unexpected events that delete several Pods simultaneously, define a Pod Disruption Budget (e.g. guaranteeing at least N Pods are always running).
+tags: [application-development, fault-tolerance, availability]
+references:
+  - title: "Kubernetes Docs — Disruptions"
+    url: "https://kubernetes.io/docs/concepts/workloads/pods/disruptions/"
+  - title: "Kubernetes Docs — Configure Pod Disruption Budgets"
+    url: "https://kubernetes.io/docs/tasks/run-application/configure-pdb/"

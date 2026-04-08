@@ -1,0 +1,16 @@
+id: CLT-032
+title: "Enforce Principle of Least Privilege in RBAC Policies"
+description: |
+  Grant the least permissions needed for an entity to function. While broader grants can give unnecessary API access 
+  and might seem easier to manage initially, they pose a significant security risk. Start with an empty Role and 
+  add only the specific resources and verbs required for the ServiceAccount or User.
+tags: [governance, rbac, security]
+references:
+  - title: "Kubernetes Docs — RBAC Authorization"
+    url: "https://kubernetes.io/docs/reference/access-authn-authz/rbac/"
+  - title: "OWASP Kubernetes Top 10 — K03: Overly Permissive RBAC"
+    url: "https://owasp.org/www-project-kubernetes-top-ten/"
+  - title: "Microsoft Threat Matrix — Exec into Container"
+    url: "https://microsoft.github.io/Threat-Matrix-for-Kubernetes/techniques/Exec%20into%20container/"
+  - title: "Microsoft Threat Matrix — Cluster-Admin Binding"
+    url: "https://microsoft.github.io/Threat-Matrix-for-Kubernetes/techniques/Cluster-admin%20binding/"

@@ -1,0 +1,10 @@
+id: CLT-020
+title: "Apply Security Labels to Resources"
+description: |
+  Group resources by compliance demands and security requirements using labels. Key labels could represent the data-confidentiality level (`confidentiality`) or the compliance standard the workload must adhere to (`compliance: pci`). These metadata markers can simplify security assessments and auditing.
+tags: [application-development, tagging, security]
+references:
+  - title: "AWS Tagging Strategies"
+    url: "https://aws.amazon.com/answers/account-management/aws-tagging-strategies/"
+  - title: "Kubernetes Docs — Labels and Selectors"
+    url: "https://kubernetes.io/docs/concepts/overview/working-with-objects/labels/"

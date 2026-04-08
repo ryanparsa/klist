@@ -1,0 +1,31 @@
+id: CNT-013
+title: "Use Separate Endpoints for Liveness and Readiness Probes"
+description: |
+  When liveness and readiness probes point to the same endpoint, the kubelet simultaneously
+  removes the pod from the Service load balancer *and* restarts it. This combines the
+  effects of both probes and leaves no window for connections to drain, causing dropped
+  requests.
+
+  - **Readiness probe** (`/readyz`): checks if the app can serve traffic right now.
+    May check local warm-up state or required configuration. Must not check downstream
+    services (see CNT-010).
+  - **Liveness probe** (`/livez`): checks if the process is still responsive.
+    Must be a trivial endpoint that always succeeds unless the process is deadlocked.
+
+  **What to check:** Identify pods where both probes share the same path:
+  ```
+  kubectl get pods -A -o json | \
+    jq '.items[].spec.containers[] | select(
+      .livenessProbe.httpGet.path == .readinessProbe.httpGet.path
+    ) | .name'
+  ```
+
+  **Remediation:** Expose two distinct endpoints (`/livez` and `/readyz`). Configure each
+  probe independently. The liveness endpoint must be simpler and lighter-weight than the
+  readiness endpoint.
+tags: [application-development, probes, reliability]
+references:
+  - title: "Kubernetes Docs — Configure Liveness, Readiness and Startup Probes"
+    url: "https://kubernetes.io/docs/tasks/configure-pod-container/configure-liveness-readiness-startup-probes/"
+  - title: "Handling Client Requests Properly with Kubernetes"
+    url: "https://freecontent.manning.com/handling-client-requests-properly-with-kubernetes/"

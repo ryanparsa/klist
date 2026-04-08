@@ -1,0 +1,11 @@
+id: CLT-025
+title: "Restrict Access to Alpha or Beta Features"
+description: |
+  Alpha and beta Kubernetes features are in active development and may have limitations or bugs that result in security
+  vulnerabilities. Evaluate the trade-off of using these features. When in doubt, disable alpha/beta features you do not explicitly need.
+tags: [configuration, security, stability]
+references:
+  - title: "Kubernetes Docs — Feature Gates"
+    url: "https://kubernetes.io/docs/reference/command-line-tools-reference/feature-gates/"
+  - title: "NSA/CISA Kubernetes Hardening Guide"
+    url: "https://media.defense.gov/2022/Aug/29/2003066362/-1/-1/0/CTR_KUBERNETES_HARDENING_GUIDANCE_1.2_20220829.PDF"

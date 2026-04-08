@@ -1,0 +1,13 @@
+id: CLT-030
+title: "Enforce ResourceQuotas for Namespaces"
+description: |
+  While LimitRanges ensure individual Pods have sensible sizes, they don't stop someone from deploying 20,000 Pods or ConfigMaps.
+  Apply a ResourceQuota to every namespace to limit the total amount of CPU, memory, storage, and API objects (like Pods) that can be consumed across the entire namespace.
+tags: [governance, resource-management, limits]
+references:
+  - title: "Kubernetes Docs — Resource Quotas"
+    url: "https://kubernetes.io/docs/concepts/policy/resource-quotas/"
+  - title: "CIS Kubernetes Benchmark 5.7.1"
+    url: "https://workbench.cisecurity.org/benchmarks/16828"
+  - title: "Microsoft Threat Matrix — Denial of Service"
+    url: "https://microsoft.github.io/Threat-Matrix-for-Kubernetes/techniques/Denial%20of%20service/"

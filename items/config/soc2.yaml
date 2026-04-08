@@ -1,0 +1,20 @@
+id: soc2
+label: "SOC 2"
+type: compliance
+description: "Controls supporting SOC 2 Trust Services Criteria (Security, Availability, Confidentiality) for Kubernetes workloads."
+items:
+  required:
+    - CLD-003
+    - CLD-009
+    - CLT-009
+    - CLT-011
+    - CLT-012
+    - CNT-001
+    - CNT-008
+    - CODE-001
+    - CODE-003
+  suggested:
+    - CLT-010
+    - CNT-009
+    - CODE-002
+    - CODE-006

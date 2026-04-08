@@ -1,0 +1,10 @@
+id: CLT-019
+title: "Apply Business Labels to Resources"
+description: |
+  To facilitate cost-allocation and tracking, map business logic into Kubernetes metadata. Common examples include identifying the assigned owner (`owner`), the project context (`project`), and the business unit (`business-unit`). Set these labels on your workloads to support external aggregation tools.
+tags: [application-development, tagging, business]
+references:
+  - title: "AWS Tagging Strategies"
+    url: "https://aws.amazon.com/answers/account-management/aws-tagging-strategies/"
+  - title: "Kubernetes Docs — Labels and Selectors"
+    url: "https://kubernetes.io/docs/concepts/overview/working-with-objects/labels/"

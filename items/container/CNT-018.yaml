@@ -1,0 +1,10 @@
+id: CNT-018
+title: "Configure the Appropriate Quality of Service (QoS)"
+description: |
+  When a node goes into an overcommitted state, Kubernetes evicts Pods based on their QoS class (Guaranteed, Burstable, BestEffort). By correctly configuring CPU/Memory requests and limits, you dictate the QoS for your Pods and determine their eviction priority.
+tags: [application-development, resource-utilisation, qos]
+references:
+  - title: "Kubernetes Docs — Configure Quality of Service for Pods"
+    url: "https://kubernetes.io/docs/tasks/configure-pod-container/quality-service-pod/"
+  - title: "Kubernetes Docs — Resource Management"
+    url: "https://kubernetes.io/docs/concepts/configuration/manage-resources-containers/"

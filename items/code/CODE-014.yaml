@@ -1,0 +1,16 @@
+id: CODE-014
+title: "Allow Deploying Containers Only from Known Registries"
+description: |
+  Prevent arbitrary code execution by restricting the container registries from which Kubernetes can pull images. 
+  Use a custom policy engine (like Open Policy Agent or Kyverno) to enforce that workloads only run images sourced 
+  from approved, internal, or trusted external registries.
+tags: [governance, admission-control, images]
+references:
+  - title: "Open Policy Agent — Kubernetes Tutorial"
+    url: "https://www.openpolicyagent.org/docs/latest/kubernetes-tutorial/"
+  - title: "Kyverno — Policy Library"
+    url: "https://kyverno.io/policies/"
+  - title: "Microsoft Threat Matrix — Compromised Image in Registry"
+    url: "https://microsoft.github.io/Threat-Matrix-for-Kubernetes/techniques/Compromised%20Image%20In%20Registry/"
+  - title: "Microsoft Threat Matrix — New Container"
+    url: "https://microsoft.github.io/Threat-Matrix-for-Kubernetes/techniques/New%20Container/"

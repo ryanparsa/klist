@@ -1,0 +1,12 @@
+id: CODE-016
+title: "Use Only Approved Domain Names in Ingress Hostnames"
+description: |
+  Block the usage of arbitrary or unauthorized domain names in Ingress manifests. Implement a custom admission 
+  policy that rejects Ingress resources attempting to route traffic through invalid or unapproved hostnames, 
+  ensuring all external routing aligns with corporate DNS policies.
+tags: [governance, ingress, policy]
+references:
+  - title: "Open Policy Agent — Kubernetes Ingress Tutorial"
+    url: "https://www.openpolicyagent.org/docs/latest/kubernetes-tutorial/#4-define-a-policy-and-load-it-into-opa-via-kubernetes"
+  - title: "Kyverno — Restrict Ingress Host"
+    url: "https://kyverno.io/policies/ingress/"

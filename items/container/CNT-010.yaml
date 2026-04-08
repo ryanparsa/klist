@@ -1,0 +1,27 @@
+id: CNT-010
+title: "Configure Readiness Probes for All Containers"
+description: |
+  Kubernetes routes traffic to a pod only when its readiness probe succeeds. Without a
+  readiness probe, the kubelet assumes the app is ready the moment the container starts —
+  which means requests may be sent to a pod that hasn't finished initialising, causing errors.
+
+  **Key rules:**
+  - The readiness probe must not check downstream dependencies (databases, APIs). Only check
+    local state. A failing dependency should not make your pod unreachable — that spreads
+    the failure upstream. See also CNT-013.
+  - Use a separate endpoint from the liveness probe (e.g., `/readyz`).
+  - Set `initialDelaySeconds` and `failureThreshold` appropriate to your app's startup time.
+
+  **What to check:**
+  ```
+  kubectl get pods -A -o json | \
+    jq '.items[] | select(.spec.containers[].readinessProbe == null) | .metadata.name'
+  ```
+tags: [application-development, probes, reliability]
+references:
+  - title: "Kubernetes Docs — Configure Liveness, Readiness and Startup Probes"
+    url: "https://kubernetes.io/docs/tasks/configure-pod-container/configure-liveness-readiness-startup-probes/"
+  - title: "Liveness Probes are Dangerous"
+    url: "https://srcco.de/posts/kubernetes-liveness-probes-are-dangerous.html"
+  - title: "Blog — Readiness Probes Best Practices"
+    url: "https://blog.colinbreck.com/kubernetes-liveness-and-readiness-probes-how-to-avoid-shooting-yourself-in-the-foot/"

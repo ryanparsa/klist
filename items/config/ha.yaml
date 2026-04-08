@@ -1,0 +1,11 @@
+id: ha
+label: "High Availability"
+type: architecture
+description: "Clusters configured for high availability with multiple control-plane nodes, where uptime and resilience are primary concerns."
+items:
+  required:
+    - CNT-008
+    - CLT-012
+  suggested:
+    - CLD-008
+    - CLT-006

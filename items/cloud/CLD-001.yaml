@@ -1,0 +1,22 @@
+id: CLD-001
+title: "Place Worker Nodes on Private Subnets"
+description: |
+  Worker nodes must reside exclusively on private subnets with no directly assigned public IP
+  addresses. Inbound traffic should reach workloads only through load balancers or ingress
+  controllers in the public subnet.
+
+  **What to check:** Verify that no worker node has a public IP. In AWS, check the node's
+  EC2 instance network interface. In GCP/Azure, verify no external IP is assigned.
+
+  **Remediation:** Reconfigure node groups/pools to use private subnets only. Route egress
+  traffic through a NAT gateway. Ensure load balancers handle all external-facing traffic.
+tags: [network, node-security, infrastructure]
+references:
+  - title: "PCI-DSS Requirement 1.2 — Network Controls"
+    url: "https://www.pcisecuritystandards.org/document_library/"
+  - title: "Kubernetes Docs — Securing a Cluster"
+    url: "https://kubernetes.io/docs/tasks/administer-cluster/securing-a-cluster/"
+  - title: "AWS EKS Best Practices — Network Security"
+    url: "https://docs.aws.amazon.com/eks/latest/best-practices/network-security.html"
+  - title: "Microsoft Threat Matrix — Using Cloud Credentials"
+    url: "https://microsoft.github.io/Threat-Matrix-for-Kubernetes/techniques/Using%20Cloud%20Credentials/"

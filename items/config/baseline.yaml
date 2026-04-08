@@ -1,0 +1,29 @@
+id: baseline
+label: "General Baseline"
+type: baseline
+description: "Core security and operational items recommended for every Kubernetes cluster, regardless of provider or environment."
+items:
+  required:
+    - CLT-001
+    - CLT-002
+    - CLT-003
+    - CLT-005
+    - CLT-006
+    - CLT-008
+    - CLT-009
+    - CLT-011
+    - CLT-012
+    - CNT-001
+    - CNT-002
+    - CNT-003
+    - CNT-004
+    - CNT-007
+    - CNT-008
+  suggested:
+    - CLD-001
+    - CLD-002
+    - CLT-010
+    - CLT-013
+    - CNT-005
+    - CNT-006
+    - CODE-003

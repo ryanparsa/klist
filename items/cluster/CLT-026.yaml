@@ -1,0 +1,13 @@
+id: CLT-026
+title: "Use OIDC for User Authentication"
+description: |
+  Avoid static tokens or basic authentication for human users. Integrate OpenID Connect (OIDC) to allow single sign-on (SSO) 
+  from trusted identity providers (like Google Identity, AWS IAM, or traditional AD) to authenticate with the Kubernetes API.
+tags: [configuration, authentication, security]
+references:
+  - title: "Kubernetes Docs — Authentication Strategies"
+    url: "https://kubernetes.io/docs/reference/access-authn-authz/authentication/"
+  - title: "The New Stack — Kubernetes Single Sign-On"
+    url: "https://thenewstack.io/kubernetes-single-sign-one-less-identity/"
+  - title: "Microsoft Threat Matrix — Using Cloud Credentials"
+    url: "https://microsoft.github.io/Threat-Matrix-for-Kubernetes/techniques/Using%20Cloud%20Credentials/"

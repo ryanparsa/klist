@@ -1,0 +1,10 @@
+id: CLT-021
+title: "Avoid Sidecars for Logging"
+description: |
+  Instead of deploying a sidecar container in every Pod to capture or transform logs, applications should emit natively formatted logs directly to standard outputs. Avoiding unnecessary sidecars reduces cluster overhead and memory pressure. Prefer node-level logging daemons for aggregation.
+tags: [application-development, logging, resources]
+references:
+  - title: "Twelve-Factor App — Logs"
+    url: "https://12factor.net/logs"
+  - title: "Kubernetes Docs — Logging Architecture"
+    url: "https://kubernetes.io/docs/concepts/cluster-administration/logging/"

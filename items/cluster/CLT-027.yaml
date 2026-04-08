@@ -1,0 +1,11 @@
+id: CLT-027
+title: "Restrict ServiceAccount Tokens to Workloads"
+description: |
+  ServiceAccount tokens are the preferred authentication strategy for applications and controllers running inside the cluster.
+  Do not distribute them or use them for human end-users trying to interact with the Kubernetes cluster API (use OIDC instead).
+tags: [configuration, authentication, rbac]
+references:
+  - title: "Kubernetes Docs — Configure Service Accounts"
+    url: "https://kubernetes.io/docs/tasks/configure-pod-container/configure-service-account/"
+  - title: "CIS Kubernetes Benchmark 5.1.6"
+    url: "https://workbench.cisecurity.org/benchmarks/16828"

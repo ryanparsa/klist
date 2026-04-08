@@ -1,0 +1,38 @@
+id: CLT-012
+title: "Apply Default-Deny NetworkPolicies in All Namespaces"
+description: |
+  Without NetworkPolicies, every pod in a cluster can reach any other pod on any port.
+  A single compromised workload can freely probe databases, internal services, and the
+  metadata API. A default-deny policy in every namespace closes this attack path.
+
+  **What to check:**
+
+  ```
+  kubectl get networkpolicy -A
+  ```
+
+  Every namespace must contain a default-deny-all ingress and egress policy. Verify with:
+
+  ```
+  kubectl get networkpolicy -n <namespace> -o yaml | grep policyTypes
+  ```
+
+  **Remediation:** Create a default-deny policy in every namespace, then selectively open
+  traffic with additional NetworkPolicies for legitimate flows. Use a CNI plugin that
+  enforces NetworkPolicies (Calico, Cilium, Weave Net — not flannel alone).
+tags: [network, network-policy, lateral-movement, zero-trust]
+references:
+  - title: "PCI-DSS Requirement 1.2 — Network Access Controls"
+    url: "https://www.pcisecuritystandards.org/document_library/"
+  - title: "CIS Kubernetes Benchmark 5.3.2"
+    url: "https://workbench.cisecurity.org/benchmarks/16828"
+  - title: "Kubernetes Docs — Network Policies"
+    url: "https://kubernetes.io/docs/concepts/services-networking/network-policies/"
+  - title: "Microsoft Threat Matrix — Network Mapping"
+    url: "https://microsoft.github.io/Threat-Matrix-for-Kubernetes/techniques/Network%20mapping/"
+  - title: "Microsoft Threat Matrix — Cluster Internal Networking"
+    url: "https://microsoft.github.io/Threat-Matrix-for-Kubernetes/techniques/Cluster%20internal%20networking/"
+  - title: "Microsoft Threat Matrix — Collecting Data from Pod"
+    url: "https://microsoft.github.io/Threat-Matrix-for-Kubernetes/techniques/Collecting%20Data%20from%20Pod/"
+  - title: "Microsoft Threat Matrix — Connect from Proxy Server"
+    url: "https://microsoft.github.io/Threat-Matrix-for-Kubernetes/techniques/Connect%20from%20Proxy%20server/"

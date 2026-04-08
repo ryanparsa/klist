@@ -1,0 +1,29 @@
+id: CNT-007
+title: "Use a Read-Only Root Filesystem"
+description: |
+  A writable root filesystem allows an attacker who gains code execution inside a container
+  to write malicious scripts, modify binaries, or persist backdoors across restarts. Setting
+  `readOnlyRootFilesystem: true` closes this vector.
+
+  **What to check:**
+
+  ```
+  kubectl get pods -A -o json | \
+    jq '.items[] | select(
+      .spec.containers[].securityContext.readOnlyRootFilesystem != true
+    ) | .metadata.name'
+  ```
+
+  **Remediation:** Add `readOnlyRootFilesystem: true` to every container's `securityContext`.
+  Mount `emptyDir` volumes for paths that legitimately need write access (e.g., `/tmp`,
+  application cache directories). Update Dockerfiles to not write to the image root at runtime.
+tags: [pod-security, filesystem, immutability, hardening]
+references:
+  - title: "PCI-DSS Requirement 5 — Protect All Systems Against Malware"
+    url: "https://www.pcisecuritystandards.org/document_library/"
+  - title: "SOC 2 CC6.8 — Change Management"
+    url: "https://www.aicpa.org/resources/article/soc-2-trust-service-principles"
+  - title: "CIS Kubernetes Benchmark 5.2.4"
+    url: "https://workbench.cisecurity.org/benchmarks/16828"
+  - title: "Microsoft Threat Matrix — Writable hostPath Mount"
+    url: "https://microsoft.github.io/Threat-Matrix-for-Kubernetes/techniques/Writable%20hostPath%20mount/"

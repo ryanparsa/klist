@@ -1,0 +1,29 @@
+id: CLT-009
+title: "Audit and Remove Wildcard RBAC Permissions"
+description: |
+  RBAC roles that use wildcard (`*`) verbs or resources grant far broader access than intended.
+  A single compromised service account with wildcard access can read all secrets, modify any
+  workload, or escalate privileges cluster-wide.
+
+  **What to check:**
+
+  ```
+  kubectl get clusterrolebindings,rolebindings -A -o json | \
+    jq '.items[].rules[]? | select(.verbs[] == "*" or .resources[] == "*")'
+  ```
+
+  **Remediation:** Replace wildcard rules with explicit, minimal permissions. Conduct a
+  quarterly review of all RoleBindings and ClusterRoleBindings. Remove any bindings that are
+  no longer required. Automate detection with tools such as RBAC Lookup, Krane, or Audit2RBAC.
+tags: [rbac, least-privilege, authorization]
+references:
+  - title: "SOC 2 CC6.1 — Logical Access Controls"
+    url: "https://www.aicpa.org/resources/article/soc-2-trust-service-principles"
+  - title: "PCI-DSS Requirement 7 — Restrict Access"
+    url: "https://www.pcisecuritystandards.org/document_library/"
+  - title: "OWASP Kubernetes Top 10 — K03: Overly Permissive RBAC"
+    url: "https://owasp.org/www-project-kubernetes-top-ten/"
+  - title: "Microsoft Threat Matrix — Exec into Container"
+    url: "https://microsoft.github.io/Threat-Matrix-for-Kubernetes/techniques/Exec%20into%20container/"
+  - title: "Microsoft Threat Matrix — Cluster-Admin Binding"
+    url: "https://microsoft.github.io/Threat-Matrix-for-Kubernetes/techniques/Cluster-admin%20binding/"

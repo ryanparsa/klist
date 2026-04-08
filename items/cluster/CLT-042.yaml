@@ -1,0 +1,27 @@
+id: CLT-042
+title: "Restrict Creation of ClusterRoleBindings to cluster-admin"
+description: |
+  The built-in `cluster-admin` ClusterRole grants unrestricted access to every resource and
+  operation in the cluster. An attacker or compromised account with permission to create
+  `ClusterRoleBindings` can escalate their own privileges by binding any identity to
+  `cluster-admin`, effectively taking over the cluster.
+
+  **What to check:** Identify who can create or modify ClusterRoleBindings:
+  ```
+  kubectl auth can-i create clusterrolebindings --all-namespaces --as <user-or-sa>
+  kubectl get clusterrolebindings -o json | \
+    jq '.items[] | select(.roleRef.name == "cluster-admin") | .subjects'
+  ```
+
+  **Remediation:** Restrict `create`, `update`, `patch`, and `delete` on `clusterrolebindings`
+  to a very small set of break-glass admin accounts only. Regularly audit and trim the list
+  of cluster-admin bindings. Alert via audit logs whenever a new ClusterRoleBinding is created
+  targeting `cluster-admin`.
+tags: [rbac, privilege-escalation, security, audit]
+references:
+  - title: "Kubernetes Docs — RBAC Authorization"
+    url: "https://kubernetes.io/docs/reference/access-authn-authz/rbac/"
+  - title: "Microsoft Threat Matrix — Cluster-Admin Binding"
+    url: "https://microsoft.github.io/Threat-Matrix-for-Kubernetes/techniques/Cluster-admin%20binding/"
+  - title: "CIS Kubernetes Benchmark 5.1.1"
+    url: "https://workbench.cisecurity.org/benchmarks/16828"

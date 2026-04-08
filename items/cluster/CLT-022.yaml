@@ -1,0 +1,10 @@
+id: CLT-022
+title: "Use Horizontal Pod Autoscaler for Variable Workloads"
+description: |
+  Rely on the Horizontal Pod Autoscaler (HPA) to automatically add or remove Pod replicas based on current usage metrics (e.g. CPU, memory, custom metrics). This ensures the application remains responsive during traffic spikes without wasting resources during quiet periods.
+tags: [application-development, scaling, hpa]
+references:
+  - title: "Kubernetes Docs — Horizontal Pod Autoscaling"
+    url: "https://kubernetes.io/docs/tasks/run-application/horizontal-pod-autoscale/"
+  - title: "Kubernetes Docs — HorizontalPodAutoscaler API"
+    url: "https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.29/#horizontalpodautoscaler-v2-autoscaling"

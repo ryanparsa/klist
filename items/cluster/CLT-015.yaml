@@ -1,0 +1,10 @@
+id: CLT-015
+title: "Use Pod Anti-Affinity Rules to Spread Workload"
+description: |
+  Even if you run several replicas of your Pods, a node failure will take down all replicas if they are scheduled on the same node. Use Pod anti-affinity rules to enforce that Pods from the same Deployment are spread across different nodes in the cluster.
+tags: [application-development, fault-tolerance, scheduling]
+references:
+  - title: "Kubernetes Docs — Inter-Pod Affinity and Anti-Affinity"
+    url: "https://kubernetes.io/docs/concepts/scheduling-eviction/assign-pod-node/#inter-pod-affinity-and-anti-affinity"
+  - title: "Kubernetes Docs — Assigning Pods to Nodes"
+    url: "https://kubernetes.io/docs/concepts/scheduling-eviction/assign-pod-node/"

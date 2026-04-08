@@ -1,0 +1,10 @@
+id: CNT-019
+title: "Use Ephemeral Local Filesystems"
+description: |
+  Containers should not store persistent state in their local filesystem. Local state prevents horizontal scaling and causes discrepancies between Pod replicas over time. Use an external storage service or a PersistentVolume mounted in the Pod to ensure state persists reliably and independent of the container lifecycle.
+tags: [application-development, storage, scaling]
+references:
+  - title: "Kubernetes Docs — Persistent Volumes"
+    url: "https://kubernetes.io/docs/concepts/storage/persistent-volumes/"
+  - title: "Twelve-Factor App — Processes"
+    url: "https://12factor.net/processes"

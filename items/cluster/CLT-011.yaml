@@ -1,0 +1,30 @@
+id: CLT-011
+title: "Enable API Server Audit Logging"
+description: |
+  Kubernetes audit logs record every request to the API server — who made it, what resource
+  was accessed, and what the outcome was. Without audit logging, detecting breaches,
+  satisfying compliance audits, and investigating incidents is impossible.
+
+  **What to check:**
+
+  ```
+  ps aux | grep kube-apiserver | grep audit-policy-file
+  ```
+
+  Flags `--audit-policy-file` and `--audit-log-path` must be set. The policy file must
+  capture at least `Metadata` level for all requests and `RequestResponse` for sensitive
+  resources (Secrets, ConfigMaps, ServiceAccounts).
+
+  **Remediation:** Create an audit policy YAML and pass it via `--audit-policy-file`. Configure
+  log rotation (`--audit-log-maxage`, `--audit-log-maxbackup`). Ship logs to a SIEM or
+  cloud-native logging service.
+tags: [audit, logging, compliance, api-server]
+references:
+  - title: "HIPAA Audit Controls (45 CFR § 164.312)"
+    url: "https://www.hhs.gov/hipaa/for-professionals/security/laws-regulations/index.html"
+  - title: "SOC 2 CC7.2 — Security Event Monitoring"
+    url: "https://www.aicpa.org/resources/article/soc-2-trust-service-principles"
+  - title: "Kubernetes Docs — Auditing"
+    url: "https://kubernetes.io/docs/tasks/debug/debug-cluster/audit/"
+  - title: "Microsoft Threat Matrix — Delete Kubernetes Events"
+    url: "https://microsoft.github.io/Threat-Matrix-for-Kubernetes/techniques/Delete%20K8S%20events/"

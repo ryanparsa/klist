@@ -1,0 +1,12 @@
+id: eks
+label: "Amazon EKS"
+type: provider
+description: "Running Kubernetes on Amazon Elastic Kubernetes Service. Covers EKS-specific controls for IAM, metadata access, and AWS logging."
+items:
+  required:
+    - CLD-003
+    - CLD-004
+    - CLD-009
+  suggested:
+    - CLD-005
+    - CLD-010

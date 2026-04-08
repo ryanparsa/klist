@@ -1,0 +1,15 @@
+id: CLT-029
+title: "Provision a Log Aggregation Tool"
+description: |
+  Use a log aggregation tool (like the EFK stack, DataDog, Sumo Logic, Stackdriver, or AWS CloudWatch) to gather and process logs. 
+  Logs scattered across ephemeral nodes will be lost when those nodes are naturally recycled; centralizing them is crucial for visibility and debugging.
+tags: [configuration, logging, observability]
+references:
+  - title: "Kubernetes Docs — Logging Architecture"
+    url: "https://kubernetes.io/docs/concepts/cluster-administration/logging/"
+  - title: "Fluentd — Open Source Data Collector"
+    url: "https://www.fluentd.org/"
+  - title: "Microsoft Threat Matrix — Delete Kubernetes Events"
+    url: "https://microsoft.github.io/Threat-Matrix-for-Kubernetes/techniques/Delete%20K8S%20events/"
+  - title: "Microsoft Threat Matrix — Clear Container Logs"
+    url: "https://microsoft.github.io/Threat-Matrix-for-Kubernetes/techniques/Clear%20container%20logs/"

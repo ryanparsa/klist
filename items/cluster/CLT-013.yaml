@@ -1,0 +1,26 @@
+id: CLT-013
+title: "Do Not Use the Default Namespace for Workloads"
+description: |
+  The `default` namespace has no resource quotas, no NetworkPolicies, and no PSS labels
+  applied by default. Deploying workloads into it bypasses namespace-level controls and
+  makes RBAC and network isolation harder to reason about.
+
+  **What to check:**
+
+  ```
+  kubectl get all -n default
+  ```
+
+  Only system or test resources should ever be in the default namespace.
+
+  **Remediation:** Create dedicated namespaces per team, environment, or application.
+  Apply ResourceQuotas, LimitRanges, and NetworkPolicies to each namespace. Enforce this
+  with an admission policy that rejects workloads targeting the default namespace.
+tags: [namespaces, isolation, hardening]
+references:
+  - title: "CIS Kubernetes Benchmark 5.7.4"
+    url: "https://workbench.cisecurity.org/benchmarks/16828"
+  - title: "Kubernetes Docs — Namespaces"
+    url: "https://kubernetes.io/docs/concepts/overview/working-with-objects/namespaces/"
+  - title: "NSA/CISA Kubernetes Hardening Guide"
+    url: "https://media.defense.gov/2022/Aug/29/2003066362/-1/-1/0/CTR_KUBERNETES_HARDENING_GUIDANCE_1.2_20220829.PDF"
