@@ -1,7 +1,7 @@
-# Task 05 — UI Components & Visual Polish
+# Task 05 — UI Components, Performance, & Polish
 
-**Touches:** `src/`
-**Goal:** Adopt shadcn/ui components and improve the visual quality of the checklist UI.
+**Touches:** `src/`, `components/ui/`, and project-level `.js` files
+**Goal:** Adopt shadcn/ui components, improve the visual quality of the checklist UI, and improve performance, accessibility, and code quality.
 
 ---
 
@@ -35,6 +35,7 @@ src/
 
 ## Your task
 
+### Phase 1: Visual Polish & Components
 1. **shadcn/ui adoption** — replace raw `<input>`, `<button>`, and layout primitives with proper shadcn/ui components (`Button`, `Input`, `Badge`, `Sheet` for the mobile sidebar, `ScrollArea`, etc.) where it reduces boilerplate and improves consistency. Install any missing shadcn components with `npx shadcn@latest add <component>`.
 
 2. **ChecklistItem polish** — the expand/collapse item detail (description, mitigations, tools, references) should feel polished:
@@ -52,6 +53,16 @@ src/
 4. **ScoreBar** — show item counts alongside the bar (e.g. "4 / 12 passed").
 
 5. **Search** — the search filter in `App.jsx` should match on tags in addition to title and description.
+
+### Phase 2: Performance, Accessibility & Code Quality
+6. **Accessibility** — add `aria-label` attributes to interactive elements (toggle buttons, filter controls, export/import). Ensure keyboard navigation works for item state cycling (pass → n/a → unchecked). Add visible focus styles for all focusable elements.
+
+7. **Performance** — memoize expensive derived values with `useMemo` and `useCallback` where re-renders are unnecessary, especially:
+   - Filtered item lists in `App.jsx`
+   - Priority resolution in `usePriorityResolution.js`
+   - Any derived state that is recomputed on every render
+
+8. **Code quality** — fix prop drilling that should be a React context, remove dead code (unused imports, unreachable branches, commented-out blocks), and ensure consistent file/component naming across `src/`.
 
 Do **not** change the YAML data format, the builder, or `public/checklist.json`.
 
