@@ -1,7 +1,9 @@
 id: self-managed
-label: "Self-Managed / On-Prem"
+label: Self-Managed / On-Prem
 type: provider
-description: "Clusters running on bare metal, VMs, or private infrastructure where the operator is responsible for all control-plane security."
+description: >-
+  Clusters running on bare metal, VMs, or private infrastructure where the
+  operator is responsible for all control-plane security.
 items:
   required:
     - CLD-001

@@ -1,12 +1,20 @@
 id: aks
-label: "Azure AKS"
+label: Azure AKS
 type: provider
-description: "Running Kubernetes on Azure Kubernetes Service. Covers AKS-specific controls for managed identity, IMDS access, and Azure Monitor."
+description: >-
+  Running Kubernetes on Azure Kubernetes Service. Covers AKS-specific controls
+  for managed identity, IMDS access, and Azure Monitor.
 items:
   required:
     - CLD-003
     - CLD-004
     - CLD-009
+    - CLD-013
+    - CLD-014
+    - CLD-016
+    - CLD-018
   suggested:
+    - CLD-001
     - CLD-005
+    - CLD-015
     - CLT-012
