@@ -1,7 +1,9 @@
 id: production
-label: "Production Environment"
+label: Production Environment
 type: baseline
-description: "Additional controls required when operating a production-grade cluster with real user data and uptime expectations."
+description: >-
+  Additional controls required when operating a production-grade cluster with
+  real user data and uptime expectations.
 items:
   required:
     - CLD-001
@@ -12,14 +14,45 @@ items:
     - CLD-021
     - CLT-010
     - CLT-013
-    - CLT-047
+    - CLT-014
+    - CLT-016
+    - CLT-017
+    - CLT-018
+    - CLT-019
+    - CLT-030
+    - CLT-039
+    - CLT-045
+    - CLT-046
     - CNT-006
     - CNT-009
+    - CNT-010
+    - CNT-011
+    - CNT-012
+    - CNT-013
+    - CNT-014
+    - CNT-015
+    - CNT-018
+    - CNT-019
+    - CNT-021
+    - CNT-023
+    - CNT-024
     - CODE-001
     - CODE-002
+    - CODE-008
+    - CODE-013
+    - CODE-015
+    - CODE-016
   suggested:
     - CLD-005
     - CLD-006
     - CLD-010
+    - CLD-011
+    - CLT-015
+    - CLT-020
+    - CLT-021
+    - CLT-022
+    - CLT-023
+    - CNT-016
+    - CNT-017
     - CODE-004
     - CODE-005

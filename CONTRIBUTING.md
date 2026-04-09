@@ -47,7 +47,12 @@ title: "Short, action-oriented label"
 description: |
   Explain what the control is, why it matters, and how to remediate it.
   Include what to check and what the fix looks like.
+mitigations: # Optional array of strings for remediation steps
+  - "List of actionable steps or strategies to reduce the risk."
 tags: [network, hardening]
+tools: # Optional array of tools
+  - title: "Tool Name"
+    url: "https://..."
 references:
   - title: "Human-readable source name"
     url: "https://..."
@@ -59,6 +64,7 @@ references:
 - `description` should cover: what the risk is, how to verify it, and how to fix it.
 - Reuse existing tags where possible — check `public/checklist.json` → `all_tags` for the current list.
 - IDs are never reused or renumbered. Gaps are fine.
+- `mitigations` must be an array of strings. `tools` must be an array of objects with `title` and `url`.
 
 ---
 
@@ -95,7 +101,7 @@ items:
 | `baseline` | Applies broadly to all or most clusters |
 | `provider` | Specific to a cloud provider (EKS, GKE, AKS, self-managed) |
 | `architecture` | Specific to a deployment pattern (HA, multi-cluster) |
-| `compliance` | Maps to a regulatory framework (CIS, HIPAA, PCI-DSS, SOC 2) |
+| `compliance` | Maps to a regulatory framework (CIS, HIPAA, PCI-DSS, SOC 2, OWASP Kubernetes Top 10) |
 
 **Rules:**
 - `id` must match the filename exactly.
@@ -114,13 +120,13 @@ node builder/build.js
 On success:
 
 ```
-✔ 39 items loaded
-    cloud        10
-    cluster      13
-    container    9
-    code         7
-✔ 12 configs loaded
-✔ 65 unique tags extracted
+✔ 103 items loaded
+    cloud        20
+    cluster      46
+    container    24
+    code         13
+✔ 13 configs loaded
+✔ 114 unique tags extracted
 ✔ public/checklist.json written
 ```
 
