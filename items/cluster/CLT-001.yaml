@@ -1,5 +1,5 @@
 id: CLT-001
-title: "Disable Anonymous Authentication on the API Server"
+title: Disable Anonymous Authentication on the API Server
 description: |
   By default, Kubernetes may allow unauthenticated requests to reach the API server. Setting
   `--anonymous-auth=false` ensures every request must carry valid credentials, eliminating
@@ -14,19 +14,28 @@ description: |
 
   The flag must be `--anonymous-auth=false`. If the flag is absent, the default is `true`
   (insecure).
-
-  **Remediation:** Add `--anonymous-auth=false` to the kube-apiserver command arguments in
-  `/etc/kubernetes/manifests/kube-apiserver.yaml`. On managed clusters (EKS/GKE/AKS), this
-  is typically controlled through cluster configuration options.
-tags: [api-server, authentication, hardening]
+mitigations:
+  - |-
+    Add `--anonymous-auth=false` to the kube-apiserver command arguments in
+    `/etc/kubernetes/manifests/kube-apiserver.yaml`. On managed clusters (EKS/GKE/AKS), this
+    is typically controlled through cluster configuration options.
+tags:
+  - api-server
+  - authentication
+  - hardening
+tools:
+  - title: kube-bench
+    url: https://github.com/aquasecurity/kube-bench
+  - title: Trivy
+    url: https://trivy.dev/
 references:
-  - title: "CIS Kubernetes Benchmark 1.2.1"
-    url: "https://workbench.cisecurity.org/benchmarks/16828"
-  - title: "NSA/CISA Kubernetes Hardening Guide"
-    url: "https://media.defense.gov/2022/Aug/29/2003066362/-1/-1/0/CTR_KUBERNETES_HARDENING_GUIDANCE_1.2_20220829.PDF"
-  - title: "Kubernetes Docs — API Server Flags"
-    url: "https://kubernetes.io/docs/reference/command-line-tools-reference/kube-apiserver/"
-  - title: "Microsoft Threat Matrix — Access Kubernetes API Server"
-    url: "https://microsoft.github.io/Threat-Matrix-for-Kubernetes/techniques/Access%20the%20K8S%20API%20server/"
-  - title: "Microsoft Threat Matrix — Connect from Proxy Server"
-    url: "https://microsoft.github.io/Threat-Matrix-for-Kubernetes/techniques/Connect%20from%20Proxy%20server/"
+  - title: CIS Kubernetes Benchmark 1.2.1
+    url: https://workbench.cisecurity.org/benchmarks/16828
+  - title: NSA/CISA Kubernetes Hardening Guide
+    url: https://media.defense.gov/2022/Aug/29/2003066362/-1/-1/0/CTR_KUBERNETES_HARDENING_GUIDANCE_1.2_20220829.PDF
+  - title: Kubernetes Docs - API Server Flags
+    url: https://kubernetes.io/docs/reference/command-line-tools-reference/kube-apiserver/
+  - title: Microsoft Threat Matrix - Access Kubernetes API Server
+    url: https://microsoft.github.io/Threat-Matrix-for-Kubernetes/techniques/Access%20the%20K8S%20API%20server/
+  - title: Microsoft Threat Matrix - Connect from Proxy Server
+    url: https://microsoft.github.io/Threat-Matrix-for-Kubernetes/techniques/Connect%20from%20Proxy%20server/

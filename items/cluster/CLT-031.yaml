@@ -1,8 +1,8 @@
 id: CLT-031
-title: "Enforce Pod Security Standards via Pod Security Admission"
+title: Enforce Pod Security Standards via Pod Security Admission
 description: |
-  Kubernetes provides Pod Security Standards (PSS) — three predefined security profiles
-  (Privileged, Baseline, Restricted) — enforced at the namespace level by the built-in
+  Kubernetes provides Pod Security Standards (PSS) - three predefined security profiles
+  (Privileged, Baseline, Restricted) - enforced at the namespace level by the built-in
   Pod Security Admission (PSA) controller (available since Kubernetes 1.23, stable in 1.25).
 
   > Note: PodSecurityPolicy (PSP) was removed in Kubernetes 1.25. If you are running an
@@ -10,25 +10,37 @@ description: |
   > Gatekeeper) is required before upgrading.
 
   **Profiles:**
-  - `Privileged` — no restrictions (only for system/infrastructure namespaces)
-  - `Baseline` — prevents the most egregious misconfigurations (no privileged containers, no host namespaces)
-  - `Restricted` — follows current pod hardening best practices (non-root, read-only FS, seccomp)
+  - `Privileged` - no restrictions (only for system/infrastructure namespaces)
+  - `Baseline` - prevents the most egregious misconfigurations (no privileged containers, no host namespaces)
+  - `Restricted` - follows current pod hardening best practices (non-root, read-only FS, seccomp)
 
   **What to check:** Verify namespaces have a PSA label:
   ```
   kubectl get namespaces -o json | jq '.items[].metadata.labels | select(."pod-security.kubernetes.io/enforce" != null)'
   ```
-
-  **Remediation:** Label production namespaces with `pod-security.kubernetes.io/enforce: restricted`
-  (or `baseline` at minimum). Use `warn` and `audit` modes first to surface violations before
-  switching to `enforce`. Supplement with Kyverno or OPA Gatekeeper for fine-grained policies.
-tags: [governance, security, admission-control, pod-security]
+mitigations:
+  - |-
+    Label production namespaces with `pod-security.kubernetes.io/enforce: restricted`
+    (or `baseline` at minimum). Use `warn` and `audit` modes first to surface violations before
+    switching to `enforce`. Supplement with Kyverno or OPA Gatekeeper for fine-grained policies.
+tags:
+  - governance
+  - security
+  - admission-control
+  - pod-security
+tools:
+  - title: Kyverno
+    url: https://kyverno.io/
+  - title: OPA Gatekeeper
+    url: https://open-policy-agent.github.io/gatekeeper/
+  - title: kube-bench
+    url: https://github.com/aquasecurity/kube-bench
 references:
-  - title: "Kubernetes Docs — Pod Security Admission"
-    url: "https://kubernetes.io/docs/concepts/security/pod-security-admission/"
-  - title: "Kubernetes Docs — Pod Security Standards"
-    url: "https://kubernetes.io/docs/concepts/security/pod-security-standards/"
-  - title: "CIS Kubernetes Benchmark 5.2"
-    url: "https://workbench.cisecurity.org/benchmarks/16828"
-  - title: "Microsoft Threat Matrix — Privileged Container"
-    url: "https://microsoft.github.io/Threat-Matrix-for-Kubernetes/techniques/Privileged%20container/"
+  - title: Kubernetes Docs - Pod Security Admission
+    url: https://kubernetes.io/docs/concepts/security/pod-security-admission/
+  - title: Kubernetes Docs - Pod Security Standards
+    url: https://kubernetes.io/docs/concepts/security/pod-security-standards/
+  - title: CIS Kubernetes Benchmark 5.2
+    url: https://workbench.cisecurity.org/benchmarks/16828
+  - title: Microsoft Threat Matrix - Privileged Container
+    url: https://microsoft.github.io/Threat-Matrix-for-Kubernetes/techniques/Privileged%20container/

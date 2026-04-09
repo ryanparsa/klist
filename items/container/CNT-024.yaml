@@ -1,5 +1,5 @@
 id: CNT-024
-title: "Block Sidecar Injection from Untrusted Sources"
+title: Block Sidecar Injection from Untrusted Sources
 description: |
   Sidecar containers share the network namespace and pod lifecycle of the main container,
   making them a powerful injection point. Attackers with permissions to modify pod definitions
@@ -17,16 +17,22 @@ description: |
     kubectl auth can-i patch pods --all-namespaces --as <service-account>
     ```
   - Are all containers in pods validated against an image allow-list?
-
-  **Remediation:** Restrict `patch` and `update` on pods to only trusted service accounts
-  (e.g., Istio operator, approved service mesh). Audit all MutatingWebhookConfigurations —
-  each webhook should have a narrow `namespaceSelector` and be from a trusted source.
-  Use image admission policies (CODE-014) to ensure injected images come from approved registries.
-tags: [pod-security, execution, persistence, admission-control]
+mitigations:
+  - |-
+    Restrict `patch` and `update` on pods to only trusted service accounts
+    (e.g., Istio operator, approved service mesh). Audit all MutatingWebhookConfigurations -
+    each webhook should have a narrow `namespaceSelector` and be from a trusted source.
+    Use image admission policies (CODE-014) to ensure injected images come from approved registries.
+tags:
+  - pod-security
+  - execution
+  - persistence
+  - admission-control
+tools: []
 references:
-  - title: "Kubernetes Docs — Admission Webhooks"
-    url: "https://kubernetes.io/docs/reference/access-authn-authz/extensible-admission-controllers/"
-  - title: "Microsoft Threat Matrix — Sidecar Injection"
-    url: "https://microsoft.github.io/Threat-Matrix-for-Kubernetes/techniques/Sidecar%20Injection/"
-  - title: "NSA/CISA Kubernetes Hardening Guide"
-    url: "https://media.defense.gov/2022/Aug/29/2003066362/-1/-1/0/CTR_KUBERNETES_HARDENING_GUIDANCE_1.2_20220829.PDF"
+  - title: Kubernetes Docs - Admission Webhooks
+    url: https://kubernetes.io/docs/reference/access-authn-authz/extensible-admission-controllers/
+  - title: Microsoft Threat Matrix - Sidecar Injection
+    url: https://microsoft.github.io/Threat-Matrix-for-Kubernetes/techniques/Sidecar%20Injection/
+  - title: NSA/CISA Kubernetes Hardening Guide
+    url: https://media.defense.gov/2022/Aug/29/2003066362/-1/-1/0/CTR_KUBERNETES_HARDENING_GUIDANCE_1.2_20220829.PDF

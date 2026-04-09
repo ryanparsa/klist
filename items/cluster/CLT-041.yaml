@@ -1,5 +1,5 @@
 id: CLT-041
-title: "Restrict Access to Kubernetes Dashboard and Sensitive Interfaces"
+title: Restrict Access to Kubernetes Dashboard and Sensitive Interfaces
 description: |
   Management UIs such as the Kubernetes Dashboard, Argo Workflows, Kubeflow, and Weave Scope
   provide broad cluster visibility and control. If exposed to the internet or accessible inside
@@ -17,15 +17,25 @@ description: |
     kubectl get clusterrolebinding kubernetes-dashboard -o yaml 2>/dev/null
     ```
   - Are management interfaces accessible within the cluster without authentication?
-
-  **Remediation:** Never expose management UIs via a public LoadBalancer or NodePort.
-  Require authentication (OIDC, SSO) for all such interfaces. Apply least-privilege RBAC
-  to dashboard service accounts. Prefer `kubectl port-forward` for operator access.
-tags: [network, access-control, hardening, discovery]
+mitigations:
+  - |-
+    Never expose management UIs via a public LoadBalancer or NodePort.
+    Require authentication (OIDC, SSO) for all such interfaces. Apply least-privilege RBAC
+    to dashboard service accounts. Prefer `kubectl port-forward` for operator access.
+tags:
+  - network
+  - access-control
+  - hardening
+  - discovery
+tools:
+  - title: Kyverno
+    url: https://kyverno.io/
+  - title: Falco
+    url: https://falco.org/
 references:
-  - title: "Kubernetes Docs — Web UI (Dashboard)"
-    url: "https://kubernetes.io/docs/tasks/access-application-cluster/web-ui-dashboard/"
-  - title: "Microsoft Threat Matrix — Exposed Sensitive Interfaces"
-    url: "https://microsoft.github.io/Threat-Matrix-for-Kubernetes/techniques/Exposed%20sensitive%20interfaces/"
-  - title: "NSA/CISA Kubernetes Hardening Guide"
-    url: "https://media.defense.gov/2022/Aug/29/2003066362/-1/-1/0/CTR_KUBERNETES_HARDENING_GUIDANCE_1.2_20220829.PDF"
+  - title: Kubernetes Docs - Web UI (Dashboard)
+    url: https://kubernetes.io/docs/tasks/access-application-cluster/web-ui-dashboard/
+  - title: Microsoft Threat Matrix - Exposed Sensitive Interfaces
+    url: https://microsoft.github.io/Threat-Matrix-for-Kubernetes/techniques/Exposed%20sensitive%20interfaces/
+  - title: NSA/CISA Kubernetes Hardening Guide
+    url: https://media.defense.gov/2022/Aug/29/2003066362/-1/-1/0/CTR_KUBERNETES_HARDENING_GUIDANCE_1.2_20220829.PDF

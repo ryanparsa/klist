@@ -1,9 +1,9 @@
 id: CLT-007
-title: "Use a Dedicated Certificate Authority for etcd"
+title: Use a Dedicated Certificate Authority for etcd
 description: |
-  etcd is the backing store for all cluster state and secrets. Its certificate authority
-  must be separate from the main Kubernetes CA so that a compromised Kubernetes component
-  cannot forge etcd client certificates.
+  etcd is the backing store for all cluster state and secrets. If etcd shares a certificate authority 
+  with the main Kubernetes cluster, a compromised Kubernetes component could forge etcd client certificates 
+  and gain direct root access to the datastore, bypassing RBAC entirely.
 
   **What to check:**
 
@@ -13,15 +13,23 @@ description: |
 
   Verify the CA file referenced by `--trusted-ca-file` is different from the Kubernetes
   cluster CA (`/etc/kubernetes/pki/ca.crt`).
-
-  **Remediation:** Generate a separate CA for etcd during cluster bootstrap (e.g., kubeadm
-  does this by default via `/etc/kubernetes/pki/etcd/ca.crt`). Do not reuse the cluster CA
-  for etcd peer and client certificates.
-tags: [etcd, pki, tls, certificates]
+mitigations:
+  - |-
+    Generate a separate CA for etcd during cluster bootstrap (e.g., kubeadm
+    does this by default via `/etc/kubernetes/pki/etcd/ca.crt`). Do not reuse the cluster CA
+    for etcd peer and client certificates.
+tags:
+  - etcd
+  - pki
+  - tls
+  - certificates
+tools:
+  - title: kube-bench
+    url: https://github.com/aquasecurity/kube-bench
 references:
-  - title: "CIS Kubernetes Benchmark 2.7"
-    url: "https://workbench.cisecurity.org/benchmarks/16828"
-  - title: "Kubernetes Docs — etcd Security"
-    url: "https://etcd.io/docs/v3.5/op-guide/security/"
-  - title: "NSA/CISA Kubernetes Hardening Guide"
-    url: "https://media.defense.gov/2022/Aug/29/2003066362/-1/-1/0/CTR_KUBERNETES_HARDENING_GUIDANCE_1.2_20220829.PDF"
+  - title: CIS Kubernetes Benchmark 2.7
+    url: https://workbench.cisecurity.org/benchmarks/16828
+  - title: Kubernetes Docs - etcd Security
+    url: https://etcd.io/docs/v3.5/op-guide/security/
+  - title: NSA/CISA Kubernetes Hardening Guide
+    url: https://media.defense.gov/2022/Aug/29/2003066362/-1/-1/0/CTR_KUBERNETES_HARDENING_GUIDANCE_1.2_20220829.PDF

@@ -1,10 +1,10 @@
 id: CLT-039
-title: "Restrict CoreDNS Configuration Write Access"
+title: Restrict CoreDNS Configuration Write Access
 description: |
   CoreDNS is the cluster's built-in DNS server. Its configuration is stored in the `coredns`
   ConfigMap in the `kube-system` namespace. An attacker with write access to this ConfigMap
   can inject malicious DNS rewrites, redirecting cluster-internal traffic to adversary-controlled
-  endpoints — a technique known as CoreDNS poisoning.
+  endpoints - a technique known as CoreDNS poisoning.
 
   **What to check:** Verify who can patch or update the CoreDNS ConfigMap:
   ```
@@ -13,15 +13,25 @@ description: |
 
   Review all RoleBindings and ClusterRoleBindings that grant `update`/`patch`/`create`
   on ConfigMaps in `kube-system`.
-
-  **Remediation:** Remove ConfigMap write permissions from non-infrastructure service accounts.
-  Use a Kyverno or OPA policy to protect the `coredns` ConfigMap specifically. Monitor the
-  ConfigMap for unexpected changes via audit logging or GitOps drift detection.
-tags: [dns, network, lateral-movement, hardening]
+mitigations:
+  - |-
+    Remove ConfigMap write permissions from non-infrastructure service accounts.
+    Use a Kyverno or OPA policy to protect the `coredns` ConfigMap specifically. Monitor the
+    ConfigMap for unexpected changes via audit logging or GitOps drift detection.
+tags:
+  - dns
+  - network
+  - lateral-movement
+  - hardening
+tools:
+  - title: Kyverno
+    url: https://kyverno.io/
+  - title: Falco
+    url: https://falco.org/
 references:
-  - title: "Kubernetes Docs — DNS for Services and Pods"
-    url: "https://kubernetes.io/docs/concepts/services-networking/dns-pod-service/"
-  - title: "Microsoft Threat Matrix — CoreDNS Poisoning"
-    url: "https://microsoft.github.io/Threat-Matrix-for-Kubernetes/techniques/CoreDNS%20poisoning/"
-  - title: "CIS Kubernetes Benchmark 5.1.3"
-    url: "https://workbench.cisecurity.org/benchmarks/16828"
+  - title: Kubernetes Docs - DNS for Services and Pods
+    url: https://kubernetes.io/docs/concepts/services-networking/dns-pod-service/
+  - title: Microsoft Threat Matrix - CoreDNS Poisoning
+    url: https://microsoft.github.io/Threat-Matrix-for-Kubernetes/techniques/CoreDNS%20poisoning/
+  - title: CIS Kubernetes Benchmark 5.1.3
+    url: https://workbench.cisecurity.org/benchmarks/16828

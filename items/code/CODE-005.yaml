@@ -1,5 +1,5 @@
 id: CODE-005
-title: "Sign Container Images and Verify at Admission"
+title: Sign Container Images and Verify at Admission
 description: |
   Container image signing creates a cryptographic attestation that an image was built by a
   trusted pipeline and has not been tampered with. Combined with an admission webhook that
@@ -13,16 +13,26 @@ description: |
   ```
   cosign verify --key cosign.pub <registry>/<image>:<tag>
   ```
-
-  **Remediation:** Integrate `cosign sign` into the CI pipeline after image push. Deploy a
-  verification admission policy that rejects unsigned images. Store signing keys in a KMS.
-tags: [supply-chain, image-signing, admission-control, ci-cd]
+mitigations:
+  - |-
+    Integrate `cosign sign` into the CI pipeline after image push. Deploy a
+    verification admission policy that rejects unsigned images. Store signing keys in a KMS.
+tags:
+  - supply-chain
+  - image-signing
+  - admission-control
+  - ci-cd
+tools:
+  - title: Cosign
+    url: https://docs.sigstore.dev/
+  - title: Kyverno
+    url: https://kyverno.io/
 references:
-  - title: "CIS Kubernetes Benchmark 5.5.1"
-    url: "https://workbench.cisecurity.org/benchmarks/16828"
-  - title: "Sigstore / Cosign"
-    url: "https://docs.sigstore.dev/"
-  - title: "SLSA Framework v1.0"
-    url: "https://slsa.dev/spec/v1.0/"
-  - title: "Microsoft Threat Matrix — Compromised Image in Registry"
-    url: "https://microsoft.github.io/Threat-Matrix-for-Kubernetes/techniques/Compromised%20Image%20In%20Registry/"
+  - title: CIS Kubernetes Benchmark 5.5.1
+    url: https://workbench.cisecurity.org/benchmarks/16828
+  - title: Sigstore / Cosign
+    url: https://docs.sigstore.dev/
+  - title: SLSA Framework v1.0
+    url: https://slsa.dev/spec/v1.0/
+  - title: Microsoft Threat Matrix - Compromised Image in Registry
+    url: https://microsoft.github.io/Threat-Matrix-for-Kubernetes/techniques/Compromised%20Image%20In%20Registry/

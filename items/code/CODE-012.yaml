@@ -1,10 +1,25 @@
 id: CODE-012
-title: "Log to stdout and stderr"
+title: Log to stdout and stderr
 description: |
-  Applications should perform passive logging: they should print log output directly to `stdout` and `stderr` instead of making network connections to intermediate aggregators or writing to database/index sinks directly. This allows external tools or daemonsets to collect, format, and route the logs cleanly.
-tags: [application-development, logging, observability]
+  Applications that write logs directly to files, databases, or network aggregators bypass the cluster's native logging mechanisms. This fragments observability, increases application complexity, and can cause data loss if the pod terminates before logs are shipped.
+mitigations:
+  - |-
+    Update the application to write all log output using the standard library's
+    stdout/stderr streams (e.g., `fmt.Println` in Go, `console.log` in Node.js, `print` in
+    Python). Remove any direct log-shipping integrations (e.g., Fluentd clients, Logstash
+    appenders) from the application code itself. Use structured logging (JSON) so that
+    external aggregators can parse and index fields without custom parsers.
+tags:
+  - application-development
+  - logging
+  - observability
+tools:
+  - title: Fluentd
+    url: https://www.fluentd.org/
+  - title: Loki
+    url: https://grafana.com/oss/loki/
 references:
-  - title: "Twelve-Factor App — Logs"
-    url: "https://12factor.net/logs"
-  - title: "Kubernetes Docs — Logging Architecture"
-    url: "https://kubernetes.io/docs/concepts/cluster-administration/logging/"
+  - title: Twelve-Factor App - Logs
+    url: https://12factor.net/logs
+  - title: Kubernetes Docs - Logging Architecture
+    url: https://kubernetes.io/docs/concepts/cluster-administration/logging/

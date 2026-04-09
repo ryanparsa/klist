@@ -1,5 +1,5 @@
 id: CLT-046
-title: "Implement Data Backup Strategy for Persistent Volumes"
+title: Implement Data Backup Strategy for Persistent Volumes
 description: |
   Attackers with sufficient permissions may destroy persistent data by deleting PersistentVolumes,
   PersistentVolumeClaims, or the underlying cloud storage. Without a tested backup strategy,
@@ -13,16 +13,24 @@ description: |
     kubectl get pvc -A
     kubectl get volumesnapshots -A 2>/dev/null
     ```
-
-  **Remediation:** Use cloud-native volume snapshot APIs (AWS EBS Snapshots, GCP Persistent
-  Disk Snapshots, Azure Disk Snapshots) scheduled via Kubernetes VolumeSnapshot objects or
-  tools like Velero. Store snapshots in a separate, restricted account. Test restore procedures
-  at least quarterly. Apply RBAC to restrict who can delete PVCs and PVs.
-tags: [backup, data-protection, disaster-recovery, stateful]
+mitigations:
+  - |-
+    Use cloud-native volume snapshot APIs (AWS EBS Snapshots, GCP Persistent
+    Disk Snapshots, Azure Disk Snapshots) scheduled via Kubernetes VolumeSnapshot objects or
+    tools like Velero. Store snapshots in a separate, restricted account. Test restore procedures
+    at least quarterly. Apply RBAC to restrict who can delete PVCs and PVs.
+tags:
+  - backup
+  - data-protection
+  - disaster-recovery
+  - stateful
+tools:
+  - title: Velero
+    url: https://velero.io/
 references:
-  - title: "Kubernetes Docs — Persistent Volumes"
-    url: "https://kubernetes.io/docs/concepts/storage/persistent-volumes/"
-  - title: "Microsoft Threat Matrix — Data Destruction"
-    url: "https://microsoft.github.io/Threat-Matrix-for-Kubernetes/techniques/Data%20destruction/"
-  - title: "Velero — Backup and Restore for Kubernetes"
-    url: "https://velero.io/docs/"
+  - title: Kubernetes Docs - Persistent Volumes
+    url: https://kubernetes.io/docs/concepts/storage/persistent-volumes/
+  - title: Microsoft Threat Matrix - Data Destruction
+    url: https://microsoft.github.io/Threat-Matrix-for-Kubernetes/techniques/Data%20destruction/
+  - title: Velero - Backup and Restore for Kubernetes
+    url: https://velero.io/docs/

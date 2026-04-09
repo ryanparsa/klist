@@ -1,10 +1,24 @@
 id: CLT-016
-title: "Set Pod Disruption Budgets"
+title: Set Pod Disruption Budgets
 description: |
-  When a node is drained, all Pods on that node are deleted and rescheduled, which could affect availability under heavy load. To protect Deployments from unexpected events that delete several Pods simultaneously, define a Pod Disruption Budget (e.g. guaranteeing at least N Pods are always running).
-tags: [application-development, fault-tolerance, availability]
+  When a node is drained, all Pods on that node are deleted and rescheduled, which could affect availability under heavy load. Without a Pod Disruption Budget, Kubernetes may evict too many Pods simultaneously during voluntary disruptions, leading to application downtime.
+mitigations:
+  - |-
+    Create a `PodDisruptionBudget` for each Deployment that must remain available
+    during maintenance. Use `minAvailable: 1` (or a percentage) to guarantee at least one
+    replica is running during voluntary disruptions such as node drains and cluster upgrades.
+    Enforce PDB existence with Kyverno or OPA Gatekeeper policies.
+tags:
+  - application-development
+  - fault-tolerance
+  - availability
+tools:
+  - title: kube-score
+    url: https://github.com/zegl/kube-score
+  - title: Kyverno
+    url: https://kyverno.io/
 references:
-  - title: "Kubernetes Docs — Disruptions"
-    url: "https://kubernetes.io/docs/concepts/workloads/pods/disruptions/"
-  - title: "Kubernetes Docs — Configure Pod Disruption Budgets"
-    url: "https://kubernetes.io/docs/tasks/run-application/configure-pdb/"
+  - title: Kubernetes Docs - Disruptions
+    url: https://kubernetes.io/docs/concepts/workloads/pods/disruptions/
+  - title: Kubernetes Docs - Configure Pod Disruption Budgets
+    url: https://kubernetes.io/docs/tasks/run-application/configure-pdb/

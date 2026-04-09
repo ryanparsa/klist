@@ -1,10 +1,17 @@
 id: CNT-016
-title: "Keep CPU Requests to 1 CPU or Below"
+title: Keep CPU Requests to 1 CPU or Below
 description: |
-  Unless running computational intensive jobs, it is recommended to set your CPU requests to 1 CPU or below. Excessive CPU requests constrain the scheduler and may prevent Pods from being optimally binned and packed on available nodes.
-tags: [application-development, resource-utilisation, performance]
+  Excessive CPU requests constrain the scheduler and may prevent Pods from being optimally binned and packed on available nodes.
+mitigations:
+  - |-
+    Unless running computational intensive jobs, it is recommended to set your CPU requests to 1 CPU or below.
+tags:
+  - application-development
+  - resource-utilisation
+  - performance
+tools: []
 references:
   - title: "Understanding Resource Limits in Kubernetes: CPU Time"
-    url: "https://medium.com/@betz.mark/understanding-resource-limits-in-kubernetes-cpu-time-9eff74d3161b"
-  - title: "Kubernetes Docs — Resource Management"
-    url: "https://kubernetes.io/docs/concepts/configuration/manage-resources-containers/"
+    url: https://medium.com/@betz.mark/understanding-resource-limits-in-kubernetes-cpu-time-9eff74d3161b
+  - title: Kubernetes Docs - Resource Management
+    url: https://kubernetes.io/docs/concepts/configuration/manage-resources-containers/

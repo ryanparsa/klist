@@ -1,12 +1,19 @@
 id: CNT-020
-title: "Mount Secrets as Volumes Rather Than Environment Variables"
+title: Mount Secrets as Volumes Rather Than Environment Variables
 description: |
-  Avoid storing sensitive configurations (credentials, tokens, certificates) as environment variables in containers. Environment variables can sometimes be inspected via system tools, crash dumps, or error logs. Always mount Secret objects securely as temporary tmpfs volumes.
-tags: [application-development, secrets, security]
+  Environment variables can sometimes be inspected via system tools, crash dumps, or error logs, leaking sensitive configurations (credentials, tokens, certificates).
+mitigations:
+  - |-
+    Avoid storing sensitive configurations as environment variables. Always mount Secret objects securely as temporary tmpfs volumes.
+tags:
+  - application-development
+  - secrets
+  - security
+tools: []
 references:
-  - title: "Kubernetes Docs — Secrets"
-    url: "https://kubernetes.io/docs/concepts/configuration/secret/"
-  - title: "CIS Kubernetes Benchmark 5.4.1"
-    url: "https://workbench.cisecurity.org/benchmarks/16828"
-  - title: "Microsoft Threat Matrix — Application Credentials in Configuration Files"
-    url: "https://microsoft.github.io/Threat-Matrix-for-Kubernetes/techniques/Application%20credentials%20in%20configuration%20files/"
+  - title: Kubernetes Docs - Secrets
+    url: https://kubernetes.io/docs/concepts/configuration/secret/
+  - title: CIS Kubernetes Benchmark 5.4.1
+    url: https://workbench.cisecurity.org/benchmarks/16828
+  - title: Microsoft Threat Matrix - Application Credentials in Configuration Files
+    url: https://microsoft.github.io/Threat-Matrix-for-Kubernetes/techniques/Application%20credentials%20in%20configuration%20files/

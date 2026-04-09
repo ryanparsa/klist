@@ -1,16 +1,28 @@
 id: CODE-014
-title: "Allow Deploying Containers Only from Known Registries"
+title: Allow Deploying Containers Only from Known Registries
 description: |
-  Prevent arbitrary code execution by restricting the container registries from which Kubernetes can pull images. 
-  Use a custom policy engine (like Open Policy Agent or Kyverno) to enforce that workloads only run images sourced 
-  from approved, internal, or trusted external registries.
-tags: [governance, admission-control, images]
+  Without registry restrictions, Kubernetes can deploy arbitrary, untrusted images from any public registry. This introduces significant risk of deploying malware, unvetted binaries, or compromised images directly into the cluster workloads.
+mitigations:
+  - |-
+    Deploy a Kyverno `ClusterPolicy` or OPA Gatekeeper constraint that validates
+    the image registry prefix against an allowlist for every Pod. Reject pods referencing
+    public or unapproved registries at admission time. Maintain the allowlist as code and
+    review it in pull requests.
+tags:
+  - governance
+  - admission-control
+  - images
+tools:
+  - title: Kyverno
+    url: https://kyverno.io/
+  - title: OPA Gatekeeper
+    url: https://open-policy-agent.github.io/gatekeeper/
 references:
-  - title: "Open Policy Agent — Kubernetes Tutorial"
-    url: "https://www.openpolicyagent.org/docs/latest/kubernetes-tutorial/"
-  - title: "Kyverno — Policy Library"
-    url: "https://kyverno.io/policies/"
-  - title: "Microsoft Threat Matrix — Compromised Image in Registry"
-    url: "https://microsoft.github.io/Threat-Matrix-for-Kubernetes/techniques/Compromised%20Image%20In%20Registry/"
-  - title: "Microsoft Threat Matrix — New Container"
-    url: "https://microsoft.github.io/Threat-Matrix-for-Kubernetes/techniques/New%20Container/"
+  - title: Open Policy Agent - Kubernetes Tutorial
+    url: https://www.openpolicyagent.org/docs/latest/kubernetes-tutorial/
+  - title: Kyverno - Policy Library
+    url: https://kyverno.io/policies/
+  - title: Microsoft Threat Matrix - Compromised Image in Registry
+    url: https://microsoft.github.io/Threat-Matrix-for-Kubernetes/techniques/Compromised%20Image%20In%20Registry/
+  - title: Microsoft Threat Matrix - New Container
+    url: https://microsoft.github.io/Threat-Matrix-for-Kubernetes/techniques/New%20Container/

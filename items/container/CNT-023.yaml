@@ -1,8 +1,8 @@
 id: CNT-023
-title: "Detect and Block Backdoor Container Images"
+title: Detect and Block Backdoor Container Images
 description: |
   A backdoor container is a legitimate-looking container image that has been tampered with
-  to include malicious code — such as a reverse shell, cryptominer, or data exfiltration
+  to include malicious code - such as a reverse shell, cryptominer, or data exfiltration
   agent. This can happen through compromised base images, CI/CD supply chain attacks, or
   registry hijacking.
 
@@ -16,16 +16,22 @@ description: |
      ```
      kubectl get daemonset -n falco  # or equivalent runtime detection
      ```
-
-  **Remediation:** Enforce image signing with Cosign + a Kyverno/Connaisseur admission
-  policy that rejects unsigned images. Scan all images in CI before push and at admission.
-  Deploy Falco rules that alert on unexpected outbound connections or new processes in
-  containers. Use distroless or minimal base images to reduce the blast radius.
-tags: [supply-chain, persistence, image-security, runtime-security]
+mitigations:
+  - |-
+    Enforce image signing with Cosign + a Kyverno/Connaisseur admission
+    policy that rejects unsigned images. Scan all images in CI before push and at admission.
+    Deploy Falco rules that alert on unexpected outbound connections or new processes in
+    containers. Use distroless or minimal base images to reduce the blast radius.
+tags:
+  - supply-chain
+  - persistence
+  - image-security
+  - runtime-security
+tools: []
 references:
-  - title: "Sigstore / Cosign — Image Signing"
-    url: "https://docs.sigstore.dev/"
-  - title: "Microsoft Threat Matrix — Backdoor Container"
-    url: "https://microsoft.github.io/Threat-Matrix-for-Kubernetes/techniques/Backdoor%20container/"
-  - title: "SLSA Framework v1.0"
-    url: "https://slsa.dev/spec/v1.0/"
+  - title: Sigstore / Cosign - Image Signing
+    url: https://docs.sigstore.dev/
+  - title: Microsoft Threat Matrix - Backdoor Container
+    url: https://microsoft.github.io/Threat-Matrix-for-Kubernetes/techniques/Backdoor%20container/
+  - title: SLSA Framework v1.0
+    url: https://slsa.dev/spec/v1.0/

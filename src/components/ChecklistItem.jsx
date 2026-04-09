@@ -1,6 +1,7 @@
 import { useState } from 'react'
 import { Square, CheckSquare, MinusSquare, ChevronDown, ChevronRight, ExternalLink } from 'lucide-react'
 import { cn } from '@/lib/utils'
+import { Markdown } from './Markdown'
 
 const PRIORITY_STYLES = {
   required:  'bg-red-50 text-red-700 ring-red-200',
@@ -74,17 +75,55 @@ export function ChecklistItem({ item, priority, state, onCycle }) {
 
       {/* Expandable panel */}
       {expanded && (
-        <div className="border-t px-3 py-3 space-y-3 text-sm">
-          {/* Description — render markdown-ish bold */}
-          <div className="text-muted-foreground whitespace-pre-wrap leading-relaxed">
-            {formatDescription(item.description)}
+        <div className="border-t px-3 py-3 space-y-4 text-sm">
+          {/* Description */}
+          <div>
+            <p className="text-xs font-semibold uppercase tracking-wide text-muted-foreground mb-2">Description</p>
+            <Markdown content={item.description} />
           </div>
+
+          {/* Mitigations */}
+          {item.mitigations?.length > 0 && (
+            <div>
+              <p className="text-xs font-semibold uppercase tracking-wide text-muted-foreground mb-2">Mitigations</p>
+              <ol className="list-decimal pl-5 space-y-2 text-sm">
+                {item.mitigations.map((m, i) => (
+                  <li key={i}>
+                    <Markdown content={m} />
+                  </li>
+                ))}
+              </ol>
+            </div>
+          )}
+
+          {/* Tools */}
+          {item.tools?.length > 0 && (
+            <div>
+              <p className="text-xs font-semibold uppercase tracking-wide text-muted-foreground mb-2">Tools</p>
+              <ol className="list-decimal pl-5 space-y-1.5">
+                {item.tools.map((tool, i) => (
+                  <li key={i}>
+                    <a
+                      href={tool.url}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="inline-flex items-center gap-1 text-xs text-primary hover:underline"
+                    >
+                      {tool.title}
+                      <ExternalLink size={11} />
+                    </a>
+                    <span className="ml-2 text-xs text-muted-foreground">{tool.url}</span>
+                  </li>
+                ))}
+              </ol>
+            </div>
+          )}
 
           {/* References */}
           {item.references?.length > 0 && (
-            <div className="space-y-1">
-              <p className="text-xs font-semibold uppercase tracking-wide text-muted-foreground">References</p>
-              <ul className="space-y-1">
+            <div>
+              <p className="text-xs font-semibold uppercase tracking-wide text-muted-foreground mb-2">References</p>
+              <ol className="list-decimal pl-5 space-y-1.5">
                 {item.references.map((ref, i) => (
                   <li key={i}>
                     <a
@@ -96,20 +135,24 @@ export function ChecklistItem({ item, priority, state, onCycle }) {
                       {ref.title}
                       <ExternalLink size={11} />
                     </a>
+                    <span className="ml-2 text-xs text-muted-foreground">{ref.url}</span>
                   </li>
                 ))}
-              </ul>
+              </ol>
             </div>
           )}
 
           {/* Tags */}
           {item.tags?.length > 0 && (
-            <div className="flex flex-wrap gap-1">
-              {item.tags.map(tag => (
-                <span key={tag} className="rounded bg-muted px-1.5 py-0.5 font-mono text-xs text-muted-foreground">
-                  {tag}
-                </span>
-              ))}
+            <div>
+              <p className="text-xs font-semibold uppercase tracking-wide text-muted-foreground mb-2">Tags</p>
+              <div className="flex flex-wrap gap-1">
+                {item.tags.map(tag => (
+                  <span key={tag} className="rounded bg-muted px-1.5 py-0.5 font-mono text-xs text-muted-foreground">
+                    {tag}
+                  </span>
+                ))}
+              </div>
             </div>
           )}
         </div>
@@ -118,14 +161,3 @@ export function ChecklistItem({ item, priority, state, onCycle }) {
   )
 }
 
-/** Very minimal inline markdown: **bold** → <strong> */
-function formatDescription(text) {
-  if (!text) return null
-  const parts = text.split(/(\*\*[^*]+\*\*)/g)
-  return parts.map((part, i) => {
-    if (part.startsWith('**') && part.endsWith('**')) {
-      return <strong key={i}>{part.slice(2, -2)}</strong>
-    }
-    return part
-  })
-}

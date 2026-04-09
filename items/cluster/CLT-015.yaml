@@ -1,10 +1,23 @@
 id: CLT-015
-title: "Use Pod Anti-Affinity Rules to Spread Workload"
+title: Use Pod Anti-Affinity Rules to Spread Workload
 description: |
-  Even if you run several replicas of your Pods, a node failure will take down all replicas if they are scheduled on the same node. Use Pod anti-affinity rules to enforce that Pods from the same Deployment are spread across different nodes in the cluster.
-tags: [application-development, fault-tolerance, scheduling]
+  Even if multiple replicas are deployed, a single node failure will take down the entire application if all replicas are scheduled onto the same physical node. Pod anti-affinity is required to ensure replicas are geographically distributed across different nodes or availability zones.
+mitigations:
+  - |-
+    Add a `podAntiAffinity` rule using `preferredDuringSchedulingIgnoredDuringExecution`
+    (soft) or `requiredDuringSchedulingIgnoredDuringExecution` (hard) in your Deployment's pod
+    spec. Match on `app.kubernetes.io/name` or a similar label to ensure replicas land on
+    distinct nodes. Prefer topology key `kubernetes.io/hostname` for node-level spreading, or
+    `topology.kubernetes.io/zone` for zone-level resilience.
+tags:
+  - application-development
+  - fault-tolerance
+  - scheduling
+tools:
+  - title: kube-score
+    url: https://github.com/zegl/kube-score
 references:
-  - title: "Kubernetes Docs — Inter-Pod Affinity and Anti-Affinity"
-    url: "https://kubernetes.io/docs/concepts/scheduling-eviction/assign-pod-node/#inter-pod-affinity-and-anti-affinity"
-  - title: "Kubernetes Docs — Assigning Pods to Nodes"
-    url: "https://kubernetes.io/docs/concepts/scheduling-eviction/assign-pod-node/"
+  - title: Kubernetes Docs - Inter-Pod Affinity and Anti-Affinity
+    url: https://kubernetes.io/docs/concepts/scheduling-eviction/assign-pod-node/#inter-pod-affinity-and-anti-affinity
+  - title: Kubernetes Docs - Assigning Pods to Nodes
+    url: https://kubernetes.io/docs/concepts/scheduling-eviction/assign-pod-node/

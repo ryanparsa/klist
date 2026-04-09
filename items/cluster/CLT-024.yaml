@@ -1,13 +1,24 @@
 id: CLT-024
-title: "Ensure Cluster Passes CIS Benchmark"
+title: Ensure Cluster Passes CIS Benchmark
 description: |
-  Check if your cluster complies with the Centre for Internet Security (CIS) benchmark for Kubernetes.
-  You can run tools like `kube-bench` to automate this process and report on misconfigurations. Note
-  that for managed clusters (like EKS, GKE, AKS), you won't be able to inspect the master nodes, but you
-  can still verify worker nodes.
-tags: [configuration, security, cis]
+  Clusters that deviate from established industry security standards natively introduce known configuration vulnerabilities. The Centre for Internet Security (CIS) benchmark provides the canonical baseline for securing Kubernetes clusters against widespread attack vectors.
+mitigations:
+  - |-
+    Run `kube-bench` as a Job or DaemonSet on each node. Review the output and
+    address all FAIL findings. Prioritise Level 1 (must-have) checks before Level 2. For
+    managed clusters, remediate worker-node findings only - control-plane checks are the
+    provider's responsibility. Re-run after every cluster upgrade.
+tags:
+  - configuration
+  - security
+  - cis
+tools:
+  - title: kube-bench
+    url: https://github.com/aquasecurity/kube-bench
+  - title: Trivy
+    url: https://trivy.dev/
 references:
-  - title: "CIS Kubernetes Benchmark"
-    url: "https://www.cisecurity.org/benchmark/kubernetes/"
-  - title: "kube-bench — CIS Kubernetes Benchmark Tool"
-    url: "https://github.com/aquasecurity/kube-bench"
+  - title: CIS Kubernetes Benchmark
+    url: https://www.cisecurity.org/benchmark/kubernetes/
+  - title: kube-bench - CIS Kubernetes Benchmark Tool
+    url: https://github.com/aquasecurity/kube-bench

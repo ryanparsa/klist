@@ -1,10 +1,17 @@
 id: CNT-017
-title: "Avoid CPU Limits Unless Necessary"
+title: Avoid CPU Limits Unless Necessary
 description: |
-  Because CPU is a compressible resource, hitting a CPU limit will cause the process to be throttled, possibly prematurely. In the case of multithreaded applications, throttling can degrade performance unexpectedly. Consider relying on CPU requests instead, and keep CPU limits removed unless you have a specific and well-justified use case.
-tags: [application-development, resource-utilisation, performance]
+  Because CPU is a compressible resource, hitting a CPU limit will cause the process to be throttled, possibly prematurely. In the case of multithreaded applications, throttling can degrade performance unexpectedly.
+mitigations:
+  - |-
+    Consider relying on CPU requests instead, and keep CPU limits removed unless you have a specific and well-justified use case.
+tags:
+  - application-development
+  - resource-utilisation
+  - performance
+tools: []
 references:
   - title: "Understanding Resource Limits in Kubernetes: CPU Time"
-    url: "https://medium.com/@betz.mark/understanding-resource-limits-in-kubernetes-cpu-time-9eff74d3161b"
-  - title: "CPU Limits and Throttling in Kubernetes"
-    url: "https://medium.com/omio-engineering/cpu-limits-and-aggressive-throttling-in-kubernetes-c5b20bd8a718"
+    url: https://medium.com/@betz.mark/understanding-resource-limits-in-kubernetes-cpu-time-9eff74d3161b
+  - title: CPU Limits and Throttling in Kubernetes
+    url: https://medium.com/omio-engineering/cpu-limits-and-aggressive-throttling-in-kubernetes-c5b20bd8a718

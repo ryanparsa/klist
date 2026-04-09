@@ -1,16 +1,28 @@
 id: CLT-032
-title: "Enforce Principle of Least Privilege in RBAC Policies"
+title: Enforce Principle of Least Privilege in RBAC Policies
 description: |
-  Grant the least permissions needed for an entity to function. While broader grants can give unnecessary API access 
-  and might seem easier to manage initially, they pose a significant security risk. Start with an empty Role and 
-  add only the specific resources and verbs required for the ServiceAccount or User.
-tags: [governance, rbac, security]
+  Granting broad permissions in RBAC policies provides unnecessary API access and poses a significant security risk. The Principle of Least Privilege dictates that an entity should only be granted the absolute minimum permissions required to perform its function.
+mitigations:
+  - |-
+    Start with an empty Role and add only the specific API groups, resources,
+    and verbs required. Use `kubectl auth can-i --list` to verify actual permissions. Run
+    RBAC Lookup or Krane to identify over-permissioned service accounts and roles. Adopt a
+    GitOps approach for RBAC manifests to ensure all permissions are peer-reviewed.
+tags:
+  - governance
+  - rbac
+  - security
+tools:
+  - title: RBAC Lookup
+    url: https://github.com/FairwindsOps/rbac-lookup
+  - title: Krane
+    url: https://github.com/appvia/krane
 references:
-  - title: "Kubernetes Docs — RBAC Authorization"
-    url: "https://kubernetes.io/docs/reference/access-authn-authz/rbac/"
-  - title: "OWASP Kubernetes Top 10 — K03: Overly Permissive RBAC"
-    url: "https://owasp.org/www-project-kubernetes-top-ten/"
-  - title: "Microsoft Threat Matrix — Exec into Container"
-    url: "https://microsoft.github.io/Threat-Matrix-for-Kubernetes/techniques/Exec%20into%20container/"
-  - title: "Microsoft Threat Matrix — Cluster-Admin Binding"
-    url: "https://microsoft.github.io/Threat-Matrix-for-Kubernetes/techniques/Cluster-admin%20binding/"
+  - title: Kubernetes Docs - RBAC Authorization
+    url: https://kubernetes.io/docs/reference/access-authn-authz/rbac/
+  - title: "OWASP Kubernetes Top 10 - K03: Overly Permissive RBAC"
+    url: https://owasp.org/www-project-kubernetes-top-ten/
+  - title: Microsoft Threat Matrix - Exec into Container
+    url: https://microsoft.github.io/Threat-Matrix-for-Kubernetes/techniques/Exec%20into%20container/
+  - title: Microsoft Threat Matrix - Cluster-Admin Binding
+    url: https://microsoft.github.io/Threat-Matrix-for-Kubernetes/techniques/Cluster-admin%20binding/

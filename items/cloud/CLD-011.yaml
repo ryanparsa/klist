@@ -1,10 +1,24 @@
 id: CLD-011
-title: "Use the Cluster Autoscaler for Highly Variable Workloads"
+title: Use the Cluster Autoscaler for Highly Variable Workloads
 description: |
-  For clusters experiencing highly variable workloads that occasionally outpace available node capacity, configure the Cluster Autoscaler. It manages creating new virtual machines/nodes (scale-up) when Pods can't be scheduled, and gracefully evicting empty nodes (scale-down) when resources are under-utilized.
-tags: [application-development, scaling, cluster-autoscaler]
+  Clusters experiencing highly variable workloads that occasionally outpace available node capacity require dynamic scaling. Without an automated scaling mechanism, Pods may fail to schedule when node capacity is exhausted, or the cluster may be over-provisioned during low-usage periods, wasting resources.
+mitigations:
+  - |-
+    Deploy the Cluster Autoscaler (or Karpenter on AWS) to the cluster via Helm
+    or the provider-managed add-on. Configure minimum and maximum node counts per node group.
+    Ensure node groups are tagged correctly so the autoscaler can discover them. Set scale-down
+    thresholds and cooldown periods to prevent thrashing.
+tags:
+  - application-development
+  - scaling
+  - cluster-autoscaler
+tools:
+  - title: Cluster Autoscaler
+    url: https://github.com/kubernetes/autoscaler/tree/master/cluster-autoscaler
+  - title: Karpenter
+    url: https://karpenter.sh/
 references:
-  - title: "GitHub — Cluster Autoscaler"
-    url: "https://github.com/kubernetes/autoscaler/tree/master/cluster-autoscaler"
-  - title: "Kubernetes Docs — Cluster Management"
-    url: "https://kubernetes.io/docs/tasks/administer-cluster/cluster-management/"
+  - title: GitHub - Cluster Autoscaler
+    url: https://github.com/kubernetes/autoscaler/tree/master/cluster-autoscaler
+  - title: Kubernetes Docs - Cluster Management
+    url: https://kubernetes.io/docs/tasks/administer-cluster/cluster-management/

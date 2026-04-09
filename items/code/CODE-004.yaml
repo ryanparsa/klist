@@ -1,22 +1,37 @@
 id: CODE-004
-title: "Scan IaC Files for Security Misconfigurations"
+title: Scan IaC Files for Security Misconfigurations
 description: |
   Terraform, Helm charts, and Kubernetes YAML manifests are code that defines infrastructure
-  and workload configuration. Misconfigurations in these files — such as open security groups,
-  missing encryption, or permissive RBAC — are common root causes of cloud breaches.
+  and workload configuration. Misconfigurations in these files - such as open security groups,
+  missing encryption, or permissive RBAC - are common root causes of cloud breaches.
 
   **What to check:** Verify an IaC scanner is integrated into CI:
   - Terraform: `tfsec`, `checkov`, or `terrascan`
   - Helm charts: `helm lint` + `trivy config` or `polaris`
   - YAML manifests: `kube-score`, `kubeconform`, `checkov`
 
-  **Remediation:** Add a scanning step to CI that fails on High/Critical findings. Add
-  pre-commit hooks for local feedback. Integrate with PR comments for developer visibility.
-tags: [ci-cd, iac, misconfiguration, supply-chain]
+mitigations:
+  - Add a scanning step to CI that fails on High/Critical findings. Add
+    pre-commit hooks for local feedback. Integrate with PR comments for developer visibility.
+
+tags:
+  - ci-cd
+  - iac
+  - misconfiguration
+  - supply-chain
+
+tools:
+  - title: Checkov
+    url: https://www.checkov.io/
+  - title: tfsec
+    url: https://github.com/aquasecurity/tfsec
+  - title: kube-score
+    url: https://github.com/zegl/kube-score
+
 references:
-  - title: "OWASP Kubernetes Top 10 — K01: Insecure Workload Configurations"
-    url: "https://owasp.org/www-project-kubernetes-top-ten/"
-  - title: "ISO 27001 A.14 — System Acquisition and Development"
-    url: "https://www.iso.org/standard/27001"
-  - title: "Checkov — IaC Security Scanner"
-    url: "https://www.checkov.io/"
+  - title: "OWASP Kubernetes Top 10 - K01: Insecure Workload Configurations"
+    url: https://owasp.org/www-project-kubernetes-top-ten/
+  - title: ISO 27001 A.14 - System Acquisition and Development
+    url: https://www.iso.org/standard/27001
+  - title: Checkov - IaC Security Scanner
+    url: https://www.checkov.io/

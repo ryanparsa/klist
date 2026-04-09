@@ -1,8 +1,8 @@
 id: CNT-022
-title: "Restrict hostPath Volume Mounts"
+title: Restrict hostPath Volume Mounts
 description: |
   A `hostPath` volume mounts a file or directory from the host node's filesystem into the
-  container. This creates a direct bridge between the container and the host — allowing
+  container. This creates a direct bridge between the container and the host - allowing
   attackers who compromise the container to read sensitive host files, write to host paths
   (including cron directories and init scripts), or escape the container boundary entirely.
 
@@ -15,17 +15,22 @@ description: |
       {name: .metadata.name, ns: .metadata.namespace,
        paths: [.spec.volumes[].hostPath.path? | select(.)]}'
   ```
-
-  **Remediation:**
-  - Block hostPath mounts via Pod Security Standards (`restricted` profile disallows them).
-  - Use Kyverno or OPA Gatekeeper to create an allow-list of approved hostPath paths (e.g., `/var/log`).
-  - Any permitted hostPath must be mounted `readOnly: true`.
-  - Prefer `emptyDir`, ConfigMap, or PVC volumes for container data needs.
-tags: [pod-security, privilege-escalation, filesystem, persistence]
+mitigations:
+  - |-
+    - Block hostPath mounts via Pod Security Standards (`restricted` profile disallows them).
+    - Use Kyverno or OPA Gatekeeper to create an allow-list of approved hostPath paths (e.g., `/var/log`).
+    - Any permitted hostPath must be mounted `readOnly: true`.
+    - Prefer `emptyDir`, ConfigMap, or PVC volumes for container data needs.
+tags:
+  - pod-security
+  - privilege-escalation
+  - filesystem
+  - persistence
+tools: []
 references:
-  - title: "Kubernetes Docs — Volumes"
-    url: "https://kubernetes.io/docs/concepts/storage/volumes/#hostpath"
-  - title: "Microsoft Threat Matrix — Writable hostPath Mount"
-    url: "https://microsoft.github.io/Threat-Matrix-for-Kubernetes/techniques/Writable%20hostPath%20mount/"
-  - title: "CIS Kubernetes Benchmark 5.2.4"
-    url: "https://workbench.cisecurity.org/benchmarks/16828"
+  - title: Kubernetes Docs - Volumes
+    url: https://kubernetes.io/docs/concepts/storage/volumes/#hostpath
+  - title: Microsoft Threat Matrix - Writable hostPath Mount
+    url: https://microsoft.github.io/Threat-Matrix-for-Kubernetes/techniques/Writable%20hostPath%20mount/
+  - title: CIS Kubernetes Benchmark 5.2.4
+    url: https://workbench.cisecurity.org/benchmarks/16828

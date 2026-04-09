@@ -1,8 +1,8 @@
 id: CODE-006
-title: "Generate an SBOM for Every Container Image"
+title: Generate an SBOM for Every Container Image
 description: |
   A Software Bill of Materials (SBOM) is a machine-readable inventory of all components in a
-  container image — OS packages, language libraries, and their versions. SBOMs enable rapid
+  container image - OS packages, language libraries, and their versions. SBOMs enable rapid
   triage when a new CVE is disclosed (e.g., Log4Shell): instead of scanning all images
   reactively, you query the SBOM index for affected packages in seconds.
 
@@ -14,14 +14,26 @@ description: |
   syft <image> -o spdx-json > sbom.json
   cosign attest --predicate sbom.json --type spdxjson <image>
   ```
-
-  **Remediation:** Add Syft or Trivy SBOM generation to the CI workflow. Attach the SBOM as
-  an OCI attestation. Integrate with a vulnerability management platform that indexes SBOMs.
-tags: [supply-chain, sbom, vulnerability-management, ci-cd]
+mitigations:
+  - |-
+    Add Syft or Trivy SBOM generation to the CI workflow. Attach the SBOM as
+    an OCI attestation. Integrate with a vulnerability management platform that indexes SBOMs.
+tags:
+  - supply-chain
+  - sbom
+  - vulnerability-management
+  - ci-cd
+tools:
+  - title: Syft
+    url: https://github.com/anchore/syft
+  - title: Trivy
+    url: https://trivy.dev/
+  - title: Grype
+    url: https://github.com/anchore/grype
 references:
-  - title: "US Executive Order 14028 — Software Supply Chain Security"
-    url: "https://www.whitehouse.gov/briefing-room/presidential-actions/2021/05/12/executive-order-on-improving-the-nations-cybersecurity/"
-  - title: "CISA — SBOM Resources"
-    url: "https://www.cisa.gov/sbom"
-  - title: "Syft — SBOM Generator"
-    url: "https://github.com/anchore/syft"
+  - title: US Executive Order 14028 - Software Supply Chain Security
+    url: https://www.whitehouse.gov/briefing-room/presidential-actions/2021/05/12/executive-order-on-improving-the-nations-cybersecurity/
+  - title: CISA - SBOM Resources
+    url: https://www.cisa.gov/sbom
+  - title: Syft - SBOM Generator
+    url: https://github.com/anchore/syft

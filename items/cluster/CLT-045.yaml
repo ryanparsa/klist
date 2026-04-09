@@ -1,7 +1,7 @@
 id: CLT-045
-title: "Enforce Pod Naming Conventions to Detect Masquerading"
+title: Enforce Pod Naming Conventions to Detect Masquerading
 description: |
-  Attackers may name backdoor pods to resemble legitimate system pods — for example, naming
+  Attackers may name backdoor pods to resemble legitimate system pods - for example, naming
   a malicious pod `coredns-a1b2c3` to blend in with CoreDNS pods, or deploying to `kube-system`
   to appear as infrastructure. This masquerading technique makes detection harder in manual
   inspection and noisy dashboards.
@@ -13,16 +13,26 @@ description: |
       jq '.items[] | select(.metadata.ownerReferences == null) | .metadata.name'
     ```
   - Do any pods have suspicious names mimicking system components in non-system namespaces?
-
-  **Remediation:** Use admission policies (Kyverno/OPA) to enforce naming conventions and
-  label requirements for all pods. Restrict pod creation in `kube-system` to cluster
-  infrastructure service accounts only. Alert on orphaned pods (no ownerReference) in system
-  namespaces. Use GitOps drift detection to catch unmanaged resources.
-tags: [defense-evasion, monitoring, governance, admission-control]
+mitigations:
+  - |-
+    Use admission policies (Kyverno/OPA) to enforce naming conventions and
+    label requirements for all pods. Restrict pod creation in `kube-system` to cluster
+    infrastructure service accounts only. Alert on orphaned pods (no ownerReference) in system
+    namespaces. Use GitOps drift detection to catch unmanaged resources.
+tags:
+  - defense-evasion
+  - monitoring
+  - governance
+  - admission-control
+tools:
+  - title: Kyverno
+    url: https://kyverno.io/
+  - title: Falco
+    url: https://falco.org/
 references:
-  - title: "Kubernetes Docs — Namespaces"
-    url: "https://kubernetes.io/docs/concepts/overview/working-with-objects/namespaces/"
-  - title: "Microsoft Threat Matrix — Pod or Container Name Similarity"
-    url: "https://microsoft.github.io/Threat-Matrix-for-Kubernetes/techniques/Pod%20or%20container%20name%20similarily/"
-  - title: "Kyverno — Policy Library"
-    url: "https://kyverno.io/policies/"
+  - title: Kubernetes Docs - Namespaces
+    url: https://kubernetes.io/docs/concepts/overview/working-with-objects/namespaces/
+  - title: Microsoft Threat Matrix - Pod or Container Name Similarity
+    url: https://microsoft.github.io/Threat-Matrix-for-Kubernetes/techniques/Pod%20or%20container%20name%20similarily/
+  - title: Kyverno - Policy Library
+    url: https://kyverno.io/policies/

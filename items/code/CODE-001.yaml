@@ -1,5 +1,5 @@
 id: CODE-001
-title: "Run SAST Scanning on Every Pull Request"
+title: Run SAST Scanning on Every Pull Request
 description: |
   Static Application Security Testing (SAST) tools analyse source code for security
   vulnerabilities without executing it. Running SAST on every PR as a blocking gate prevents
@@ -8,17 +8,27 @@ description: |
   **What to check:** Verify that a SAST tool (e.g., Semgrep, CodeQL, Snyk Code, Checkov
   for IaC) is configured in the CI pipeline. Confirm that PR merges are blocked when
   High or Critical severity findings are reported.
-
-  **Remediation:** Add a SAST step to the CI workflow (GitHub Actions, GitLab CI, Jenkins).
-  Configure branch protection rules to require the SAST check to pass. Triage and remediate
-  findings before merging.
-tags: [ci-cd, sast, static-analysis, supply-chain]
+mitigations:
+  - |-
+    Add a SAST step to the CI workflow (GitHub Actions, GitLab CI, Jenkins).
+    Configure branch protection rules to require the SAST check to pass. Triage and remediate
+    findings before merging.
+tags:
+  - ci-cd
+  - sast
+  - static-analysis
+  - supply-chain
+tools:
+  - title: Semgrep
+    url: https://semgrep.dev/
+  - title: CodeQL
+    url: https://codeql.github.com/
 references:
-  - title: "NIST SP 800-218 — Secure Software Development Framework (SSDF)"
-    url: "https://csrc.nist.gov/publications/detail/sp/800-218/final"
-  - title: "OWASP Kubernetes Top 10 — K02: Supply Chain Vulnerabilities"
-    url: "https://owasp.org/www-project-kubernetes-top-ten/"
-  - title: "Semgrep — Open Source SAST"
-    url: "https://semgrep.dev/"
-  - title: "Microsoft Threat Matrix — Application Vulnerability"
-    url: "https://microsoft.github.io/Threat-Matrix-for-Kubernetes/techniques/Application%20Vulnerability/"
+  - title: NIST SP 800-218 - Secure Software Development Framework (SSDF)
+    url: https://csrc.nist.gov/publications/detail/sp/800-218/final
+  - title: "OWASP Kubernetes Top 10 - K02: Supply Chain Vulnerabilities"
+    url: https://owasp.org/www-project-kubernetes-top-ten/
+  - title: Semgrep - Open Source SAST
+    url: https://semgrep.dev/
+  - title: Microsoft Threat Matrix - Application Vulnerability
+    url: https://microsoft.github.io/Threat-Matrix-for-Kubernetes/techniques/Application%20Vulnerability/

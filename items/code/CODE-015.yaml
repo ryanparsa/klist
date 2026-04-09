@@ -1,12 +1,25 @@
 id: CODE-015
-title: "Enforce Uniqueness in Ingress Hostnames"
+title: Enforce Uniqueness in Ingress Hostnames
 description: |
   Without proper validation, a user might create an Ingress manifest that reuses an existing hostname, potentially 
-  hijacking or overriding traffic for an established service. Implement a validation webhook (e.g., via OPA) to 
-  check existing Ingress resources and deny the creation of duplicate hostnames across the cluster.
-tags: [governance, ingress, networking]
+  hijacking or overriding traffic for an established service.
+mitigations:
+  - |-
+    Deploy the Kyverno `unique-ingress-host` policy (available in the Kyverno
+    policy library) or an OPA Gatekeeper constraint that queries existing Ingress resources
+    and rejects creation of a new Ingress if the host is already in use. Test the policy in
+    `audit` mode before switching to `enforce`.
+tags:
+  - governance
+  - ingress
+  - networking
+tools:
+  - title: Kyverno
+    url: https://kyverno.io/
+  - title: OPA Gatekeeper
+    url: https://open-policy-agent.github.io/gatekeeper/
 references:
-  - title: "Open Policy Agent — Kubernetes Ingress Tutorial"
-    url: "https://www.openpolicyagent.org/docs/latest/kubernetes-tutorial/#4-define-a-policy-and-load-it-into-opa-via-kubernetes"
-  - title: "Kyverno — Unique Ingress Host"
-    url: "https://kyverno.io/policies/ingress/unique-ingress-host/"
+  - title: Open Policy Agent - Kubernetes Ingress Tutorial
+    url: https://www.openpolicyagent.org/docs/latest/kubernetes-tutorial/#4-define-a-policy-and-load-it-into-opa-via-kubernetes
+  - title: Kyverno - Unique Ingress Host
+    url: https://kyverno.io/policies/ingress/unique-ingress-host/

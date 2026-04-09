@@ -1,5 +1,5 @@
 id: CODE-008
-title: "Implement Retry Logic for Dependent Services"
+title: Implement Retry Logic for Dependent Services
 description: |
   Kubernetes starts containers in any order. A pod may be scheduled before its dependencies
   (database, message broker, downstream API) are ready. Applications that crash immediately
@@ -14,21 +14,29 @@ description: |
   - Does the app crash (non-zero exit) immediately when a dependency is unreachable at startup?
   - Is there a retry loop with configurable max attempts and backoff for database/service connections?
   - Does the application recover automatically if a dependency becomes temporarily unavailable?
+mitigations:
+  - |-
+    Wrap dependency initialisation in a retry loop with exponential backoff
+    and jitter (start at 1s, double up to 30s). Suitable libraries:
+    - Python: `tenacity`
+    - JVM: `resilience4j`, `spring-retry`
+    - Go: `github.com/cenkalti/backoff`
+    - Node.js: `async-retry`
 
-  **Remediation:** Wrap dependency initialisation in a retry loop with exponential backoff
-  and jitter (start at 1s, double up to 30s). Suitable libraries:
-  - Python: `tenacity`
-  - JVM: `resilience4j`, `spring-retry`
-  - Go: `github.com/cenkalti/backoff`
-  - Node.js: `async-retry`
-
-  Do not rely solely on `initContainers` for this — they only handle startup order, not
-  mid-runtime reconnection.
-tags: [application-development, reliability, resilience, twelve-factor]
+    Do not rely solely on `initContainers` for this - they only handle startup order, not
+    mid-runtime reconnection.
+tags:
+  - application-development
+  - reliability
+  - resilience
+  - twelve-factor
+tools:
+  - title: kube-score
+    url: https://github.com/zegl/kube-score
 references:
-  - title: "Twelve-Factor App — Backing Services"
-    url: "https://12factor.net/backing-services"
-  - title: "AWS — Exponential Backoff and Jitter"
-    url: "https://aws.amazon.com/blogs/architecture/exponential-backoff-and-jitter/"
-  - title: "Kubernetes Docs — Init Containers"
-    url: "https://kubernetes.io/docs/concepts/workloads/pods/init-containers/"
+  - title: Twelve-Factor App - Backing Services
+    url: https://12factor.net/backing-services
+  - title: AWS - Exponential Backoff and Jitter
+    url: https://aws.amazon.com/blogs/architecture/exponential-backoff-and-jitter/
+  - title: Kubernetes Docs - Init Containers
+    url: https://kubernetes.io/docs/concepts/workloads/pods/init-containers/

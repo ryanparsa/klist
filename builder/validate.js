@@ -44,7 +44,7 @@ export function validate({ items, configs }) {
     }
   }
 
-  // --- Required field checks on items ---
+  // --- Required and Optional field checks on items ---
   const REQUIRED_ITEM_FIELDS = ['id', 'title', 'description', 'tags', 'references']
   for (const item of items) {
     for (const field of REQUIRED_ITEM_FIELDS) {
@@ -58,6 +58,27 @@ export function validate({ items, configs }) {
       for (const ref of item.references) {
         if (!ref.title) errors.push(`[${item.id}] reference missing title`)
         if (!ref.url) errors.push(`[${item.id}] reference missing url`)
+      }
+    }
+
+    if (item.mitigations != null) {
+      if (!Array.isArray(item.mitigations)) {
+        errors.push(`[${item.id}] mitigations must be an array`)
+      } else {
+        for (const m of item.mitigations) {
+          if (typeof m !== 'string') errors.push(`[${item.id}] mitigations items must be strings`)
+        }
+      }
+    }
+
+    if (item.tools != null) {
+      if (!Array.isArray(item.tools)) {
+        errors.push(`[${item.id}] tools must be an array`)
+      } else {
+        for (const tool of item.tools) {
+          if (!tool.title) errors.push(`[${item.id}] tool missing title`)
+          if (!tool.url) errors.push(`[${item.id}] tool missing url`)
+        }
       }
     }
   }

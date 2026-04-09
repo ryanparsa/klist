@@ -1,10 +1,23 @@
 id: CLT-021
-title: "Avoid Sidecars for Logging"
+title: Avoid Sidecars for Logging
 description: |
-  Instead of deploying a sidecar container in every Pod to capture or transform logs, applications should emit natively formatted logs directly to standard outputs. Avoiding unnecessary sidecars reduces cluster overhead and memory pressure. Prefer node-level logging daemons for aggregation.
-tags: [application-development, logging, resources]
+  Deploying a sidecar container in every Pod to capture or transform logs introduces unnecessary cluster overhead and memory pressure. Node-level logging daemons natively aggregating standard outputs are a much more efficient pattern for cluster-wide logging.
+mitigations:
+  - |-
+    Refactor applications to write structured logs (JSON preferred) directly to
+    `stdout` and `stderr`. Remove sidecar log-shipping containers. Deploy Fluentd or Fluent Bit
+    as a DaemonSet to collect and forward node-level logs to a centralised aggregator.
+tags:
+  - application-development
+  - logging
+  - resources
+tools:
+  - title: Fluentd
+    url: https://www.fluentd.org/
+  - title: Loki
+    url: https://grafana.com/oss/loki/
 references:
-  - title: "Twelve-Factor App — Logs"
-    url: "https://12factor.net/logs"
-  - title: "Kubernetes Docs — Logging Architecture"
-    url: "https://kubernetes.io/docs/concepts/cluster-administration/logging/"
+  - title: Twelve-Factor App - Logs
+    url: https://12factor.net/logs
+  - title: Kubernetes Docs - Logging Architecture
+    url: https://kubernetes.io/docs/concepts/cluster-administration/logging/

@@ -1,14 +1,26 @@
 id: CLT-033
-title: "Create Granular, Non-Shared RBAC Roles"
+title: Create Granular, Non-Shared RBAC Roles
 description: |
-  Avoid sharing generic, broad policies across diverse workloads. Define custom, fine-grained roles based on distinct 
-  job functions or requirements (e.g., ReadOnly, PowerUser, Operator, Controller). This contains breaches by ensuring 
-  a compromised service account cannot affect unrelated namespaces or resource types.
-tags: [governance, rbac, architecture]
+  Sharing generic, broad RBAC policies across diverse workloads violates the principle of least privilege. Custom, fine-grained roles based on distinct job functions or requirements contain potential breaches by ensuring a compromised service account cannot affect unrelated namespaces or resource types.
+mitigations:
+  - |-
+    Define a Role catalog per team or function (e.g., `viewer`, `developer`,
+    `operator`, `ci-deployer`). Create namespace-scoped Roles rather than ClusterRoles where
+    possible. Bind Roles to specific service accounts or OIDC groups, not individuals.
+    Audit role usage quarterly with RBAC Lookup or Krane to remove unused bindings.
+tags:
+  - governance
+  - rbac
+  - architecture
+tools:
+  - title: RBAC Lookup
+    url: https://github.com/FairwindsOps/rbac-lookup
+  - title: Krane
+    url: https://github.com/appvia/krane
 references:
-  - title: "Kubernetes Docs — RBAC Authorization"
-    url: "https://kubernetes.io/docs/reference/access-authn-authz/rbac/"
-  - title: "Zalando — Kubernetes RBAC Roles"
-    url: "https://kubernetes-on-aws.readthedocs.io/en/latest/dev-guide/arch/access-control/adr-004-roles-and-service-accounts.html"
-  - title: "Microsoft Threat Matrix — Cluster-Admin Binding"
-    url: "https://microsoft.github.io/Threat-Matrix-for-Kubernetes/techniques/Cluster-admin%20binding/"
+  - title: Kubernetes Docs - RBAC Authorization
+    url: https://kubernetes.io/docs/reference/access-authn-authz/rbac/
+  - title: Zalando - Kubernetes RBAC Roles
+    url: https://kubernetes-on-aws.readthedocs.io/en/latest/dev-guide/arch/access-control/adr-004-roles-and-service-accounts.html
+  - title: Microsoft Threat Matrix - Cluster-Admin Binding
+    url: https://microsoft.github.io/Threat-Matrix-for-Kubernetes/techniques/Cluster-admin%20binding/

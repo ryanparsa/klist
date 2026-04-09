@@ -1,23 +1,31 @@
 id: CLD-005
-title: "Use a Container-Optimized Node OS"
+title: Use a Container-Optimized Node OS
 description: |
   General-purpose operating systems carry unnecessary tools, shells, and services that expand
   the attack surface of every node. Container-optimized operating systems remove interactive
   shells, lock the root filesystem read-only, and ship with a minimal package set.
 
-  **Recommended options:** Bottlerocket (AWS), Container-Optimized OS (GKE), RHCOS/CoreOS,
-  Flatcar Linux.
-
   **What to check:** Inspect the AMI or node image used in the node group launch template.
-  Verify it is a purpose-built, hardened OS — not Ubuntu or Amazon Linux 2 general images.
-
-  **Remediation:** Migrate node groups to a container-optimised image. Test workload
-  compatibility before rolling out to production.
-tags: [node-security, os-hardening, infrastructure]
+  Verify it is a purpose-built, hardened OS - not Ubuntu or Amazon Linux 2 general images.
+mitigations:
+  - |-
+    Migrate node groups to a container-optimised image. Test workload
+    compatibility before rolling out to production.
+  - |
+    Recommended options: Bottlerocket (AWS), Container-Optimized OS (GKE), RHCOS/CoreOS, Flatcar Linux.
+tags:
+  - node-security
+  - os-hardening
+  - infrastructure
+tools:
+  - title: Bottlerocket
+    url: https://bottlerocket.dev/
+  - title: kube-bench
+    url: https://github.com/aquasecurity/kube-bench
 references:
-  - title: "CIS Kubernetes Benchmark — Node Configuration"
-    url: "https://workbench.cisecurity.org/benchmarks/16828"
-  - title: "AWS Bottlerocket Security"
-    url: "https://bottlerocket.dev/en/os/1.20.x/security/threat-model/"
-  - title: "PCI-DSS Requirement 2.2 — System Configuration Standards"
-    url: "https://www.pcisecuritystandards.org/document_library/"
+  - title: CIS Kubernetes Benchmark - Node Configuration
+    url: https://workbench.cisecurity.org/benchmarks/16828
+  - title: AWS Bottlerocket Security
+    url: https://bottlerocket.dev/en/os/1.20.x/security/threat-model/
+  - title: PCI-DSS Requirement 2.2 - System Configuration Standards
+    url: https://www.pcisecuritystandards.org/document_library/

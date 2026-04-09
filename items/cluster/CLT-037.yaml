@@ -1,10 +1,10 @@
 id: CLT-037
-title: "Protect Static Pod Manifests Directory"
+title: Protect Static Pod Manifests Directory
 description: |
   Static pods are managed directly by kubelet on each node by reading YAML manifests from a
   local directory (typically `/etc/kubernetes/manifests/`). Attackers who gain write access
   to this directory can create or modify pods that run outside the Kubernetes API server's
-  control — bypassing admission controllers, RBAC, and audit logging.
+  control - bypassing admission controllers, RBAC, and audit logging.
 
   Kubelet also supports a `--manifest-url` flag that loads manifests from a remote URL.
   Both vectors must be locked down.
@@ -18,15 +18,25 @@ description: |
     ```
     ps aux | grep kubelet | grep manifest-url
     ```
-
-  **Remediation:** Set directory permissions to `700` owned by `root`. Disable `--manifest-url`
-  on all kubelets if not in use. Monitor the directory for unexpected file changes using a
-  file integrity monitoring (FIM) tool.
-tags: [node-security, hardening, persistence, kubelet]
+mitigations:
+  - |-
+    Set directory permissions to `700` owned by `root`. Disable `--manifest-url`
+    on all kubelets if not in use. Monitor the directory for unexpected file changes using a
+    file integrity monitoring (FIM) tool.
+tags:
+  - node-security
+  - hardening
+  - persistence
+  - kubelet
+tools:
+  - title: kube-bench
+    url: https://github.com/aquasecurity/kube-bench
+  - title: Falco
+    url: https://falco.org/
 references:
-  - title: "Kubernetes Docs — Static Pods"
-    url: "https://kubernetes.io/docs/tasks/configure-pod-container/static-pod/"
-  - title: "Microsoft Threat Matrix — Static Pods"
-    url: "https://microsoft.github.io/Threat-Matrix-for-Kubernetes/techniques/Static%20Pods/"
-  - title: "CIS Kubernetes Benchmark 4.1.9"
-    url: "https://workbench.cisecurity.org/benchmarks/16828"
+  - title: Kubernetes Docs - Static Pods
+    url: https://kubernetes.io/docs/tasks/configure-pod-container/static-pod/
+  - title: Microsoft Threat Matrix - Static Pods
+    url: https://microsoft.github.io/Threat-Matrix-for-Kubernetes/techniques/Static%20Pods/
+  - title: CIS Kubernetes Benchmark 4.1.9
+    url: https://workbench.cisecurity.org/benchmarks/16828

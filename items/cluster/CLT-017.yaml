@@ -1,12 +1,26 @@
 id: CLT-017
-title: "Define a LimitRange for Each Namespace"
+title: Define a LimitRange for Each Namespace
 description: |
-  To prevent accidental deployment of Pods without explicit memory and CPU configurations, define a LimitRange object in each namespace. This enforce standard sizes or minimums/maximums for containers deployed in a namespace, acting as an automated safety net for resource utilization.
-tags: [application-development, resource-management, namespaces]
+  Namespaces without a `LimitRange` object allow the accidental deployment of Pods lacking explicit memory and CPU configurations. A `LimitRange` enforces standard sizes or minimums/maximums for containers, acting as an automated safety net for cluster-wide resource utilization.
+mitigations:
+  - |-
+    Create a `LimitRange` manifest in each namespace specifying default CPU and
+    memory requests and limits. Use a Kyverno or OPA Gatekeeper policy to reject namespace
+    creation that does not include a LimitRange, or automatically create one via a namespace
+    provisioning workflow.
+tags:
+  - application-development
+  - resource-management
+  - namespaces
+tools:
+  - title: kube-score
+    url: https://github.com/zegl/kube-score
+  - title: Kyverno
+    url: https://kyverno.io/
 references:
-  - title: "Kubernetes Docs — LimitRange"
-    url: "https://kubernetes.io/docs/concepts/policy/limit-range/"
-  - title: "CIS Kubernetes Benchmark 5.2.3"
-    url: "https://workbench.cisecurity.org/benchmarks/16828"
-  - title: "Microsoft Threat Matrix — Denial of Service"
-    url: "https://microsoft.github.io/Threat-Matrix-for-Kubernetes/techniques/Denial%20of%20service/"
+  - title: Kubernetes Docs - LimitRange
+    url: https://kubernetes.io/docs/concepts/policy/limit-range/
+  - title: CIS Kubernetes Benchmark 5.2.3
+    url: https://workbench.cisecurity.org/benchmarks/16828
+  - title: Microsoft Threat Matrix - Denial of Service
+    url: https://microsoft.github.io/Threat-Matrix-for-Kubernetes/techniques/Denial%20of%20service/

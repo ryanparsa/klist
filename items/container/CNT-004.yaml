@@ -1,5 +1,5 @@
 id: CNT-004
-title: "Disable Privilege Escalation"
+title: Disable Privilege Escalation
 description: |
   The `allowPrivilegeEscalation` flag controls whether a process can gain more privileges
   than its parent. Even when a container starts as non-root, a vulnerability in the binary
@@ -13,15 +13,20 @@ description: |
       .spec.containers[].securityContext.allowPrivilegeEscalation != false
     ) | .metadata.name'
   ```
-
-  **Remediation:** Explicitly set `allowPrivilegeEscalation: false` in every container's
-  `securityContext`. This is required by the PSS Restricted profile and can be enforced
-  with a Kyverno ClusterPolicy or OPA constraint.
-tags: [pod-security, privilege-escalation, hardening]
+mitigations:
+  - |-
+    Explicitly set `allowPrivilegeEscalation: false` in every container's
+    `securityContext`. This is required by the PSS Restricted profile and can be enforced
+    with a Kyverno ClusterPolicy or OPA constraint.
+tags:
+  - pod-security
+  - privilege-escalation
+  - hardening
+tools: []
 references:
-  - title: "OWASP Kubernetes Top 10 — K01: Insecure Workload Configurations"
-    url: "https://owasp.org/www-project-kubernetes-top-ten/"
-  - title: "CIS Kubernetes Benchmark 5.2.5"
-    url: "https://workbench.cisecurity.org/benchmarks/16828"
-  - title: "Kubernetes Docs — Security Context"
-    url: "https://kubernetes.io/docs/tasks/configure-pod-container/security-context/"
+  - title: "OWASP Kubernetes Top 10 - K01: Insecure Workload Configurations"
+    url: https://owasp.org/www-project-kubernetes-top-ten/
+  - title: CIS Kubernetes Benchmark 5.2.5
+    url: https://workbench.cisecurity.org/benchmarks/16828
+  - title: Kubernetes Docs - Security Context
+    url: https://kubernetes.io/docs/tasks/configure-pod-container/security-context/
