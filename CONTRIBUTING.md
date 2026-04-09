@@ -27,9 +27,9 @@ Items live in `items/{category}/` as individual YAML files. The category determi
 
 | Category | Directory | ID prefix | Example |
 |---|---|---|---|
-| Cloud | `items/cloud/` | `CLD` | `CLUD-11.yaml` |
-| Cluster | `items/cluster/` | `CLT` | `CLST-14.yaml` |
-| Container | `items/container/` | `CNT` | `CONT-10.yaml` |
+| Cloud | `items/cloud/` | `CLUD` | `CLUD-11.yaml` |
+| Cluster | `items/cluster/` | `CLST` | `CLST-14.yaml` |
+| Container | `items/container/` | `CONT` | `CONT-10.yaml` |
 | Code | `items/code/` | `CODE` | `CODE-008.yaml` |
 
 **Steps:**
@@ -42,25 +42,27 @@ Items live in `items/{category}/` as individual YAML files. The category determi
 **Item schema:**
 
 ```yaml
-id: CLUD-11
-title: "Short, action-oriented label"
-description: |
+id: CLUD-11 # Must match the filename exactly (e.g., CLUD-11.yaml)
+title: "Short, action-oriented label" # Clear, concise title
+stage: active # Required: 'draft', 'active', or 'deprecated'
+description: | # Explain the control, why it matters, and remediation. Include what to check and what the fix looks like.
   Explain what the control is, why it matters, and how to remediate it.
   Include what to check and what the fix looks like.
-mitigations: # Optional array of strings for remediation steps
+mitigations: # Optional: Array of strings for remediation steps
   - "List of actionable steps or strategies to reduce the risk."
-tags: [network, hardening]
-tools: # Optional array of tools
+tags: [network, hardening] # Array of related tags (reuse existing ones from public/checklist.json if possible)
+tools: # Optional: Array of related tools with title and url
   - title: "Tool Name"
     url: "https://..."
-references:
+references: # Required: At least one reference with title and url
   - title: "Human-readable source name"
     url: "https://..."
 ```
 
 **Rules:**
 - `id` must match the filename exactly (e.g. `CLUD-11.yaml` → `id: CLUD-11`).
-- At least one `reference` is required.
+- `stage` is required and must be `draft`, `active`, or `deprecated`.
+- At least one `reference` is required, and each must have a `title` and `url`.
 - `description` should cover: what the risk is, how to verify it, and how to fix it.
 - Reuse existing tags where possible — check `public/checklist.json` → `all_tags` for the current list.
 - IDs are never reused or renumbered. Gaps are fine.
@@ -120,9 +122,9 @@ node builder/build.js
 On success:
 
 ```
-✔ 103 items loaded
-    cloud        20
-    cluster      46
+✔ 105 items loaded
+    cloud        21
+    cluster      47
     container    24
     code         13
 ✔ 13 configs loaded
