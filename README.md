@@ -13,7 +13,7 @@ Checks are organised around the **4C model** (Cloud, Cluster, Container, Code) a
 ## Features
 
 - **Dynamic priorities** :  select your configs (EKS, SOC 2, production…) and items are automatically promoted to Required, Suggested, or Optional
-- **Per-section scoring** :  track progress across Cloud, Cluster, Container, and Code layers
+- **Per-section scoring** :  track progress across 103 items spanning Cloud (20), Cluster (46), Container (24), and Code (13) layers
 - **Tri-state items** :  mark each item as Passed, N/A, or leave it unchecked
 - **Search and tag filter** :  quickly find relevant items across all categories
 - **Shareable URL** :  active config selections live in the query string (`?configs=baseline,eks`)
