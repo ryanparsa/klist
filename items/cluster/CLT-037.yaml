@@ -7,7 +7,7 @@ description: |
   control - bypassing admission controllers, RBAC, and audit logging.
 
   Kubelet also supports a `--manifest-url` flag that loads manifests from a remote URL.
-  Both vectors must be locked down.
+  Deploying static pods from web-accessible locations can be risky. Both vectors must be locked down.
 
   **What to check:**
   - Verify `/etc/kubernetes/manifests/` is only writable by root:
@@ -20,9 +20,9 @@ description: |
     ```
 mitigations:
   - |-
-    Set directory permissions to `700` owned by `root`. Disable `--manifest-url`
-    on all kubelets if not in use. Monitor the directory for unexpected file changes using a
-    file integrity monitoring (FIM) tool.
+    Set directory permissions to `700` owned by `root`. Avoid using web-hosted manifests for Kubelet.
+    Ensure Kubelet does not run with the `--manifest-url` argument unless strictly required.
+    Monitor the directory for unexpected file changes using a file integrity monitoring (FIM) tool.
 tags:
   - node-security
   - hardening
@@ -36,6 +36,8 @@ tools:
 references:
   - title: Kubernetes Docs - Static Pods
     url: https://kubernetes.io/docs/tasks/configure-pod-container/static-pod/
+  - title: Microsoft Threat Matrix - Avoid using web-hosted manifest for Kubelet
+    url: https://microsoft.github.io/Threat-Matrix-for-Kubernetes/mitigations/MS-M9032%20Avoid%20using%20web-hosted%20manifest%20for%20Kubelet/
   - title: Microsoft Threat Matrix - Static Pods
     url: https://microsoft.github.io/Threat-Matrix-for-Kubernetes/techniques/Static%20Pods/
   - title: CIS Kubernetes Benchmark 4.1.9

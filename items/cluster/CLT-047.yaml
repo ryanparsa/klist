@@ -1,0 +1,29 @@
+id: CLT-047
+title: Restrict Network Access to etcd
+description: |
+  etcd is the distributed key-value store used by Kubernetes to hold cluster state and secrets.
+  By default, any entity that can reach the etcd endpoints on the network could attempt to query or modify data if not properly protected.
+  Access to etcd should be strictly limited to the Kubernetes control plane components (API servers).
+
+  **What to check:**
+  - Verify network policies or firewalls restrict access to etcd ports (e.g., 2379, 2380) to only the control plane nodes.
+    ```sh
+    kubectl get nodes -l node-role.kubernetes.io/control-plane
+    ```
+mitigations:
+  - |
+    Apply strict network segmentation rules (via cloud provider security groups, firewalls, or CNI network policies)
+    to ensure that only authorized API server IPs can communicate with the etcd cluster.
+    Configure etcd to use mutual TLS (mTLS) so that clients must present a valid certificate issued by the etcd CA.
+tags:
+  - etcd
+  - network
+  - access-control
+tools:
+  - title: kube-bench
+    url: https://github.com/aquasecurity/kube-bench
+references:
+  - title: Microsoft Threat Matrix - Restrict access to etcd
+    url: https://microsoft.github.io/Threat-Matrix-for-Kubernetes/mitigations/MS-M9024%20Restrict%20access%20to%20etcd/
+  - title: Kubernetes Docs - etcd Security
+    url: https://etcd.io/docs/v3.5/op-guide/security/
