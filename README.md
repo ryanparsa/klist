@@ -13,7 +13,7 @@ Checks are organised around the **4C model** (Cloud, Cluster, Container, Code) a
 ## Features
 
 - **Dynamic priorities** :  select your configs (EKS, SOC 2, production…) and items are automatically promoted to Required, Suggested, or Optional
-- **Per-section scoring** :  track progress across 103 items spanning Cloud (20), Cluster (46), Container (24), and Code (13) layers
+- **Per-section scoring** :  track progress across 105 items spanning Cloud (21), Cluster (47), Container (24), and Code (13) layers
 - **Tri-state items** :  mark each item as Passed, N/A, or leave it unchecked
 - **Search and tag filter** :  quickly find relevant items across all categories
 - **Shareable URL** :  active config selections live in the query string (`?configs=baseline,eks`)
@@ -42,9 +42,9 @@ The app is available at `http://localhost:5173/klist/`.
 ```
 klist/
 ├── items/
-│   ├── cloud/          # CLD-xxx.yaml
-│   ├── cluster/        # CLT-xxx.yaml
-│   ├── container/      # CNT-xxx.yaml
+│   ├── cloud/          # CLUD-xxx.yaml
+│   ├── cluster/        # CLST-xxx.yaml
+│   ├── container/      # CONT-xxx.yaml
 │   ├── code/           # CODE-xxx.yaml
 │   └── config/         # one .yaml per config (baseline, eks, soc2, …)
 │
