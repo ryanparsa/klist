@@ -1,0 +1,60 @@
+id: CLUD-19
+title: Use Cloud-Native IAM for Cluster Access Management
+stage: active
+description: |
+  Using a shared, manually managed ConfigMap (e.g., `aws-auth` on EKS) to map cloud
+  IAM identities to Kubernetes RBAC lacks audit trails, is error-prone, and is a frequent
+  source of privilege escalation. Mistakes in the ConfigMap can lock administrators out or
+  grant unintended cluster-admin access.
+
+  Cloud-native IAM integration provides:
+  - Full CloudTrail / Cloud Audit Log auditing of access changes
+  - Support for MFA-protected sessions
+  - Clean IaC integration (no manual ConfigMap editing)
+  - Reduced blast radius from ConfigMap corruption
+mitigations:
+  - |-
+    On EKS, migrate authentication mode to `API` or `API_AND_CONFIG_MAP` as an
+    interim step. Create Access Entries for each IAM role or user that needs cluster access.
+    Assign the least-privileged access policy (prefer namespace-scoped over cluster-wide).
+    Remove manual entries from the `aws-auth` ConfigMap after migration.
+  - |
+    EKS-specific guidance: Migrate from `aws-auth` ConfigMap to the Access Entries API
+    by setting authentication mode to `API`:
+    ```bash
+    aws eks update-cluster-config \
+      --name <cluster-name> \
+      --access-config authenticationMode=API
+
+    aws eks create-access-entry \
+      --cluster-name <cluster-name> \
+      --principal-arn arn:aws:iam::<account-id>:role/<role-name> \
+      --type STANDARD
+
+    aws eks associate-access-policy \
+      --cluster-name <cluster-name> \
+      --principal-arn arn:aws:iam::<account-id>:role/<role-name> \
+      --policy-arn arn:aws:eks::aws:cluster-access-policy/AmazonEKSViewPolicy \
+      --access-scope type=namespace,namespaces=<namespace>
+    ```
+  - |
+    GKE: Use Google Groups for RBAC or Workload Identity.
+  - |
+    AKS: Use Azure AD-integrated RBAC with managed identity.
+tags:
+  - iam
+  - authentication
+  - cloud
+  - rbac
+tools:
+  - title: Prowler
+    url: https://github.com/prowler-cloud/prowler
+  - title: RBAC Lookup
+    url: https://github.com/FairwindsOps/rbac-lookup
+references:
+  - title: AWS EKS - Access Entries
+    url: https://docs.aws.amazon.com/eks/latest/userguide/access-entries.html
+  - title: AWS EKS - Grant IAM Users Access
+    url: https://docs.aws.amazon.com/eks/latest/userguide/grant-k8s-access.html
+  - title: Microsoft Threat Matrix - Cluster-Admin Binding
+    url: https://microsoft.github.io/Threat-Matrix-for-Kubernetes/techniques/Cluster-admin%20binding/

@@ -7,31 +7,31 @@ description: >-
   (CDE).
 items:
   required:
-    - CLD-001
-    - CLD-002
-    - CLD-007
-    - CLT-001
-    - CLT-002
-    - CLT-005
-    - CLT-006
-    - CLT-011
-    - CLT-012
-    - CLT-020
-    - CLT-046
-    - CNT-001
-    - CNT-002
-    - CNT-003
-    - CNT-004
-    - CNT-007
-    - CNT-008
-    - CNT-009
-    - CNT-021
+    - CLUD-1
+    - CLUD-2
+    - CLUD-7
+    - CLST-1
+    - CLST-2
+    - CLST-5
+    - CLST-6
+    - CLST-11
+    - CLST-12
+    - CLST-20
+    - CLST-46
+    - CONT-1
+    - CONT-2
+    - CONT-3
+    - CONT-4
+    - CONT-7
+    - CONT-8
+    - CONT-9
+    - CONT-21
     - CODE-001
     - CODE-002
     - CODE-004
     - CODE-007
   suggested:
-    - CLD-004
-    - CLD-005
+    - CLUD-4
+    - CLUD-5
     - CODE-005
     - CODE-006

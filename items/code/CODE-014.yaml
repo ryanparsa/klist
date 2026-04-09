@@ -1,5 +1,6 @@
 id: CODE-014
 title: Allow Deploying Containers Only from Known Registries
+stage: active
 description: |
   Without registry restrictions, Kubernetes can deploy arbitrary, untrusted images from any public registry. This introduces significant risk of deploying malware, unvetted binaries, or compromised images directly into the cluster workloads.
 mitigations:

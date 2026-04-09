@@ -1,0 +1,51 @@
+id: CLST-21
+title: Avoid Sidecars for Logging
+stage: active
+description: |
+  Deploying a sidecar container in every Pod to capture or transform logs introduces unnecessary cluster overhead and memory pressure. Node-level logging daemons natively aggregating standard outputs are a much more efficient pattern for cluster-wide logging.
+
+  What to check:
+  Look for pods that inject fluentd or logstash as sidecars within the pod:
+  ```bash
+  kubectl get pods -A -o custom-columns="NAMESPACE:.metadata.namespace,NAME:.metadata.name,CONTAINERS:.spec.containers[*].image" | grep -E 'fluent|logstash'
+  ```
+mitigations:
+  - |-
+    Refactor applications to write structured logs (JSON preferred) directly to
+    `stdout` and `stderr`. Remove sidecar log-shipping containers.
+
+    ```yaml
+    apiVersion: v1
+    kind: Pod
+    metadata:
+      name: my-app
+    spec:
+      containers:
+      - name: app
+        image: my-app:latest
+        env:
+        - name: LOG_FORMAT
+          value: "json"
+        # Removed logging sidecar container
+    ```
+  - |-
+    Deploy Fluentd or Fluent Bit as a DaemonSet to collect and forward node-level logs to a centralised aggregator.
+
+    ```bash
+    helm repo add fluent https://fluent.github.io/helm-charts
+    helm install fluent-bit fluent/fluent-bit -n kube-system
+    ```
+tags:
+  - application-development
+  - logging
+  - resources
+tools:
+  - title: Fluentd
+    url: https://www.fluentd.org/
+  - title: Loki
+    url: https://grafana.com/oss/loki/
+references:
+  - title: Twelve-Factor App - Logs
+    url: https://12factor.net/logs
+  - title: Kubernetes Docs - Logging Architecture
+    url: https://kubernetes.io/docs/concepts/cluster-administration/logging/

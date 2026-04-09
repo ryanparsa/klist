@@ -1,5 +1,6 @@
 id: CODE-008
 title: Implement Retry Logic for Dependent Services
+stage: active
 description: |
   Kubernetes starts containers in any order. A pod may be scheduled before its dependencies
   (database, message broker, downstream API) are ready. Applications that crash immediately

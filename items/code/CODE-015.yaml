@@ -1,5 +1,6 @@
 id: CODE-015
 title: Enforce Uniqueness in Ingress Hostnames
+stage: active
 description: |
   Without proper validation, a user might create an Ingress manifest that reuses an existing hostname, potentially 
   hijacking or overriding traffic for an established service.

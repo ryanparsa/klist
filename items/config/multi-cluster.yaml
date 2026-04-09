@@ -6,11 +6,11 @@ description: >-
   distribution, or environment separation.
 items:
   required:
-    - CLT-009
-    - CLT-013
-    - CLT-014
+    - CLST-9
+    - CLST-13
+    - CLST-14
   suggested:
-    - CLD-003
-    - CLT-010
-    - CLT-012
-    - CLT-015
+    - CLUD-3
+    - CLST-10
+    - CLST-12
+    - CLST-15

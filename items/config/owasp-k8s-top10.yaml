@@ -5,87 +5,87 @@ description: "Controls mapped to the OWASP Kubernetes Top 10 2025 risks (K01–K
 items:
   required:
     # K01: Insecure Workload Configurations
-    - CNT-001
-    - CNT-002
-    - CNT-003
-    - CNT-004
-    - CNT-005
-    - CNT-006
-    - CNT-007
-    - CLT-031
+    - CONT-1
+    - CONT-2
+    - CONT-3
+    - CONT-4
+    - CONT-5
+    - CONT-6
+    - CONT-7
+    - CLST-31
     # K02: Overly Permissive Authorization Configurations
-    - CLT-002
-    - CLT-009
-    - CLT-010
-    - CLT-032
-    - CLT-042
-    - CLD-003
+    - CLST-2
+    - CLST-9
+    - CLST-10
+    - CLST-32
+    - CLST-42
+    - CLUD-3
     # K03: Secrets Management Failures
-    - CLT-006
-    - CNT-020
+    - CLST-6
+    - CONT-20
     - CODE-003
     # K04: Lack Of Cluster Level Policy Enforcement
-    - CLT-005
-    - CLD-016
+    - CLST-5
+    - CLUD-16
     # K05: Missing Network Segmentation Controls
-    - CLT-012
-    - CLD-001
-    - CLD-002
+    - CLST-12
+    - CLUD-1
+    - CLUD-2
     # K06: Overly Exposed Kubernetes Components
-    - CLT-001
-    - CLT-003
-    - CLT-008
-    - CLD-018
+    - CLST-1
+    - CLST-3
+    - CLST-8
+    - CLUD-18
     # K07: Misconfigured And Vulnerable Cluster Components
-    - CLD-008
-    - CLT-037
+    - CLUD-8
+    - CLST-37
     # K08: Cluster To Cloud Lateral Movement
-    - CLD-004
-    - CLD-010
-    - CLD-013
+    - CLUD-4
+    - CLUD-10
+    - CLUD-13
     # K09: Broken Authentication Mechanisms
-    - CLT-004
-    - CLT-026
-    - CLD-019
+    - CLST-4
+    - CLST-26
+    - CLUD-19
     # K10: Inadequate Logging And Monitoring
-    - CLT-011
-    - CLD-009
-    - CLD-017
+    - CLST-11
+    - CLUD-9
+    - CLUD-17
   suggested:
     # K01
-    - CNT-022
+    - CONT-22
     # K02
-    - CLT-027
-    - CLT-033
-    - CLT-035
-    - CLT-036
-    - CLD-014
+    - CLST-27
+    - CLST-33
+    - CLST-35
+    - CLST-36
+    - CLUD-14
     # K03
-    - CLT-044
-    - CLD-015
-    - CLD-020
+    - CLST-44
+    - CLUD-15
+    - CLUD-20
     # K04
     - CODE-004
     - CODE-005
     - CODE-014
     # K05
-    - CLT-034
-    - CLT-040
+    - CLST-34
+    - CLST-40
     # K06
-    - CLT-041
-    - CLT-043
+    - CLST-41
+    - CLST-43
     # K07
-    - CLD-005
-    - CLD-006
-    - CLT-024
-    - CLT-025
+    - CLUD-5
+    - CLUD-6
+    - CLST-24
+    - CLST-25
     - CODE-002
     # K09
     - CODE-007
     # K10
-    - CLT-028
-    - CLT-029
-    - CLT-038
-    - CLD-012
-    - CNT-009
+    - CLST-28
+    - CLST-29
+    - CLST-38
+    - CLUD-12
+    - CONT-9
     - CODE-012

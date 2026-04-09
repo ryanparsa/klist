@@ -6,15 +6,15 @@ description: >-
   for managed identity, IMDS access, and Azure Monitor.
 items:
   required:
-    - CLD-003
-    - CLD-004
-    - CLD-009
-    - CLD-013
-    - CLD-014
-    - CLD-016
-    - CLD-018
+    - CLUD-3
+    - CLUD-4
+    - CLUD-9
+    - CLUD-13
+    - CLUD-14
+    - CLUD-16
+    - CLUD-18
   suggested:
-    - CLD-001
-    - CLD-005
-    - CLD-015
-    - CLT-012
+    - CLUD-1
+    - CLUD-5
+    - CLUD-15
+    - CLST-12

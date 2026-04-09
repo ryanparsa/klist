@@ -7,21 +7,21 @@ description: >-
   logging, and encryption.
 items:
   required:
-    - CLD-003
-    - CLD-004
-    - CLD-007
-    - CLD-009
-    - CLD-013
-    - CLD-016
-    - CLD-017
-    - CLD-018
-    - CLD-019
-    - CLT-026
-    - CNT-009
+    - CLUD-3
+    - CLUD-4
+    - CLUD-7
+    - CLUD-9
+    - CLUD-13
+    - CLUD-16
+    - CLUD-17
+    - CLUD-18
+    - CLUD-19
+    - CLST-26
+    - CONT-9
   suggested:
-    - CLD-001
-    - CLD-005
-    - CLD-010
-    - CLD-014
-    - CLD-015
-    - CLD-020
+    - CLUD-1
+    - CLUD-5
+    - CLUD-10
+    - CLUD-14
+    - CLUD-15
+    - CLUD-20

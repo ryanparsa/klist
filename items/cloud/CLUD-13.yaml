@@ -1,0 +1,45 @@
+id: CLUD-13
+title: Restrict Pod Access to Cloud Managed Identity
+stage: active
+description: |
+  Cloud providers assign managed identities to VM instances (EC2 Instance Profile on AWS,
+  Managed Identity on Azure, Service Account on GCP). Pods running on these VMs can inherit
+  the node's cloud identity and use it to access cloud services - including container
+  registries, secrets managers, and other Kubernetes clusters.
+
+  Attackers who compromise any pod can exploit this to escalate privileges to the node's
+  cloud identity, potentially gaining cloud-level control beyond the Kubernetes cluster.
+
+  **What to check:**
+  - Is IMDSv2 enforced with hop limit = 1 on AWS to prevent pod access to IMDS?
+    ```
+    aws ec2 describe-instances --query 'Reservations[].Instances[].MetadataOptions'
+    ```
+  - Are workloads using pod-level identity (IRSA, Workload Identity, AAD Workload Identity)
+    instead of relying on node-level identity?
+mitigations:
+  - |-
+    - AWS: Enable IRSA (IAM Roles for Service Accounts) so only specific pods get
+      scoped cloud permissions. Set IMDS hop limit to 1.
+    - GCP: Use Workload Identity Federation.
+    - Azure: Use AAD Workload Identity.
+    - Do not assign broad IAM roles to node groups; grant pod-level permissions only.
+tags:
+  - cloud
+  - identity
+  - privilege-escalation
+  - iam
+tools:
+  - title: Prowler
+    url: https://github.com/prowler-cloud/prowler
+  - title: Kyverno
+    url: https://kyverno.io/
+  - title: Checkov
+    url: https://www.checkov.io/
+references:
+  - title: AWS EKS - IAM Roles for Service Accounts
+    url: https://docs.aws.amazon.com/eks/latest/userguide/iam-roles-for-service-accounts.html
+  - title: Microsoft Threat Matrix - Access Managed Identity Credentials
+    url: https://microsoft.github.io/Threat-Matrix-for-Kubernetes/techniques/Access%20managed%20identity%20credentials/
+  - title: GCP - Workload Identity
+    url: https://cloud.google.com/kubernetes-engine/docs/how-to/workload-identity

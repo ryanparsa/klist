@@ -12,7 +12,7 @@ This is **klist** — a Kubernetes checklist. The project has two documentation 
 **Context to verify before editing:**
 - Items live in `items/cloud/`, `items/cluster/`, `items/container/`, `items/code/` — the builder output shows current totals.
 - Configs live in `items/config/` — list all config IDs and their `type` field.
-- The full item schema (read a few files like `CLD-002.yaml`, `CLT-009.yaml`) includes fields not currently documented in `CONTRIBUTING.md`: `mitigations`, `tools`.
+- The full item schema (read a few files like `CLUD-2.yaml`, `CLST-9.yaml`) includes fields not currently documented in `CONTRIBUTING.md`: `mitigations`, `tools`.
 - The builder lives in `builder/build.js` — skim it to confirm current validation rules and output format.
 
 ---

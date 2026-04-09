@@ -6,22 +6,22 @@ description: >-
   Confidentiality) for Kubernetes workloads.
 items:
   required:
-    - CLD-003
-    - CLD-009
-    - CLT-009
-    - CLT-011
-    - CLT-012
-    - CLT-020
-    - CLT-046
-    - CNT-001
-    - CNT-008
-    - CNT-023
+    - CLUD-3
+    - CLUD-9
+    - CLST-9
+    - CLST-11
+    - CLST-12
+    - CLST-20
+    - CLST-46
+    - CONT-1
+    - CONT-8
+    - CONT-23
     - CODE-001
     - CODE-003
   suggested:
-    - CLT-010
-    - CLT-015
-    - CLT-016
-    - CNT-009
+    - CLST-10
+    - CLST-15
+    - CLST-16
+    - CONT-9
     - CODE-002
     - CODE-006

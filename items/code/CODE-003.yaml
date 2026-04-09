@@ -1,5 +1,6 @@
 id: CODE-003
 title: Scan Repositories for Hardcoded Secrets
+stage: active
 description: |
   Developers occasionally commit API keys, database passwords, and private keys directly
   into source code. Once in git history, these credentials are extremely difficult to fully

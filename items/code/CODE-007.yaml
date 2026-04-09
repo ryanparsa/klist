@@ -1,5 +1,6 @@
 id: CODE-007
 title: Use Private Container Registries with Authentication
+stage: active
 description: |
   Pulling container images from public registries without authentication or storing images in
   public repositories exposes workloads to image substitution attacks and leaks proprietary

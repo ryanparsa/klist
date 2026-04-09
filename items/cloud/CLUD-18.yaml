@@ -1,0 +1,51 @@
+id: CLUD-18
+title: Disable Public API Server Endpoint on Managed Clusters
+stage: active
+description: |
+  Managed Kubernetes clusters (EKS, GKE, AKS) create a public API server endpoint by
+  default, accessible from any IP on the internet. This exposes the cluster to brute-force
+  attacks, credential stuffing, and exploitation of API server vulnerabilities without
+  requiring network-level access.
+
+  The safest configuration is to enable private-only endpoint access, so the API server
+  is only reachable from within the cluster's VPC or via a VPN/private link connection.
+mitigations:
+  - |-
+    Disable the public API server endpoint and enable private endpoint access.
+    Ensure operators connect via VPN, AWS Direct Connect, or GCP Cloud Interconnect. If
+    immediate disablement is not feasible, restrict `publicAccessCidrs` to minimal known
+    CIDR ranges (VPN egress IPs only) and plan full private migration.
+  - |
+    EKS-specific guidance:
+    ```bash
+    aws eks update-cluster-config \
+      --name <cluster-name> \
+      --resources-vpc-config endpointPublicAccess=false,endpointPrivateAccess=true
+    ```
+    If public access cannot be disabled immediately, restrict `publicAccessCidrs` to known
+    operator IP ranges (VPN exit IPs, CI/CD NAT gateway IPs) as an interim measure.
+  - |
+    GKE: Enable Private Cluster with `--enable-private-endpoint` to restrict API server access to private IPs only.
+  - |
+    AKS: Use the `--api-server-authorized-ip-ranges` flag or enable a private cluster.
+tags:
+  - network
+  - api-server
+  - hardening
+  - cloud
+tools:
+  - title: Prowler
+    url: https://github.com/prowler-cloud/prowler
+  - title: Checkov
+    url: https://www.checkov.io/
+  - title: tfsec
+    url: https://github.com/aquasecurity/tfsec
+references:
+  - title: AWS EKS - Cluster Endpoint Access Control
+    url: https://docs.aws.amazon.com/eks/latest/userguide/cluster-endpoint.html
+  - title: GKE - Private Cluster
+    url: https://cloud.google.com/kubernetes-engine/docs/concepts/private-cluster-concept
+  - title: AKS - Private Cluster
+    url: https://learn.microsoft.com/en-us/azure/aks/private-cluster
+  - title: Microsoft Threat Matrix - Access Kubernetes API Server
+    url: https://microsoft.github.io/Threat-Matrix-for-Kubernetes/techniques/Access%20the%20K8S%20API%20server/

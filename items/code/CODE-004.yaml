@@ -1,5 +1,6 @@
 id: CODE-004
 title: Scan IaC Files for Security Misconfigurations
+stage: active
 description: |
   Terraform, Helm charts, and Kubernetes YAML manifests are code that defines infrastructure
   and workload configuration. Misconfigurations in these files - such as open security groups,

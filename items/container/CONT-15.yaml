@@ -1,0 +1,46 @@
+id: CONT-15
+title: Forward SIGTERM to the Application Process in Dockerfile
+stage: active
+description: |
+  When a container's `CMD` or `ENTRYPOINT` uses **shell form** rather than **exec form**,
+  the shell (`/bin/sh`) becomes PID 1. Shells do not forward signals to child processes by
+  default. As a result, SIGTERM sent by Kubernetes is silently swallowed, and the app waits
+  the full `terminationGracePeriodSeconds` before being force-killed - causing connection
+  drops and slow rollouts.
+
+  **Shell form (incorrect):**
+  ```dockerfile
+  CMD node server.js          # PID 1 = /bin/sh -c, does not forward SIGTERM
+  ENTRYPOINT ./start.sh       # same issue
+  ```
+
+  **What to check:** Review all Dockerfiles in your repositories. Verify that the final
+  `CMD` and `ENTRYPOINT` instructions use JSON array (exec) form.
+mitigations:
+  - |
+    Update Dockerfiles to use the exec form for `CMD` and `ENTRYPOINT`.
+    ```dockerfile
+    CMD ["node", "server.js"]   # PID 1 = node, receives SIGTERM directly
+    ENTRYPOINT ["/app/start"]
+    ```
+
+    If a wrapper script is required, end the script with `exec "$@"` so the shell is
+    replaced by the target process:
+    ```bash
+    #!/bin/sh
+    # ... pre-start setup ...
+    exec "$@"
+    ```
+tags:
+  - application-development
+  - graceful-shutdown
+  - dockerfile
+  - reliability
+tools: []
+references:
+  - title: Kubernetes Docs - Pod Lifecycle
+    url: https://kubernetes.io/docs/concepts/workloads/pods/pod-lifecycle/
+  - title: Graceful Shutdown of Kubernetes Pods
+    url: https://pracucci.com/graceful-shutdown-of-kubernetes-pods.html
+  - title: Docker Docs - CMD
+    url: https://docs.docker.com/reference/dockerfile/#cmd

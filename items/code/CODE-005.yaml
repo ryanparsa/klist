@@ -1,5 +1,6 @@
 id: CODE-005
 title: Sign Container Images and Verify at Admission
+stage: active
 description: |
   Container image signing creates a cryptographic attestation that an image was built by a
   trusted pipeline and has not been tampered with. Combined with an admission webhook that

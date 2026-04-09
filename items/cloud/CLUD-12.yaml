@@ -1,0 +1,27 @@
+id: CLUD-12
+title: Implement Log Retention and Archival
+stage: active
+description: |
+  Missing or short-lived log retention policies hinder operational troubleshooting, incident response, and compliance auditing. Without a robust retention and archival policy, critical forensic data may be lost when the cluster purges old active logs.
+mitigations:
+  - |-
+    Configure a log aggregation tool (Fluentd, Fluent Bit, or the cloud provider's
+    native agent) to forward logs to a centralised store (S3, GCS, Azure Blob, Loki, or a
+    SIEM). Set active retention to 30-45 days in the hot tier and archive to cheaper cold
+    storage (Glacier, Nearline) for the remainder of the compliance retention period.
+    Automate lifecycle policies to enforce archival and deletion according to your compliance
+    requirements (HIPAA: 6 years, PCI-DSS: 1 year).
+tags:
+  - configuration
+  - logging
+  - compliance
+tools:
+  - title: Fluentd
+    url: https://www.fluentd.org/
+  - title: Loki
+    url: https://grafana.com/oss/loki/
+references:
+  - title: Kubernetes Docs - Logging Architecture
+    url: https://kubernetes.io/docs/concepts/cluster-administration/logging/
+  - title: SOC 2 CC7.2 - Security Event Monitoring
+    url: https://www.aicpa.org/resources/article/soc-2-trust-service-principles

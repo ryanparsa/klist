@@ -9,7 +9,7 @@ This repo is **klist** — a static Vite + React app that renders a Kubernetes o
 
 Each item follows this schema:
 ```yaml
-id: CLD-002
+id: CLUD-2
 title: Restrict Network Access to API Server and Kubelet
 description: |
   Prose explanation of the risk and what to check.
@@ -29,7 +29,7 @@ references:
 
 1. **Add concrete `kubectl` / CLI commands** in the `description` under "What to check:" so a reader can verify the control immediately. Use fenced code blocks inside the YAML literal block (`|`).
 2. **Add remediation code snippets** to `mitigations` — e.g. a `SecurityContext` patch, a `NetworkPolicy` manifest, an RBAC role YAML, or a shell command — wherever the current text is prose-only.
-3. **Add ASCII or Mermaid diagrams** (as fenced code blocks inside the description) for items where a flow or architecture helps — e.g. network segmentation (K05), cluster-to-cloud lateral movement (K08), or secret injection paths (K03).
+3. **Add ASCII or Mermaid diagrams** (as fenced code blocks inside the description) for items where a flow or architecture helps — e.g. network segmentation (K05), cluster-to-cloud lateral movement (K08), or secret injection paths (K03). Note that you can use mermaid diagram and chart in markdown code.
 4. Do **not** change `id`, `title`, `tags`, `tools`, or `references`. Only enrich `description` and `mitigations`.
 5. Keep titles **provider-agnostic** — AWS/GCP/Azure specifics belong only in the description body.
 

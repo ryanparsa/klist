@@ -1,5 +1,6 @@
 id: CODE-016
 title: Use Only Approved Domain Names in Ingress Hostnames
+stage: active
 description: |
   Unauthorized or arbitrary domain names in Ingress manifests can lead to domain hijacking, routing conflicts, or circumvention of corporate DNS policies. Attackers or misconfigured deployments might claim internal tooling domains to inappropriately intercept or redirect traffic.
 mitigations:

@@ -1,5 +1,6 @@
 id: CODE-013
 title: Externalise Application Configuration
+stage: active
 description: |
   Hardcoded configuration logic within the application code inhibits portability, complicates secrets management, and requires full application redeploys for minor configuration changes. Configurations must be decoupled to allow identical container builds to run across different environments.
 mitigations:

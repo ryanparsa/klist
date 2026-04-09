@@ -1,0 +1,23 @@
+id: CLST-22
+title: Use Horizontal Pod Autoscaler for Variable Workloads
+stage: active
+description: |
+  Without automated horizontal scaling, workloads either risk becoming unresponsive during traffic spikes or waste resources running over-provisioned during quiet periods. The Horizontal Pod Autoscaler (HPA) automatically adjusts ReplicaSets based on observed metrics.
+mitigations:
+  - |-
+    Define an `HorizontalPodAutoscaler` resource for each variable workload.
+    Set `minReplicas` to at least 2 to maintain availability during scale-in. Use CPU and
+    memory metrics as the primary scaling signals, or configure custom/external metrics via
+    the metrics-server or KEDA for queue depth or request rate scaling.
+tags:
+  - application-development
+  - scaling
+  - hpa
+tools:
+  - title: Cluster Autoscaler
+    url: https://github.com/kubernetes/autoscaler/tree/master/cluster-autoscaler
+references:
+  - title: Kubernetes Docs - Horizontal Pod Autoscaling
+    url: https://kubernetes.io/docs/tasks/run-application/horizontal-pod-autoscale/
+  - title: Kubernetes Docs - HorizontalPodAutoscaler API
+    url: https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.29/#horizontalpodautoscaler-v2-autoscaling

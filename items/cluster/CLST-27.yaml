@@ -1,0 +1,23 @@
+id: CLST-27
+title: Restrict ServiceAccount Tokens to Workloads
+stage: active
+description: |
+  ServiceAccount tokens are intended exclusively for applications and controllers running inside the cluster. Distributing them to human end-users circumvents external identity providers, bypasses MFA enforcement, and makes it impossible to reliably attribute API actions to specific individuals during an audit.
+mitigations:
+  - |-
+    Audit kubeconfig files in CI/CD systems and developer workstations for
+    ServiceAccount tokens. Replace ServiceAccount token-based kubeconfigs used by humans with
+    OIDC credentials. Ensure `automountServiceAccountToken: false` is set on ServiceAccounts
+    not used by in-cluster workloads. Rotate or delete stale tokens immediately.
+tags:
+  - configuration
+  - authentication
+  - rbac
+tools:
+  - title: RBAC Lookup
+    url: https://github.com/FairwindsOps/rbac-lookup
+references:
+  - title: Kubernetes Docs - Configure Service Accounts
+    url: https://kubernetes.io/docs/tasks/configure-pod-container/configure-service-account/
+  - title: CIS Kubernetes Benchmark 5.1.6
+    url: https://workbench.cisecurity.org/benchmarks/16828

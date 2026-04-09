@@ -6,24 +6,24 @@ description: >-
   process, or transmit Protected Health Information (PHI).
 items:
   required:
-    - CLD-007
-    - CLD-009
-    - CLT-006
-    - CLT-011
-    - CLT-020
-    - CLT-046
-    - CNT-003
-    - CNT-007
+    - CLUD-7
+    - CLUD-9
+    - CLST-6
+    - CLST-11
+    - CLST-20
+    - CLST-46
+    - CONT-3
+    - CONT-7
     - CODE-003
     - CODE-007
   suggested:
-    - CLD-002
-    - CLD-003
-    - CLT-010
-    - CLT-015
-    - CNT-009
-    - CNT-011
-    - CNT-012
-    - CNT-021
+    - CLUD-2
+    - CLUD-3
+    - CLST-10
+    - CLST-15
+    - CONT-9
+    - CONT-11
+    - CONT-12
+    - CONT-21
     - CODE-002
     - CODE-005

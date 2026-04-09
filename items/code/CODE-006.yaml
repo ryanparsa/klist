@@ -1,5 +1,6 @@
 id: CODE-006
 title: Generate an SBOM for Every Container Image
+stage: active
 description: |
   A Software Bill of Materials (SBOM) is a machine-readable inventory of all components in a
   container image - OS packages, language libraries, and their versions. SBOMs enable rapid

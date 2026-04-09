@@ -1,0 +1,46 @@
+id: CLST-10
+title: Disable Automatic ServiceAccount Token Mounting
+stage: active
+description: |
+  By default, Kubernetes automatically mounts a ServiceAccount token into every pod. Most
+  application pods do not need to call the Kubernetes API, so this token is unnecessary and
+  becomes an attack surface - a compromised container can use it to probe the cluster.
+
+  **What to check:**
+
+  ```
+  kubectl get pods -A -o json | \
+    jq '.items[] | select(.spec.automountServiceAccountToken != false) | .metadata.name'
+  ```
+
+  Also check ServiceAccount objects:
+
+  ```
+  kubectl get serviceaccounts -A -o json | \
+    jq '.items[] | select(.automountServiceAccountToken != false) | .metadata.name'
+  ```
+mitigations:
+  - |-
+    Set `automountServiceAccountToken: false` on ServiceAccount objects and
+    override to `true` only in pods that explicitly require API access. Enforce this with an
+    admission policy (OPA Gatekeeper / Kyverno).
+tags:
+  - rbac
+  - service-accounts
+  - least-privilege
+tools:
+  - title: Kyverno
+    url: https://kyverno.io/
+  - title: OPA Gatekeeper
+    url: https://open-policy-agent.github.io/gatekeeper/
+  - title: Trivy
+    url: https://trivy.dev/
+references:
+  - title: "OWASP Kubernetes Top 10 - K03: Overly Permissive RBAC"
+    url: https://owasp.org/www-project-kubernetes-top-ten/
+  - title: CIS Kubernetes Benchmark 5.1.6
+    url: https://workbench.cisecurity.org/benchmarks/16828
+  - title: Kubernetes Docs - Configure Service Accounts
+    url: https://kubernetes.io/docs/tasks/configure-pod-container/configure-service-account/
+  - title: Microsoft Threat Matrix - Container Service Account
+    url: https://microsoft.github.io/Threat-Matrix-for-Kubernetes/techniques/container%20service%20account/

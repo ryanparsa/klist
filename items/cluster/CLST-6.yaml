@@ -1,0 +1,43 @@
+id: CLST-6
+title: Encrypt Secrets at Rest in etcd
+stage: active
+description: |
+  Kubernetes Secrets are base64-encoded by default, which is not encryption. Anyone with
+  read access to etcd can trivially decode all secrets. Without an `EncryptionConfiguration`
+  using a KMS or strong AES provider, Kubernetes writes secrets to disk unencrypted, exposing all cluster credentials.
+
+  **What to check:**
+
+  ```
+  ps aux | grep kube-apiserver | grep encryption-provider-config
+  ```
+
+  The flag `--encryption-provider-config` must point to a valid EncryptionConfiguration file.
+  Verify the provider is `kms` (preferred) or `aescbc` - not `identity` (which is no-op).
+
+mitigations:
+  - Create an EncryptionConfiguration manifest specifying the KMS provider
+    (AWS KMS, GCP KMS, Azure Key Vault) or a generated AES-CBC key. Restart the API server
+    and run `kubectl get secret -o json | etcdctl get ...` to confirm encryption.
+
+tags:
+  - etcd
+  - encryption-at-rest
+  - secrets
+  - compliance
+
+tools:
+  - title: kube-bench
+    url: https://github.com/aquasecurity/kube-bench
+  - title: Trivy
+    url: https://trivy.dev/
+
+references:
+  - title: Kubernetes Docs - Encrypting Secret Data at Rest
+    url: https://kubernetes.io/docs/tasks/administer-cluster/encrypt-data/
+  - title: HIPAA Integrity Controls
+    url: https://www.hhs.gov/hipaa/for-professionals/security/laws-regulations/index.html
+  - title: PCI-DSS Requirement 3 - Protect Stored Account Data
+    url: https://www.pcisecuritystandards.org/document_library/
+  - title: Microsoft Threat Matrix - List Kubernetes Secrets
+    url: https://microsoft.github.io/Threat-Matrix-for-Kubernetes/techniques/List%20K8S%20secrets/

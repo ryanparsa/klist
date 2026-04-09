@@ -45,7 +45,8 @@ export function validate({ items, configs }) {
   }
 
   // --- Required and Optional field checks on items ---
-  const REQUIRED_ITEM_FIELDS = ['id', 'title', 'description', 'tags', 'references']
+  const REQUIRED_ITEM_FIELDS = ['id', 'title', 'stage', 'description', 'tags', 'references']
+  const VALID_STAGES = ['draft', 'active', 'deprecated']
   for (const item of items) {
     for (const field of REQUIRED_ITEM_FIELDS) {
       if (item[field] == null) {
@@ -59,6 +60,10 @@ export function validate({ items, configs }) {
         if (!ref.title) errors.push(`[${item.id}] reference missing title`)
         if (!ref.url) errors.push(`[${item.id}] reference missing url`)
       }
+    }
+
+    if (item.stage && !VALID_STAGES.includes(item.stage)) {
+      errors.push(`[${item.id}] invalid stage "${item.stage}" — must be one of: ${VALID_STAGES.join(', ')}`)
     }
 
     if (item.mitigations != null) {

@@ -6,16 +6,16 @@ description: >-
   operator is responsible for all control-plane security.
 items:
   required:
-    - CLD-001
-    - CLD-002
-    - CLD-005
-    - CLD-006
-    - CLD-007
-    - CLT-004
-    - CLT-007
-    - CLT-012
-    - CLT-013
+    - CLUD-1
+    - CLUD-2
+    - CLUD-5
+    - CLUD-6
+    - CLUD-7
+    - CLST-4
+    - CLST-7
+    - CLST-12
+    - CLST-13
   suggested:
-    - CLD-003
-    - CLD-008
-    - CLD-010
+    - CLUD-3
+    - CLUD-8
+    - CLUD-10

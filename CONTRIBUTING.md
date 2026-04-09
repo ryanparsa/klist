@@ -27,9 +27,9 @@ Items live in `items/{category}/` as individual YAML files. The category determi
 
 | Category | Directory | ID prefix | Example |
 |---|---|---|---|
-| Cloud | `items/cloud/` | `CLD` | `CLD-011.yaml` |
-| Cluster | `items/cluster/` | `CLT` | `CLT-014.yaml` |
-| Container | `items/container/` | `CNT` | `CNT-010.yaml` |
+| Cloud | `items/cloud/` | `CLD` | `CLUD-11.yaml` |
+| Cluster | `items/cluster/` | `CLT` | `CLST-14.yaml` |
+| Container | `items/container/` | `CNT` | `CONT-10.yaml` |
 | Code | `items/code/` | `CODE` | `CODE-008.yaml` |
 
 **Steps:**
@@ -42,7 +42,7 @@ Items live in `items/{category}/` as individual YAML files. The category determi
 **Item schema:**
 
 ```yaml
-id: CLD-011
+id: CLUD-11
 title: "Short, action-oriented label"
 description: |
   Explain what the control is, why it matters, and how to remediate it.
@@ -59,7 +59,7 @@ references:
 ```
 
 **Rules:**
-- `id` must match the filename exactly (e.g. `CLD-011.yaml` → `id: CLD-011`).
+- `id` must match the filename exactly (e.g. `CLUD-11.yaml` → `id: CLUD-11`).
 - At least one `reference` is required.
 - `description` should cover: what the risk is, how to verify it, and how to fix it.
 - Reuse existing tags where possible — check `public/checklist.json` → `all_tags` for the current list.
@@ -88,10 +88,10 @@ type: baseline          # baseline | provider | architecture | compliance
 description: "Shown as a tooltip in the sidebar."
 items:
   required:
-    - CLT-001
-    - CNT-003
+    - CLST-1
+    - CONT-3
   suggested:
-    - CLD-005
+    - CLUD-5
 ```
 
 **Type → sidebar order:**

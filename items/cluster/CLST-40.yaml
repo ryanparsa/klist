@@ -1,0 +1,41 @@
+id: CLST-40
+title: Use a CNI Plugin That Prevents ARP Spoofing
+stage: active
+description: |
+  Kubernetes' default networking (kubenet) relies on ARP for pod-to-pod communication and is
+  susceptible to ARP poisoning/IP spoofing attacks. A compromised pod can broadcast fake ARP
+  replies to intercept or impersonate traffic from other pods on the same node.
+
+  CNI plugins that use eBPF or enforce strict ARP behaviour (e.g., Cilium, Calico with eBPF
+  dataplane) eliminate this attack vector at the network level.
+
+  **What to check:** Identify which CNI plugin is installed:
+  ```
+  kubectl get pods -n kube-system -o wide | grep -E 'calico|cilium|flannel|weave'
+  ls /etc/cni/net.d/
+  ```
+
+  Flannel alone does **not** prevent ARP poisoning. Calico in standard mode uses BGP routing
+  and is not susceptible; Cilium in eBPF mode fully prevents it.
+mitigations:
+  - |-
+    If using a CNI prone to ARP poisoning (e.g., flannel), plan a migration
+    to Cilium or Calico. If staying on Calico, enable WireGuard encryption for in-cluster
+    traffic to prevent interception even if ARP is spoofed.
+tags:
+  - network
+  - cni
+  - lateral-movement
+  - hardening
+tools:
+  - title: Cilium
+    url: https://cilium.io/
+  - title: Calico
+    url: https://www.tigera.io/project-calico/
+references:
+  - title: Cilium Docs - eBPF-based Networking
+    url: https://docs.cilium.io/en/latest/overview/intro/
+  - title: Microsoft Threat Matrix - ARP Poisoning and IP Spoofing
+    url: https://microsoft.github.io/Threat-Matrix-for-Kubernetes/techniques/ARP%20poisoning%20and%20IP%20spoofing/
+  - title: Calico Docs - WireGuard Encryption
+    url: https://docs.tigera.io/calico/latest/network-policy/encrypt-cluster-pod-traffic

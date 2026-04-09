@@ -1,5 +1,6 @@
 id: CODE-002
 title: Scan Dependencies for Known Vulnerabilities
+stage: active
 description: |
   Third-party libraries and container base images frequently contain CVEs. Software
   Composition Analysis (SCA) tools identify vulnerable dependencies before they are shipped

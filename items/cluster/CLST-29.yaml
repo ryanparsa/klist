@@ -1,0 +1,30 @@
+id: CLST-29
+title: Provision a Log Aggregation Tool
+stage: active
+description: |
+  Logs scattered across ephemeral nodes will be permanently lost when those nodes are scaled down, upgraded, or fail. Centralizing logs through an aggregation tool ensures telemetry data persists securely and remains searchable regardless of the underlying infrastructure's lifecycle.
+mitigations:
+  - |-
+    Deploy Fluentd or Fluent Bit as a DaemonSet to collect logs from all nodes
+    and forward them to a centralised store (Loki, Elasticsearch, Splunk, CloudWatch, or GCP
+    Logging). Configure structured log parsing so logs are queryable. Ensure the aggregation
+    pipeline is highly available - use persistent buffers to prevent log loss during
+    backpressure.
+tags:
+  - configuration
+  - logging
+  - observability
+tools:
+  - title: Fluentd
+    url: https://www.fluentd.org/
+  - title: Loki
+    url: https://grafana.com/oss/loki/
+references:
+  - title: Kubernetes Docs - Logging Architecture
+    url: https://kubernetes.io/docs/concepts/cluster-administration/logging/
+  - title: Fluentd - Open Source Data Collector
+    url: https://www.fluentd.org/
+  - title: Microsoft Threat Matrix - Delete Kubernetes Events
+    url: https://microsoft.github.io/Threat-Matrix-for-Kubernetes/techniques/Delete%20K8S%20events/
+  - title: Microsoft Threat Matrix - Clear Container Logs
+    url: https://microsoft.github.io/Threat-Matrix-for-Kubernetes/techniques/Clear%20container%20logs/

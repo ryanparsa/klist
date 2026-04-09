@@ -6,37 +6,37 @@ description: >-
   covering API server hardening, etcd, kubelet, and workload configuration.
 items:
   required:
-    - CLD-001
-    - CLD-002
-    - CLD-003
-    - CLD-004
-    - CLD-005
-    - CLD-010
-    - CLD-017
-    - CLT-001
-    - CLT-002
-    - CLT-003
-    - CLT-004
-    - CLT-005
-    - CLT-006
-    - CLT-007
-    - CLT-008
-    - CLT-009
-    - CLT-010
-    - CLT-011
-    - CLT-012
-    - CLT-013
-    - CLT-024
-    - CLT-039
-    - CNT-001
-    - CNT-002
-    - CNT-003
-    - CNT-004
-    - CNT-005
-    - CNT-006
-    - CNT-007
-    - CNT-008
-    - CNT-021
+    - CLUD-1
+    - CLUD-2
+    - CLUD-3
+    - CLUD-4
+    - CLUD-5
+    - CLUD-10
+    - CLUD-17
+    - CLST-1
+    - CLST-2
+    - CLST-3
+    - CLST-4
+    - CLST-5
+    - CLST-6
+    - CLST-7
+    - CLST-8
+    - CLST-9
+    - CLST-10
+    - CLST-11
+    - CLST-12
+    - CLST-13
+    - CLST-24
+    - CLST-39
+    - CONT-1
+    - CONT-2
+    - CONT-3
+    - CONT-4
+    - CONT-5
+    - CONT-6
+    - CONT-7
+    - CONT-8
+    - CONT-21
   suggested:
     - CODE-001
     - CODE-002

@@ -6,17 +6,17 @@ description: >-
   where uptime and resilience are primary concerns.
 items:
   required:
-    - CLD-011
-    - CLT-012
-    - CLT-014
-    - CLT-015
-    - CLT-016
-    - CNT-008
-    - CNT-010
-    - CNT-012
-    - CNT-013
-    - CNT-014
+    - CLUD-11
+    - CLST-12
+    - CLST-14
+    - CLST-15
+    - CLST-16
+    - CONT-8
+    - CONT-10
+    - CONT-12
+    - CONT-13
+    - CONT-14
     - CODE-008
   suggested:
-    - CLD-008
-    - CLT-006
+    - CLUD-8
+    - CLST-6

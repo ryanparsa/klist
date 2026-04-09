@@ -1,0 +1,27 @@
+id: CLST-30
+title: Enforce ResourceQuotas for Namespaces
+stage: active
+description: |
+  While LimitRanges ensure individual Pods have sensible sizes, they do not prevent a workload or user from deploying tens of thousands of Pods or ConfigMaps. Without a `ResourceQuota`, a single namespace can exhaust the cluster's entire capacity of CPU, memory, or API objects, leading to a system-wide denial of service.
+mitigations:
+  - |-
+    Create a `ResourceQuota` manifest for each namespace that limits total CPU,
+    memory, and object counts (pods, services, configmaps, secrets). Automate quota creation
+    as part of namespace provisioning. Use Kyverno or OPA Gatekeeper policies to require
+    quotas before workloads can be deployed.
+tags:
+  - governance
+  - resource-management
+  - limits
+tools:
+  - title: Kyverno
+    url: https://kyverno.io/
+  - title: kube-score
+    url: https://github.com/zegl/kube-score
+references:
+  - title: Kubernetes Docs - Resource Quotas
+    url: https://kubernetes.io/docs/concepts/policy/resource-quotas/
+  - title: CIS Kubernetes Benchmark 5.7.1
+    url: https://workbench.cisecurity.org/benchmarks/16828
+  - title: Microsoft Threat Matrix - Denial of Service
+    url: https://microsoft.github.io/Threat-Matrix-for-Kubernetes/techniques/Denial%20of%20service/

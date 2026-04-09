@@ -1,5 +1,6 @@
 id: CODE-001
 title: Run SAST Scanning on Every Pull Request
+stage: active
 description: |
   Static Application Security Testing (SAST) tools analyse source code for security
   vulnerabilities without executing it. Running SAST on every PR as a blocking gate prevents

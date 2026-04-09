@@ -1,0 +1,47 @@
+id: CONT-16
+title: Keep CPU Requests to 1 CPU or Below
+stage: active
+description: |
+  Excessive CPU requests constrain the scheduler and may prevent Pods from being optimally binned and packed on available nodes.
+  When a node has no more CPU capacity left to satisfy a request, the pod is left pending.
+
+  What to check:
+  Check for any running pods with excessively high CPU requests:
+  ```bash
+  kubectl get pods -A -o custom-columns="NAMESPACE:.metadata.namespace,NAME:.metadata.name,CPU_REQUEST:.spec.containers[*].resources.requests.cpu" | grep -v "<none>"
+  ```
+mitigations:
+  - |-
+    Unless running computational intensive jobs, it is recommended to set your CPU requests to 1 CPU or below.
+    Update your deployment manifests to set sensible limits.
+
+    ```yaml
+    resources:
+      requests:
+        cpu: "500m"
+        memory: "256Mi"
+    ```
+  - |-
+    Use a LimitRange to restrict maximum CPU requests by default:
+
+    ```yaml
+    apiVersion: v1
+    kind: LimitRange
+    metadata:
+      name: cpu-limit-range
+    spec:
+      limits:
+      - defaultRequest:
+          cpu: 500m
+        type: Container
+    ```
+tags:
+  - application-development
+  - resource-utilisation
+  - performance
+tools: []
+references:
+  - title: "Understanding Resource Limits in Kubernetes: CPU Time"
+    url: https://medium.com/@betz.mark/understanding-resource-limits-in-kubernetes-cpu-time-9eff74d3161b
+  - title: Kubernetes Docs - Resource Management
+    url: https://kubernetes.io/docs/concepts/configuration/manage-resources-containers/

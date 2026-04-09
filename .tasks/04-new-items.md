@@ -27,7 +27,7 @@ This repo is **klist** — a Kubernetes checklist. Items live in `items/cloud/`,
 Every new item **must** follow this exact schema or the builder will reject it:
 
 ```yaml
-id: CLD-021
+id: CLUD-21
 title: Restrict public API server access        # provider-agnostic — no AWS/GCP/Azure in title
 description: |
   Explanation of the risk and what to verify.
@@ -68,7 +68,7 @@ references:
 
 Before creating a new item, scan **all** existing files in the target `items/{category}/` directory and find the highest numeric suffix currently in use. Use that number + 1 as the new ID.
 
-Example: if the highest existing Cloud item is `CLD-020`, the next new Cloud item is `CLD-021`.
+Example: if the highest existing Cloud item is `CLUD-20`, the next new Cloud item is `CLUD-21`.
 
 Gaps in the numbering sequence are intentional — never reuse an existing ID.
 
@@ -78,7 +78,7 @@ Gaps in the numbering sequence are intentional — never reuse an existing ID.
 
 1. Check whether an existing item already covers this risk. If it does, enrich that item's `description` and `mitigations` instead of creating a new one.
 2. If no existing item covers it, create a new YAML file in the appropriate `items/{category}/` directory.
-3. The `description` must include a "What to check:" section with a `kubectl` or CLI command.
+3. The `description` must include a "What to check:" section with a `kubectl` or CLI command. You can use mermaid diagram and chart in markdown code.
 4. Add a `mitigations` entry with a concrete remediation snippet (manifest, command, or policy excerpt).
 5. Add a `tools` entry referencing the tool whose rule/policy surfaced this gap.
 6. Add a `references` entry linking back to the specific rule, policy, or technique.

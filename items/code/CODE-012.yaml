@@ -1,5 +1,6 @@
 id: CODE-012
 title: Log to stdout and stderr
+stage: active
 description: |
   Applications that write logs directly to files, databases, or network aggregators bypass the cluster's native logging mechanisms. This fragments observability, increases application complexity, and can cause data loss if the pod terminates before logs are shipped.
 mitigations:

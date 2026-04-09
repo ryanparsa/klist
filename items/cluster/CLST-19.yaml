@@ -1,0 +1,23 @@
+id: CLST-19
+title: Apply Business Labels to Resources
+stage: active
+description: |
+  Without business metadata modeled into Kubernetes objects, facilitating cost-allocation and tracking spending is heavily impaired. External aggregation tools rely on standardized business labels (such as `owner`, `project`, or `business-unit`) to correctly associate infrastructure usage with organizational units.
+mitigations:
+  - |-
+    Define a labeling standard (e.g., `owner`, `project`, `business-unit`,
+    `cost-center`) and apply it to all workload manifests. Integrate label validation into the
+    CI pipeline using `kube-score` or Kyverno policies. Connect labels to your billing and
+    cost allocation tooling.
+tags:
+  - application-development
+  - tagging
+  - business
+tools:
+  - title: Kyverno
+    url: https://kyverno.io/
+references:
+  - title: AWS Tagging Strategies
+    url: https://aws.amazon.com/answers/account-management/aws-tagging-strategies/
+  - title: Kubernetes Docs - Labels and Selectors
+    url: https://kubernetes.io/docs/concepts/overview/working-with-objects/labels/

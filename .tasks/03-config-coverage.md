@@ -15,9 +15,9 @@ type: provider          # one of: baseline | provider | architecture | complianc
 description: "..."
 items:
   required:
-    - CLD-001
+    - CLUD-1
   suggested:
-    - CLT-003
+    - CLST-3
 ```
 
 **Current configs:** `baseline`, `eks`, `aks`, `gke`, `self-managed`, `production`, `ha`, `multi-cluster`, `hipaa`, `pci-dss`, `soc2`, `cis-benchmark`, `owasp-k8s-top10`.
