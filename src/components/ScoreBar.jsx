@@ -23,17 +23,11 @@ export function ScoreBar({ label, items, priorityMap, getState }) {
               />
             </div>
             <span className="text-sm tabular-nums text-muted-foreground shrink-0">
-              {req.passed} / {req.total} required
+              {req.passed} / {req.total} passed
             </span>
           </>
         ) : (
           <span className="text-sm text-muted-foreground">no required items</span>
-        )}
-
-        {sug.total > 0 && (
-          <span className="text-xs tabular-nums text-muted-foreground shrink-0 hidden sm:inline">
-            {sug.passed} / {sug.total} suggested
-          </span>
         )}
       </div>
     </div>
