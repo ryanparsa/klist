@@ -1,0 +1,91 @@
+id: owasp-k8s-top10
+label: "OWASP Kubernetes Top 10 (2025)"
+type: compliance
+description: "Controls mapped to the OWASP Kubernetes Top 10 2025 risks (K01–K10), covering insecure workloads, overly permissive auth, secrets mismanagement, missing policy enforcement, network gaps, exposed components, vulnerable cluster components, cloud lateral movement, broken authentication, and insufficient logging."
+items:
+  required:
+    # K01: Insecure Workload Configurations
+    - CNT-001
+    - CNT-002
+    - CNT-003
+    - CNT-004
+    - CNT-005
+    - CNT-006
+    - CNT-007
+    - CLT-031
+    # K02: Overly Permissive Authorization Configurations
+    - CLT-002
+    - CLT-009
+    - CLT-010
+    - CLT-032
+    - CLT-042
+    - CLD-003
+    # K03: Secrets Management Failures
+    - CLT-006
+    - CNT-020
+    - CODE-003
+    # K04: Lack Of Cluster Level Policy Enforcement
+    - CLT-005
+    - CLD-016
+    # K05: Missing Network Segmentation Controls
+    - CLT-012
+    - CLD-001
+    - CLD-002
+    # K06: Overly Exposed Kubernetes Components
+    - CLT-001
+    - CLT-003
+    - CLT-008
+    - CLD-018
+    # K07: Misconfigured And Vulnerable Cluster Components
+    - CLD-008
+    - CLT-037
+    # K08: Cluster To Cloud Lateral Movement
+    - CLD-004
+    - CLD-010
+    - CLD-013
+    # K09: Broken Authentication Mechanisms
+    - CLT-004
+    - CLT-026
+    - CLD-019
+    # K10: Inadequate Logging And Monitoring
+    - CLT-011
+    - CLD-009
+    - CLD-017
+  suggested:
+    # K01
+    - CNT-022
+    # K02
+    - CLT-027
+    - CLT-033
+    - CLT-035
+    - CLT-036
+    - CLD-014
+    # K03
+    - CLT-044
+    - CLD-015
+    - CLD-020
+    # K04
+    - CODE-004
+    - CODE-005
+    - CODE-014
+    # K05
+    - CLT-034
+    - CLT-040
+    # K06
+    - CLT-041
+    - CLT-043
+    # K07
+    - CLD-005
+    - CLD-006
+    - CLT-024
+    - CLT-025
+    - CODE-002
+    # K09
+    - CODE-007
+    # K10
+    - CLT-028
+    - CLT-029
+    - CLT-038
+    - CLD-012
+    - CNT-009
+    - CODE-012

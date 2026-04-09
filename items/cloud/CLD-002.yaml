@@ -8,8 +8,7 @@ description: |
   **What to check:** Run a port scan or review security group / firewall rules. Neither port
   should be reachable from 0.0.0.0/0.
 mitigations:
-  - |-
-    Restrict inbound rules to known CIDR ranges. Use a VPN or private link
+  - Restrict inbound rules to known CIDR ranges. Use a VPN or private link
     service for operator access. Consider AWS PrivateLink / GCP Private Service Connect for
     managed clusters.
 tags:
