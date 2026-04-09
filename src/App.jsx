@@ -8,6 +8,10 @@ import { usePriorityResolution } from '@/hooks/usePriorityResolution'
 import { Sidebar } from '@/components/Sidebar'
 import { ChecklistSection } from '@/components/ChecklistSection'
 import { ExportImport } from '@/components/ExportImport'
+import { Input } from '@/components/ui/input'
+import { Button } from '@/components/ui/button'
+import { Sheet, SheetContent, SheetTrigger, SheetTitle, SheetDescription } from '@/components/ui/sheet'
+import { VisuallyHidden } from '@radix-ui/react-visually-hidden'
 
 const CATEGORIES = [
   { id: 'cloud',     label: 'Cloud' },
@@ -56,7 +60,7 @@ export default function App() {
 
   function itemVisible(item) {
     if (activeTags.size > 0 && !item.tags.some(t => activeTags.has(t))) return false
-    if (searchLower && !item.title.toLowerCase().includes(searchLower) && !item.description.toLowerCase().includes(searchLower)) return false
+    if (searchLower && !item.title.toLowerCase().includes(searchLower) && !item.description.toLowerCase().includes(searchLower) && !item.tags.some(t => t.toLowerCase().includes(searchLower))) return false
     return true
   }
 
@@ -75,20 +79,8 @@ export default function App() {
 
   return (
     <div className="flex h-screen overflow-hidden bg-background">
-      {/* Mobile backdrop */}
-      {sidebarOpen && (
-        <div
-          className="fixed inset-0 z-20 bg-black/40 lg:hidden"
-          onClick={() => setSidebarOpen(false)}
-        />
-      )}
-
-      {/* Sidebar — fixed on mobile (slide-in), static on desktop */}
-      <aside className={cn(
-        'fixed inset-y-0 left-0 z-30 w-64 border-r bg-sidebar transition-transform duration-200',
-        'lg:static lg:z-auto lg:translate-x-0',
-        sidebarOpen ? 'translate-x-0' : '-translate-x-full',
-      )}>
+      {/* Desktop Sidebar */}
+      <aside className="hidden lg:flex inset-y-0 left-0 z-30 w-64 border-r bg-sidebar flex-col overflow-hidden">
         <Sidebar
           configs={data.configs}
           allTags={data.all_tags}
@@ -96,7 +88,7 @@ export default function App() {
           activeTags={activeTags}
           onToggleConfig={toggleConfig}
           onToggleTag={toggleTag}
-          onClose={() => setSidebarOpen(false)}
+          onClose={() => {}}
         />
       </aside>
 
@@ -106,13 +98,30 @@ export default function App() {
         {/* Header */}
         <header className="no-print flex shrink-0 items-center justify-between border-b px-4 py-2.5">
           <div className="flex items-center gap-2">
-            <button
-              className="rounded p-1.5 hover:bg-muted transition-colors lg:hidden"
-              onClick={() => setSidebarOpen(true)}
-              aria-label="Open sidebar"
-            >
-              <Menu size={18} />
-            </button>
+            {/* Mobile Sidebar */}
+            <Sheet open={sidebarOpen} onOpenChange={setSidebarOpen}>
+              <SheetTrigger asChild>
+                <Button variant="ghost" size="icon" className="lg:hidden" aria-label="Open sidebar">
+                  <Menu size={18} />
+                </Button>
+              </SheetTrigger>
+              <SheetContent side="left" className="p-0 w-64">
+                <VisuallyHidden>
+                  <SheetTitle>Filters</SheetTitle>
+                  <SheetDescription>Configure active checklist filters and tags.</SheetDescription>
+                </VisuallyHidden>
+                <Sidebar
+                  configs={data.configs}
+                  allTags={data.all_tags}
+                  activeConfigs={activeConfigs}
+                  activeTags={activeTags}
+                  onToggleConfig={toggleConfig}
+                  onToggleTag={toggleTag}
+                  onClose={() => setSidebarOpen(false)}
+                />
+              </SheetContent>
+            </Sheet>
+
             <span className="font-mono text-base font-semibold tracking-tight">klist</span>
             <span className="hidden text-xs text-muted-foreground sm:inline">
               Kubernetes Operational Checklist
@@ -127,12 +136,11 @@ export default function App() {
 
         {/* Search */}
         <div className="no-print shrink-0 border-b px-4 py-2">
-          <input
+          <Input
             type="search"
             placeholder="Search items…"
             value={search}
             onChange={e => setSearch(e.target.value)}
-            className="w-full rounded-md border bg-background px-3 py-1.5 text-sm placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-ring"
           />
         </div>
 
