@@ -1,12 +1,22 @@
 id: gke
-label: "Google GKE"
+label: Google GKE
 type: provider
-description: "Running Kubernetes on Google Kubernetes Engine. Covers GKE-specific controls for Workload Identity, metadata server, and Cloud Audit Logs."
+description: >-
+  Running Kubernetes on Google Kubernetes Engine. Covers GKE-specific controls
+  for Workload Identity, metadata server, and Cloud Audit Logs.
 items:
   required:
     - CLD-003
     - CLD-004
+    - CLD-007
     - CLD-009
+    - CLD-013
+    - CLD-014
+    - CLD-016
+    - CLD-018
+    - CLT-026
   suggested:
+    - CLD-001
     - CLD-005
+    - CLD-015
     - CLT-012
