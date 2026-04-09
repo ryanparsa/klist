@@ -1,7 +1,10 @@
-import { computeScore } from '@/hooks/usePriorityResolution'
+import { useMemo } from 'react'
+import { computeScore } from '@/lib/score'
+import { useChecklistContext } from '@/contexts/ChecklistContext'
 
-export function ScoreBar({ label, items, priorityMap, getState }) {
-  const score = computeScore(items, priorityMap, getState)
+export function ScoreBar({ label, items }) {
+  const { priorityMap, getState } = useChecklistContext()
+  const score = useMemo(() => computeScore(items, priorityMap, getState), [items, priorityMap, getState])
 
   const req = score.required
   const sug = score.suggested
@@ -15,7 +18,6 @@ export function ScoreBar({ label, items, priorityMap, getState }) {
 
         {req.total > 0 ? (
           <>
-            {/* Progress bar */}
             <div className="flex-1 h-2 rounded-full bg-muted overflow-hidden">
               <div
                 className="h-full rounded-full bg-primary transition-all duration-300"

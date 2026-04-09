@@ -40,7 +40,6 @@ export function ExportImport({ activeConfigs, rawStates, onImport }) {
       }
     }
     reader.readAsText(file)
-    // Reset so the same file can be re-imported
     e.target.value = ''
   }
 
@@ -77,7 +76,8 @@ function IconButton({ onClick, title, children }) {
     <button
       onClick={onClick}
       title={title}
-      className="flex items-center gap-1.5 rounded-md border px-2.5 py-1.5 text-sm font-medium hover:bg-muted transition-colors"
+      className="flex items-center gap-1.5 rounded-md border px-2.5 py-1.5 text-sm font-medium hover:bg-muted transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
+      aria-label={title}
     >
       {children}
     </button>

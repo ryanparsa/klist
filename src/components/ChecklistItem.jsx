@@ -1,7 +1,8 @@
-import { useState } from 'react'
+import { useState, memo } from 'react'
 import { Square, CheckSquare, MinusSquare, ChevronDown, ChevronRight, ExternalLink } from 'lucide-react'
 import { cn } from '@/lib/utils'
 import { Markdown } from './Markdown'
+import { useChecklistContext } from '@/contexts/ChecklistContext'
 
 const PRIORITY_STYLES = {
   required:  'bg-red-50 text-red-700 ring-red-200',
@@ -21,8 +22,12 @@ const STATE_ICON_STYLES = {
   na:        'text-muted-foreground/60',
 }
 
-export function ChecklistItem({ item, priority, state, onCycle }) {
+export const ChecklistItem = memo(function ChecklistItem({ item }) {
+  const { priorityMap, getState, cycleState } = useChecklistContext()
   const [expanded, setExpanded] = useState(false)
+
+  const priority = priorityMap.get(item.id) ?? 'optional'
+  const state = getState(item.id)
 
   const Icon = STATE_ICONS[state]
   const iconStyle = STATE_ICON_STYLES[state]
@@ -33,29 +38,25 @@ export function ChecklistItem({ item, priority, state, onCycle }) {
       state === 'passed' && 'opacity-60',
       state === 'na' && 'opacity-40',
     )}>
-      {/* Row */}
       <div className="flex items-center gap-2 px-3 py-2">
-        {/* Tri-state toggle */}
         <button
-          onClick={() => onCycle(item.id)}
-          className={cn('shrink-0 transition-colors', iconStyle)}
+          onClick={() => cycleState(item.id)}
+          className={cn('shrink-0 transition-colors rounded focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring', iconStyle)}
           aria-label={`State: ${state}. Click to cycle.`}
         >
           <Icon size={18} />
         </button>
 
-        {/* ID */}
         <span className="shrink-0 font-mono text-xs text-muted-foreground w-16">{item.id}</span>
 
-        {/* Title — click to expand */}
         <button
-          className="flex-1 text-left text-sm font-medium truncate hover:text-primary transition-colors"
+          className="flex-1 text-left text-sm font-medium truncate hover:text-primary transition-colors rounded focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
           onClick={() => setExpanded(e => !e)}
+          aria-label={`Expand item: ${item.title}`}
         >
           {item.title}
         </button>
 
-        {/* Priority badge */}
         <span className={cn(
           'shrink-0 rounded-full px-2 py-0.5 text-xs font-medium ring-1 ring-inset',
           PRIORITY_STYLES[priority]
@@ -63,26 +64,22 @@ export function ChecklistItem({ item, priority, state, onCycle }) {
           {priority}
         </span>
 
-        {/* Expand chevron */}
         <button
           onClick={() => setExpanded(e => !e)}
-          className="shrink-0 text-muted-foreground hover:text-foreground transition-colors"
+          className="shrink-0 text-muted-foreground hover:text-foreground transition-colors rounded focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
           aria-label={expanded ? 'Collapse' : 'Expand'}
         >
           {expanded ? <ChevronDown size={15} /> : <ChevronRight size={15} />}
         </button>
       </div>
 
-      {/* Expandable panel */}
       {expanded && (
         <div className="border-t px-3 py-3 space-y-4 text-sm">
-          {/* Description */}
           <div>
             <p className="text-xs font-semibold uppercase tracking-wide text-muted-foreground mb-2">Description</p>
             <Markdown content={item.description} />
           </div>
 
-          {/* Mitigations */}
           {item.mitigations?.length > 0 && (
             <div>
               <p className="text-xs font-semibold uppercase tracking-wide text-muted-foreground mb-2">Mitigations</p>
@@ -96,7 +93,6 @@ export function ChecklistItem({ item, priority, state, onCycle }) {
             </div>
           )}
 
-          {/* Tools */}
           {item.tools?.length > 0 && (
             <div>
               <p className="text-xs font-semibold uppercase tracking-wide text-muted-foreground mb-2">Tools</p>
@@ -119,7 +115,6 @@ export function ChecklistItem({ item, priority, state, onCycle }) {
             </div>
           )}
 
-          {/* References */}
           {item.references?.length > 0 && (
             <div>
               <p className="text-xs font-semibold uppercase tracking-wide text-muted-foreground mb-2">References</p>
@@ -142,7 +137,6 @@ export function ChecklistItem({ item, priority, state, onCycle }) {
             </div>
           )}
 
-          {/* Tags */}
           {item.tags?.length > 0 && (
             <div>
               <p className="text-xs font-semibold uppercase tracking-wide text-muted-foreground mb-2">Tags</p>
@@ -159,5 +153,5 @@ export function ChecklistItem({ item, priority, state, onCycle }) {
       )}
     </div>
   )
-}
+})
 

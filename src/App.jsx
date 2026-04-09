@@ -8,6 +8,8 @@ import { usePriorityResolution } from '@/hooks/usePriorityResolution'
 import { Sidebar } from '@/components/Sidebar'
 import { ChecklistSection } from '@/components/ChecklistSection'
 import { ExportImport } from '@/components/ExportImport'
+import { ChecklistProvider } from '@/contexts/ChecklistContext'
+import { useMemo, useCallback } from 'react'
 
 const CATEGORIES = [
   { id: 'cloud',     label: 'Cloud' },
@@ -24,10 +26,6 @@ export default function App() {
 
   const [search, setSearch] = useState('')
   const [sidebarOpen, setSidebarOpen] = useState(false)
-
-  // -------------------------------------------------------------------------
-  // Loading / error states
-  // -------------------------------------------------------------------------
 
   if (error) {
     return (
@@ -48,42 +46,36 @@ export default function App() {
     )
   }
 
-  // -------------------------------------------------------------------------
-  // Filter predicate — used by every section (does NOT affect scoring)
-  // -------------------------------------------------------------------------
-
   const searchLower = search.toLowerCase()
 
-  function itemVisible(item) {
+  const itemVisible = useCallback((item) => {
     if (activeTags.size > 0 && !item.tags.some(t => activeTags.has(t))) return false
     if (searchLower && !item.title.toLowerCase().includes(searchLower) && !item.description.toLowerCase().includes(searchLower)) return false
     return true
-  }
+  }, [activeTags, searchLower])
 
-  // -------------------------------------------------------------------------
-  // Import handler
-  // -------------------------------------------------------------------------
+  const contextValue = useMemo(() => ({
+    priorityMap,
+    getState,
+    cycleState,
+    itemVisible
+  }), [priorityMap, getState, cycleState, itemVisible])
 
   function handleImport({ active_configs, states }) {
     setActiveConfigs(active_configs)
     importStates(states)
   }
 
-  // -------------------------------------------------------------------------
-  // Render
-  // -------------------------------------------------------------------------
-
   return (
-    <div className="flex h-screen overflow-hidden bg-background">
-      {/* Mobile backdrop */}
-      {sidebarOpen && (
+    <ChecklistProvider value={contextValue}>
+      <div className="flex h-screen overflow-hidden bg-background">
+        {sidebarOpen && (
         <div
           className="fixed inset-0 z-20 bg-black/40 lg:hidden"
           onClick={() => setSidebarOpen(false)}
         />
       )}
 
-      {/* Sidebar — fixed on mobile (slide-in), static on desktop */}
       <aside className={cn(
         'fixed inset-y-0 left-0 z-30 w-64 border-r bg-sidebar transition-transform duration-200',
         'lg:static lg:z-auto lg:translate-x-0',
@@ -100,14 +92,12 @@ export default function App() {
         />
       </aside>
 
-      {/* Main column */}
       <div className="flex flex-1 flex-col overflow-hidden min-w-0">
 
-        {/* Header */}
         <header className="no-print flex shrink-0 items-center justify-between border-b px-4 py-2.5">
           <div className="flex items-center gap-2">
             <button
-              className="rounded p-1.5 hover:bg-muted transition-colors lg:hidden"
+              className="rounded p-1.5 hover:bg-muted transition-colors lg:hidden focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
               onClick={() => setSidebarOpen(true)}
               aria-label="Open sidebar"
             >
@@ -125,32 +115,28 @@ export default function App() {
           />
         </header>
 
-        {/* Search */}
-        <div className="no-print shrink-0 border-b px-4 py-2">
-          <input
-            type="search"
-            placeholder="Search items…"
-            value={search}
-            onChange={e => setSearch(e.target.value)}
-            className="w-full rounded-md border bg-background px-3 py-1.5 text-sm placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-ring"
-          />
-        </div>
-
-        {/* Checklist */}
-        <main className="flex-1 overflow-y-auto px-4 py-5">
-          {CATEGORIES.map(({ id, label }) => (
-            <ChecklistSection
-              key={id}
-              label={label}
-              items={data.items.filter(i => i.category === id)}
-              priorityMap={priorityMap}
-              getState={getState}
-              cycleState={cycleState}
-              itemVisible={itemVisible}
+          <div className="no-print shrink-0 border-b px-4 py-2">
+            <input
+              type="search"
+              aria-label="Search items"
+              placeholder="Search items…"
+              value={search}
+              onChange={e => setSearch(e.target.value)}
+              className="w-full rounded-md border bg-background px-3 py-1.5 text-sm placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
             />
-          ))}
-        </main>
+          </div>
+
+          <main className="flex-1 overflow-y-auto px-4 py-5">
+            {CATEGORIES.map(({ id, label }) => (
+              <ChecklistSection
+                key={id}
+                label={label}
+                items={data.items.filter(i => i.category === id)}
+              />
+            ))}
+          </main>
+        </div>
       </div>
-    </div>
+    </ChecklistProvider>
   )
 }

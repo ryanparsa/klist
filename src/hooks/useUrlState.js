@@ -44,7 +44,6 @@ export function useUrlState() {
     })
   }, [])
 
-  // Sync on browser back/forward
   useEffect(() => {
     const handler = () => setState(parseUrl())
     window.addEventListener('popstate', handler)

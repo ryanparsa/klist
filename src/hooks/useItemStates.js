@@ -36,7 +36,6 @@ export function useItemStates() {
   }, [])
 
   const importStates = useCallback((incoming) => {
-    // incoming may contain 'unchecked' keys — strip them (unchecked is the default)
     const cleaned = Object.fromEntries(
       Object.entries(incoming).filter(([, v]) => v !== 'unchecked')
     )

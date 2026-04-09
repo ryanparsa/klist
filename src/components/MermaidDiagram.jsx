@@ -25,7 +25,6 @@ export function MermaidDiagram({ chart }) {
     
     return () => {
       isMounted = false
-      // Cleanup dynamically created mermaid nodes if necessary
       const node = document.getElementById(id)
       if (node) {
         node.remove()

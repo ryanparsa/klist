@@ -1,11 +1,12 @@
+import { useMemo } from 'react'
 import { ScoreBar } from './ScoreBar'
 import { ChecklistItem } from './ChecklistItem'
+import { useChecklistContext } from '@/contexts/ChecklistContext'
 
-export function ChecklistSection({ label, items, priorityMap, getState, cycleState, itemVisible }) {
-  const visible = items.filter(itemVisible)
+export function ChecklistSection({ label, items }) {
+  const { itemVisible } = useChecklistContext()
+  const visible = useMemo(() => items.filter(itemVisible), [items, itemVisible])
 
-  // Always render the section header + score bar.
-  // Only skip if the section has no items at all.
   if (items.length === 0) return null
 
   return (
@@ -13,8 +14,6 @@ export function ChecklistSection({ label, items, priorityMap, getState, cycleSta
       <ScoreBar
         label={label}
         items={items}
-        priorityMap={priorityMap}
-        getState={getState}
       />
 
       {visible.length === 0 ? (
@@ -27,9 +26,6 @@ export function ChecklistSection({ label, items, priorityMap, getState, cycleSta
             <ChecklistItem
               key={item.id}
               item={item}
-              priority={priorityMap.get(item.id) ?? 'optional'}
-              state={getState(item.id)}
-              onCycle={cycleState}
             />
           ))}
         </div>

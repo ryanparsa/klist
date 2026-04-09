@@ -11,7 +11,7 @@ export function Markdown({ content }) {
     <ReactMarkdown
       remarkPlugins={[remarkGfm]}
       components={{
-        code({ node, inline, className, children, ...props }) {
+        code({ inline, className, children, ...props }) {
           const match = /language-(\w+)/.exec(className || '')
           const language = match ? match[1] : ''
 
@@ -38,7 +38,7 @@ export function Markdown({ content }) {
           )
         },
         p: ({ children }) => <p className="mb-3 leading-relaxed last:mb-0">{children}</p>,
-        a: ({ node, ...props }) => <a className="text-primary hover:underline font-medium inline-flex items-center gap-1" target="_blank" rel="noopener noreferrer" {...props} />,
+        a: ({ ...props }) => <a className="text-primary hover:underline font-medium inline-flex items-center gap-1" target="_blank" rel="noopener noreferrer" {...props} />,
         ul: ({ children }) => <ul className="list-disc pl-5 mb-3 space-y-1">{children}</ul>,
         ol: ({ children }) => <ol className="list-decimal pl-5 mb-3 space-y-1">{children}</ol>,
         li: ({ children }) => <li>{children}</li>,
