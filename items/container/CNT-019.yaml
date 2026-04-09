@@ -2,9 +2,38 @@ id: CNT-019
 title: Use Ephemeral Local Filesystems
 description: |
   Local state stored in a container's ephemeral filesystem prevents horizontal scaling and causes discrepancies between Pod replicas over time.
+  When containers are restarted or scaled out, local state is lost or split among different replicas.
+
+  What to check:
+  Look for pods that write directly to local storage or mount `emptyDir` volumes expecting persistence.
+  ```bash
+  kubectl get pods -A -o custom-columns="NAMESPACE:.metadata.namespace,NAME:.metadata.name,VOLUMES:.spec.volumes[*].name"
+  ```
 mitigations:
   - |-
     Do not store persistent state in local ephemeral filesystems. Use an external storage service or a PersistentVolume mounted in the Pod to ensure state persists reliably and independent of the container lifecycle.
+
+    ```yaml
+    apiVersion: v1
+    kind: PersistentVolumeClaim
+    metadata:
+      name: my-pvc
+    spec:
+      accessModes:
+        - ReadWriteOnce
+      resources:
+        requests:
+          storage: 10Gi
+    ```
+  - |-
+    Mount the PersistentVolumeClaim in your deployment to access durable storage.
+
+    ```yaml
+    volumes:
+      - name: data-volume
+        persistentVolumeClaim:
+          claimName: my-pvc
+    ```
 tags:
   - application-development
   - storage
