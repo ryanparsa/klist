@@ -2,9 +2,31 @@ id: CNT-017
 title: Avoid CPU Limits Unless Necessary
 description: |
   Because CPU is a compressible resource, hitting a CPU limit will cause the process to be throttled, possibly prematurely. In the case of multithreaded applications, throttling can degrade performance unexpectedly.
+  Excessive CPU limits combined with kernel CFS quota logic can cause intermittent latency spikes, even when the underlying host node has idle CPU cycles available.
+
+  What to check:
+  Look for pods that have cpu limits configured.
+  ```bash
+  kubectl get pods -A -o custom-columns="NAMESPACE:.metadata.namespace,NAME:.metadata.name,CPU_LIMIT:.spec.containers[*].resources.limits.cpu" | grep -v "<none>"
+  ```
 mitigations:
   - |-
     Consider relying on CPU requests instead, and keep CPU limits removed unless you have a specific and well-justified use case.
+
+    ```yaml
+    resources:
+      requests:
+        cpu: "100m"
+        memory: "256Mi"
+      limits:
+        memory: "512Mi"
+    ```
+  - |-
+    You can patch an existing deployment to remove the CPU limit using the following kubectl command:
+
+    ```bash
+    kubectl patch deployment my-app -p '{"spec":{"template":{"spec":{"containers":[{"name":"my-container","resources":{"limits":{"cpu":null}}}]}}}}'
+    ```
 tags:
   - application-development
   - resource-utilisation
