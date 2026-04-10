@@ -19,16 +19,34 @@ description: |
   ```
   kubectl get namespaces -o json | jq '.items[].metadata.labels | select(."pod-security.kubernetes.io/enforce" != null)'
   ```
+
+  Pod Security Standards (PSS) define three profiles - Privileged, Baseline, and Restricted -
+  that control which security-sensitive fields pods may set. Namespaces must be labelled to
+  enforce at least the Baseline profile; production namespaces should target Restricted.
+
+  **What to check:**
+
+  ```
+  kubectl get namespaces -o json | \
+    jq '.items[].metadata.labels | with_entries(select(.key | startswith("pod-security.kubernetes.io")))'
+  ```
+
+  Every non-system namespace should have `pod-security.kubernetes.io/enforce` set to
+  `baseline` or `restricted`.
 mitigations:
   - |-
     Label production namespaces with `pod-security.kubernetes.io/enforce: restricted`
     (or `baseline` at minimum). Use `warn` and `audit` modes first to surface violations before
     switching to `enforce`. Supplement with Kyverno or OPA Gatekeeper for fine-grained policies.
+  - |-
+    Add PSS labels to all namespaces. Use `warn` and `audit` modes first to
+    detect violations before switching to `enforce`. Consider OPA Gatekeeper or Kyverno for
+    more fine-grained policies.
 tags:
   - governance
   - security
   - admission-control
-  - pod-security
+  - hardening
 tools:
   - title: Kyverno
     url: https://kyverno.io/
@@ -45,3 +63,7 @@ references:
     url: https://workbench.cisecurity.org/benchmarks/16828
   - title: Microsoft Threat Matrix - Privileged Container
     url: https://microsoft.github.io/Threat-Matrix-for-Kubernetes/techniques/Privileged%20container/
+  - title: NSA/CISA Kubernetes Hardening Guide
+    url: https://media.defense.gov/2022/Aug/29/2003066362/-1/-1/0/CTR_KUBERNETES_HARDENING_GUIDANCE_1.2_20220829.PDF
+  - title: PCI-DSS Requirement 2 - Apply Secure Configurations
+    url: https://www.pcisecuritystandards.org/document_library/

@@ -14,8 +14,8 @@ mitigations:
     permission boundaries. Prefer IRSA (AWS), Workload Identity (GCP), or AAD Pod Identity
     (Azure) to grant per-pod permissions instead of node-level permissions.
 tags:
-  - iam
-  - node-security
+  - rbac
+  - security
   - least-privilege
   - cloud
 tools:

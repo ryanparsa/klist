@@ -11,7 +11,7 @@ mitigations:
     a default-deny NetworkPolicy and confirming traffic is blocked.
 tags:
   - governance
-  - networking
+  - network
   - security
 tools:
   - title: Cilium

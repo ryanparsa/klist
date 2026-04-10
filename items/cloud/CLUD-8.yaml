@@ -16,7 +16,7 @@ mitigations:
     (EKS managed node groups, GKE release channels). Enable automated OS security patches via
     the node OS tooling (e.g., `yum-cron`, `unattended-upgrades`).
 tags:
-  - node-security
+  - security
   - patching
   - vulnerability-management
 tools:

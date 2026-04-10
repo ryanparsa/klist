@@ -18,7 +18,7 @@ mitigations:
     such as Kaniko, Buildah, or img for image builds. Use OPA/Kyverno admission policies to
     block hostPath mounts of the Docker socket.
 tags:
-  - node-security
+  - security
   - privilege-escalation
   - container-runtime
 tools:

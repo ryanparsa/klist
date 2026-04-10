@@ -28,7 +28,7 @@ tags:
   - cloud
   - identity
   - privilege-escalation
-  - iam
+  - rbac
 tools:
   - title: Prowler
     url: https://github.com/prowler-cloud/prowler

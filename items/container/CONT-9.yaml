@@ -21,7 +21,7 @@ mitigations:
     unexpected outbound connections, writes to sensitive paths, and privilege changes. Wire
     alerts to PagerDuty, Slack, or a SIEM.
 tags:
-  - runtime-security
+  - security
   - monitoring
   - threat-detection
   - falco

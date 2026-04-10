@@ -19,7 +19,7 @@ mitigations:
 tags:
   - etcd
   - network
-  - access-control
+  - rbac
 tools:
   - title: kube-bench
     url: https://github.com/aquasecurity/kube-bench

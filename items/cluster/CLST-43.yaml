@@ -23,7 +23,7 @@ mitigations:
     stale or over-privileged kubeconfig entries.
 tags:
   - authentication
-  - access-control
+  - rbac
   - initial-access
   - hardening
 tools:

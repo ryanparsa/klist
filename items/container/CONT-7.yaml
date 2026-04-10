@@ -20,7 +20,7 @@ mitigations:
     Mount `emptyDir` volumes for paths that legitimately need write access (e.g., `/tmp`,
     application cache directories). Update Dockerfiles to not write to the image root at runtime.
 tags:
-  - pod-security
+  - security
   - filesystem
   - immutability
   - hardening

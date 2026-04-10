@@ -19,7 +19,7 @@ mitigations:
     required via `capabilities.add` rather than full privileged mode. Block this with a PSS
     Baseline/Restricted label or a Kyverno policy.
 tags:
-  - pod-security
+  - security
   - privilege-escalation
   - container-runtime
 tools: []

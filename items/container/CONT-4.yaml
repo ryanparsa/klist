@@ -20,7 +20,7 @@ mitigations:
     `securityContext`. This is required by the PSS Restricted profile and can be enforced
     with a Kyverno ClusterPolicy or OPA constraint.
 tags:
-  - pod-security
+  - security
   - privilege-escalation
   - hardening
 tools: []

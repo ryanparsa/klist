@@ -14,7 +14,7 @@ mitigations:
 tags:
   - configuration
   - logging
-  - auditing
+  - audit
 tools:
   - title: Fluentd
     url: https://www.fluentd.org/

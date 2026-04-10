@@ -15,8 +15,8 @@ mitigations:
     Apply OS-level firewall rules (iptables/nftables) to block non-essential ports. Automate
     hardening with CIS Benchmark tooling (e.g., `cloud-init`, node configuration management).
 tags:
-  - node-security
-  - os-hardening
+  - security
+  - hardening
   - network
 tools:
   - title: kube-bench

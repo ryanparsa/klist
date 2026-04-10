@@ -21,7 +21,7 @@ tags:
   - api-server
   - kubelet
   - tls
-  - encryption-in-transit
+  - encryption
 tools:
   - title: kube-bench
     url: https://github.com/aquasecurity/kube-bench
