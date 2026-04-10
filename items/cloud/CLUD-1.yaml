@@ -14,7 +14,7 @@ mitigations:
     traffic through a NAT gateway. Ensure load balancers handle all external-facing traffic.
 tags:
   - network
-  - node-security
+  - security
   - infrastructure
 tools:
   - title: kube-bench

@@ -25,7 +25,7 @@ mitigations:
     each webhook should have a narrow `namespaceSelector` and be from a trusted source.
     Use image admission policies (CODE-014) to ensure injected images come from approved registries.
 tags:
-  - pod-security
+  - security
   - execution
   - persistence
   - admission-control

@@ -21,7 +21,7 @@ mitigations:
     to pod and container specs. Update base images to create and use a non-root user via
     `USER <uid>` in the Dockerfile.
 tags:
-  - pod-security
+  - security
   - least-privilege
   - container-runtime
 tools: []

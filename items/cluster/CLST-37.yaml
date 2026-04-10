@@ -25,7 +25,7 @@ mitigations:
     Ensure Kubelet does not run with the `--manifest-url` argument unless strictly required.
     Monitor the directory for unexpected file changes using a file integrity monitoring (FIM) tool.
 tags:
-  - node-security
+  - security
   - hardening
   - persistence
   - kubelet

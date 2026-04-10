@@ -54,7 +54,7 @@ mitigations:
 tags:
   - governance
   - ingress
-  - networking
+  - network
 tools:
   - title: Kyverno
     url: https://kyverno.io/

@@ -27,9 +27,9 @@ mitigations:
         type: RuntimeDefault
     ```
 tags:
-  - pod-security
+  - security
   - seccomp
-  - kernel-hardening
+  - hardening
   - linux
 tools: []
 references:

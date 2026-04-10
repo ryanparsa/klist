@@ -22,7 +22,7 @@ mitigations:
 tags:
   - supply-chain
   - registry
-  - image-security
+  - security
   - authentication
 tools:
   - title: Trivy

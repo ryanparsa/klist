@@ -29,7 +29,7 @@ mitigations:
     to dashboard service accounts. Prefer `kubectl port-forward` for operator access.
 tags:
   - network
-  - access-control
+  - rbac
   - hardening
   - discovery
 tools:

@@ -5,7 +5,7 @@ description: "Controls mapped to the OWASP Kubernetes Top 10 2025 risks (K01–K
 items:
   required:
     # K01: Insecure Workload Configurations
-    - CONT-1
+    - CLST-31
     - CONT-2
     - CONT-3
     - CONT-4

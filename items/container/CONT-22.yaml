@@ -23,7 +23,7 @@ mitigations:
     - Any permitted hostPath must be mounted `readOnly: true`.
     - Prefer `emptyDir`, ConfigMap, or PVC volumes for container data needs.
 tags:
-  - pod-security
+  - security
   - privilege-escalation
   - filesystem
   - persistence

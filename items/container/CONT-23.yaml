@@ -26,8 +26,7 @@ mitigations:
 tags:
   - supply-chain
   - persistence
-  - image-security
-  - runtime-security
+  - security
 tools: []
 references:
   - title: Sigstore / Cosign - Image Signing

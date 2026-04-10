@@ -15,8 +15,8 @@ mitigations:
   - |
     Recommended options: Bottlerocket (AWS), Container-Optimized OS (GKE), RHCOS/CoreOS, Flatcar Linux.
 tags:
-  - node-security
-  - os-hardening
+  - security
+  - hardening
   - infrastructure
 tools:
   - title: Bottlerocket

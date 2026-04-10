@@ -21,7 +21,7 @@ mitigations:
 tags:
   - api-server
   - admission-control
-  - pod-security
+  - security
   - hardening
 tools:
   - title: kube-bench

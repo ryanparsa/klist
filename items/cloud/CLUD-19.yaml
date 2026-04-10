@@ -42,10 +42,9 @@ mitigations:
   - |
     AKS: Use Azure AD-integrated RBAC with managed identity.
 tags:
-  - iam
+  - rbac
   - authentication
   - cloud
-  - rbac
 tools:
   - title: Prowler
     url: https://github.com/prowler-cloud/prowler

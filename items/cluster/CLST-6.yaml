@@ -22,7 +22,7 @@ mitigations:
 
 tags:
   - etcd
-  - encryption-at-rest
+  - encryption
   - secrets
   - compliance
 
