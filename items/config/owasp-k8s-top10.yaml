@@ -35,10 +35,8 @@ items:
     - CLST-1
     - CLST-3
     - CLST-8
+    - CLST-47
     - CLUD-18
-    # K07: Misconfigured And Vulnerable Cluster Components
-    - CLUD-8
-    - CLST-37
     # K08: Cluster To Cloud Lateral Movement
     - CLUD-4
     - CLUD-10
@@ -74,12 +72,6 @@ items:
     # K06
     - CLST-41
     - CLST-43
-    # K07
-    - CLUD-5
-    - CLUD-6
-    - CLST-24
-    - CLST-25
-    - CODE-002
     # K09
     - CODE-007
     # K10
