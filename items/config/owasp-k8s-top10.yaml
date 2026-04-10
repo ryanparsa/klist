@@ -35,6 +35,7 @@ items:
     - CLST-1
     - CLST-3
     - CLST-8
+    - CLST-47
     - CLUD-18
     # K07: Misconfigured And Vulnerable Cluster Components
     - CLUD-8
