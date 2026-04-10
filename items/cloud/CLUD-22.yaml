@@ -1,0 +1,29 @@
+id: CLUD-22
+title: Enforce Multi-factor Authentication
+stage: active
+description: |
+  Using multi-factor authentication (MFA) for accounts can prevent unauthorized access
+  in case an adversary acquires account credentials. This reduces the risk of an adversary
+  achieving valid credentials to an account that has permissions to the Kubernetes cluster
+  and its cloud environment.
+
+  **What to check:** Verify that all users and service principals with access to the cloud
+  provider console or Kubernetes API are required to use MFA. For AWS, check IAM policies;
+  for Azure, verify Conditional Access policies; for Google Cloud, verify 2-Step Verification
+  enforcement.
+
+  ```bash
+  # Example: Check AWS IAM users for MFA setup
+  aws iam get-credential-report --query 'Content' --output text | base64 -d | awk -F, '{print $1, $8}'
+  ```
+mitigations:
+  - Require MFA for all human user accounts in the cloud identity provider.
+  - Implement conditional access policies requiring MFA for any authentication attempt interacting with cluster management tools.
+tags:
+  - identity
+  - authentication
+  - mfa
+tools: []
+references:
+  - title: Microsoft Threat Matrix - Multi-factor Authentication
+    url: https://microsoft.github.io/Threat-Matrix-for-Kubernetes/mitigations/MS-M9001%20Multi-factor%20Authentication/
