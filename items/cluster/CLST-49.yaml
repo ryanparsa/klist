@@ -1,0 +1,37 @@
+id: CLST-49
+title: Enable Just In Time access to API server
+stage: active
+description: |
+  Employing Just In Time (JIT) elevated access to the Kubernetes API server helps reduce
+  the attack surface of compromised accounts by allowing access only at specific times, and
+  through a governed escalation process. JIT access ensures that standard permissions are
+  minimal, with elevated rights granted temporarily when required.
+
+  ```mermaid
+  flowchart LR
+      A[User Request] --> B[Approval Workflow]
+      B -->|Approved| C[Temporary Role Assignment]
+      C --> D[Access K8s API]
+      D -->|Time Expires| E[Revoke Role]
+  ```
+
+  **What to check:** Verify that critical administrative roles are not permanently assigned
+  to user accounts. Check the identity provider or PAM (Privileged Access Management) tool
+  to confirm a JIT workflow is in place.
+
+  ```bash
+  # Example: Check for permanent cluster-admin role bindings
+  kubectl get clusterrolebindings -o json | jq '.items[] | select(.roleRef.name == "cluster-admin") | .subjects'
+  ```
+mitigations:
+  - Integrate Kubernetes authentication with an OIDC provider (e.g., Azure AD, Okta).
+  - Use cloud-native PIM/PAM solutions (e.g., Azure AD Privileged Identity Management) to control and audit temporary group membership for cluster access.
+  - Implement time-bound RBAC assignments or temporary tokens for accessing the cluster.
+tags:
+  - identity
+  - rbac
+  - jit
+tools: []
+references:
+  - title: Microsoft Threat Matrix - Enable Just In Time access to API server
+    url: https://microsoft.github.io/Threat-Matrix-for-Kubernetes/mitigations/MS-M9006%20Enable%20Just%20In%20Time%20access%20to%20API%20server/

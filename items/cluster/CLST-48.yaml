@@ -1,0 +1,34 @@
+id: CLST-48
+title: Restrict access to the API server using IP firewall
+stage: active
+description: |
+  Restricting access to the API server can prevent unwanted access to the cluster's
+  management plane, even if an adversary achieves valid credentials to the cluster.
+  In managed clusters, cloud providers often support native built-in firewalls which
+  can restrict the IP addresses that are allowed to access the API server.
+
+  ```mermaid
+  flowchart TD
+      A[Attacker with Credentials] -->|Internet| B{API Server IP Firewall}
+      B -->|Blocked IP| C[Access Denied]
+      D[Authorized User] -->|VPN/Trusted IP| B
+      B -->|Allowed IP| E[Kubernetes API Server]
+  ```
+
+  **What to check:** Check your cloud provider configuration to ensure the Kubernetes API server endpoint has IP allowlisting enabled.
+
+  ```bash
+  # Example: Describe EKS cluster to view public access CIDRs
+  aws eks describe-cluster --name <cluster-name> --query 'cluster.resourcesVpcConfig.publicAccessCidrs'
+  ```
+mitigations:
+  - Configure the managed cluster's API server endpoint to only allow traffic from known, trusted CIDR blocks (e.g., corporate VPN, specific NAT gateways).
+  - Disable public endpoint access entirely if all management traffic can be routed through a private endpoint within a VPC.
+tags:
+  - network
+  - firewall
+  - api-server
+tools: []
+references:
+  - title: Microsoft Threat Matrix - Restrict access to the API server using IP firewall
+    url: https://microsoft.github.io/Threat-Matrix-for-Kubernetes/mitigations/MS-M9002%20Restrict%20access%20to%20the%20API%20server%20using%20IP%20firewall/
