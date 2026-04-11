@@ -122,13 +122,13 @@ node builder/build.js
 On success:
 
 ```
-✔ 105 items loaded
+✔ 102 items loaded
     cloud        21
-    cluster      47
-    container    24
+    cluster      45
+    container    23
     code         13
 ✔ 13 configs loaded
-✔ 114 unique tags extracted
+✔ 102 unique tags extracted
 ✔ public/checklist.json written
 ```
 
