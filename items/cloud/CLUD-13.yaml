@@ -43,3 +43,5 @@ references:
     url: https://microsoft.github.io/Threat-Matrix-for-Kubernetes/techniques/Access%20managed%20identity%20credentials/
   - title: GCP - Workload Identity
     url: https://cloud.google.com/kubernetes-engine/docs/how-to/workload-identity
+  - title: EKS Pod Identity (preferred over IRSA for new deployments)
+    url: https://docs.aws.amazon.com/eks/latest/userguide/pod-identities.html

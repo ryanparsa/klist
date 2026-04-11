@@ -1,0 +1,82 @@
+id: CLST-48
+title: Maintain and Enforce a Kubernetes Version Upgrade Schedule
+stage: active
+description: |
+  Kubernetes releases a new minor version roughly every 4 months and supports each
+  version for approximately 14 months. Running end-of-life versions exposes clusters to
+  unpatched CVEs and removed APIs. On managed services, providers extend support at
+  significantly higher cost and eventually force-upgrade clusters, potentially causing
+  unplanned disruptions.
+
+  **What to check:**
+  - Are all clusters running a supported minor version (within N-2 of latest)?
+  - Does a recurring upgrade schedule exist (quarterly cadence is common)?
+  - Is deprecated API usage detected before upgrading?
+    ```
+    pluto detect-all-in-cluster
+    kubent
+    ```
+  - Is the upgrade order enforced: control plane → add-ons → data plane?
+  - Do staging clusters upgrade at least one cycle ahead of production?
+  - Are Pod Disruption Budgets set on critical workloads before rolling node updates?
+
+  **AWS EKS:** Standard support: 14 months at $0.10/hr. Extended support: 12 additional
+  months at $0.60/hr (6× the cost). AWS force-upgrades the control plane after extended
+  support ends. Managed add-ons (`vpc-cni`, `coredns`, `kube-proxy`, CSI drivers) are
+  NOT automatically upgraded during control plane upgrades — they must be updated
+  separately. Use EKS Cluster Insights to detect deprecated API usage before upgrading.
+
+  **GKE:** Auto-upgrade channels (Rapid/Regular/Stable) handle upgrades on a schedule.
+  Verify maintenance windows and exclusions are configured to avoid upgrades during
+  critical business periods.
+
+  **AKS:** Automatic upgrade profiles are available per cluster. Node OS upgrade channels
+  are managed separately from Kubernetes version upgrades — check both.
+
+mitigations:
+  - |-
+    Run Pluto or kubent against the cluster before each upgrade to detect resources using
+    removed or deprecated APIs:
+    ```
+    pluto detect-all-in-cluster
+    kubent
+    ```
+    Fix all findings before upgrading the control plane.
+  - |-
+    On EKS, run `aws eks list-insights --cluster-name <name>` before upgrading. Address
+    all UPGRADE_READINESS findings. After control plane upgrade, update each add-on:
+    ```
+    aws eks describe-addon-versions --kubernetes-version <new-version> --addon-name <name>
+    aws eks update-addon --cluster-name <name> --addon-name <name> --addon-version <ver>
+    ```
+  - |-
+    Track the EKS version release calendar and schedule upgrades before standard support
+    ends to avoid the 6× extended support cost. Plan at least 2 quarters ahead.
+  - |-
+    Test upgrades in a staging cluster first. Validate all workloads and add-ons before
+    rolling the same upgrade to production.
+
+tags:
+  - version-management
+  - upgrades
+  - lifecycle
+  - compliance
+  - patch-management
+
+tools:
+  - title: Pluto (deprecated API detector)
+    url: https://github.com/FairwindsOps/pluto
+  - title: kubent (kube-no-trouble)
+    url: https://github.com/doitintl/kube-no-trouble
+
+references:
+  - title: Kubernetes Version Skew Policy
+    url: https://kubernetes.io/docs/setup/release/version-skew-policy/
+  - title: EKS Kubernetes Version Lifecycle
+    url: https://docs.aws.amazon.com/eks/latest/userguide/kubernetes-versions.html
+  - title: EKS Best Practices - Cluster Upgrades
+    url: https://docs.aws.amazon.com/eks/latest/best-practices/cluster-upgrades.html
+  - title: GKE - Release Channels
+    url: https://cloud.google.com/kubernetes-engine/docs/concepts/release-channels
+  - title: AKS - Upgrade an AKS Cluster
+    url: https://learn.microsoft.com/en-us/azure/aks/upgrade-cluster

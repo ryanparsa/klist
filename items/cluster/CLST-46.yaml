@@ -35,3 +35,5 @@ references:
     url: https://microsoft.github.io/Threat-Matrix-for-Kubernetes/techniques/Data%20destruction/
   - title: Velero - Backup and Restore for Kubernetes
     url: https://velero.io/docs/
+  - title: EKS - Backup Cluster Resources with Velero
+    url: https://docs.aws.amazon.com/eks/latest/userguide/backup-cluster.html

@@ -1,10 +1,10 @@
-import { useState } from 'react'
-import { Link } from 'react-router-dom'
-import { Square, CheckSquare, MinusSquare, ChevronDown, ChevronRight, ExternalLink } from 'lucide-react'
+import { useParams, Navigate } from 'react-router-dom'
+import { Square, CheckSquare, MinusSquare, ExternalLink } from 'lucide-react'
 import { cn } from '@/lib/utils'
-import { Markdown } from './Markdown'
-import { Collapsible, CollapsibleContent, CollapsibleTrigger } from '@/components/ui/collapsible'
+import { Markdown } from '@/components/Markdown'
+import { Breadcrumb } from '@/components/Breadcrumb'
 import { Separator } from '@/components/ui/separator'
+import { CATEGORIES } from '@/lib/categories'
 
 const PRIORITY_STYLES = {
   required:  'bg-red-50 text-red-700 ring-red-200',
@@ -24,95 +24,71 @@ const STATE_ICON_STYLES = {
   na:        'text-muted-foreground/60',
 }
 
-export function ChecklistItem({ item, priority, state, onCycle }) {
-  const [expanded, setExpanded] = useState(false)
+export function ItemPage({ data, priorityMap, getState, cycleState }) {
+  const { category, itemId } = useParams()
 
+  const cat = CATEGORIES.find(c => c.id === category)
+  const item = data.items.find(i => i.id === itemId)
+
+  if (!cat || !item || item.category !== category) return <Navigate to="/" replace />
+
+  const priority = priorityMap.get(item.id) ?? 'optional'
+  const state = getState(item.id)
   const Icon = STATE_ICONS[state]
   const iconStyle = STATE_ICON_STYLES[state]
 
   return (
-    <Collapsible
-      open={expanded}
-      onOpenChange={setExpanded}
-      className={cn(
-        'rounded-md border bg-card transition-colors',
+    <main className="flex-1 overflow-y-auto px-4 py-5">
+      <Breadcrumb items={[
+        { label: cat.label, href: `/${category}` },
+        { label: item.id },
+      ]} />
+
+      <div className={cn(
+        'mt-4 rounded-md border bg-card transition-colors',
         state === 'passed' && 'opacity-60',
         state === 'na' && 'opacity-40',
-      )}
-    >
-      {/* Row */}
-      <div className="flex items-center gap-2 px-3 py-2">
-        {/* Tri-state toggle */}
-        <button
-          onClick={() => onCycle(item.id)}
-          className={cn('shrink-0 transition-colors', iconStyle)}
-          aria-label={`State: ${state}. Click to cycle.`}
-        >
-          <Icon size={18} />
-        </button>
-
-        {/* ID */}
-        <Link
-          to={`/${item.category}/${item.id}`}
-          className="shrink-0 font-mono text-xs text-muted-foreground w-16 hover:text-primary transition-colors"
-          onClick={e => e.stopPropagation()}
-        >
-          {item.id}
-        </Link>
-
-        {/* Title — click to expand */}
-        <CollapsibleTrigger asChild>
-          <button className="flex-1 text-left text-sm font-medium truncate hover:text-primary transition-colors">
-            {item.title}
-          </button>
-        </CollapsibleTrigger>
-
-        {/* Priority badge */}
-        <span className={cn(
-          'shrink-0 rounded-full px-2 py-0.5 text-xs font-medium ring-1 ring-inset',
-          PRIORITY_STYLES[priority]
-        )}>
-          {priority}
-        </span>
-
-        {/* Expand chevron */}
-        <CollapsibleTrigger asChild>
+      )}>
+        {/* Title row */}
+        <div className="flex items-center gap-3 px-4 py-3">
           <button
-            className="shrink-0 text-muted-foreground hover:text-foreground transition-colors"
-            aria-label={expanded ? 'Collapse' : 'Expand'}
+            onClick={() => cycleState(item.id)}
+            className={cn('shrink-0 transition-colors', iconStyle)}
+            aria-label={`State: ${state}. Click to cycle.`}
           >
-            {expanded ? <ChevronDown size={15} /> : <ChevronRight size={15} />}
+            <Icon size={20} />
           </button>
-        </CollapsibleTrigger>
-      </div>
+          <span className="shrink-0 font-mono text-sm text-muted-foreground">{item.id}</span>
+          <h1 className="flex-1 text-base font-semibold">{item.title}</h1>
+          <span className={cn(
+            'shrink-0 rounded-full px-2 py-0.5 text-xs font-medium ring-1 ring-inset',
+            PRIORITY_STYLES[priority]
+          )}>
+            {priority}
+          </span>
+        </div>
 
-      {/* Expandable panel */}
-      <CollapsibleContent className="data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0 data-[state=closed]:zoom-out-95 data-[state=open]:zoom-in-95 data-[state=closed]:slide-out-to-top-2 data-[state=open]:slide-in-from-top-2">
-        <div className="border-t px-3 py-3 space-y-4 text-sm">
-          {/* Description */}
+        {/* Content */}
+        <div className="border-t px-4 py-4 space-y-4 text-sm">
           <div>
             <p className="text-xs font-semibold uppercase tracking-wide text-muted-foreground mb-2">Description</p>
             <Markdown content={item.description} />
           </div>
 
-          {/* Mitigations */}
           {item.mitigations?.length > 0 && (
             <>
               <Separator />
               <div>
                 <p className="text-xs font-semibold uppercase tracking-wide text-muted-foreground mb-2">Mitigations</p>
-                <ol className="list-decimal pl-5 space-y-2 text-sm">
+                <ol className="list-decimal pl-5 space-y-2">
                   {item.mitigations.map((m, i) => (
-                    <li key={i}>
-                      <Markdown content={m} />
-                    </li>
+                    <li key={i}><Markdown content={m} /></li>
                   ))}
                 </ol>
               </div>
             </>
           )}
 
-          {/* Tools */}
           {item.tools?.length > 0 && (
             <>
               <Separator />
@@ -130,7 +106,6 @@ export function ChecklistItem({ item, priority, state, onCycle }) {
                         {tool.title}
                         <ExternalLink size={11} />
                       </a>
-                      <span className="ml-2 text-xs text-muted-foreground">{tool.url}</span>
                     </li>
                   ))}
                 </ol>
@@ -138,7 +113,6 @@ export function ChecklistItem({ item, priority, state, onCycle }) {
             </>
           )}
 
-          {/* References */}
           {item.references?.length > 0 && (
             <>
               <Separator />
@@ -156,7 +130,6 @@ export function ChecklistItem({ item, priority, state, onCycle }) {
                         {ref.title}
                         <ExternalLink size={11} />
                       </a>
-                      <span className="ml-2 text-xs text-muted-foreground">{ref.url}</span>
                     </li>
                   ))}
                 </ol>
@@ -164,7 +137,6 @@ export function ChecklistItem({ item, priority, state, onCycle }) {
             </>
           )}
 
-          {/* Tags */}
           {item.tags?.length > 0 && (
             <>
               <Separator />
@@ -181,8 +153,7 @@ export function ChecklistItem({ item, priority, state, onCycle }) {
             </>
           )}
         </div>
-      </CollapsibleContent>
-    </Collapsible>
+      </div>
+    </main>
   )
 }
-

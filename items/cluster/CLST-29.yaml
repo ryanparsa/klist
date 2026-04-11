@@ -28,3 +28,5 @@ references:
     url: https://microsoft.github.io/Threat-Matrix-for-Kubernetes/techniques/Delete%20K8S%20events/
   - title: Microsoft Threat Matrix - Clear Container Logs
     url: https://microsoft.github.io/Threat-Matrix-for-Kubernetes/techniques/Clear%20container%20logs/
+  - title: AWS Fluent Bit for CloudWatch Container Insights
+    url: https://docs.aws.amazon.com/AmazonCloudWatch/latest/monitoring/Container-Insights-setup-logs-FluentBit.html

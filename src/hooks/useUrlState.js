@@ -1,55 +1,43 @@
-import { useState, useCallback, useEffect } from 'react'
-
-function parseUrl() {
-  const params = new URLSearchParams(window.location.search)
-  const configs = params.get('configs')?.split(',').filter(Boolean) ?? []
-  const tags = params.get('tags')?.split(',').filter(Boolean) ?? []
-  return { activeConfigs: new Set(configs), activeTags: new Set(tags) }
-}
-
-function writeUrl(activeConfigs, activeTags) {
-  const params = new URLSearchParams()
-  if (activeConfigs.size > 0) params.set('configs', [...activeConfigs].join(','))
-  if (activeTags.size > 0) params.set('tags', [...activeTags].join(','))
-  const search = params.toString()
-  window.history.replaceState(null, '', search ? `?${search}` : window.location.pathname)
-}
+import { useCallback } from 'react'
+import { useSearchParams } from 'react-router-dom'
 
 export function useUrlState() {
-  const [state, setState] = useState(parseUrl)
+  const [searchParams, setSearchParams] = useSearchParams()
+
+  const activeConfigs = new Set(searchParams.get('configs')?.split(',').filter(Boolean) ?? [])
+  const activeTags = new Set(searchParams.get('tags')?.split(',').filter(Boolean) ?? [])
 
   const toggleConfig = useCallback((id) => {
-    setState(prev => {
-      const next = new Set(prev.activeConfigs)
-      next.has(id) ? next.delete(id) : next.add(id)
-      writeUrl(next, prev.activeTags)
-      return { ...prev, activeConfigs: next }
-    })
-  }, [])
+    setSearchParams(prev => {
+      const configs = new Set(prev.get('configs')?.split(',').filter(Boolean) ?? [])
+      configs.has(id) ? configs.delete(id) : configs.add(id)
+      const next = new URLSearchParams(prev)
+      if (configs.size > 0) next.set('configs', [...configs].join(','))
+      else next.delete('configs')
+      return next
+    }, { replace: true })
+  }, [setSearchParams])
 
   const toggleTag = useCallback((tag) => {
-    setState(prev => {
-      const next = new Set(prev.activeTags)
-      next.has(tag) ? next.delete(tag) : next.add(tag)
-      writeUrl(prev.activeConfigs, next)
-      return { ...prev, activeTags: next }
-    })
-  }, [])
+    setSearchParams(prev => {
+      const tags = new Set(prev.get('tags')?.split(',').filter(Boolean) ?? [])
+      tags.has(tag) ? tags.delete(tag) : tags.add(tag)
+      const next = new URLSearchParams(prev)
+      if (tags.size > 0) next.set('tags', [...tags].join(','))
+      else next.delete('tags')
+      return next
+    }, { replace: true })
+  }, [setSearchParams])
 
   const setActiveConfigs = useCallback((ids) => {
-    setState(prev => {
-      const next = new Set(ids)
-      writeUrl(next, prev.activeTags)
-      return { ...prev, activeConfigs: next }
-    })
-  }, [])
+    setSearchParams(prev => {
+      const next = new URLSearchParams(prev)
+      const configs = new Set(ids)
+      if (configs.size > 0) next.set('configs', [...configs].join(','))
+      else next.delete('configs')
+      return next
+    }, { replace: true })
+  }, [setSearchParams])
 
-  // Sync on browser back/forward
-  useEffect(() => {
-    const handler = () => setState(parseUrl())
-    window.addEventListener('popstate', handler)
-    return () => window.removeEventListener('popstate', handler)
-  }, [])
-
-  return { ...state, toggleConfig, toggleTag, setActiveConfigs }
+  return { activeConfigs, activeTags, toggleConfig, toggleTag, setActiveConfigs }
 }

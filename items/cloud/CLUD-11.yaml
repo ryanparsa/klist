@@ -23,3 +23,5 @@ references:
     url: https://github.com/kubernetes/autoscaler/tree/master/cluster-autoscaler
   - title: Kubernetes Docs - Cluster Management
     url: https://kubernetes.io/docs/tasks/administer-cluster/cluster-management/
+  - title: Karpenter - Getting Started on EKS
+    url: https://karpenter.sh/docs/getting-started/getting-started-with-karpenter/

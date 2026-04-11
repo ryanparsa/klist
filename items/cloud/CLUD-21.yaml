@@ -41,3 +41,5 @@ references:
     url: https://microsoft.github.io/Threat-Matrix-for-Kubernetes/mitigations/MS-M9030%20Use%20Cloud%20Storage%20Provider/
   - title: Kubernetes Docs - Storage Classes
     url: https://kubernetes.io/docs/concepts/storage/storage-classes/
+  - title: EKS EBS CSI Driver
+    url: https://docs.aws.amazon.com/eks/latest/userguide/ebs-csi.html

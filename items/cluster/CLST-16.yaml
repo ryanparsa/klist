@@ -23,3 +23,5 @@ references:
     url: https://kubernetes.io/docs/concepts/workloads/pods/disruptions/
   - title: Kubernetes Docs - Configure Pod Disruption Budgets
     url: https://kubernetes.io/docs/tasks/run-application/configure-pdb/
+  - title: EKS - Managed Node Group Update Behavior (PDBs respected; NOT during ASG AZRebalance)
+    url: https://docs.aws.amazon.com/eks/latest/userguide/managed-node-update-behavior.html

@@ -1,24 +1,18 @@
 import { useState } from 'react'
+import { Routes, Route, Link } from 'react-router-dom'
 import { Menu } from 'lucide-react'
-import { cn } from '@/lib/utils'
 import { useChecklist } from '@/hooks/useChecklist'
 import { useUrlState } from '@/hooks/useUrlState'
 import { useItemStates } from '@/hooks/useItemStates'
 import { usePriorityResolution } from '@/hooks/usePriorityResolution'
 import { Sidebar } from '@/components/Sidebar'
-import { ChecklistSection } from '@/components/ChecklistSection'
 import { ExportImport } from '@/components/ExportImport'
-import { Input } from '@/components/ui/input'
 import { Button } from '@/components/ui/button'
 import { Sheet, SheetContent, SheetTrigger, SheetTitle, SheetDescription } from '@/components/ui/sheet'
 import { VisuallyHidden } from '@radix-ui/react-visually-hidden'
-
-const CATEGORIES = [
-  { id: 'cloud',     label: 'Cloud' },
-  { id: 'cluster',   label: 'Cluster' },
-  { id: 'container', label: 'Container' },
-  { id: 'code',      label: 'Code' },
-]
+import { HomePage } from '@/pages/HomePage'
+import { CategoryPage } from '@/pages/CategoryPage'
+import { ItemPage } from '@/pages/ItemPage'
 
 export default function App() {
   const { data, error } = useChecklist()
@@ -26,7 +20,6 @@ export default function App() {
   const { getState, cycleState, importStates, rawStates } = useItemStates()
   const priorityMap = usePriorityResolution(data?.configs ?? [], activeConfigs)
 
-  const [search, setSearch] = useState('')
   const [sidebarOpen, setSidebarOpen] = useState(false)
 
   // -------------------------------------------------------------------------
@@ -53,24 +46,25 @@ export default function App() {
   }
 
   // -------------------------------------------------------------------------
-  // Filter predicate — used by every section (does NOT affect scoring)
-  // -------------------------------------------------------------------------
-
-  const searchLower = search.toLowerCase()
-
-  function itemVisible(item) {
-    if (activeTags.size > 0 && !item.tags.some(t => activeTags.has(t))) return false
-    if (searchLower && !item.title.toLowerCase().includes(searchLower) && !item.description.toLowerCase().includes(searchLower) && !item.tags.some(t => t.toLowerCase().includes(searchLower))) return false
-    return true
-  }
-
-  // -------------------------------------------------------------------------
   // Import handler
   // -------------------------------------------------------------------------
 
   function handleImport({ active_configs, states }) {
     setActiveConfigs(active_configs)
     importStates(states)
+  }
+
+  // -------------------------------------------------------------------------
+  // Shared props passed to every page
+  // -------------------------------------------------------------------------
+
+  const pageProps = {
+    data,
+    activeConfigs,
+    activeTags,
+    priorityMap,
+    getState,
+    cycleState,
   }
 
   // -------------------------------------------------------------------------
@@ -122,7 +116,12 @@ export default function App() {
               </SheetContent>
             </Sheet>
 
-            <span className="font-mono text-base font-semibold tracking-tight">klist</span>
+            <Link
+              to="/"
+              className="font-mono text-base font-semibold tracking-tight hover:opacity-70 transition-opacity"
+            >
+              klist
+            </Link>
             <span className="hidden text-xs text-muted-foreground sm:inline">
               Kubernetes Operational Checklist
             </span>
@@ -134,30 +133,13 @@ export default function App() {
           />
         </header>
 
-        {/* Search */}
-        <div className="no-print shrink-0 border-b px-4 py-2">
-          <Input
-            type="search"
-            placeholder="Search items…"
-            value={search}
-            onChange={e => setSearch(e.target.value)}
-          />
-        </div>
+        {/* Routed pages */}
+        <Routes>
+          <Route path="/" element={<HomePage {...pageProps} />} />
+          <Route path="/:category" element={<CategoryPage {...pageProps} />} />
+          <Route path="/:category/:itemId" element={<ItemPage {...pageProps} />} />
+        </Routes>
 
-        {/* Checklist */}
-        <main className="flex-1 overflow-y-auto px-4 py-5">
-          {CATEGORIES.map(({ id, label }) => (
-            <ChecklistSection
-              key={id}
-              label={label}
-              items={data.items.filter(i => i.category === id)}
-              priorityMap={priorityMap}
-              getState={getState}
-              cycleState={cycleState}
-              itemVisible={itemVisible}
-            />
-          ))}
-        </main>
       </div>
     </div>
   )

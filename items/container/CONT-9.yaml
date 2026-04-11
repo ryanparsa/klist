@@ -39,3 +39,7 @@ references:
     url: https://microsoft.github.io/Threat-Matrix-for-Kubernetes/techniques/bash%20or%20cmd%20inside%20container/
   - title: Microsoft Threat Matrix - New Container
     url: https://microsoft.github.io/Threat-Matrix-for-Kubernetes/techniques/New%20Container/
+  - title: Amazon GuardDuty EKS Runtime Monitoring
+    url: https://docs.aws.amazon.com/guardduty/latest/ug/guardduty-eks-runtime-monitoring.html
+  - title: Amazon Inspector - Container Image Scanning for EKS
+    url: https://docs.aws.amazon.com/inspector/latest/user/enable-disable-scanning-ec2.html

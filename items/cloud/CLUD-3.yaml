@@ -36,3 +36,5 @@ references:
     url: https://microsoft.github.io/Threat-Matrix-for-Kubernetes/techniques/Access%20cloud%20resources/
   - title: Microsoft Threat Matrix - Mount Service Principal
     url: https://microsoft.github.io/Threat-Matrix-for-Kubernetes/techniques/Mount%20service%20principal/
+  - title: EKS Best Practices - IAM
+    url: https://docs.aws.amazon.com/eks/latest/best-practices/iam.html
