@@ -3,13 +3,21 @@ title: Use Pod Anti-Affinity Rules to Spread Workload
 stage: active
 description: |
   Even if multiple replicas are deployed, a single node failure will take down the entire application if all replicas are scheduled onto the same physical node. Pod anti-affinity is required to ensure replicas are geographically distributed across different nodes or availability zones.
+
+  **What to check:**
+  ```bash
+  kubectl get deployments -A -o yaml | grep -i podAntiAffinity
+  ```
+
+  ```mermaid
+  flowchart TD
+    A[Pod Anti-Affinity] --> B[Node A: Replica 1]
+    A --> C[Node B: Replica 2]
+  ```
 mitigations:
-  - |-
-    Add a `podAntiAffinity` rule using `preferredDuringSchedulingIgnoredDuringExecution`
-    (soft) or `requiredDuringSchedulingIgnoredDuringExecution` (hard) in your Deployment's pod
-    spec. Match on `app.kubernetes.io/name` or a similar label to ensure replicas land on
-    distinct nodes. Prefer topology key `kubernetes.io/hostname` for node-level spreading, or
-    `topology.kubernetes.io/zone` for zone-level resilience.
+  - "Add a `podAntiAffinity` rule using `preferredDuringSchedulingIgnoredDuringExecution` (soft) or `requiredDuringSchedulingIgnoredDuringExecution` (hard) in your Deployment's pod spec."
+  - "Match on `app.kubernetes.io/name` or a similar label to ensure replicas land on distinct nodes."
+  - "Prefer topology key `kubernetes.io/hostname` for node-level spreading, or `topology.kubernetes.io/zone` for zone-level resilience."
 tags:
   - application-development
   - fault-tolerance
@@ -17,6 +25,9 @@ tags:
 tools:
   - title: kube-score
     url: https://github.com/zegl/kube-score
+  - title: polaris
+    url: https://github.com/FairwindsOps/polaris
+
 references:
   - title: Kubernetes Docs - Inter-Pod Affinity and Anti-Affinity
     url: https://kubernetes.io/docs/concepts/scheduling-eviction/assign-pod-node/#inter-pod-affinity-and-anti-affinity

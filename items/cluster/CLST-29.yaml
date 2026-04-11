@@ -3,13 +3,21 @@ title: Provision a Log Aggregation Tool
 stage: active
 description: |
   Logs scattered across ephemeral nodes will be permanently lost when those nodes are scaled down, upgraded, or fail. Centralizing logs through an aggregation tool ensures telemetry data persists securely and remains searchable regardless of the underlying infrastructure's lifecycle.
+
+  **What to check:**
+  ```bash
+  kubectl get pods -n observability | grep loki
+  ```
+
+  ```mermaid
+  flowchart TD
+    A[Log Agents] --> B[Log Aggregator]
+    B --> C[Search/Dashboards]
+  ```
 mitigations:
-  - |-
-    Deploy Fluentd or Fluent Bit as a DaemonSet to collect logs from all nodes
-    and forward them to a centralised store (Loki, Elasticsearch, Splunk, CloudWatch, or GCP
-    Logging). Configure structured log parsing so logs are queryable. Ensure the aggregation
-    pipeline is highly available - use persistent buffers to prevent log loss during
-    backpressure.
+  - "Deploy Fluentd or Fluent Bit as a DaemonSet to collect logs from all nodes and forward them to a centralised store (Loki, Elasticsearch, Splunk, CloudWatch, or GCP Logging)."
+  - "Configure structured log parsing so logs are queryable."
+  - "Ensure the aggregation pipeline is highly available - use persistent buffers to prevent log loss during backpressure."
 tags:
   - configuration
   - logging

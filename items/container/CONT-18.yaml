@@ -9,6 +9,13 @@ description: |
   ```bash
   kubectl get pods -A -o custom-columns="NAMESPACE:.metadata.namespace,NAME:.metadata.name,QOS:.status.qosClass" | grep BestEffort
   ```
+
+  ```mermaid
+  flowchart TD
+    A[Pod] --> B{Limits == Requests?}
+    B -->|Yes| C[Guaranteed QoS]
+    B -->|No| D[Burstable/BestEffort QoS]
+  ```
 mitigations:
   - |-
     Correctly configure CPU/Memory requests and limits to dictate the QoS for your Pods and determine their predictable eviction priority. To achieve `Guaranteed` QoS, specify both limits and requests, and make them equal for CPU and Memory.
@@ -36,7 +43,10 @@ tags:
   - application-development
   - resource-utilisation
   - qos
-tools: []
+tools:
+  - title: Goldilocks
+    url: https://github.com/FairwindsOps/goldilocks
+
 references:
   - title: Kubernetes Docs - Configure Quality of Service for Pods
     url: https://kubernetes.io/docs/tasks/configure-pod-container/quality-service-pod/

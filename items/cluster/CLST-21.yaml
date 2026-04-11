@@ -9,6 +9,17 @@ description: |
   ```bash
   kubectl get pods -A -o custom-columns="NAMESPACE:.metadata.namespace,NAME:.metadata.name,CONTAINERS:.spec.containers[*].image" | grep -E 'fluent|logstash'
   ```
+
+  **What to check:**
+  ```bash
+  kubectl get pods -A -o jsonpath='{range .items[?(@.spec.containers[1])]}{.metadata.namespace}{"\t"}{.metadata.name}{"\n"}{end}'
+  ```
+
+  ```mermaid
+  flowchart TD
+    A[App Pod] -->|stdout| B[Node-level Logging Agent]
+    B --> C[Central Logging]
+  ```
 mitigations:
   - |-
     Refactor applications to write structured logs (JSON preferred) directly to

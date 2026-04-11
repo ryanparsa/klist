@@ -3,12 +3,21 @@ title: Enable Network Policies via CNI Plugin
 stage: active
 description: |
   By default, Kubernetes allows open communication between all Pods and nodes in the cluster. Network segmentation cannot be enforced unless a Container Network Interface (CNI) plugin (like Calico or Cilium) that natively supports and enforces Kubernetes Network Policies is deployed.
+
+  **What to check:**
+  ```bash
+  kubectl get networkpolicies -A
+  ```
+
+  ```mermaid
+  flowchart TD
+    A[Frontend Pod] -->|Allowed| B[Backend Pod]
+    C[Other Namespace] --x|Denied| B
+  ```
 mitigations:
-  - |-
-    Replace or supplement kubenet/flannel with a CNI plugin that enforces
-    NetworkPolicy (Cilium or Calico). Verify the CNI is active with
-    `kubectl get pods -n kube-system | grep -E 'cilium|calico'`. Test enforcement by applying
-    a default-deny NetworkPolicy and confirming traffic is blocked.
+  - "Replace or supplement kubenet/flannel with a CNI plugin that enforces NetworkPolicy (Cilium or Calico)."
+  - "Verify the CNI is active with `kubectl get pods -n kube-system | grep -E 'cilium|calico'`."
+  - "Test enforcement by applying a default-deny NetworkPolicy and confirming traffic is blocked."
 tags:
   - governance
   - network

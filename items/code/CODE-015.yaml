@@ -11,6 +11,13 @@ description: |
   ```bash
   kubectl get ingress -A -o jsonpath='{range .items[*]}{range .spec.rules[*]}{.host}{"\n"}{end}{end}' | sort | uniq -d
   ```
+
+  ```mermaid
+  flowchart TD
+    A[Ingress Creation] --> B{Hostname Unique?}
+    B -->|Yes| C[Allow]
+    B -->|No| D[Reject via Admission Control]
+  ```
 mitigations:
   - |-
     Deploy the Kyverno `unique-ingress-host` policy (available in the Kyverno

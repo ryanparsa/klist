@@ -3,12 +3,24 @@ title: Ensure Cluster Passes CIS Benchmark
 stage: active
 description: |
   Clusters that deviate from established industry security standards natively introduce known configuration vulnerabilities. The Centre for Internet Security (CIS) benchmark provides the canonical baseline for securing Kubernetes clusters against widespread attack vectors.
+
+  **What to check:**
+  ```bash
+  kube-bench run --targets master,node
+  ```
+
+  ```mermaid
+  flowchart TD
+    A[Kube-bench] --> B[Master Nodes]
+    A --> C[Worker Nodes]
+    B --> D[Compliance Report]
+  ```
 mitigations:
-  - |-
-    Run `kube-bench` as a Job or DaemonSet on each node. Review the output and
-    address all FAIL findings. Prioritise Level 1 (must-have) checks before Level 2. For
-    managed clusters, remediate worker-node findings only - control-plane checks are the
-    provider's responsibility. Re-run after every cluster upgrade.
+  - "Run `kube-bench` as a Job or DaemonSet on each node."
+  - "Review the output and address all FAIL findings."
+  - "Prioritise Level 1 (must-have) checks before Level 2."
+  - "For managed clusters, remediate worker-node findings only - control-plane checks are the provider's responsibility."
+  - "Re-run after every cluster upgrade."
 tags:
   - configuration
   - security

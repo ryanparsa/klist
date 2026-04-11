@@ -3,13 +3,21 @@ title: Log to stdout and stderr
 stage: active
 description: |
   Applications that write logs directly to files, databases, or network aggregators bypass the cluster's native logging mechanisms. This fragments observability, increases application complexity, and can cause data loss if the pod terminates before logs are shipped.
+
+  **What to check:**
+  ```bash
+  kubectl logs <pod-name>
+  ```
+
+  ```mermaid
+  flowchart TD
+    A[App] -->|stdout| B[Container Runtime]
+    B --> C[Node Logs / Fluent Bit]
+  ```
 mitigations:
-  - |-
-    Update the application to write all log output using the standard library's
-    stdout/stderr streams (e.g., `fmt.Println` in Go, `console.log` in Node.js, `print` in
-    Python). Remove any direct log-shipping integrations (e.g., Fluentd clients, Logstash
-    appenders) from the application code itself. Use structured logging (JSON) so that
-    external aggregators can parse and index fields without custom parsers.
+  - "Update the application to write all log output using the standard library's stdout/stderr streams (e.g., `fmt.Println` in Go, `console.log` in Node.js, `print` in Python)."
+  - "Remove any direct log-shipping integrations (e.g., Fluentd clients, Logstash appenders) from the application code itself."
+  - "Use structured logging (JSON) so that external aggregators can parse and index fields without custom parsers."
 tags:
   - application-development
   - logging

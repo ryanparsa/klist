@@ -3,12 +3,21 @@ title: Define a LimitRange for Each Namespace
 stage: active
 description: |
   Namespaces without a `LimitRange` object allow the accidental deployment of Pods lacking explicit memory and CPU configurations. A `LimitRange` enforces standard sizes or minimums/maximums for containers, acting as an automated safety net for cluster-wide resource utilization.
+
+  **What to check:**
+  ```bash
+  kubectl get limitranges -A
+  ```
+
+  ```mermaid
+  flowchart TD
+    A[Pod Creation] --> B{LimitRange defined?}
+    B -->|Yes| C[Apply Defaults/Limits]
+    B -->|No| D[Unbounded Pod]
+  ```
 mitigations:
-  - |-
-    Create a `LimitRange` manifest in each namespace specifying default CPU and
-    memory requests and limits. Use a Kyverno or OPA Gatekeeper policy to reject namespace
-    creation that does not include a LimitRange, or automatically create one via a namespace
-    provisioning workflow.
+  - "Create a `LimitRange` manifest in each namespace specifying default CPU and memory requests and limits."
+  - "Use a Kyverno or OPA Gatekeeper policy to reject namespace creation that does not include a LimitRange, or automatically create one via a namespace provisioning workflow."
 tags:
   - application-development
   - resource-management
@@ -18,6 +27,9 @@ tools:
     url: https://github.com/zegl/kube-score
   - title: Kyverno
     url: https://kyverno.io/
+  - title: Goldilocks
+    url: https://github.com/FairwindsOps/goldilocks
+
 references:
   - title: Kubernetes Docs - LimitRange
     url: https://kubernetes.io/docs/concepts/policy/limit-range/

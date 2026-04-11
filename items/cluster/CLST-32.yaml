@@ -3,12 +3,22 @@ title: Enforce Principle of Least Privilege in RBAC Policies
 stage: active
 description: |
   Granting broad permissions in RBAC policies provides unnecessary API access and poses a significant security risk. The Principle of Least Privilege dictates that an entity should only be granted the absolute minimum permissions required to perform its function.
+
+  **What to check:**
+  ```bash
+  kubectl get clusterrolebindings -o yaml | grep cluster-admin
+  ```
+
+  ```mermaid
+  flowchart TD
+    A[User/SA] -->|RoleBinding| B[Namespace-scoped Role]
+    B --> C[Specific Resources Allowed]
+  ```
 mitigations:
-  - |-
-    Start with an empty Role and add only the specific API groups, resources,
-    and verbs required. Use `kubectl auth can-i --list` to verify actual permissions. Run
-    RBAC Lookup or Krane to identify over-permissioned service accounts and roles. Adopt a
-    GitOps approach for RBAC manifests to ensure all permissions are peer-reviewed.
+  - "Start with an empty Role and add only the specific API groups, resources, and verbs required."
+  - "Use `kubectl auth can-i --list` to verify actual permissions."
+  - "Run RBAC Lookup or Krane to identify over-permissioned service accounts and roles."
+  - "Adopt a GitOps approach for RBAC manifests to ensure all permissions are peer-reviewed."
 tags:
   - governance
   - rbac
@@ -18,6 +28,9 @@ tools:
     url: https://github.com/FairwindsOps/rbac-lookup
   - title: Krane
     url: https://github.com/appvia/krane
+  - title: rbac-tool
+    url: https://github.com/alcideio/rbac-tool
+
 references:
   - title: Kubernetes Docs - RBAC Authorization
     url: https://kubernetes.io/docs/reference/access-authn-authz/rbac/

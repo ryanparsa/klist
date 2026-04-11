@@ -12,6 +12,18 @@ description: |
   - Support for MFA-protected sessions
   - Clean IaC integration (no manual ConfigMap editing)
   - Reduced blast radius from ConfigMap corruption
+
+  **What to check:**
+  ```bash
+  aws eks describe-cluster --name <cluster-name> --query 'cluster.accessConfig.authenticationMode'
+  ```
+
+  ```mermaid
+  flowchart TD
+    A[IAM User] --> B[Cloud IAM Policy]
+    B --> C[EKS Access Entry]
+    C --> D[K8s RoleBinding]
+  ```
 mitigations:
   - |-
     On EKS, migrate authentication mode to `API` or `API_AND_CONFIG_MAP` as an
@@ -50,6 +62,9 @@ tools:
     url: https://github.com/prowler-cloud/prowler
   - title: RBAC Lookup
     url: https://github.com/FairwindsOps/rbac-lookup
+  - title: AWS CLI
+    url: https://aws.amazon.com/cli/
+
 references:
   - title: AWS EKS - Access Entries
     url: https://docs.aws.amazon.com/eks/latest/userguide/access-entries.html

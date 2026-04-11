@@ -7,22 +7,25 @@ description: |
   Without business metadata modeled into Kubernetes objects, facilitating cost-allocation and tracking spending is heavily impaired. External aggregation tools rely on standardized business labels (such as `owner`, `project`, or `business-unit`) to correctly associate infrastructure usage with organizational units.
 
   Security labels group resources by compliance demands and security requirements. Key labels typically represent the data-confidentiality level (`confidentiality`) or the compliance standard the workload must adhere to (`compliance: pci`). These metadata markers simplify automated security assessments and auditing.
+
+  **What to check:**
+  ```bash
+  kubectl get pods --show-labels
+  ```
+
+  ```mermaid
+  flowchart TD
+    A[Deployment] --> B[app.kubernetes.io/name]
+    A --> C[app.kubernetes.io/instance]
+  ```
 mitigations:
-  - |-
-    Add the standard `app.kubernetes.io/*` labels to all workload manifests:
-    `name`, `instance`, `version`, `component`, `part-of`, and `managed-by`. Enforce their
-    presence using Kyverno `require-labels` policies or OPA Gatekeeper constraints in
-    production namespaces.
-  - |-
-    Define a labeling standard (e.g., `owner`, `project`, `business-unit`,
-    `cost-center`) and apply it to all workload manifests. Integrate label validation into the
-    CI pipeline using `kube-score` or Kyverno policies. Connect labels to your billing and
-    cost allocation tooling.
-  - |-
-    Establish a security labeling convention (e.g., `confidentiality: high`,
-    `compliance: pci-dss`) and apply it to all workloads that handle regulated data. Use these
-    labels in NetworkPolicy selectors, OPA/Kyverno policies, and SIEM queries to automatically
-    scope controls to the right workloads.
+  - "Add the standard `app.kubernetes.io/*` labels to all workload manifests: `name`, `instance`, `version`, `component`, `part-of`, and `managed-by`."
+  - "Enforce their presence using Kyverno `require-labels` policies or OPA Gatekeeper constraints in production namespaces."
+  - "Define a labeling standard (e.g., `owner`, `project`, `business-unit`, `cost-center`) and apply it to all workload manifests."
+  - "Integrate label validation into the CI pipeline using `kube-score` or Kyverno policies."
+  - "Connect labels to your billing and cost allocation tooling."
+  - "Establish a security labeling convention (e.g., `confidentiality: high`, `compliance: pci-dss`) and apply it to all workloads that handle regulated data."
+  - "Use these labels in NetworkPolicy selectors, OPA/Kyverno policies, and SIEM queries to automatically scope controls to the right workloads."
 tags:
   - application-development
   - tagging
