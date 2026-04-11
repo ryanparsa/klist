@@ -1,6 +1,8 @@
 import { computeScore } from '@/hooks/usePriorityResolution'
+import { useChecklistContext } from '@/lib/ChecklistContext'
 
-export function ScoreBar({ label, items, priorityMap, getState }) {
+export function ScoreBar({ label, items }) {
+  const { priorityMap, getState } = useChecklistContext()
   const score = computeScore(items, priorityMap, getState)
 
   const req = score.required

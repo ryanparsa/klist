@@ -4,8 +4,11 @@ import { Input } from '@/components/ui/input'
 import { ChecklistSection } from '@/components/ChecklistSection'
 import { Breadcrumb } from '@/components/Breadcrumb'
 import { CATEGORIES } from '@/lib/categories'
+import { useChecklistContext } from '@/lib/ChecklistContext'
+import { useMemo } from 'react'
 
-export function CategoryPage({ data, activeTags, priorityMap, getState, cycleState }) {
+export function CategoryPage() {
+  const { data, activeTags } = useChecklistContext()
   const { category } = useParams()
   const [search, setSearch] = useState('')
 
@@ -14,7 +17,7 @@ export function CategoryPage({ data, activeTags, priorityMap, getState, cycleSta
 
   const searchLower = search.toLowerCase()
 
-  function itemVisible(item) {
+  const itemVisible = (item) => {
     if (activeTags.size > 0 && !item.tags.some(t => activeTags.has(t))) return false
     if (searchLower && !item.title.toLowerCase().includes(searchLower) && !item.description.toLowerCase().includes(searchLower) && !item.tags.some(t => t.toLowerCase().includes(searchLower))) return false
     return true
@@ -34,10 +37,7 @@ export function CategoryPage({ data, activeTags, priorityMap, getState, cycleSta
       <main className="flex-1 overflow-y-auto px-4 py-5">
         <ChecklistSection
           label={cat.label}
-          items={data.items.filter(i => i.category === category)}
-          priorityMap={priorityMap}
-          getState={getState}
-          cycleState={cycleState}
+          category={category}
           itemVisible={itemVisible}
         />
       </main>

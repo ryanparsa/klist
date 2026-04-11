@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useState, useMemo } from 'react'
 import { Routes, Route, Link } from 'react-router-dom'
 import { Menu } from 'lucide-react'
 import { useChecklist } from '@/hooks/useChecklist'
@@ -13,6 +13,7 @@ import { VisuallyHidden } from '@radix-ui/react-visually-hidden'
 import { HomePage } from '@/pages/HomePage'
 import { CategoryPage } from '@/pages/CategoryPage'
 import { ItemPage } from '@/pages/ItemPage'
+import { ChecklistProvider } from '@/lib/ChecklistContext'
 
 export default function App() {
   const { data, error } = useChecklist()
@@ -58,14 +59,14 @@ export default function App() {
   // Shared props passed to every page
   // -------------------------------------------------------------------------
 
-  const pageProps = {
+  const pageProps = useMemo(() => ({
     data,
     activeConfigs,
     activeTags,
     priorityMap,
     getState,
     cycleState,
-  }
+  }), [data, activeConfigs, activeTags, priorityMap, getState, cycleState])
 
   // -------------------------------------------------------------------------
   // Render
@@ -134,11 +135,13 @@ export default function App() {
         </header>
 
         {/* Routed pages */}
-        <Routes>
-          <Route path="/" element={<HomePage {...pageProps} />} />
-          <Route path="/:category" element={<CategoryPage {...pageProps} />} />
-          <Route path="/:category/:itemId" element={<ItemPage {...pageProps} />} />
-        </Routes>
+        <ChecklistProvider value={pageProps}>
+          <Routes>
+            <Route path="/" element={<HomePage />} />
+            <Route path="/:category" element={<CategoryPage />} />
+            <Route path="/:category/:itemId" element={<ItemPage />} />
+          </Routes>
+        </ChecklistProvider>
 
       </div>
     </div>

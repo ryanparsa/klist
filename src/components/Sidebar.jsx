@@ -42,7 +42,10 @@ export function Sidebar({ configs, allTags, activeConfigs, activeTags, onToggleC
                   {typeConfigs.map(config => (
                     <li key={config.id}>
                       <label
-                        className="flex cursor-pointer items-center gap-2 rounded px-2 py-1.5 text-sm hover:bg-muted"
+                        className={cn(
+                          "flex cursor-pointer items-center gap-2 rounded px-2 py-1.5 text-sm transition-colors",
+                          activeConfigs.has(config.id) ? "bg-muted/60 font-medium text-foreground" : "hover:bg-muted text-muted-foreground hover:text-foreground"
+                        )}
                         title={config.description ?? ''}
                       >
                         <Checkbox

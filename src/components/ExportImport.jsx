@@ -1,5 +1,6 @@
 import { useRef } from 'react'
 import { Download, Upload, Printer } from 'lucide-react'
+import { Button } from '@/components/ui/button'
 
 export function ExportImport({ activeConfigs, rawStates, onImport }) {
   const fileInputRef = useRef(null)
@@ -46,20 +47,20 @@ export function ExportImport({ activeConfigs, rawStates, onImport }) {
 
   return (
     <div className="flex items-center gap-1">
-      <IconButton onClick={handleImportClick} title="Import session">
+      <Button variant="outline" size="sm" onClick={handleImportClick} title="Import session" aria-label="Import session" className="h-8 px-2.5">
         <Upload size={16} />
         <span className="hidden sm:inline">Import</span>
-      </IconButton>
+      </Button>
 
-      <IconButton onClick={handleExport} title="Export session">
+      <Button variant="outline" size="sm" onClick={handleExport} title="Export session" aria-label="Export session" className="h-8 px-2.5">
         <Download size={16} />
         <span className="hidden sm:inline">Export</span>
-      </IconButton>
+      </Button>
 
-      <IconButton onClick={() => window.print()} title="Print / Save as PDF">
+      <Button variant="outline" size="sm" onClick={() => window.print()} title="Print / Save as PDF" aria-label="Print / Save as PDF" className="h-8 px-2.5">
         <Printer size={16} />
         <span className="hidden sm:inline">PDF</span>
-      </IconButton>
+      </Button>
 
       <input
         ref={fileInputRef}
@@ -69,17 +70,5 @@ export function ExportImport({ activeConfigs, rawStates, onImport }) {
         onChange={handleFileChange}
       />
     </div>
-  )
-}
-
-function IconButton({ onClick, title, children }) {
-  return (
-    <button
-      onClick={onClick}
-      title={title}
-      className="flex items-center gap-1.5 rounded-md border px-2.5 py-1.5 text-sm font-medium hover:bg-muted transition-colors"
-    >
-      {children}
-    </button>
   )
 }

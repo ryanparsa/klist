@@ -5,6 +5,7 @@ import { cn } from '@/lib/utils'
 import { Markdown } from './Markdown'
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from '@/components/ui/collapsible'
 import { Separator } from '@/components/ui/separator'
+import { useChecklistContext } from '@/lib/ChecklistContext'
 
 const PRIORITY_STYLES = {
   required:  'bg-red-50 text-red-700 ring-red-200',
@@ -24,7 +25,10 @@ const STATE_ICON_STYLES = {
   na:        'text-muted-foreground/60',
 }
 
-export function ChecklistItem({ item, priority, state, onCycle }) {
+export function ChecklistItem({ item }) {
+  const { priorityMap, getState, cycleState: onCycle } = useChecklistContext()
+  const priority = priorityMap.get(item.id) ?? 'optional'
+  const state = getState(item.id)
   const [expanded, setExpanded] = useState(false)
 
   const Icon = STATE_ICONS[state]
@@ -45,7 +49,13 @@ export function ChecklistItem({ item, priority, state, onCycle }) {
         {/* Tri-state toggle */}
         <button
           onClick={() => onCycle(item.id)}
-          className={cn('shrink-0 transition-colors', iconStyle)}
+          onKeyDown={(e) => {
+            if (e.key === 'Enter' || e.key === ' ') {
+              e.preventDefault()
+              onCycle(item.id)
+            }
+          }}
+          className={cn('shrink-0 transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring rounded-sm', iconStyle)}
           aria-label={`State: ${state}. Click to cycle.`}
         >
           <Icon size={18} />
@@ -54,7 +64,7 @@ export function ChecklistItem({ item, priority, state, onCycle }) {
         {/* ID */}
         <Link
           to={`/${item.category}/${item.id}`}
-          className="shrink-0 font-mono text-xs text-muted-foreground w-16 hover:text-primary transition-colors"
+          className="shrink-0 font-mono text-xs text-muted-foreground w-16 hover:text-primary transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring rounded-sm"
           onClick={e => e.stopPropagation()}
         >
           {item.id}
@@ -62,7 +72,7 @@ export function ChecklistItem({ item, priority, state, onCycle }) {
 
         {/* Title — click to expand */}
         <CollapsibleTrigger asChild>
-          <button className="flex-1 text-left text-sm font-medium truncate hover:text-primary transition-colors">
+          <button className="flex-1 text-left text-sm font-medium truncate hover:text-primary transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring rounded-sm">
             {item.title}
           </button>
         </CollapsibleTrigger>
@@ -78,7 +88,7 @@ export function ChecklistItem({ item, priority, state, onCycle }) {
         {/* Expand chevron */}
         <CollapsibleTrigger asChild>
           <button
-            className="shrink-0 text-muted-foreground hover:text-foreground transition-colors"
+            className="shrink-0 text-muted-foreground hover:text-foreground transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring rounded-sm"
             aria-label={expanded ? 'Collapse' : 'Expand'}
           >
             {expanded ? <ChevronDown size={15} /> : <ChevronRight size={15} />}

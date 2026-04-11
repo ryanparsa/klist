@@ -3,6 +3,7 @@ import { Square, CheckSquare, MinusSquare, ExternalLink } from 'lucide-react'
 import { cn } from '@/lib/utils'
 import { Markdown } from '@/components/Markdown'
 import { Breadcrumb } from '@/components/Breadcrumb'
+import { useChecklistContext } from '@/lib/ChecklistContext'
 import { Separator } from '@/components/ui/separator'
 import { CATEGORIES } from '@/lib/categories'
 
@@ -24,7 +25,8 @@ const STATE_ICON_STYLES = {
   na:        'text-muted-foreground/60',
 }
 
-export function ItemPage({ data, priorityMap, getState, cycleState }) {
+export function ItemPage() {
+  const { data, priorityMap, getState, cycleState } = useChecklistContext()
   const { category, itemId } = useParams()
 
   const cat = CATEGORIES.find(c => c.id === category)
