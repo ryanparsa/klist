@@ -3,12 +3,23 @@ title: Use the Cluster Autoscaler for Highly Variable Workloads
 stage: active
 description: |
   Clusters experiencing highly variable workloads that occasionally outpace available node capacity require dynamic scaling. Without an automated scaling mechanism, Pods may fail to schedule when node capacity is exhausted, or the cluster may be over-provisioned during low-usage periods, wasting resources.
+
+  **What to check:**
+  ```bash
+  kubectl get pods -n kube-system | grep cluster-autoscaler
+  ```
+
+  ```mermaid
+  flowchart TD
+    A[Pending Pod] --> B{Cluster Autoscaler}
+    B -->|Capacity Needed| C[Provision Node]
+    C --> D[Pod Scheduled]
+  ```
 mitigations:
-  - |-
-    Deploy the Cluster Autoscaler (or Karpenter on AWS) to the cluster via Helm
-    or the provider-managed add-on. Configure minimum and maximum node counts per node group.
-    Ensure node groups are tagged correctly so the autoscaler can discover them. Set scale-down
-    thresholds and cooldown periods to prevent thrashing.
+  - "Deploy the Cluster Autoscaler (or Karpenter on AWS) to the cluster via Helm or the provider-managed add-on."
+  - "Configure minimum and maximum node counts per node group."
+  - "Ensure node groups are tagged correctly so the autoscaler can discover them."
+  - "Set scale-down thresholds and cooldown periods to prevent thrashing."
 tags:
   - application-development
   - scaling

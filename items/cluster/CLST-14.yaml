@@ -3,11 +3,21 @@ title: Run Multiple Replicas for Deployments
 stage: active
 description: |
   Running a standalone Pod individually creates a critical single point of failure. A hardware failure of the physical machine, a kernel panic, or a node drain will permanently delete the standalone workload and cause immediate application downtime.
+
+  **What to check:**
+  ```bash
+  kubectl get deployments -A -o jsonpath='{range .items[?(@.spec.replicas<2)]}{.metadata.namespace}{"\t"}{.metadata.name}{"\n"}{end}'
+  ```
+
+  ```mermaid
+  flowchart TD
+    A[Deployment] --> B[Replica 1]
+    A --> C[Replica 2]
+  ```
 mitigations:
-  - |-
-    Set `replicas: 2` (or higher) in all Deployment, StatefulSet, and ReplicaSet
-    manifests. Never run critical workloads as bare Pods. Use `kube-score` or Kyverno policies
-    to reject single-replica deployments in production namespaces.
+  - "Set `replicas: 2` (or higher) in all Deployment, StatefulSet, and ReplicaSet manifests."
+  - "Never run critical workloads as bare Pods."
+  - "Use `kube-score` or Kyverno policies to reject single-replica deployments in production namespaces."
 tags:
   - application-development
   - reliability

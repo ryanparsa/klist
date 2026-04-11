@@ -10,6 +10,12 @@ description: |
   ```bash
   kubectl get pods -A -o custom-columns="NAMESPACE:.metadata.namespace,NAME:.metadata.name,CPU_LIMIT:.spec.containers[*].resources.limits.cpu" | grep -v "<none>"
   ```
+
+  ```mermaid
+  flowchart TD
+    A[Pod with CPU Limit] --> B[CPU Throttling under load]
+    C[Pod without CPU Limit] --> D[Burst using unused node CPU]
+  ```
 mitigations:
   - |-
     Consider relying on CPU requests instead, and keep CPU limits removed unless you have a specific and well-justified use case.
@@ -32,7 +38,10 @@ tags:
   - application-development
   - resource-utilisation
   - performance
-tools: []
+tools:
+  - title: polaris
+    url: https://github.com/FairwindsOps/polaris
+
 references:
   - title: "Understanding Resource Limits in Kubernetes: CPU Time"
     url: https://medium.com/@betz.mark/understanding-resource-limits-in-kubernetes-cpu-time-9eff74d3161b

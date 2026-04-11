@@ -10,6 +10,12 @@ description: |
   ```bash
   kubectl get pods -A -o custom-columns="NAMESPACE:.metadata.namespace,NAME:.metadata.name,VOLUMES:.spec.volumes[*].name"
   ```
+
+  ```mermaid
+  flowchart TD
+    A[Container] --> B{readOnlyRootFilesystem?}
+    B -->|Yes| C[Ephemeral Volume (emptyDir)]
+  ```
 mitigations:
   - |-
     Do not store persistent state in local ephemeral filesystems. Use an external storage service or a PersistentVolume mounted in the Pod to ensure state persists reliably and independent of the container lifecycle.
@@ -39,7 +45,10 @@ tags:
   - application-development
   - storage
   - scaling
-tools: []
+tools:
+  - title: Trivy
+    url: https://trivy.dev/
+
 references:
   - title: Kubernetes Docs - Persistent Volumes
     url: https://kubernetes.io/docs/concepts/storage/persistent-volumes/

@@ -3,12 +3,22 @@ title: Set Pod Disruption Budgets
 stage: active
 description: |
   When a node is drained, all Pods on that node are deleted and rescheduled, which could affect availability under heavy load. Without a Pod Disruption Budget, Kubernetes may evict too many Pods simultaneously during voluntary disruptions, leading to application downtime.
+
+  **What to check:**
+  ```bash
+  kubectl get pdb -A
+  ```
+
+  ```mermaid
+  flowchart TD
+    A[Node Drain] --> B{PDB Allows Eviction?}
+    B -->|Yes| C[Evict Pod]
+    B -->|No| D[Wait]
+  ```
 mitigations:
-  - |-
-    Create a `PodDisruptionBudget` for each Deployment that must remain available
-    during maintenance. Use `minAvailable: 1` (or a percentage) to guarantee at least one
-    replica is running during voluntary disruptions such as node drains and cluster upgrades.
-    Enforce PDB existence with Kyverno or OPA Gatekeeper policies.
+  - "Create a `PodDisruptionBudget` for each Deployment that must remain available during maintenance."
+  - "Use `minAvailable: 1` (or a percentage) to guarantee at least one replica is running during voluntary disruptions such as node drains and cluster upgrades."
+  - "Enforce PDB existence with Kyverno or OPA Gatekeeper policies."
 tags:
   - application-development
   - fault-tolerance
@@ -18,6 +28,9 @@ tools:
     url: https://github.com/zegl/kube-score
   - title: Kyverno
     url: https://kyverno.io/
+  - title: polaris
+    url: https://github.com/FairwindsOps/polaris
+
 references:
   - title: Kubernetes Docs - Disruptions
     url: https://kubernetes.io/docs/concepts/workloads/pods/disruptions/

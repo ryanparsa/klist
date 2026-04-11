@@ -16,6 +16,11 @@ description: |
   ```bash
   kubectl get pods -A -o custom-columns="NAMESPACE:.metadata.namespace,NAME:.metadata.name,SECRET_ENV:.spec.containers[*].env[*].valueFrom.secretKeyRef.name" | grep -v "<none>"
   ```
+
+  **What to check:**
+  ```bash
+  kubectl get pods -o yaml | grep envFrom
+  ```
 mitigations:
   - |-
     Avoid storing sensitive configurations as environment variables. Always mount Secret objects securely as temporary tmpfs volumes.
@@ -39,7 +44,10 @@ tags:
   - application-development
   - secrets
   - security
-tools: []
+tools:
+  - title: Checkov
+    url: https://www.checkov.io/
+
 references:
   - title: Kubernetes Docs - Secrets
     url: https://kubernetes.io/docs/concepts/configuration/secret/

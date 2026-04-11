@@ -10,6 +10,17 @@ description: |
   - Rotation on a defined schedule
   - Revocation to immediately block all access to encrypted data
   - Audit visibility via KMS access logs
+
+  **What to check:**
+  ```bash
+  aws eks describe-cluster --name <cluster-name> --query 'cluster.encryptionConfig'
+  ```
+
+  ```mermaid
+  flowchart TD
+    A[K8s Secret] --> B[API Server Envelope Encryption]
+    B --> C[Customer Managed KMS Key]
+  ```
 mitigations:
   - |-
     Create a dedicated KMS key for the cluster with a rotation schedule of 1 year

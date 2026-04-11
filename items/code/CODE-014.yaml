@@ -3,12 +3,22 @@ title: Allow Deploying Containers Only from Known Registries
 stage: active
 description: |
   Without registry restrictions, Kubernetes can deploy arbitrary, untrusted images from any public registry. This introduces significant risk of deploying malware, unvetted binaries, or compromised images directly into the cluster workloads.
+
+  **What to check:**
+  ```bash
+  kubectl get pods -o jsonpath='{range .items[*]}{.spec.containers[*].image}{"\n"}{end}'
+  ```
+
+  ```mermaid
+  flowchart TD
+    A[Pod Creation] --> B{Image Registry Allowed?}
+    B -->|Yes| C[Admit Pod]
+    B -->|No| D[Deny Pod via OPA/Kyverno]
+  ```
 mitigations:
-  - |-
-    Deploy a Kyverno `ClusterPolicy` or OPA Gatekeeper constraint that validates
-    the image registry prefix against an allowlist for every Pod. Reject pods referencing
-    public or unapproved registries at admission time. Maintain the allowlist as code and
-    review it in pull requests.
+  - "Deploy a Kyverno `ClusterPolicy` or OPA Gatekeeper constraint that validates the image registry prefix against an allowlist for every Pod."
+  - "Reject pods referencing public or unapproved registries at admission time."
+  - "Maintain the allowlist as code and review it in pull requests."
 tags:
   - governance
   - admission-control

@@ -9,6 +9,17 @@ description: |
   Without control plane logs, there is no record of API requests, authentication decisions,
   scheduling events, or controller actions that occurred before an incident was detected.
 
+
+  **What to check:**
+  ```bash
+  aws eks describe-cluster --name <cluster-name> --query 'cluster.logging.clusterLogging'
+  ```
+
+  ```mermaid
+  flowchart TD
+    A[API Server] -->|Audit Logs| B[CloudWatch/Stackdriver]
+    C[Scheduler] -->|Scheduler Logs| B
+  ```
 mitigations:
   - Enable all available control plane log types for the managed cluster. Route logs to a
     centralised, tamper-resistant store and set a retention period of at least 90 days active

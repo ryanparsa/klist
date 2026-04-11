@@ -3,12 +3,22 @@ title: Create Granular, Non-Shared RBAC Roles
 stage: active
 description: |
   Sharing generic, broad RBAC policies across diverse workloads violates the principle of least privilege. Custom, fine-grained roles based on distinct job functions or requirements contain potential breaches by ensuring a compromised service account cannot affect unrelated namespaces or resource types.
+
+  **What to check:**
+  ```bash
+  kubectl get roles -A
+  ```
+
+  ```mermaid
+  flowchart TD
+    A[App A SA] -->|RoleBinding A| B[Role A]
+    C[App B SA] -->|RoleBinding B| D[Role B]
+  ```
 mitigations:
-  - |-
-    Define a Role catalog per team or function (e.g., `viewer`, `developer`,
-    `operator`, `ci-deployer`). Create namespace-scoped Roles rather than ClusterRoles where
-    possible. Bind Roles to specific service accounts or OIDC groups, not individuals.
-    Audit role usage quarterly with RBAC Lookup or Krane to remove unused bindings.
+  - "Define a Role catalog per team or function (e.g., `viewer`, `developer`, `operator`, `ci-deployer`)."
+  - "Create namespace-scoped Roles rather than ClusterRoles where possible."
+  - "Bind Roles to specific service accounts or OIDC groups, not individuals."
+  - "Audit role usage quarterly with RBAC Lookup or Krane to remove unused bindings."
 tags:
   - governance
   - rbac

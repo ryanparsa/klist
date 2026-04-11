@@ -3,14 +3,22 @@ title: Collect Comprehensive Cluster Logs
 stage: active
 description: |
   Without comprehensive cluster logging across all functional levels (Nodes, Control Plane, and API auditing), tracing the root cause of an incident or detecting a breach is effectively impossible. Complete visibility requires that logs capture essential metadata like application name, namespace, Pod, container, and node.
+
+  **What to check:**
+  ```bash
+  kubectl get ds -n kube-system | grep fluent
+  ```
+
+  ```mermaid
+  flowchart TD
+    A[Node/Container Logs] --> B[DaemonSet Logger]
+    B --> C[SIEM / Log Aggregator]
+  ```
 mitigations:
-  - |-
-    Deploy a DaemonSet-based log collector (Fluentd, Fluent Bit) on all nodes
-    to capture kubelet and container runtime logs. Enable Kubernetes API server audit logging
-    with a policy that captures at least `Metadata` for all requests and `RequestResponse`
-    for secrets, configmaps, and serviceaccounts. For managed clusters, enable control plane
-    log exports (EKS CloudWatch, GKE Cloud Logging, AKS Log Analytics). Ensure every log
-    entry includes namespace, pod name, container name, and node name.
+  - "Deploy a DaemonSet-based log collector (Fluentd, Fluent Bit) on all nodes to capture kubelet and container runtime logs."
+  - "Enable Kubernetes API server audit logging with a policy that captures at least `Metadata` for all requests and `RequestResponse` for secrets, configmaps, and serviceaccounts."
+  - "For managed clusters, enable control plane log exports (EKS CloudWatch, GKE Cloud Logging, AKS Log Analytics)."
+  - "Ensure every log entry includes namespace, pod name, container name, and node name."
 tags:
   - configuration
   - logging

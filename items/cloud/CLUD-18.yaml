@@ -9,6 +9,17 @@ description: |
 
   The safest configuration is to enable private-only endpoint access, so the API server
   is only reachable from within the cluster's VPC or via a VPN/private link connection.
+
+  **What to check:**
+  ```bash
+  aws eks describe-cluster --name <cluster-name> --query 'cluster.resourcesVpcConfig.endpointPublicAccess'
+  ```
+
+  ```mermaid
+  flowchart TD
+    A[Internet] --x B[Public Endpoint]
+    C[VPN/VPC] --> D[Private Endpoint]
+  ```
 mitigations:
   - |-
     Disable the public API server endpoint and enable private endpoint access.
