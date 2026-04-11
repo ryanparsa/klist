@@ -45,7 +45,7 @@ Items live in `items/{category}/` as individual YAML files. The category determi
 id: CLUD-11 # Must match the filename exactly (e.g., CLUD-11.yaml)
 title: "Short, action-oriented label" # Clear, concise title
 stage: active # Required: 'draft', 'active', or 'deprecated'
-description: | # Explain the control, why it matters, and remediation. Include what to check and what the fix looks like.
+description: | # Explain the control, why it matters, and remediation. Include a '**What to check:**' section with CLI commands, and a Mermaid.js diagram for architectural/multi-stage issues.
   Explain what the control is, why it matters, and how to remediate it.
   Include what to check and what the fix looks like.
 mitigations: # Optional: Array of strings for remediation steps
@@ -122,13 +122,13 @@ node builder/build.js
 On success:
 
 ```
-✔ 105 items loaded
-    cloud        21
-    cluster      47
-    container    24
+✔ 104 items loaded
+    cloud        22
+    cluster      46
+    container    23
     code         13
 ✔ 13 configs loaded
-✔ 114 unique tags extracted
+✔ 110 unique tags extracted
 ✔ public/checklist.json written
 ```
 
