@@ -33,3 +33,5 @@ references:
     url: https://www.aicpa.org/resources/article/soc-2-trust-service-principles
   - title: Kubernetes Release Cycle
     url: https://kubernetes.io/releases/
+  - title: "OWASP Kubernetes Top 10 - K07: Misconfigured And Vulnerable Cluster Components"
+    url: https://owasp.org/www-project-kubernetes-top-ten/2025/en/src/K07-Misconfigured-And-Vulnerable-Cluster-Components.md
