@@ -26,6 +26,7 @@ items:
     - CODE-3
     # K04: Lack Of Cluster Level Policy Enforcement
     - CLST-5
+    - CLST-57
     - CLUD-16
     - CODE-22
     # K05: Missing Network Segmentation Controls
