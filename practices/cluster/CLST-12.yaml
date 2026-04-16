@@ -2,9 +2,9 @@ id: CLST-12
 title: Apply Default-Deny NetworkPolicies in All Namespaces
 stage: active
 description: |
-  Without NetworkPolicies, every pod in a cluster can reach any other pod on any port.
+  By default, Kubernetes does not restrict traffic between pods or from pods to services in the control plane. Without NetworkPolicies, every pod in a cluster can reach any other pod on any port.
   A single compromised workload can freely probe databases, internal services, and the
-  metadata API. A default-deny policy in every namespace closes this attack path.
+  Kubernetes control plane or node-level administrative services. Additionally, lack of outbound (egress) restrictions allows attackers to exfiltrate data from the cluster or access sensitive external services. A default-deny policy in every namespace closes these attack paths.
 
   **What to check:**
 
@@ -49,3 +49,5 @@ references:
     url: https://microsoft.github.io/Threat-Matrix-for-Kubernetes/techniques/Collecting%20Data%20from%20Pod/
   - title: Microsoft Threat Matrix - Connect from Proxy Server
     url: https://microsoft.github.io/Threat-Matrix-for-Kubernetes/techniques/Connect%20from%20Proxy%20server/
+  - title: "OWASP Kubernetes Top 10 - K05: Missing Network Segmentation Controls"
+    url: https://owasp.org/www-project-kubernetes-top-ten/2025/en/src/K05-Missing-Network-Segmentation-Controls.md

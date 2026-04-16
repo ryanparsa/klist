@@ -13,6 +13,7 @@ items:
     - CONT-5
     - CONT-6
     - CONT-7
+    - CONT-26
     # K02: Overly Permissive Authorization Configurations
     - CLST-2
     - CLST-9
@@ -29,9 +30,9 @@ items:
     - CLUD-16
     - CODE-22
     # K05: Missing Network Segmentation Controls
-    - CLST-12
     - CLUD-1
     - CLUD-2
+    - CLST-12
     # K06: Overly Exposed Kubernetes Components
     - CLST-1
     - CLST-3
@@ -76,8 +77,10 @@ items:
     - CODE-14
     - CODE-17
     # K05
+    - CLUD-4
     - CLST-34
     - CLST-40
+    - CONT-26
     # K06
     - CLST-41
     - CLST-43

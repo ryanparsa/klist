@@ -51,3 +51,7 @@ references:
     url: https://github.com/open-policy-agent/gatekeeper-library/tree/master/library/pod-security-policy/host-network-ports
   - title: Kubernetes Docs - Pod Security Standards (Baseline)
     url: https://kubernetes.io/docs/concepts/security/pod-security-standards/#baseline
+  - title: "OWASP Kubernetes Top 10 - K01: Insecure Workload Configurations"
+    url: https://owasp.org/www-project-kubernetes-top-ten/2025/en/src/K01-Insecure-Workload-Configurations.md
+  - title: "OWASP Kubernetes Top 10 - K05: Missing Network Segmentation Controls"
+    url: https://owasp.org/www-project-kubernetes-top-ten/2025/en/src/K05-Missing-Network-Segmentation-Controls.md
