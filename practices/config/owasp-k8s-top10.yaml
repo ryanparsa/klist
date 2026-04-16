@@ -33,22 +33,18 @@ items:
     - CLUD-1
     - CLUD-2
     # K06: Overly Exposed Kubernetes Components
-    - CLST-1
     - CLST-3
-    - CLST-8
     - CLST-47
     - CLST-51
     - CLUD-18
-    # K07: Vulnerable and Outdated Components
-    - CLUD-5
-    - CODE-1
-    - CODE-2
     # K08: Cluster To Cloud Lateral Movement
     - CLUD-4
     - CLUD-10
     - CLUD-13
     # K09: Broken Authentication Mechanisms
+    - CLST-1
     - CLST-4
+    - CLST-8
     - CLST-26
     - CLUD-19
     # K10: Inadequate Logging And Monitoring
@@ -83,10 +79,9 @@ items:
     - CLST-34
     - CLST-40
     # K06
+    - CLST-24
     - CLST-41
     - CLST-43
-    # K07
-    - CLST-24
     - CLST-48
     # K09
     - CODE-7
