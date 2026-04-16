@@ -5,6 +5,7 @@ description: "Controls mapped to the OWASP Kubernetes Top 10 2025 risks (K01–K
 items:
   required:
     # K01: Insecure Workload Configurations
+    - CLST-10
     - CLST-31
     - CLST-58
     - CONT-2
@@ -13,10 +14,11 @@ items:
     - CONT-5
     - CONT-6
     - CONT-7
+    - CONT-8
+    - CONT-26
     # K02: Overly Permissive Authorization Configurations
     - CLST-2
     - CLST-9
-    - CLST-10
     - CLST-32
     - CLST-42
     - CLUD-3
@@ -27,7 +29,7 @@ items:
     # K04: Lack Of Cluster Level Policy Enforcement
     - CLUD-16
     - CLST-5
-    - CLST-59
+    - CLST-60
     - CODE-22
     # K05: Missing Network Segmentation Controls
     - CLST-12
@@ -47,6 +49,7 @@ items:
     # K09: Broken Authentication Mechanisms
     - CLST-4
     - CLST-26
+    - CLST-59
     - CLUD-19
     # K10: Inadequate Logging And Monitoring
     - CLST-11
@@ -55,7 +58,6 @@ items:
   suggested:
     # K01
     - CONT-22
-    # K01
     - CONT-29
     # K02
     - CONT-32

@@ -1,49 +1,42 @@
 id: CLST-59
-title: "Implement Policy-as-Code for Centralized Cluster Governance"
+title: Avoid Client Certificates for Human Authentication
 stage: active
 description: |
-  As Kubernetes environments scale across multiple clusters and cloud providers, manual enforcement of security and operational policies becomes unmanageable. Without centralized, automated governance, clusters are prone to configuration drift and security gaps that can be exploited by attackers.
+  Kubernetes supports X.509 client certificates for authentication, but they lack critical security features required for modern identity management. Most importantly, the Kubernetes API server has no mechanism for certificate revocation (such as CRL or OCSP). Once a certificate is issued, it remains valid until it expires, even if the private key is compromised or the user leaves the organization.
 
-  Policy-as-Code (PaC) allows teams to define, manage, and enforce policies using version-controlled code. This approach leverages admission controllers to intercept API requests and validate them against defined policies before they are persisted in the cluster.
-
-  **Why it matters:**
-  - **Consistency:** Ensures the same security standards are applied across all namespaces and clusters.
-  - **Prevention:** Blocks misconfigured or non-compliant resources (e.g., privileged containers, untrusted registries) before they ever run.
-  - **Auditability:** Provides a clear audit trail of policy changes and violations.
+  Additionally, client certificates do not support Multi-Factor Authentication (MFA), making them a high-risk credential if leaked or stolen.
 
   **What to check:**
-  - Verify if a validating admission webhook is registered and active in the cluster:
-    `kubectl get validatingwebhookconfigurations`
-  - Check for the presence of custom resource definitions (CRDs) related to common policy engines.
-  - Ensure that policies are stored in a central Git repository and deployed via CI/CD or GitOps.
+  Audit your `kubeconfig` files and API server configuration to ensure that human users are not being issued long-lived client certificates.
 
-  ```mermaid
-  flowchart TD
-    A[API Request] --> B{Admission Controller}
-    B --> C{Policy Engine}
-    C -->|Compliant| D[Allow & Persist]
-    C -->|Non-Compliant| E[Reject & Notify]
+  ```bash
+  # Check if the API server is configured with a CA for client certs
+  ps aux | grep kube-apiserver | grep client-ca-file
   ```
+
+  Check `kubeconfig` files for `client-certificate-data` or `client-key-data`:
+  ```bash
+  kubectl config view --raw
+  ```
+
 mitigations:
-  - "Deploy a Policy-as-Code engine to manage complex governance requirements beyond built-in admission controllers."
-  - "Centralize policy definitions in a version-controlled repository to ensure transparency and consistency."
-  - "Configure admission controllers to operate in 'Enforce' mode for critical security policies and 'Audit' mode for monitoring."
-  - "Implement automated testing for policies to prevent breaking legitimate workloads during updates."
+  - "Use OpenID Connect (OIDC) or Cloud-native IAM (e.g., EKS Access Entries, GKE RBAC) for human user authentication."
+  - "Enforce Multi-Factor Authentication (MFA) at the identity provider level."
+  - "Reserve client certificates exclusively for 'break glass' emergency access or for core system components with short-lived, automated rotation."
+  - "If certificates must be used, keep their expiration duration as short as possible."
 tags:
+  - authentication
   - security
-  - governance
-  - admission-control
+  - configuration
 tools:
-  - title: "Kyverno"
-    url: "https://kyverno.io/"
-  - title: "OPA Gatekeeper"
-    url: "https://open-policy-agent.github.io/gatekeeper/"
-  - title: "Kubewarden"
-    url: "https://www.kubewarden.io/"
+  - title: Dex
+    url: https://dexidp.io/
+  - title: kubelogin
+    url: https://github.com/int128/kubelogin
 references:
-  - title: "OWASP Kubernetes Top 10 - K04: Policy Enforcement"
-    url: "https://owasp.org/www-project-kubernetes-top-ten/2022/en/src/K04-policy-enforcement"
-  - title: "Kubernetes Docs - Admission Controllers"
-    url: "https://kubernetes.io/docs/reference/access-authn-authz/admission-controllers/"
-  - title: "CNCF Cloud Native Policy Management Whitepaper"
-    url: "https://www.cncf.io/blog/2022/05/19/cncf-cloud-native-policy-management-whitepaper-now-available/"
+  - title: "OWASP Kubernetes Top 10 - K09: Broken Authentication Mechanisms"
+    url: https://owasp.org/www-project-kubernetes-top-ten/2025/en/src/K09-broken-authentication-mechanisms
+  - title: Kubernetes Docs - Certificate Revocation
+    url: https://kubernetes.io/docs/setup/best-practices/certificates/#certificate-revocation-list-crl-not-supported
+  - title: Tremolo Security - What the NSA and CISA left out
+    url: https://www.tremolosecurity.com/post/what-the-nsa-and-cisa-left-out-of-their-kubernetes-hardening-guide
