@@ -28,6 +28,8 @@ tags:
   - dos-prevention
 tools: []
 references:
+  - title: "OWASP Kubernetes Top 10 - K01: Insecure Workload Configurations"
+    url: https://owasp.org/www-project-kubernetes-top-ten/
   - title: SOC 2 Availability Principle
     url: https://www.aicpa.org/resources/article/soc-2-trust-service-principles
   - title: Kubernetes Docs - Resource Management

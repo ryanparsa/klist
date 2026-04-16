@@ -26,6 +26,8 @@ tags:
   - hardening
 tools: []
 references:
+  - title: "OWASP Kubernetes Top 10 - K01: Insecure Workload Configurations"
+    url: https://owasp.org/www-project-kubernetes-top-ten/
   - title: PCI-DSS Requirement 5 - Protect All Systems Against Malware
     url: https://www.pcisecuritystandards.org/document_library/
   - title: SOC 2 CC6.8 - Change Management
