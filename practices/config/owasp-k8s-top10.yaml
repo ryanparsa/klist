@@ -46,6 +46,7 @@ items:
     # K09: Broken Authentication Mechanisms
     - CLST-4
     - CLST-26
+    - CLST-59
     - CLUD-19
     # K10: Inadequate Logging And Monitoring
     - CLST-11
