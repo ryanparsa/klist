@@ -47,3 +47,5 @@ references:
     url: https://media.defense.gov/2022/Aug/29/2003066362/-1/-1/0/CTR_KUBERNETES_HARDENING_GUIDANCE_1.2_20220829.PDF
   - title: Microsoft Threat Matrix - Access Kubelet API
     url: https://microsoft.github.io/Threat-Matrix-for-Kubernetes/techniques/Access%20Kubelet%20API/
+  - title: "OWASP Kubernetes Top 10 - K06: Overly Exposed Kubernetes Components"
+    url: https://owasp.org/www-project-kubernetes-top-ten/2025/en/src/K06-Overly-Exposed-Kubernetes-Components.md

@@ -2,9 +2,11 @@ id: CLST-1
 title: Disable Anonymous Authentication on the API Server
 stage: active
 description: |
-  By default, Kubernetes may allow unauthenticated requests to reach the API server. Setting
-  `--anonymous-auth=false` ensures every request must carry valid credentials, eliminating
-  a class of unauthenticated access attacks.
+  By default, Kubernetes may allow unauthenticated requests to reach the API server.
+  This presents an information leakage risk as unauthenticated users can access the
+  `/version` endpoint to retrieve exact cluster version details. Setting
+  `--anonymous-auth=false` ensures every request must carry valid credentials,
+  eliminating a class of unauthenticated access attacks and discovery probes.
 
   **What to check:** On the control-plane node, inspect the kube-apiserver static pod manifest
   or process arguments:
@@ -40,3 +42,5 @@ references:
     url: https://microsoft.github.io/Threat-Matrix-for-Kubernetes/techniques/Access%20the%20K8S%20API%20server/
   - title: Microsoft Threat Matrix - Connect from Proxy Server
     url: https://microsoft.github.io/Threat-Matrix-for-Kubernetes/techniques/Connect%20from%20Proxy%20server/
+  - title: "OWASP Kubernetes Top 10 - K06: Overly Exposed Kubernetes Components"
+    url: https://owasp.org/www-project-kubernetes-top-ten/2025/en/src/K06-Overly-Exposed-Kubernetes-Components.md

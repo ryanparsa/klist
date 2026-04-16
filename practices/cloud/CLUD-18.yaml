@@ -3,9 +3,13 @@ title: Disable Public API Server Endpoint on Managed Clusters
 stage: active
 description: |
   Managed Kubernetes clusters (EKS, GKE, AKS) create a public API server endpoint by
-  default, accessible from any IP on the internet. This exposes the cluster to brute-force
-  attacks, credential stuffing, and exploitation of API server vulnerabilities without
-  requiring network-level access.
+  default, accessible from any IP on the internet. This exposure significantly increases
+  the risk of cluster compromise if an attacker acquires valid credentials (e.g., via
+  leaked kubeconfig files on GitHub or compromised developer laptops).
+
+  Public endpoints also present an information leakage risk; TLS certificates used by
+  the services often contain Subject Alternative Name (SAN) fields that reveal internal
+  network addresses and cluster metadata to any internet-resident scanner.
 
   The safest configuration is to enable private-only endpoint access, so the API server
   is only reachable from within the cluster's VPC or via a VPN/private link connection.
@@ -62,3 +66,7 @@ references:
     url: https://microsoft.github.io/Threat-Matrix-for-Kubernetes/techniques/Access%20the%20K8S%20API%20server/
   - title: Microsoft Threat Matrix - Restrict access to the API server using IP firewall
     url: https://microsoft.github.io/Threat-Matrix-for-Kubernetes/mitigations/MS-M9002%20Restrict%20access%20to%20the%20API%20server%20using%20IP%20firewall/
+  - title: Kubernetes Census (Information Leakage via Public APIs)
+    url: https://raesene.github.io/blog/2024/02/17/a-final-kubernetes-censys/
+  - title: "OWASP Kubernetes Top 10 - K06: Overly Exposed Kubernetes Components"
+    url: https://owasp.org/www-project-kubernetes-top-ten/2025/en/src/K06-Overly-Exposed-Kubernetes-Components.md

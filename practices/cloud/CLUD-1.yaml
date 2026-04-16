@@ -32,3 +32,5 @@ references:
     url: https://docs.aws.amazon.com/eks/latest/best-practices/network-security.html
   - title: Microsoft Threat Matrix - Using Cloud Credentials
     url: https://microsoft.github.io/Threat-Matrix-for-Kubernetes/techniques/Using%20Cloud%20Credentials/
+  - title: "OWASP Kubernetes Top 10 - K06: Overly Exposed Kubernetes Components"
+    url: https://owasp.org/www-project-kubernetes-top-ten/2025/en/src/K06-Overly-Exposed-Kubernetes-Components.md

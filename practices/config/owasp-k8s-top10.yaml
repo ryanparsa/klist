@@ -14,61 +14,61 @@ items:
     - CONT-6
     - CONT-7
     # K02: Overly Permissive Authorization Configurations
+    - CLUD-3
     - CLST-2
     - CLST-9
     - CLST-10
     - CLST-32
     - CLST-42
-    - CLUD-3
     # K03: Secrets Management Failures
     - CLST-6
     - CONT-20
     - CODE-3
     # K04: Lack Of Cluster Level Policy Enforcement
-    - CLST-5
     - CLUD-16
+    - CLST-5
     - CODE-22
     # K05: Missing Network Segmentation Controls
-    - CLST-12
     - CLUD-1
     - CLUD-2
+    - CLST-12
     # K06: Overly Exposed Kubernetes Components
+    - CLUD-1
+    - CLUD-18
     - CLST-1
     - CLST-3
     - CLST-8
     - CLST-47
     - CLST-51
-    - CLUD-18
     # K08: Cluster To Cloud Lateral Movement
     - CLUD-4
     - CLUD-10
     - CLUD-13
     # K09: Broken Authentication Mechanisms
+    - CLUD-19
     - CLST-4
     - CLST-26
-    - CLUD-19
     # K10: Inadequate Logging And Monitoring
-    - CLST-11
     - CLUD-9
     - CLUD-17
+    - CLST-11
   suggested:
     # K01
     - CONT-22
-    # K01
     - CONT-29
     # K02
-    - CONT-32
-    - CLST-33
+    - CLUD-14
     - CLST-27
+    - CLST-33
     - CLST-35
     - CLST-36
     - CLST-53
-    - CLUD-14
+    - CONT-32
     # K03
-    - CLST-44
-    - CLST-54
     - CLUD-15
     - CLUD-20
+    - CLST-44
+    - CLST-54
     # K04
     - CLST-30
     - CODE-4
@@ -84,8 +84,8 @@ items:
     # K09
     - CODE-7
     # K10
+    - CLUD-12
     - CLST-29
     - CLST-38
-    - CLUD-12
     - CONT-9
     - CODE-12
