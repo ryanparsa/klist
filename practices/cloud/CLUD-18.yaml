@@ -52,6 +52,8 @@ tools:
   - title: tfsec
     url: https://github.com/aquasecurity/tfsec
 references:
+  - title: "OWASP Kubernetes Top 10 (2022) - K09: Misconfigured Cluster Components"
+    url: https://owasp.org/www-project-kubernetes-top-ten/2022/en/src/K09-misconfigured-cluster-components
   - title: AWS EKS - Cluster Endpoint Access Control
     url: https://docs.aws.amazon.com/eks/latest/userguide/cluster-endpoint.html
   - title: GKE - Private Cluster

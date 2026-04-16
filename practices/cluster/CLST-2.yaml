@@ -3,8 +3,8 @@ title: Set Authorization Mode to RBAC and Node
 stage: active
 description: |
   The API server's `--authorization-mode` flag must be set to `RBAC,Node`. The `AlwaysAllow`
-  mode grants every request full access regardless of identity, which is never acceptable
-  in any environment.
+  mode grants every request full access regardless of identity, which is a critical
+  misconfiguration of core cluster components and is never acceptable in any environment.
 
   **What to check:**
 
@@ -29,6 +29,8 @@ tools:
   - title: RBAC Lookup
     url: https://github.com/FairwindsOps/rbac-lookup
 references:
+  - title: "OWASP Kubernetes Top 10 (2022) - K09: Misconfigured Cluster Components"
+    url: https://owasp.org/www-project-kubernetes-top-ten/2022/en/src/K09-misconfigured-cluster-components
   - title: CIS Kubernetes Benchmark 1.2.7
     url: https://workbench.cisecurity.org/benchmarks/16828
   - title: PCI-DSS Requirement 7 - Restrict Access to System Components

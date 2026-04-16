@@ -3,8 +3,9 @@ title: Restrict Network Access to API Server and Kubelet
 stage: active
 description: |
   Limit network access to sensitive control-plane ports - API Server (6443) and Kubelet (10250)
-  - to authorised sources only, such as internal VPN ranges or bastion hosts. Exposing these
-  ports to the public internet is a critical risk.
+  - to authorised sources only, such as internal VPN ranges or bastion hosts. Exposing
+  these core cluster component ports to the public internet is a critical risk that
+  invites automated attacks and exploitation.
 
   **What to check:** Run a port scan or review security group / firewall rules. Neither port
   should be reachable from 0.0.0.0/0.
@@ -25,6 +26,8 @@ tools:
   - title: Trivy
     url: https://trivy.dev/
 references:
+  - title: "OWASP Kubernetes Top 10 (2022) - K09: Misconfigured Cluster Components"
+    url: https://owasp.org/www-project-kubernetes-top-ten/2022/en/src/K09-misconfigured-cluster-components
   - title: NSA/CISA Kubernetes Hardening Guide
     url: https://media.defense.gov/2022/Aug/29/2003066362/-1/-1/0/CTR_KUBERNETES_HARDENING_GUIDANCE_1.2_20220829.PDF
   - title: HIPAA Transmission Security

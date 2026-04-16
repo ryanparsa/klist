@@ -35,9 +35,7 @@ items:
     - CLUD-1
     - CLUD-2
     # K06: Overly Exposed Kubernetes Components
-    - CLST-1
     - CLST-3
-    - CLST-8
     - CLST-47
     - CLST-51
     - CLUD-18
@@ -52,7 +50,9 @@ items:
     - CLUD-10
     - CLUD-13
     # K09: Broken Authentication Mechanisms
+    - CLST-1
     - CLST-4
+    - CLST-8
     - CLST-26
     - CLST-59
     - CLUD-19
@@ -88,8 +88,10 @@ items:
     - CLST-34
     - CLST-40
     # K06
+    - CLST-24
     - CLST-41
     - CLST-43
+    - CLST-48
     # K07
     - CLUD-6
     - CODE-1
