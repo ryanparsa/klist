@@ -1,13 +1,13 @@
 id: CODE-3
-title: Scan Repositories for Hardcoded Secrets
+title: Scan Repositories and Images for Hardcoded Secrets
 stage: active
 description: |
   Developers occasionally commit API keys, database passwords, and private keys directly
-  into source code. Once in git history, these credentials are extremely difficult to fully
-  remove and may already have been exfiltrated. Secret scanning tools detect these commits
-  before or immediately after they land.
+  into source code, configuration files, or container images. Once in git history or image
+  layers, these credentials are extremely difficult to fully remove and may already have
+  been exfiltrated. Secret scanning tools detect these commits before or immediately after they land.
 
-  **What to check:** Verify a secret scanning tool is active on all repositories:
+  **What to check:** Verify a secret scanning tool is active on all repositories and build pipelines:
   - GitHub: GitHub Advanced Security / Secret Scanning alerts enabled
   - GitLab: Secret Detection CI job enabled
   - Self-hosted: GitGuardian, TruffleHog, or gitleaks wired into CI
@@ -18,6 +18,7 @@ mitigations:
     Enable native secret scanning in the SCM. Add a pre-commit hook with
     `gitleaks` or `detect-secrets`. Rotate any detected credentials immediately. Invalidate
     old git history with `git-filter-repo` if necessary.
+  - "Scan container images for embedded secrets during the build process using vulnerability scanners with secret detection enabled."
 tags:
   - secrets
   - ci-cd
@@ -27,6 +28,8 @@ tools:
   - title: GitLeaks
     url: https://github.com/gitleaks/gitleaks
 references:
+  - title: "OWASP Kubernetes Top 10 - K03: Secrets Management Failures"
+    url: https://owasp.org/www-project-kubernetes-top-ten/2025/en/src/K03-Secrets-Management-Failures.md
   - title: SOC 2 CC6.1 - Logical Access Controls
     url: https://www.aicpa.org/resources/article/soc-2-trust-service-principles
   - title: ISO 27001 A.9 - Access Control
