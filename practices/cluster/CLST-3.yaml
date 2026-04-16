@@ -4,7 +4,8 @@ stage: active
 description: |
   The `--secure-port` flag controls which port the API server listens on for HTTPS traffic.
   Setting it to `0` disables TLS entirely, causing all API traffic to be unencrypted. This
-  must never be set to `0` in any environment.
+  leads to insecure communication between core cluster components and must never be
+  set to `0` in any environment.
 
   **What to check:**
 
@@ -29,6 +30,8 @@ tools:
   - title: Trivy
     url: https://trivy.dev/
 references:
+  - title: "OWASP Kubernetes Top 10 (2022) - K09: Misconfigured Cluster Components"
+    url: https://owasp.org/www-project-kubernetes-top-ten/2022/en/src/K09-misconfigured-cluster-components
   - title: CIS Kubernetes Benchmark 1.2.16
     url: https://workbench.cisecurity.org/benchmarks/16828
   - title: Kubernetes Docs - API Server TLS

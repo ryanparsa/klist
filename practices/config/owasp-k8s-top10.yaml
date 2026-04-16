@@ -39,6 +39,10 @@ items:
     - CLST-47
     - CLST-51
     - CLUD-18
+    # K07: Vulnerable and Outdated Components
+    - CLUD-5
+    - CODE-1
+    - CODE-2
     # K08: Cluster To Cloud Lateral Movement
     - CLUD-4
     - CLUD-10
@@ -81,6 +85,9 @@ items:
     # K06
     - CLST-41
     - CLST-43
+    # K07
+    - CLST-24
+    - CLST-48
     # K09
     - CODE-7
     # K10

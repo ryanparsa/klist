@@ -31,6 +31,8 @@ tools:
   - title: Trivy
     url: https://trivy.dev/
 references:
+  - title: "OWASP Kubernetes Top 10 (2022) - K09: Misconfigured Cluster Components"
+    url: https://owasp.org/www-project-kubernetes-top-ten/2022/en/src/K09-misconfigured-cluster-components
   - title: CIS Kubernetes Benchmark
     url: https://www.cisecurity.org/benchmark/kubernetes/
   - title: kube-bench - CIS Kubernetes Benchmark Tool
