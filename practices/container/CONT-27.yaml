@@ -1,0 +1,78 @@
+id: CONT-27
+title: Configure Kubelet Container Log Rotation
+stage: active
+description: |
+  Kubernetes writes all container stdout/stderr to files under `/var/log/containers/`
+  on each node. Without log rotation limits, a single noisy or misbehaving container
+  can fill the node's disk, triggering DiskPressure, evicting other pods, and
+  potentially making the node unschedulable.
+
+  The kubelet manages log rotation via two settings:
+  - `containerLogMaxSize` - maximum size of a single log file before rotation (default: `10Mi`)
+  - `containerLogMaxFiles` - maximum number of rotated log files kept per container (default: `5`)
+
+  With defaults, a single container can consume up to 50Mi of log storage (10Mi × 5).
+  On a node running many containers, untuned defaults accumulate quickly.
+
+  **What to check:**
+  ```bash
+  # On a node, inspect the active kubelet config
+  kubectl get --raw /api/v1/nodes/<node-name>/proxy/configz | jq '.kubeletconfig | {containerLogMaxSize, containerLogMaxFiles}'
+
+  # Or check the kubelet config file directly on the node
+  cat /var/lib/kubelet/config.yaml | grep -E 'containerLog'
+
+  # Check current log disk usage per node
+  kubectl debug node/<node-name> -it --image=busybox -- du -sh /host/var/log/containers/
+  ```
+
+mitigations:
+  - |-
+    Set `containerLogMaxSize` and `containerLogMaxFiles` in the kubelet configuration
+    to enforce tighter rotation. Apply via the KubeletConfiguration object:
+    ```yaml
+    apiVersion: kubelet.config.k8s.io/v1beta1
+    kind: KubeletConfiguration
+    containerLogMaxSize: "20Mi"
+    containerLogMaxFiles: 3
+    ```
+    This caps each container at 60Mi of log storage. Adjust based on node disk capacity
+    and the number of pods per node.
+  - |-
+    On managed clusters, configure log rotation through the node group or node pool
+    settings. On EKS managed node groups, pass kubelet config via `--kubelet-extra-args`
+    in the launch template userdata:
+    ```bash
+    --container-log-max-size=20Mi --container-log-max-files=3
+    ```
+    On GKE, use the `--logging-config` flag or the NodePool's node config. On AKS, use
+    a custom kubelet configuration in the agent pool profile.
+  - |-
+    Set up node-level disk pressure alerting so that high log volume is detected before
+    it causes evictions:
+    ```
+    alert: NodeDiskPressure
+    expr: kube_node_status_condition{condition="DiskPressure",status="true"} == 1
+    ```
+    Use this as an early signal that log rotation limits need tightening.
+
+tags:
+  - logging
+  - node
+  - operations
+  - reliability
+  - disk-pressure
+
+tools:
+  - title: kube-bench
+    url: https://github.com/aquasecurity/kube-bench
+
+references:
+  - title: Kubernetes Docs - Logging Architecture
+    url: https://kubernetes.io/docs/concepts/cluster-administration/logging/
+  - title: Kubelet Config - containerLogMaxSize
+    url: https://kubernetes.io/docs/reference/config-api/kubelet-config.v1beta1/
+  - title: CIS Kubernetes Benchmark 4.1 - Worker Node Configuration
+    url: https://workbench.cisecurity.org/benchmarks/16828
+  - title: EKS - Custom Kubelet Configuration
+    url: https://docs.aws.amazon.com/eks/latest/userguide/customizing-the-kubelet.html

@@ -1,0 +1,66 @@
+id: pci-dss
+label: PCI-DSS v4.0
+type: compliance
+description: >-
+  Controls mapped to PCI-DSS v4.0 requirements for clusters that process, store,
+  or transmit cardholder data or are in scope of the Cardholder Data Environment
+  (CDE).
+items:
+  required:
+    - CLUD-1
+    - CLUD-2
+    - CLUD-6
+    - CLUD-7
+    - CLUD-8
+    - CLUD-9
+    - CLUD-12
+    - CLST-1
+    - CLST-2
+    - CLST-3
+    - CLST-5
+    - CLST-6
+    - CLST-8
+    - CLST-9
+    - CLST-10
+    - CLST-11
+    - CLST-12
+    - CLST-18
+    - CLST-29
+    - CLST-31
+    - CLST-32
+    - CLST-39
+    - CLST-46
+    - CLST-47
+    - CLST-48
+    - CLST-51
+    - CLST-53
+    - CLST-55
+    - CLST-58
+    - CONT-2
+    - CONT-3
+    - CONT-4
+    - CONT-5
+    - CONT-6
+    - CONT-7
+    - CONT-8
+    - CONT-9
+    - CONT-21
+    - CONT-22
+    - CODE-1
+    - CODE-2
+    - CODE-3
+    - CODE-4
+    - CODE-7
+    - CONT-32
+  suggested:
+    - CLUD-4
+    - CLUD-5
+    - CLST-30
+    - CLST-38
+    - CLST-54
+    - CONT-13
+    - CONT-29
+    - CODE-5
+    - CODE-6
+    - CODE-17
+    - CODE-18

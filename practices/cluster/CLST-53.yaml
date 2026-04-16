@@ -1,0 +1,45 @@
+id: CLST-53
+title: Restrict Access to the `nodes/proxy` Subresource
+stage: active
+description: |
+  The `nodes/proxy` RBAC subresource allows a principal to proxy arbitrary HTTP requests
+  directly to a kubelet API, bypassing the API server's admission control and audit logging.
+  An attacker with this permission can execute commands in any pod on the targeted node,
+  read logs, and enumerate running workloads - all without generating audit events.
+
+  **What to check:** Audit all ClusterRoles and Roles for this subresource:
+
+  ```
+  kubectl get clusterroles,roles -A -o json | \
+    jq '.items[] | select(
+      .rules[]? |
+      (.resources[]? == "nodes/proxy") or
+      (.resources[]? == "*")
+    ) | .metadata.name'
+  ```
+
+  Only the `system:node-proxier` and `system:masters` built-in roles should have this
+  permission. Any custom role with it is a privilege escalation risk.
+mitigations:
+  - |-
+    Remove `nodes/proxy` from all custom RBAC roles. If direct kubelet access is
+    genuinely required (e.g., by a monitoring agent), restrict the binding to the
+    specific ServiceAccount and namespace, and ensure audit logging covers the affected
+    principals. Periodically re-audit with `kubectl auth can-i get nodes/proxy --as=<sa>`.
+tags:
+  - rbac
+  - kubelet
+  - privilege-escalation
+  - audit
+tools:
+  - title: RBAC Lookup
+    url: https://github.com/FairwindsOps/rbac-lookup
+  - title: kubectl-who-can
+    url: https://github.com/aquasecurity/kubectl-who-can
+references:
+  - title: Kubernetes Docs - RBAC Subresources
+    url: https://kubernetes.io/docs/reference/access-authn-authz/rbac/#referring-to-subjects
+  - title: "OWASP Kubernetes Top 10 - K03: Overly Permissive RBAC"
+    url: https://owasp.org/www-project-kubernetes-top-ten/
+  - title: Microsoft Threat Matrix - Exec Into Container
+    url: https://microsoft.github.io/Threat-Matrix-for-Kubernetes/techniques/Exec%20into%20container/

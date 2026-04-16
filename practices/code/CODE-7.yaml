@@ -1,0 +1,42 @@
+id: CODE-7
+title: Use Private Container Registries with Authentication
+stage: active
+description: |
+  Pulling container images from public registries without authentication or storing images in
+  public repositories exposes workloads to image substitution attacks and leaks proprietary
+  code. All production images must be stored in private registries with access controls.
+
+  **What to check:**
+  - Are all image references pointing to a private registry (not `docker.io` public)?
+  - Are registry credentials stored as Kubernetes image pull secrets, not hardcoded?
+  - Is anonymous pull disabled on the registry?
+
+  ```
+  kubectl get pods -A -o json | jq '.items[].spec.containers[].image' | grep -v '<your-private-registry>'
+  ```
+mitigations:
+  - |-
+    Migrate images to a private registry (ECR, GCR, ACR, Harbor). Create
+    `imagePullSecrets` referencing registry credentials. Disable anonymous pull in registry
+    settings. Scan images on push.
+tags:
+  - supply-chain
+  - registry
+  - security
+  - authentication
+tools:
+  - title: Trivy
+    url: https://trivy.dev/
+  - title: Cosign
+    url: https://docs.sigstore.dev/
+references:
+  - title: SOC 2 CC6.1 - Logical Access Controls
+    url: https://www.aicpa.org/resources/article/soc-2-trust-service-principles
+  - title: HIPAA Technical Safeguards
+    url: https://www.hhs.gov/hipaa/for-professionals/security/laws-regulations/index.html
+  - title: Kubernetes Docs - Pull an Image from a Private Registry
+    url: https://kubernetes.io/docs/tasks/configure-pod-container/pull-image-private-registry/
+  - title: Microsoft Threat Matrix - Compromised Image in Registry
+    url: https://microsoft.github.io/Threat-Matrix-for-Kubernetes/techniques/Compromised%20Image%20In%20Registry/
+  - title: Microsoft Threat Matrix - Images from a Private Registry
+    url: https://microsoft.github.io/Threat-Matrix-for-Kubernetes/techniques/images%20from%20a%20private%20registry/

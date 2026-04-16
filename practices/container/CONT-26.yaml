@@ -1,0 +1,53 @@
+id: CONT-26
+title: Disallow Host Namespaces (hostPID, hostIPC, hostNetwork)
+stage: active
+description: |
+  Containers rely on Linux namespaces (PID, IPC, Network) for isolation from the host and other containers.
+  When a pod is configured to share the host's namespaces (`hostPID: true`, `hostIPC: true`, or `hostNetwork: true`),
+  it breaks this isolation. For instance, `hostPID` allows a container to view and manipulate all processes on the host,
+  while `hostNetwork` exposes the host's network interfaces, allowing the container to sniff traffic or bind to host ports.
+
+  ```mermaid
+  graph TD
+      A[Compromised Container] --> B{Shared Host Namespace?}
+      B -- hostPID: true --> C[Inspect / Kill Host Processes]
+      B -- hostIPC: true --> D[Access Host Shared Memory]
+      B -- hostNetwork: true --> E[Sniff Host Traffic / Bind to Host Ports]
+      C --> F[Container Escape / Node Compromise]
+      D --> F
+      E --> F
+  ```
+
+  **What to check:**
+  Find pods sharing any host namespaces:
+  ```bash
+  kubectl get pods -A -o json | \
+    jq '.items[] | select(.spec.hostPID == true or .spec.hostIPC == true or .spec.hostNetwork == true) | .metadata.name'
+  ```
+mitigations:
+  - |-
+    Set `hostPID: false`, `hostIPC: false`, and `hostNetwork: false` (or remove the fields as they default to false)
+    in all Pod specifications.
+  - |-
+    Enforce Pod Security Standards (PSS) using the `baseline` profile, which completely disallows sharing of
+    host namespaces.
+  - |-
+    Use an admission controller (OPA Gatekeeper `k8spsphostnamespace` / `k8spsphostnetworkingports` or Kyverno)
+    to reject pods attempting to use host namespaces.
+tags:
+  - container-escape
+  - isolation
+  - pod-security
+  - host-namespaces
+tools:
+  - title: OPA Gatekeeper
+    url: https://open-policy-agent.github.io/gatekeeper/
+  - title: Kyverno
+    url: https://kyverno.io/
+references:
+  - title: Gatekeeper Library - k8spsphostnamespace
+    url: https://github.com/open-policy-agent/gatekeeper-library/tree/master/library/pod-security-policy/host-namespaces
+  - title: Gatekeeper Library - k8spsphostnetworkingports
+    url: https://github.com/open-policy-agent/gatekeeper-library/tree/master/library/pod-security-policy/host-network-ports
+  - title: Kubernetes Docs - Pod Security Standards (Baseline)
+    url: https://kubernetes.io/docs/concepts/security/pod-security-standards/#baseline

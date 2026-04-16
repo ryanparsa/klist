@@ -1,0 +1,97 @@
+id: CLST-58
+title: Enforce Uniqueness in Ingress Hostnames
+stage: active
+description: |
+  Without proper validation, a user might create an Ingress manifest that reuses an existing hostname, potentially 
+  hijacking or overriding traffic for an established service.
+  This allows attackers to intercept traffic meant for other applications or causes denial of service by misdirecting users.
+
+  What to check:
+  Find all defined Ingress hosts to check for duplicates manually or programmatically:
+  ```bash
+  kubectl get ingress -A -o jsonpath='{range .items[*]}{range .spec.rules[*]}{.host}{"\n"}{end}{end}' | sort | uniq -d
+  ```
+
+  ```mermaid
+  flowchart TD
+    A[Ingress Creation] --> B{Hostname Unique?}
+    B -->|Yes| C[Allow]
+    B -->|No| D[Reject via Admission Control]
+  ```
+mitigations:
+  - |-
+    Deploy the Kyverno `unique-ingress-host` policy which ensures that no two Ingress resources in the cluster can share the same hostname. The policy uses a lookup to compare the hosts in the incoming request against existing Ingress resources.
+
+    ```yaml
+    apiVersion: kyverno.io/v1
+    kind: ClusterPolicy
+    metadata:
+      name: unique-ingress-host
+    spec:
+      validationFailureAction: Enforce
+      background: false
+      rules:
+      - name: check-host
+        match:
+          any:
+          - resources:
+              kinds:
+              - networking.k8s.io/v1/Ingress
+        validate:
+          message: "The Ingress host name must be unique across the cluster."
+          foreach:
+          - list: "request.object.spec.rules"
+            deny:
+              conditions:
+                all:
+                - key: "{{element.host}}"
+                  operator: AnyIn
+                  value: "{{ networking.k8s.io/v1/Ingress[?metadata.name != '{{request.object.metadata.name}}' || metadata.namespace != '{{request.object.metadata.namespace}}' ].spec.rules[].host }}"
+    ```
+  - |-
+    Alternatively, use OPA Gatekeeper with a ConstraintTemplate that validates hostname uniqueness across all namespaces:
+
+    ```yaml
+    apiVersion: templates.gatekeeper.sh/v1
+    kind: ConstraintTemplate
+    metadata:
+      name: k8suniqueingresshost
+    spec:
+      crd:
+        spec:
+          names:
+            kind: K8sUniqueIngressHost
+      targets:
+        - target: admission.k8s.gatekeeper.sh
+          rego: |
+            package k8suniqueingresshost
+
+            identical(obj, target) {
+              obj.metadata.name == target.metadata.name
+              obj.metadata.namespace == target.metadata.namespace
+            }
+
+            violation({"msg": msg}) {
+              input.request.kind.kind == "Ingress"
+              re := input.request.object
+              host := re.spec.rules[_].host
+              other := data.inventory.namespace[_]["networking.k8s.io/v1"]["Ingress"][_]
+              not identical(re, other)
+              other.spec.rules[_].host == host
+              msg := sprintf("Ingress host %v is already in use by %v/%v", [host, other.metadata.namespace, other.metadata.name])
+            }
+    ```
+tags:
+  - governance
+  - ingress
+  - network
+tools:
+  - title: Kyverno
+    url: https://kyverno.io/
+  - title: OPA Gatekeeper
+    url: https://open-policy-agent.github.io/gatekeeper/
+references:
+  - title: Open Policy Agent - Kubernetes Ingress Tutorial
+    url: https://www.openpolicyagent.org/docs/latest/kubernetes-tutorial/#4-define-a-policy-and-load-it-into-opa-via-kubernetes
+  - title: Kyverno - Unique Ingress Host
+    url: https://kyverno.io/policies/ingress/unique-ingress-host/

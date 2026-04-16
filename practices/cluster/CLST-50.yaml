@@ -1,0 +1,87 @@
+id: CLST-50
+title: Adopt GitOps for Cluster State Management and Drift Detection
+stage: active
+description: |
+  Without a declarative source of truth, cluster state drifts over time through manual
+  kubectl applies, ad-hoc patches, and undocumented changes. Drift accumulates silently -
+  deployments diverge from what is in Git, security policies get bypassed, and incident
+  recovery is slowed because no one is certain what the cluster should look like.
+
+  GitOps enforces that Git is the authoritative record of desired cluster state. A
+  reconciliation agent continuously compares live state to the desired state and alerts
+  on or automatically corrects divergence.
+
+  **What to check:**
+  - Is all cluster configuration (workloads, RBAC, network policies, namespaces) stored
+    in Git and applied exclusively through a CD pipeline?
+  - Is there a GitOps operator installed and actively reconciling?
+    ```
+    kubectl get pods -n argocd
+    kubectl get pods -n flux-system
+    ```
+  - Are there resources in the cluster with no corresponding Git source (orphaned resources)?
+  - Does the GitOps operator alert or auto-remediate when live state diverges from Git?
+  - Is direct `kubectl apply` to production restricted via RBAC or admission control?
+
+mitigations:
+  - |-
+    Deploy ArgoCD or Flux to continuously reconcile cluster state from a Git repository.
+    Configure applications to sync automatically for non-breaking changes and require
+    manual approval for sensitive resources (RBAC, network policies):
+    ```
+    # ArgoCD - install
+    kubectl create namespace argocd
+    kubectl apply -n argocd -f https://raw.githubusercontent.com/argoproj/argo-cd/stable/manifests/install.yaml
+
+    # Flux - bootstrap
+    flux bootstrap github \
+      --owner=<org> \
+      --repository=<repo> \
+      --branch=main \
+      --path=clusters/production
+    ```
+  - |-
+    Enable drift detection alerting so that any manual change to a managed resource
+    triggers a notification. In ArgoCD, set the sync policy to detect and surface OutOfSync
+    status. In Flux, configure alerts to fire on drift events:
+    ```
+    # ArgoCD: set app to detect drift without auto-remediation
+    argocd app set <app-name> --sync-policy none --self-heal=false
+    # Then monitor: argocd app list | grep OutOfSync
+    ```
+  - |-
+    Restrict direct production access. Remove `kubectl apply` permissions from human users
+    in production via RBAC. Only the GitOps service account should have write access to
+    managed namespaces. Use impersonation or break-glass procedures for emergency access,
+    and audit all break-glass usage.
+  - |-
+    Store all cluster-scoped resources (ClusterRoles, ClusterRoleBindings, NetworkPolicies,
+    PodSecurityAdmission labels, ResourceQuotas) in Git alongside application manifests.
+    Use a repo structure that separates infrastructure config from application workloads
+    to allow different approval workflows.
+
+tags:
+  - gitops
+  - drift-detection
+  - operations
+  - configuration-management
+  - ci-cd
+  - compliance
+
+tools:
+  - title: ArgoCD
+    url: https://argo-cd.readthedocs.io/
+  - title: Flux
+    url: https://fluxcd.io/
+
+references:
+  - title: OpenGitOps Principles
+    url: https://opengitops.dev/
+  - title: ArgoCD - Getting Started
+    url: https://argo-cd.readthedocs.io/en/stable/getting_started/
+  - title: Flux - Core Concepts
+    url: https://fluxcd.io/flux/concepts/
+  - title: EKS Best Practices - GitOps
+    url: https://docs.aws.amazon.com/eks/latest/best-practices/gitops.html
+  - title: CNCF GitOps Working Group
+    url: https://github.com/cncf/tag-app-delivery/tree/main/gitops-wg

@@ -1,0 +1,49 @@
+id: CLST-51
+title: Disable the Kubelet Read-Only Port
+stage: active
+description: |
+  The kubelet exposes an unauthenticated, read-only HTTP API on port 10255 by default.
+  This port leaks pod listings, running container metadata, and node resource information
+  to any network-accessible caller without requiring credentials. It must be disabled.
+
+  **What to check:** On each node, verify the kubelet configuration:
+
+  ```
+  cat /var/lib/kubelet/config.yaml | grep readOnlyPort
+  ```
+
+  The value must be `readOnlyPort: 0`. If the field is absent, the default (10255) is
+  active and must be explicitly disabled.
+
+  Also confirm the port is not listening:
+
+  ```
+  ss -tlnp | grep 10255
+  ```
+
+  No output is the expected result.
+mitigations:
+  - |-
+    Set `readOnlyPort: 0` in the KubeletConfiguration file
+    (`/var/lib/kubelet/config.yaml`) and restart the kubelet. On managed clusters,
+    apply the equivalent node-pool configuration option (e.g., `--read-only-port=0`
+    in the kubelet extra-args).
+tags:
+  - kubelet
+  - network
+  - information-disclosure
+  - hardening
+tools:
+  - title: kube-bench
+    url: https://github.com/aquasecurity/kube-bench
+  - title: Trivy
+    url: https://trivy.dev/
+references:
+  - title: CIS Kubernetes Benchmark 4.2.4
+    url: https://workbench.cisecurity.org/benchmarks/16828
+  - title: Kubernetes Docs - Kubelet Configuration
+    url: https://kubernetes.io/docs/reference/config-api/kubelet-config.v1beta1/
+  - title: NSA/CISA Kubernetes Hardening Guide
+    url: https://media.defense.gov/2022/Aug/29/2003066362/-1/-1/0/CTR_KUBERNETES_HARDENING_GUIDANCE_1.2_20220829.PDF
+  - title: Microsoft Threat Matrix - Access Kubelet API
+    url: https://microsoft.github.io/Threat-Matrix-for-Kubernetes/techniques/Access%20Kubelet%20API/

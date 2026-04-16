@@ -1,0 +1,41 @@
+id: CLST-23
+title: Evaluate the Vertical Pod Autoscaler Carefully Before Using in Production
+stage: active
+description: |
+  The Vertical Pod Autoscaler (VPA) automatically adjusts the CPU and memory requests and
+  limits of Pods based on observed usage. Unlike the HPA (which adds more replicas), the VPA
+  scales a single Pod's resources - useful for workloads that cannot scale horizontally.
+
+  However, applying a resource change requires evicting and restarting the Pod. Combining VPA and HPA on the same target metrics can also cause conflicting auto-scaling behaviours, leading to instability.
+
+  **What to check:**
+  ```bash
+  kubectl get vpa -A
+  ```
+
+  ```mermaid
+  flowchart TD
+    A[VPA] -->|Recommend| B[Optimal CPU/Memory]
+    A -->|Auto| C[Recreate Pod with New Requests]
+  ```
+mitigations:
+  - "Install the VPA controller in `Off` mode first to collect recommendations without making changes."
+  - "Review recommendations with `kubectl describe vpa <name>`."
+  - "Migrate workloads to use suggested request/limit values."
+  - "Only switch to `Auto` mode for workloads that tolerate pod restarts and cannot scale horizontally."
+  - "Never use VPA and HPA on the same CPU/memory metric for the same deployment."
+tags:
+  - application-development
+  - scaling
+  - vpa
+tools:
+  - title: Cluster Autoscaler
+    url: https://github.com/kubernetes/autoscaler/tree/master/cluster-autoscaler
+  - title: Goldilocks
+    url: https://github.com/FairwindsOps/goldilocks
+
+references:
+  - title: Kubernetes Autoscaler - VPA
+    url: https://github.com/kubernetes/autoscaler/tree/master/vertical-pod-autoscaler
+  - title: Kubernetes Docs - Vertical Pod Autoscaling
+    url: https://kubernetes.io/docs/concepts/workloads/autoscaling/

@@ -1,0 +1,79 @@
+id: production
+label: Production Environment
+type: baseline
+description: >-
+  Additional controls required when operating a production-grade cluster with
+  real user data and uptime expectations.
+items:
+  required:
+    - CLUD-1
+    - CLUD-2
+    - CLUD-7
+    - CLUD-8
+    - CLUD-9
+    - CLUD-21
+    - CLST-10
+    - CLST-11
+    - CLST-13
+    - CONT-31
+    - CONT-32
+    - CLST-16
+    - CLST-17
+    - CLST-18
+    - CLST-29
+    - CLST-30
+    - CLST-31
+    - CLST-32
+    - CLST-34
+    - CLST-39
+    - CLST-45
+    - CLST-46
+    - CLST-49
+    - CLST-51
+    - CLST-53
+    - CLST-54
+    - CLST-55
+    - CLST-56
+    - CLST-58
+    - CONT-6
+    - CONT-9
+    - CONT-10
+    - CONT-11
+    - CONT-12
+    - CONT-13
+    - CONT-14
+    - CONT-15
+    - CONT-18
+    - CONT-19
+    - CONT-21
+    - CONT-23
+    - CONT-24
+    - CONT-27
+    - CONT-28
+    - CONT-31
+    - CODE-1
+    - CODE-2
+    - CODE-8
+    - CODE-13
+    - CODE-16
+    - CODE-14
+    - CODE-22
+  suggested:
+    - CLUD-5
+    - CLUD-6
+    - CLUD-10
+    - CLUD-11
+    - CLUD-23
+    - CLST-15
+    - CLST-21
+    - CLST-22
+    - CLST-23
+    - CLST-50
+    - CLST-38
+    - CONT-16
+    - CONT-17
+    - CONT-29
+    - CODE-4
+    - CODE-5
+    - CODE-17
+    - CODE-18

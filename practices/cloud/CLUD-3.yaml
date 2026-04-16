@@ -1,0 +1,40 @@
+id: CLUD-3
+title: Apply Least-Privilege IAM Roles to Nodes
+stage: active
+description: |
+  IAM roles or service accounts attached to worker nodes must follow the principle of least
+  privilege. Nodes should only have permissions required to pull images, write logs, and
+  register with the control plane. Roles must not be shared across clusters.
+
+  **What to check:** Review the IAM role attached to each node group. Look for overly broad
+  policies (e.g., `*` actions or `*` resources). Verify no cross-cluster role sharing.
+mitigations:
+  - |-
+    Create dedicated, minimal IAM roles per cluster/node group. Use
+    permission boundaries. Prefer IRSA (AWS), Workload Identity (GCP), or AAD Pod Identity
+    (Azure) to grant per-pod permissions instead of node-level permissions.
+tags:
+  - rbac
+  - security
+  - least-privilege
+  - cloud
+tools:
+  - title: Prowler
+    url: https://github.com/prowler-cloud/prowler
+  - title: Checkov
+    url: https://www.checkov.io/
+  - title: RBAC Lookup
+    url: https://github.com/FairwindsOps/rbac-lookup
+references:
+  - title: "OWASP Kubernetes Top 10 - K08: Secrets Management Failures"
+    url: https://owasp.org/www-project-kubernetes-top-ten/
+  - title: AWS IAM Best Practices
+    url: https://docs.aws.amazon.com/IAM/latest/UserGuide/best-practices.html
+  - title: SOC 2 CC6.1 - Logical Access Controls
+    url: https://www.aicpa.org/resources/article/soc-2-trust-service-principles
+  - title: Microsoft Threat Matrix - Access Cloud Resources
+    url: https://microsoft.github.io/Threat-Matrix-for-Kubernetes/techniques/Access%20cloud%20resources/
+  - title: Microsoft Threat Matrix - Mount Service Principal
+    url: https://microsoft.github.io/Threat-Matrix-for-Kubernetes/techniques/Mount%20service%20principal/
+  - title: EKS Best Practices - IAM
+    url: https://docs.aws.amazon.com/eks/latest/best-practices/iam.html

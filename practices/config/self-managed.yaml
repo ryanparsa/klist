@@ -1,0 +1,34 @@
+id: self-managed
+label: Self-Managed / On-Prem
+type: provider
+description: >-
+  Clusters running on bare metal, VMs, or private infrastructure where the
+  operator is responsible for all control-plane security.
+items:
+  required:
+    - CLUD-1
+    - CLUD-2
+    - CLUD-5
+    - CLUD-6
+    - CLUD-7
+    - CLST-4
+    - CLST-7
+    - CLST-11
+    - CLST-12
+    - CLST-13
+    - CLST-34
+    - CLST-47
+    - CLST-49
+    - CLST-51
+    - CLST-52
+    - CLST-55
+  suggested:
+    - CLUD-3
+    - CLUD-8
+    - CLUD-10
+    - CLST-29
+    - CLST-53
+    - CLST-54
+    - CONT-13
+    - CONT-29
+    - CONT-32

@@ -1,0 +1,50 @@
+id: CONT-25
+title: Disallow Unmasked Proc Mounts
+stage: active
+description: |
+  By default, container runtimes mask certain paths in `/proc` (such as `/proc/sys` and `/proc/kcore`)
+  to prevent containers from accessing or modifying sensitive host kernel parameters.
+  Setting `procMount: Unmasked` in a container's `securityContext` bypasses this protection,
+  exposing the host's `/proc` filesystem and creating a severe container escape risk.
+
+  ```mermaid
+  graph TD
+      A[Attacker Compromises Container] --> B{procMount: Unmasked?}
+      B -- Yes --> C[Access Host /proc/sys or /proc/kcore]
+      B -- No --> D[Access Denied by Container Runtime]
+      C --> E[Modify Kernel Parameters / Extract Host Secrets]
+      E --> F[Container Escape / Node Compromise]
+  ```
+
+  **What to check:**
+  Identify all pods configured with unmasked proc mounts:
+  ```bash
+  kubectl get pods -A -o json | \
+    jq '.items[] | select(.spec.containers[]?.securityContext.procMount == "Unmasked") | .metadata.name'
+  ```
+mitigations:
+  - |-
+    Remove `procMount: Unmasked` from all Pod `securityContext` definitions, falling back to the
+    runtime `Default` behavior.
+  - |-
+    Enforce Pod Security Standards (PSS) at the `baseline` or `restricted` level, which strictly forbid
+    unmasked `/proc` mounts.
+  - |-
+    Deploy an admission controller like OPA Gatekeeper (using the `k8spspprocmount` template) or
+    Kyverno to reject pods requesting `procMount: Unmasked`.
+tags:
+  - container-escape
+  - pod-security
+  - isolation
+tools:
+  - title: OPA Gatekeeper
+    url: https://open-policy-agent.github.io/gatekeeper/
+  - title: Kyverno
+    url: https://kyverno.io/
+references:
+  - title: Gatekeeper Library - k8spspprocmount
+    url: https://github.com/open-policy-agent/gatekeeper-library/tree/master/library/pod-security-policy/proc-mount
+  - title: Kubernetes Docs - Allowed Proc Mount Types
+    url: https://kubernetes.io/docs/concepts/security/pod-security-policy/#allowedprocmounttypes
+  - title: Kubernetes Docs - Pod Security Standards (Baseline)
+    url: https://kubernetes.io/docs/concepts/security/pod-security-standards/#baseline

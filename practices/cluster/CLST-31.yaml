@@ -1,0 +1,58 @@
+id: CLST-31
+title: Enforce Pod Security Standards via Pod Security Admission
+stage: active
+description: |
+  Kubernetes provides Pod Security Standards (PSS) - three predefined security profiles
+  (Privileged, Baseline, Restricted) - enforced at the namespace level by the built-in
+  Pod Security Admission (PSA) controller (available since Kubernetes 1.23, stable in 1.25).
+
+  > Note: PodSecurityPolicy (PSP) was removed in Kubernetes 1.25. If you are running an
+  > older cluster still using PSP, migrating to PSA or a policy engine (Kyverno, OPA
+  > Gatekeeper) is required before upgrading.
+
+  **Profiles:**
+  - `Privileged` - No restrictions (only for system/infrastructure namespaces).
+  - `Baseline` - Prevents the most egregious misconfigurations (no privileged containers, no host namespaces).
+  - `Restricted` - Follows current pod hardening best practices (non-root, read-only FS, seccomp).
+
+  Namespaces must be labelled to enforce at least the `baseline` profile; production namespaces should target `restricted`.
+
+  **What to check:**
+
+  ```
+  kubectl get namespaces -o json | \
+    jq '.items[].metadata.labels | with_entries(select(.key | startswith("pod-security.kubernetes.io")))'
+  ```
+
+  Every non-system namespace should have `pod-security.kubernetes.io/enforce` set to `baseline` or `restricted`.
+mitigations:
+  - |-
+    Apply Pod Security Admission labels to all namespaces. Use `warn` and `audit` modes first to
+    detect violations before switching to `enforce`. Production namespaces should be labelled with
+    `pod-security.kubernetes.io/enforce: restricted`, while others should use `baseline` at minimum.
+    Supplement with Kyverno or OPA Gatekeeper for fine-grained policies not covered by PSS.
+tags:
+  - governance
+  - security
+  - admission-control
+  - hardening
+tools:
+  - title: Kyverno
+    url: https://kyverno.io/
+  - title: OPA Gatekeeper
+    url: https://open-policy-agent.github.io/gatekeeper/
+  - title: kube-bench
+    url: https://github.com/aquasecurity/kube-bench
+references:
+  - title: Kubernetes Docs - Pod Security Admission
+    url: https://kubernetes.io/docs/concepts/security/pod-security-admission/
+  - title: Kubernetes Docs - Pod Security Standards
+    url: https://kubernetes.io/docs/concepts/security/pod-security-standards/
+  - title: CIS Kubernetes Benchmark 5.2
+    url: https://workbench.cisecurity.org/benchmarks/16828
+  - title: Microsoft Threat Matrix - Privileged Container
+    url: https://microsoft.github.io/Threat-Matrix-for-Kubernetes/techniques/Privileged%20container/
+  - title: NSA/CISA Kubernetes Hardening Guide
+    url: https://media.defense.gov/2022/Aug/29/2003066362/-1/-1/0/CTR_KUBERNETES_HARDENING_GUIDANCE_1.2_20220829.PDF
+  - title: PCI-DSS Requirement 2 - Apply Secure Configurations
+    url: https://www.pcisecuritystandards.org/document_library/

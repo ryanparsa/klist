@@ -1,0 +1,107 @@
+id: CONT-28
+title: Set Ephemeral Storage Limits on Containers
+stage: active
+description: |
+  A container's writable layer, emptyDir volumes, and stdout/stderr logs all consume
+  ephemeral storage on the node's local disk. Without an explicit limit, a single
+  container - through excessive logging, writing to the local filesystem, or a
+  runaway temporary file - can exhaust node disk space, cause DiskPressure, and
+  trigger eviction of unrelated pods on the same node.
+
+  Kubernetes enforces ephemeral storage limits at the container level via
+  `resources.limits.ephemeral-storage`. When a container exceeds its limit, the pod
+  is evicted immediately.
+
+  **What to check:**
+  ```bash
+  # Find containers with no ephemeral-storage limit set
+  kubectl get pods -A -o json | jq '
+    .items[] | .metadata.namespace + "/" + .metadata.name + " - " +
+    (.spec.containers[].name) + ": " +
+    (.spec.containers[].resources.limits."ephemeral-storage" // "NO LIMIT")
+  '
+
+  # Check current ephemeral storage usage per pod
+  kubectl get --raw /api/v1/nodes/<node>/proxy/stats/summary | \
+    jq '.pods[] | {pod: .podRef.name, ephemeral: .ephemeral_storage}'
+  ```
+
+mitigations:
+  - |-
+    Set `ephemeral-storage` requests and limits on all containers, especially those
+    known to write logs or temporary files:
+    ```yaml
+    resources:
+      requests:
+        ephemeral-storage: "256Mi"
+      limits:
+        ephemeral-storage: "1Gi"
+    ```
+    Size the limit based on expected log volume and temp file usage. For logging-heavy
+    workloads, combine this with structured logging and a log shipper to reduce local
+    accumulation.
+  - |-
+    Enforce ephemeral storage limits cluster-wide using a LimitRange so that pods
+    without explicit limits still get a safe default:
+    ```yaml
+    apiVersion: v1
+    kind: LimitRange
+    metadata:
+      name: ephemeral-storage-defaults
+      namespace: <namespace>
+    spec:
+      limits:
+        - type: Container
+          default:
+            ephemeral-storage: "512Mi"
+          defaultRequest:
+            ephemeral-storage: "128Mi"
+          max:
+            ephemeral-storage: "2Gi"
+    ```
+  - |-
+    Use an admission controller (Kyverno or OPA Gatekeeper) to require
+    `ephemeral-storage` limits on all containers and block deployments that omit them:
+    ```yaml
+    # Kyverno policy example
+    apiVersion: kyverno.io/v1
+    kind: ClusterPolicy
+    metadata:
+      name: require-ephemeral-storage-limit
+    spec:
+      validationFailureAction: Enforce
+      rules:
+        - name: check-ephemeral-storage-limit
+          match:
+            resources:
+              kinds: [Pod]
+          validate:
+            message: "ephemeral-storage limit is required on all containers"
+            pattern:
+              spec:
+                containers:
+                  - resources:
+                      limits:
+                        ephemeral-storage: "?*"
+    ```
+
+tags:
+  - resource-management
+  - storage
+  - reliability
+  - node
+  - disk-pressure
+
+tools:
+  - title: Kyverno
+    url: https://kyverno.io/
+  - title: OPA Gatekeeper
+    url: https://open-policy-agent.github.io/gatekeeper/
+
+references:
+  - title: Kubernetes Docs - Local Ephemeral Storage
+    url: https://kubernetes.io/docs/concepts/configuration/manage-resources-containers/#local-ephemeral-storage
+  - title: Kubernetes Docs - LimitRange
+    url: https://kubernetes.io/docs/concepts/policy/limit-range/
+  - title: Kubernetes Docs - Node-pressure Eviction
+    url: https://kubernetes.io/docs/concepts/scheduling-eviction/node-pressure-eviction/

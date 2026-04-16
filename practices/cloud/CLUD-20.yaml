@@ -1,0 +1,65 @@
+id: CLUD-20
+title: Use Customer-Managed Keys for Kubernetes Data Encryption
+stage: active
+description: |
+  Managed Kubernetes providers encrypt cluster data at rest using provider-owned keys by
+  default. While this protects against physical media theft, it does not protect against a
+  compromised cloud account or insider threat at the provider level.
+
+  Customer-Managed Keys (CMK) give the customer control over the encryption key lifecycle:
+  - Rotation on a defined schedule
+  - Revocation to immediately block all access to encrypted data
+  - Audit visibility via KMS access logs
+
+  **What to check:**
+  ```bash
+  aws eks describe-cluster --name <cluster-name> --query 'cluster.encryptionConfig'
+  ```
+
+  ```mermaid
+  flowchart TD
+    A[K8s Secret] --> B[API Server Envelope Encryption]
+    B --> C[Customer Managed KMS Key]
+  ```
+mitigations:
+  - |-
+    Create a dedicated KMS key for the cluster with a rotation schedule of 1 year
+    or less. Apply the `associate-encryption-config` command (EKS) or equivalent for your
+    provider. Restrict KMS key usage via key policy to only the cluster's IAM role. Enable
+    CloudTrail/Cloud Audit Logs on KMS to audit all Decrypt and GenerateDataKey calls.
+  - |
+    EKS-specific guidance: Kubernetes 1.28+ enables envelope encryption using an
+    AWS-owned key by default. To use a CMK:
+    ```bash
+    aws eks associate-encryption-config \
+      --cluster-name <cluster-name> \
+      --encryption-config '[{"resources":["secrets"],"provider":{"keyArn":"arn:aws:kms:<region>:<account-id>:key/<key-id>"}}]'
+    ```
+
+    This encrypts Kubernetes Secrets (and optionally ConfigMaps) in etcd using the
+    AWS KMS key. Grant the EKS cluster IAM role `kms:GenerateDataKey` and `kms:Decrypt`
+    on the CMK.
+  - |
+    GKE: Use Application-Layer Secrets Encryption with a Cloud KMS key.
+  - |
+    AKS: Use customer-managed keys for etcd encryption via Azure Key Vault.
+tags:
+  - encryption
+  - secrets
+  - kms
+  - compliance
+  - cloud
+tools:
+  - title: Prowler
+    url: https://github.com/prowler-cloud/prowler
+  - title: Checkov
+    url: https://www.checkov.io/
+references:
+  - title: AWS EKS - Envelope Encryption
+    url: https://docs.aws.amazon.com/eks/latest/userguide/envelope-encryption.html
+  - title: GKE - Application-Layer Secrets Encryption
+    url: https://cloud.google.com/kubernetes-engine/docs/how-to/encrypting-secrets
+  - title: AKS - Customer-Managed Keys
+    url: https://learn.microsoft.com/en-us/azure/aks/azure-disk-customer-managed-keys
+  - title: HIPAA Integrity Controls
+    url: https://www.hhs.gov/hipaa/for-professionals/security/laws-regulations/index.html

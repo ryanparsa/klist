@@ -1,0 +1,41 @@
+id: CLST-46
+title: Implement Data Backup Strategy for Persistent Volumes
+stage: active
+description: |
+  Attackers with sufficient permissions may destroy persistent data by deleting PersistentVolumes,
+  PersistentVolumeClaims, or the underlying cloud storage. Without a tested backup strategy,
+  data destruction results in permanent data loss and severe availability incidents.
+
+  **What to check:**
+  - Are backups taken for each PersistentVolumeClaim used by stateful workloads?
+  - Are backups stored in a separate account, region, or storage tier from the cluster?
+  - Is the restore path tested regularly?
+    ```
+    kubectl get pvc -A
+    kubectl get volumesnapshots -A 2>/dev/null
+    ```
+mitigations:
+  - |-
+    Use cloud-native volume snapshot APIs (AWS EBS Snapshots, GCP Persistent
+    Disk Snapshots, Azure Disk Snapshots) scheduled via Kubernetes VolumeSnapshot objects or
+    tools like Velero. Store snapshots in a separate, restricted account. Test restore procedures
+    at least quarterly. Apply RBAC to restrict who can delete PVCs and PVs.
+tags:
+  - backup
+  - data-protection
+  - disaster-recovery
+  - stateful
+tools:
+  - title: Velero
+    url: https://velero.io/
+references:
+  - title: Kubernetes Docs - Persistent Volumes
+    url: https://kubernetes.io/docs/concepts/storage/persistent-volumes/
+  - title: Microsoft Threat Matrix - Data Destruction
+    url: https://microsoft.github.io/Threat-Matrix-for-Kubernetes/techniques/Data%20destruction/
+  - title: Microsoft Threat Matrix - Implement Data Backup Strategy
+    url: https://microsoft.github.io/Threat-Matrix-for-Kubernetes/mitigations/MS-M9031%20Implement%20Data%20Backup%20Strategy/
+  - title: Velero - Backup and Restore for Kubernetes
+    url: https://velero.io/docs/
+  - title: EKS - Backup Cluster Resources with Velero
+    url: https://docs.aws.amazon.com/eks/latest/userguide/backup-cluster.html

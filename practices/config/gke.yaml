@@ -1,0 +1,35 @@
+id: gke
+label: Google GKE
+type: provider
+description: >-
+  Running Kubernetes on Google Kubernetes Engine. Covers GKE-specific controls
+  for Workload Identity, metadata server, and Cloud Audit Logs.
+items:
+  required:
+    - CLUD-3
+    - CLUD-4
+    - CLUD-7
+    - CLUD-9
+    - CLUD-11
+    - CLUD-13
+    - CLUD-14
+    - CLUD-16
+    - CLUD-17
+    - CLUD-18
+    - CLUD-19
+    - CLUD-22
+    - CLST-26
+    - CLST-48
+    - CONT-32
+  suggested:
+    - CLUD-1
+    - CLUD-5
+    - CLUD-10
+    - CLUD-15
+    - CLUD-20
+    - CLUD-23
+    - CLST-10
+    - CLST-12
+    - CLST-31
+    - CLST-32
+    - CLST-34

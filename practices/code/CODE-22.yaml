@@ -1,0 +1,38 @@
+id: CODE-22
+title: "Restrict Ingress Path Values to Safe Directories"
+stage: active
+description: |
+  Allowing arbitrary path values in Ingress manifests can expose sensitive files and directories on the Ingress controller to unauthorized access. For example, CVE-2021-25745 highlighted a vulnerability where attackers could use specific path values (like `/etc` or `/var/run/secrets`) to bypass security controls and access sensitive information from the Ingress controller's file system.
+
+  To maintain a secure environment, it is critical to restrict `spec.rules[].http.paths[].path` to only known-safe values and block access to system-critical directories.
+
+  **What to check:**
+  Use the following command to identify Ingress resources with potentially dangerous path values:
+  ```bash
+  kubectl get ingress -A -o jsonpath='{range .items[*]}{.metadata.namespace}{"/"}{.metadata.name}{": "}{.spec.rules[*].http.paths[*].path}{"\n"}{end}' | grep -E "/etc|/var/run|/root|/admin.conf"
+  ```
+
+  ```mermaid
+  flowchart TD
+    A[Ingress Manifest] --> B{Path contains sensitive system directories?}
+    B -->|Yes| C[Reject Ingress]
+    B -->|No| D[Allow Ingress]
+  ```
+mitigations:
+  - "Upgrade Ingress controllers to versions that have fixed known path traversal vulnerabilities."
+  - "Implement admission control policies to validate and reject Ingress resources containing prohibited path values."
+  - "Configure the Ingress controller with a restricted security context, limiting its file system access to only necessary directories."
+tags:
+  - security
+  - ingress
+  - manifest
+tools:
+  - title: "Kyverno"
+    url: "https://kyverno.io/"
+  - title: "OPA Gatekeeper"
+    url: "https://open-policy-agent.github.io/gatekeeper/"
+references:
+  - title: "CVE-2021-25745: ingress-nginx path traversal"
+    url: "https://github.com/kubernetes/ingress-nginx/issues/7837"
+  - title: "Kyverno Policy: Restrict NGINX Ingress Paths"
+    url: "https://kyverno.io/policies/nginx-ingress/restrict-ingress-paths/restrict-ingress-paths/"

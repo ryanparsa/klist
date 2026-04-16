@@ -1,0 +1,84 @@
+id: CODE-17
+title: Generate and Verify SLSA Build Provenance for Container Images
+stage: active
+description: |
+  SLSA (Supply-chain Levels for Software Artifacts) build provenance is a signed
+  attestation that records how an artifact was built: the source repository, commit SHA,
+  build platform, workflow, and dependencies. Unlike image signing (which only attests
+  identity), provenance enables verifiers to check *what* produced the image and
+  *where* the source came from.
+
+  Without provenance, a signed image can still have been built from a tampered source or
+  on an untrusted build platform - attacks that simple signature verification cannot detect.
+
+  **What to check:**
+
+  1. Does the CI pipeline generate provenance attestations after building images?
+
+  ```
+  cosign verify-attestation \
+    --type slsaprovenance \
+    --key cosign.pub \
+    <registry>/<image>@sha256:<digest>
+  ```
+
+  2. Are attestations stored alongside the image in the registry (as OCI referrers)?
+
+  ```
+  cosign tree <registry>/<image>@sha256:<digest>
+  ```
+
+  3. Is an admission policy verifying provenance before pods are scheduled?
+mitigations:
+  - |-
+    Integrate provenance generation into CI using the SLSA GitHub Generator
+    (`slsa-framework/slsa-github-generator`). It produces SLSA L3 provenance
+    (isolated, ephemeral build) signed via Sigstore/Fulcio without requiring stored
+    key material:
+
+    ```yaml
+    # .github/workflows/release.yml
+    jobs:
+      provenance:
+        uses: slsa-framework/slsa-github-generator/.github/workflows/generator_container_slsa3.yml@v2
+        with:
+          image: ghcr.io/myorg/myimage
+          digest: ${{ needs.build.outputs.digest }}
+    ```
+  - |-
+    Add a Kyverno `verifyImages` policy that requires a valid SLSA provenance
+    attestation before allowing pods to run:
+
+    ```yaml
+    verifyImages:
+      - imageReferences: ["registry.example.com/*"]
+        attestations:
+          - type: https://slsa.dev/provenance/v1
+            attestors:
+              - entries:
+                  - keyless:
+                      subject: "https://github.com/myorg/myrepo/.github/workflows/release.yml@refs/heads/main"
+                      issuer: "https://token.actions.githubusercontent.com"
+    ```
+tags:
+  - supply-chain
+  - slsa
+  - provenance
+  - image-signing
+  - ci-cd
+tools:
+  - title: SLSA GitHub Generator
+    url: https://github.com/slsa-framework/slsa-github-generator
+  - title: Cosign
+    url: https://docs.sigstore.dev/
+  - title: Kyverno
+    url: https://kyverno.io/
+references:
+  - title: SLSA Framework v1.0
+    url: https://slsa.dev/spec/v1.0/
+  - title: Sigstore - Provenance
+    url: https://docs.sigstore.dev/
+  - title: "OWASP Kubernetes Top 10 - K02: Supply Chain Vulnerabilities"
+    url: https://owasp.org/www-project-kubernetes-top-ten/
+  - title: US Executive Order 14028 - Improving the Nation's Cybersecurity
+    url: https://www.whitehouse.gov/briefing-room/presidential-actions/2021/05/12/executive-order-on-improving-the-nations-cybersecurity/

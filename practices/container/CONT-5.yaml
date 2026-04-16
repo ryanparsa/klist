@@ -1,0 +1,38 @@
+id: CONT-5
+title: Drop All Linux Capabilities
+stage: active
+description: |
+  Linux capabilities are fine-grained subsets of root privileges. Containers inherit a
+  default set that includes dangerous capabilities like `NET_RAW`, `SYS_CHROOT`, and others.
+  Dropping all capabilities and adding back only what is strictly needed reduces the blast
+  radius of a container compromise.
+
+  **What to check:**
+
+  ```
+  kubectl get pods -A -o json | \
+    jq '.items[] | select(
+      .spec.containers[].securityContext.capabilities.drop | index("ALL") | not
+    ) | .metadata.name'
+  ```
+mitigations:
+  - |-
+    Add the following to every container's `securityContext`:
+
+    ```yaml
+    capabilities:
+      drop: ["ALL"]
+      add: []   # only add specific caps if truly required, e.g. NET_BIND_SERVICE
+    ```
+tags:
+  - security
+  - linux-capabilities
+  - hardening
+tools: []
+references:
+  - title: CIS Kubernetes Benchmark 5.2.10
+    url: https://workbench.cisecurity.org/benchmarks/16828
+  - title: Kubernetes Docs - Capabilities
+    url: https://kubernetes.io/docs/tasks/configure-pod-container/security-context/#set-capabilities-for-a-container
+  - title: NSA/CISA Kubernetes Hardening Guide
+    url: https://media.defense.gov/2022/Aug/29/2003066362/-1/-1/0/CTR_KUBERNETES_HARDENING_GUIDANCE_1.2_20220829.PDF

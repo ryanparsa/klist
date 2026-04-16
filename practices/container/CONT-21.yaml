@@ -1,0 +1,50 @@
+id: CONT-21
+title: Do Not Run SSH Daemon Inside Containers
+stage: active
+description: |
+  Running an SSH server inside a container violates the principle of single-process containers
+  and creates an independent authentication surface. Attackers who obtain valid SSH credentials
+  - through brute force, leaked keys, or phishing - can use this to gain persistent remote
+  access to the container, bypassing Kubernetes RBAC entirely.
+
+  **What to check:** Scan running containers for listening SSH daemons:
+  ```
+  kubectl get pods -A -o json | \
+    jq -r '.items[] | "\(.metadata.namespace)/\(.metadata.name)"' | \
+    xargs -I {} kubectl exec -n $(echo {} | cut -d/ -f1) $(echo {} | cut -d/ -f2) \
+    -- ss -tlnp 2>/dev/null | grep ':22'
+  ```
+
+  Also scan container images in the pipeline:
+  ```
+  trivy image --severity HIGH,CRITICAL <image> | grep -i ssh
+  ```
+
+  ```mermaid
+  flowchart TD
+    A[Attacker] -->|Compromises Credentials| B(SSH Access)
+    B --> C{SSH Daemon Running?}
+    C -->|Yes| D[Remote Access to Container]
+    C -->|No| E[Connection Refused]
+    D --> F[Bypass Kubernetes RBAC]
+  ```
+mitigations:
+  - Remove SSH daemon packages from all container images.
+  - "Use `kubectl exec` (restricted via RBAC - see CLT-035) for legitimate operator access."
+  - Never expose port 22 from any container.
+  - Use distroless or minimal base images that do not include SSH by default.
+  - Implement network segmentation (e.g., using NetworkPolicies) to limit network access to containers.
+  - Restrict the container runtime using Linux Security Modules (LSM) like AppArmor or SELinux to limit which processes can open network sockets within a container.
+tags:
+  - container-runtime
+  - hardening
+  - execution
+  - remote-access
+tools: []
+references:
+  - title: Kubernetes Docs - Configure Containers
+    url: https://kubernetes.io/docs/tasks/inject-data-application/
+  - title: Microsoft Threat Matrix - SSH Server Running Inside Container
+    url: https://microsoft.github.io/Threat-Matrix-for-Kubernetes/techniques/SSH%20server%20running%20inside%20container/
+  - title: "OWASP Kubernetes Top 10 - K01: Insecure Workload Configurations"
+    url: https://owasp.org/www-project-kubernetes-top-ten/

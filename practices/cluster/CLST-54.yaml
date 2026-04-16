@@ -1,0 +1,68 @@
+id: CLST-54
+title: Use Projected (Bound) Service Account Tokens
+stage: active
+description: |
+  Kubernetes auto-mounts long-lived, non-expiring service account tokens by default (legacy
+  `kubernetes.io/service-account-token` Secret type). These tokens are valid indefinitely
+  and are scoped only to the API server audience. If a pod is compromised, the token can
+  be reused by an attacker without time limit.
+
+  Projected volume tokens (introduced in Kubernetes 1.12, GA in 1.20) are time-limited,
+  audience-bound, and automatically rotated. They expire after a configurable TTL
+  (default 1 hour) and are invalidated when the pod is deleted.
+
+  **What to check:** Look for pods still using legacy token mounts:
+
+  ```
+  kubectl get pods -A -o json | \
+    jq '.items[] | select(
+      .spec.volumes[]?.projected == null and
+      .spec.volumes[]?.secret.secretName != null
+    ) | "\(.metadata.namespace)/\(.metadata.name)"'
+  ```
+
+  Also check for legacy `kubernetes.io/service-account-token` Secrets still being used:
+
+  ```
+  kubectl get secrets -A --field-selector type=kubernetes.io/service-account-token
+  ```
+
+  In clusters running Kubernetes 1.24+, no pod should be using these long-lived secrets.
+mitigations:
+  - |-
+    For pods that need API access, inject the token via a projected volume with
+    an explicit `expirationSeconds` (e.g., 3600):
+
+    ```yaml
+    volumes:
+      - name: token
+        projected:
+          sources:
+            - serviceAccountToken:
+                audience: https://kubernetes.default.svc
+                expirationSeconds: 3600
+                path: token
+    ```
+
+    Mount the volume at `/var/run/secrets/kubernetes.io/serviceaccount/token`.
+    Remove any legacy `kubernetes.io/service-account-token` Secrets not required by
+    third-party tooling.
+  - |-
+    Enable `--service-account-extend-token-expiration=false` on the API server if
+    you want to prevent legacy tokens from being silently extended. On Kubernetes 1.24+,
+    legacy auto-generated SA secrets are no longer created automatically.
+tags:
+  - rbac
+  - service-accounts
+  - least-privilege
+  - credentials
+tools:
+  - title: Kyverno
+    url: https://kyverno.io/
+references:
+  - title: Kubernetes Docs - Bound Service Account Tokens
+    url: https://kubernetes.io/docs/reference/access-authn-authz/service-accounts-admin/#bound-service-account-tokens
+  - title: CIS Kubernetes Benchmark 5.1.6
+    url: https://workbench.cisecurity.org/benchmarks/16828
+  - title: Microsoft Threat Matrix - Container Service Account
+    url: https://microsoft.github.io/Threat-Matrix-for-Kubernetes/techniques/container%20service%20account/

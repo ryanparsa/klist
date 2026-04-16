@@ -1,0 +1,63 @@
+id: CONT-15
+title: Forward SIGTERM to the Application Process in Dockerfile
+stage: active
+description: |
+  When a container's `CMD` or `ENTRYPOINT` (or the Kubernetes `command` field) uses **shell form** rather than **exec form**, the shell (`/bin/sh`) becomes PID 1. Shells do not forward signals to child processes by default.
+
+  As a result, SIGTERM sent by Kubernetes is swallowed by the shell, and the application waits the full `terminationGracePeriodSeconds` before being force-killed (SIGKILL) by the container runtime. This causes abrupt connection drops, slow rollouts, and failed graceful shutdowns.
+
+  **Shell form (incorrect):**
+  ```dockerfile
+  CMD node server.js          # PID 1 = /bin/sh -c, does not forward SIGTERM
+  ENTRYPOINT ./start.sh       # same issue
+  ```
+
+  ```mermaid
+  flowchart TD
+    K[Kubernetes] -- SIGTERM --> S[PID 1: /bin/sh]
+    S -- Swallows signal --> A[PID 2: Application]
+    K -- Waits 30s... --> K
+    K -- SIGKILL --> S
+    S -- Terminated --> A
+  ```
+
+  **What to check:** Review all Dockerfiles in your repositories. Verify that the final
+  `CMD` and `ENTRYPOINT` instructions use JSON array (exec) form. Also check Kubernetes Pod manifests for use of `command` without a JSON array.
+mitigations:
+  - |-
+    Update Dockerfiles to use the exec form for `CMD` and `ENTRYPOINT`.
+    ```dockerfile
+    CMD ["node", "server.js"]   # PID 1 = node, receives SIGTERM directly
+    ENTRYPOINT ["/app/start"]
+    ```
+  - |-
+    If a wrapper script is required, end the script with `exec "$@"` so the shell is
+    replaced by the target process:
+    ```bash
+    #!/bin/sh
+    # ... pre-start setup ...
+    exec "$@"
+    ```
+  - |-
+    Use a minimal init system like `tini` or `dumb-init` as the entrypoint. These
+    tools are designed to run as PID 1 and correctly forward signals to child
+    processes while reaping zombie processes.
+    ```dockerfile
+    ENTRYPOINT ["/sbin/tini", "--"]
+    CMD ["node", "server.js"]
+    ```
+tags:
+  - application-development
+  - graceful-shutdown
+  - dockerfile
+  - reliability
+tools: []
+references:
+  - title: Kubernetes Docs - Pod Lifecycle
+    url: https://kubernetes.io/docs/concepts/workloads/pods/pod-lifecycle/
+  - title: Graceful Shutdown of Kubernetes Pods
+    url: https://pracucci.com/graceful-shutdown-of-kubernetes-pods.html
+  - title: Docker Docs - CMD
+    url: https://docs.docker.com/reference/dockerfile/#cmd
+  - title: "tini - A tiny but valid init for containers"
+    url: https://github.com/krallin/tini

@@ -1,0 +1,113 @@
+id: CLUD-23
+title: Optimize Cluster Cost and Resource Efficiency
+stage: active
+description: |
+  Kubernetes clusters frequently run with significant resource waste - oversized node
+  types, over-provisioned requests, idle workloads, and on-demand pricing where
+  interruptible capacity would suffice. Without visibility into actual usage vs.
+  requested resources, cost grows unchecked and teams have no signal to act on.
+
+  **What to check:**
+  - Do workloads have CPU and memory requests set, and are they close to actual usage?
+    ```
+    kubectl top pods -A
+    kubectl describe vpa <name> -n <namespace>
+    ```
+  - Are any namespaces or workloads consuming resources far above their requests?
+  - Is the cluster using Spot/Preemptible nodes for fault-tolerant workloads?
+  - Are there idle or abandoned namespaces, deployments, or PVCs?
+    ```
+    kubectl get pvc -A | grep -v Bound
+    kubectl get deploy -A | grep ' 0/'
+    ```
+  - Is a cost visibility tool in place (Kubecost, OpenCost, or provider-native tooling)?
+  - Are resource usage dashboards available to teams for self-service monitoring?
+  - Are cluster scanners used to detect orphaned resources or misconfigurations?
+
+mitigations:
+  - |-
+    Deploy Goldilocks (VPA in recommendation mode) to generate right-sizing suggestions
+    for all workloads without enforcing changes automatically:
+    ```
+    helm install goldilocks fairwinds-stable/goldilocks -n goldilocks --create-namespace
+    kubectl label namespace <app-ns> goldilocks.fairwinds.io/enabled=true
+    ```
+    Review the Goldilocks dashboard and adjust resource requests to match P95 actual usage.
+  - |-
+    Deploy OpenCost or Kubecost to get per-namespace, per-workload, and per-team cost
+    attribution. Expose showback reports to engineering teams so cost becomes a first-class
+    engineering metric. Set budget alerts for namespaces that exceed thresholds.
+  - |-
+    Use Spot/Preemptible nodes for stateless, fault-tolerant, or batch workloads. Configure
+    node taints and workload tolerations to ensure only appropriate workloads land on
+    interruptible capacity. Use Karpenter or Cluster Autoscaler with mixed instance
+    policies to blend on-demand and spot capacity automatically.
+  - |-
+    Run regular audits to clean up idle resources - PVCs not attached to any pod, Deployments
+    scaled to zero with no activity, and namespaces with no running workloads:
+    ```
+    kubectl get pvc -A -o json | jq '.items[] | select(.status.phase != "Bound")'
+    kubectl get deploy -A --field-selector=status.replicas=0
+    ```
+  - |-
+    Set LimitRanges and ResourceQuotas per namespace to prevent unbounded resource
+    consumption and create accountability at the team level:
+    ```
+    kubectl apply -f - <<EOF
+    apiVersion: v1
+    kind: ResourceQuota
+    metadata:
+      name: team-quota
+      namespace: <team-ns>
+    spec:
+      hard:
+        requests.cpu: "10"
+        requests.memory: 20Gi
+        limits.cpu: "20"
+        limits.memory: 40Gi
+    EOF
+    ```
+  - |-
+    Deploy a cluster sanitizer or best-practice scanner (e.g., Popeye) to identify
+    underutilized resources, orphaned objects, and configuration drift that leads
+    to resource waste. Integrate these scans into regular operational audits.
+  - |-
+    Provide engineers with access to resource usage dashboards (e.g., Kubernetes
+    Dashboard, Grafana, or cloud-native container insights) to enable them to
+    visualize the real-time consumption of their workloads at the pod and
+    container level.
+
+tags:
+  - cost
+  - resource-management
+  - efficiency
+  - capacity-planning
+  - operations
+
+tools:
+  - title: Goldilocks (right-sizing recommendations)
+    url: https://github.com/FairwindsOps/goldilocks
+  - title: OpenCost
+    url: https://www.opencost.io/
+  - title: Kubecost
+    url: https://www.kubecost.com/
+  - title: Karpenter
+    url: https://karpenter.sh/
+  - title: Popeye - A Kubernetes Cluster Sanitizer
+    url: https://github.com/derailed/popeye
+  - title: Kubernetes Dashboard
+    url: https://github.com/kubernetes/dashboard
+
+references:
+  - title: Kubernetes Docs - Resource Management for Pods and Containers
+    url: https://kubernetes.io/docs/concepts/configuration/manage-resources-containers/
+  - title: Kubernetes Docs - Resource Quotas
+    url: https://kubernetes.io/docs/concepts/policy/resource-quotas/
+  - title: EKS Best Practices - Cost Optimization
+    url: https://docs.aws.amazon.com/eks/latest/best-practices/cost-opt-compute.html
+  - title: EKS Best Practices - Cost Awareness
+    url: https://docs.aws.amazon.com/eks/latest/best-practices/cost-awareness.html
+  - title: GKE - Cost Optimization Best Practices
+    url: https://cloud.google.com/kubernetes-engine/docs/best-practices/cost-optimization
+  - title: AKS - Cost Optimization
+    url: https://learn.microsoft.com/en-us/azure/aks/best-practices-cost

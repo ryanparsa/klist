@@ -1,0 +1,36 @@
+id: CODE-13
+title: Externalise Application Configuration
+stage: active
+description: |
+  Hardcoded configuration logic within the application code inhibits portability, complicates secrets management, and requires full application redeploys for minor configuration changes. Configurations must be decoupled to allow identical container builds to run across different environments.
+
+  **What to check:**
+  ```bash
+  kubectl get configmaps,secrets -A
+  ```
+
+  ```mermaid
+  flowchart TD
+    A[ConfigMap/Secret] -->|Mount/Env| B[Pod]
+    C[Source Code] --x|Hardcoded configs| B
+  ```
+mitigations:
+  - "Create a `ConfigMap` for each application containing environment-specific settings (database hostnames, feature flags, log levels)."
+  - "Mount the ConfigMap as environment variables or as a file volume in the pod spec."
+  - "Never hardcode environment names, URLs, or toggle values in the container image."
+  - "Store secrets separately in Kubernetes Secrets or a cloud secret manager, not in ConfigMaps."
+tags:
+  - application-development
+  - configuration
+  - twelve-factor
+tools:
+  - title: Secrets Store CSI Driver
+    url: https://secrets-store-csi-driver.sigs.k8s.io/
+  - title: External Secrets Operator
+    url: https://external-secrets.io/
+
+references:
+  - title: Twelve-Factor App - Config
+    url: https://12factor.net/config
+  - title: Kubernetes Docs - ConfigMaps
+    url: https://kubernetes.io/docs/concepts/configuration/configmap/

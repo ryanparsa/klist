@@ -1,0 +1,39 @@
+id: CONT-24
+title: Block Sidecar Injection from Untrusted Sources
+stage: active
+description: |
+  Sidecar containers share the network namespace and pod lifecycle of the main container,
+  making them a powerful injection point. Attackers with permissions to modify pod definitions
+  (e.g., via a compromised service account or mutating admission webhook) can inject malicious
+  sidecars into legitimate pods to intercept traffic, exfiltrate data, or maintain persistence
+  without the main container being modified.
+
+  **What to check:**
+  - Are mutating admission webhooks audited and restricted?
+    ```
+    kubectl get mutatingwebhookconfigurations
+    ```
+  - Can non-admin service accounts patch running pod specs?
+    ```
+    kubectl auth can-i patch pods --all-namespaces --as <service-account>
+    ```
+  - Are all containers in pods validated against an image allow-list?
+mitigations:
+  - "Adhere to the least-privilege principle by preventing unnecessary users and service accounts from creating new pods and controllers."
+  - "Restrict `patch` and `update` permissions on pods to only trusted service accounts (e.g., approved service mesh operators)."
+  - "Restrict over-permissive containers in the cluster using admission controllers."
+  - "Audit all `MutatingWebhookConfigurations`; each webhook should have a narrow `namespaceSelector` and come from a trusted source."
+  - "Gate images deployed to the Kubernetes cluster using image admission policies to restrict the deployment of new containers to a trusted supply chain."
+tags:
+  - security
+  - execution
+  - persistence
+  - admission-control
+tools: []
+references:
+  - title: Kubernetes Docs - Admission Webhooks
+    url: https://kubernetes.io/docs/reference/access-authn-authz/extensible-admission-controllers/
+  - title: Microsoft Threat Matrix - Sidecar Injection
+    url: https://microsoft.github.io/Threat-Matrix-for-Kubernetes/techniques/Sidecar%20Injection/
+  - title: NSA/CISA Kubernetes Hardening Guide
+    url: https://media.defense.gov/2022/Aug/29/2003066362/-1/-1/0/CTR_KUBERNETES_HARDENING_GUIDANCE_1.2_20220829.PDF

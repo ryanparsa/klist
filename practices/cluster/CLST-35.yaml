@@ -1,0 +1,41 @@
+id: CLST-35
+title: Restrict kubectl exec on Production Pods
+stage: active
+description: |
+  The `kubectl exec` command allows running arbitrary processes inside a running container.
+  In production, this capability should be restricted to break-glass scenarios only. An
+  attacker or compromised operator account with exec permissions can run malicious commands,
+  exfiltrate data, or install backdoors without deploying new workloads.
+
+  **What to check:** Audit which RBAC users and service accounts have `pods/exec` permissions:
+
+  ```
+  kubectl auth can-i create pods/exec --all-namespaces --as <user-or-sa>
+  kubectl get clusterrolebindings,rolebindings -A -o json | \
+    jq '.items[] | select(.rules[]?.resources[]? == "pods/exec") | .metadata.name'
+  ```
+mitigations:
+  - |-
+    Remove `pods/exec` from all non-operator roles. If exec is needed for
+    debugging, grant it via a time-limited RoleBinding (e.g., via JIT access tooling) rather
+    than a permanent grant. Use an admission controller (OPA Gatekeeper / Kyverno) to restrict
+    exec to specific namespaces or labels.
+tags:
+  - rbac
+  - security
+  - least-privilege
+  - operations
+tools:
+  - title: RBAC Lookup
+    url: https://github.com/FairwindsOps/rbac-lookup
+  - title: Kyverno
+    url: https://kyverno.io/
+  - title: Falco
+    url: https://falco.org/
+references:
+  - title: Kubernetes Docs - RBAC Authorization
+    url: https://kubernetes.io/docs/reference/access-authn-authz/rbac/
+  - title: Microsoft Threat Matrix - Exec into Container
+    url: https://microsoft.github.io/Threat-Matrix-for-Kubernetes/techniques/Exec%20into%20container/
+  - title: NSA/CISA Kubernetes Hardening Guide
+    url: https://media.defense.gov/2022/Aug/29/2003066362/-1/-1/0/CTR_KUBERNETES_HARDENING_GUIDANCE_1.2_20220829.PDF

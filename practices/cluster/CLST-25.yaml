@@ -1,0 +1,35 @@
+id: CLST-25
+title: Restrict Access to Alpha or Beta Features
+stage: active
+description: |
+  Alpha and beta Kubernetes features are in active development and may have limitations or bugs that result in stability issues or security vulnerabilities. Enabling experimental feature gates unnecessarily expands the cluster's attack surface with unvetted code.
+
+  **What to check:**
+  ```bash
+  ps aux | grep kube-apiserver | grep feature-gates
+  ```
+
+  ```mermaid
+  flowchart TD
+    A[API Server] --> B{Feature Gates Enabled?}
+    B -->|Yes| C[Experimental Features Active]
+  ```
+mitigations:
+  - "Review the list of enabled feature gates on each cluster component (API server, kubelet, controller manager, scheduler)."
+  - "Remove any `--feature-gates=<AlphaFeature>=true` flags that are not required for production workloads."
+  - "Consult the Kubernetes changelog before each upgrade to identify newly promoted or removed features."
+tags:
+  - configuration
+  - security
+  - stability
+tools:
+  - title: kube-bench
+    url: https://github.com/aquasecurity/kube-bench
+  - title: Checkov
+    url: https://www.checkov.io/
+
+references:
+  - title: Kubernetes Docs - Feature Gates
+    url: https://kubernetes.io/docs/reference/command-line-tools-reference/feature-gates/
+  - title: NSA/CISA Kubernetes Hardening Guide
+    url: https://media.defense.gov/2022/Aug/29/2003066362/-1/-1/0/CTR_KUBERNETES_HARDENING_GUIDANCE_1.2_20220829.PDF

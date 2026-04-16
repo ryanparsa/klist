@@ -1,0 +1,48 @@
+id: CLST-56
+title: Define and Enforce Backup Recovery Point Objectives (RPO)
+stage: active
+description: |
+    Recovery Point Objective (RPO) defines the maximum acceptable amount of data loss measured in time. For mission-critical workloads, an insufficient backup frequency can lead to significant business disruption or permanent data loss during a disaster. While generic backup strategies may exist, they often lack the granularity required to meet the specific RPO demands of highly dynamic or critical applications.
+
+    Enforcing backup frequency based on workload classification ensures that data protection tiers are consistently applied across the cluster and prevents misconfigurations that could leave critical data under-protected.
+
+    **What to check:**
+    - Do backup policies or schedules exist for all stateful workloads?
+    - Is the backup frequency in those policies aligned with the workload's required RPO (e.g., hourly for mission-critical apps)?
+    - Are workloads labeled according to their criticality, and are these labels used to drive backup automation?
+    - Are there any critical workloads missing the required high-frequency backup schedule?
+
+    ```mermaid
+    graph TD
+        A[Workload Deployment] --> B{Workload Labels?}
+        B -- "priority: mission-critical" --> C[Policy Enforcement]
+        B -- "priority: standard" --> D[Policy Enforcement]
+        C --> E["Validate @hourly (or better) Frequency"]
+        D --> F["Validate @daily (or better) Frequency"]
+        E --> G[High-Frequency Data Protection]
+        F --> H[Standard Data Protection]
+    ```
+mitigations:
+  - Establish a formal data classification framework that defines RPO and Recovery Time Objective (RTO) requirements for different workload tiers.
+  - Implement policy-as-code to automatically validate that backup resources associated with critical workloads meet the minimum required frequency during creation or update.
+  - Utilize Kubernetes labels or annotations to categorize workloads by criticality and use these selectors to automate the assignment of appropriate backup policies.
+  - Configure monitoring and alerting to detect backup job failures or schedules that have drifted from the defined RPO requirements.
+tags:
+  - backup
+  - disaster-recovery
+  - resilience
+  - stateful
+tools:
+  - title: Kyverno
+    url: https://kyverno.io/
+  - title: Kasten K10
+    url: https://www.kasten.io/
+  - title: Velero
+    url: https://velero.io/
+references:
+  - title: Kyverno Policy - Check Hourly RPO
+    url: https://kyverno.io/policies/kasten-k10/k10-hourly-rpo/k10-hourly-rpo/
+  - title: EKS Best Practices - Backup and Restore
+    url: https://docs.aws.amazon.com/eks/latest/best-practices/backup-restore.html
+  - title: Disaster Recovery Strategies for Kubernetes
+    url: https://kubernetes.io/blog/2023/06/15/disaster-recovery-strategies-for-kubernetes/

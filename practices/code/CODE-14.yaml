@@ -1,0 +1,51 @@
+id: CODE-14
+title: Allow Deploying Containers Only from Known Registries
+stage: active
+description: |
+  Deploying images from arbitrary, untrusted public registries introduces the risk of running malware, unvetted binaries, or compromised software. To maintain a secure supply chain, clusters should enforce an allowlist of trusted registries. In multi-tenant environments, this often requires a hierarchical approach where a global set of approved registries is supplemented by specific registries allowed for particular namespaces.
+
+  **What to check:**
+  - Verify that an admission controller is active and validating image prefixes.
+  - Check the global allowlist configuration (e.g., in a ConfigMap or policy definition).
+  - Inspect namespaces for specific registry overrides or additions.
+
+  ```bash
+  # List all images currently running in the cluster
+  kubectl get pods -A -o jsonpath='{range .items[*]}{.spec.containers[*].image}{"\n"}{end}' | sort | uniq
+
+  # Check for namespace-level registry annotations
+  kubectl get namespaces -o custom-columns=NAME:.metadata.name,ANNOTATIONS:.metadata.annotations
+  ```
+
+  ```mermaid
+  flowchart TD
+    A[Pod Creation Request] --> B{Image in Global Allowlist?}
+    B -->|No| C{Image in Namespace Allowlist?}
+    B -->|Yes| F[Admit Pod]
+    C -->|Yes| F
+    C -->|No| G[Deny Pod]
+  ```
+mitigations:
+  - "Implement an admission control policy (using CEL, OPA, or other engines) to validate container image prefixes against an allowlist."
+  - "Establish a global allowlist for common, enterprise-wide trusted registries."
+  - "Enable namespace-specific allowlists (e.g., via namespace annotations) to support multi-tenancy and specialized workloads."
+  - "Reject any Pod or workload that references an image from an unapproved registry at the time of creation or update."
+tags:
+  - governance
+  - admission-control
+  - images
+  - multi-tenancy
+tools:
+  - title: Kyverno
+    url: https://kyverno.io/
+  - title: OPA Gatekeeper
+    url: https://open-policy-agent.github.io/gatekeeper/
+references:
+  - title: Open Policy Agent - Kubernetes Tutorial
+    url: https://www.openpolicyagent.org/docs/latest/kubernetes-tutorial/
+  - title: Kyverno - Advanced Restrict Image Registries
+    url: https://kyverno.io/policies/other/cel/advanced-restrict-image-registries/advanced-restrict-image-registries/
+  - title: Microsoft Threat Matrix - Compromised Image in Registry
+    url: https://microsoft.github.io/Threat-Matrix-for-Kubernetes/techniques/Compromised%20Image%20In%20Registry/
+  - title: Microsoft Threat Matrix - New Container
+    url: https://microsoft.github.io/Threat-Matrix-for-Kubernetes/techniques/New%20Container/

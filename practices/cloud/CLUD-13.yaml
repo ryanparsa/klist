@@ -1,0 +1,54 @@
+id: CLUD-13
+title: Restrict Pod Access to Cloud Managed Identity
+stage: active
+description: |
+  Cloud providers assign managed identities to VM instances. Pods running on these VMs can inherit
+  the node's cloud identity and use it to authenticate with cloud services. The identity's token
+  can be obtained by accessing the Instance Metadata Service (IMDS).
+
+  Attackers who compromise any pod can exploit this by querying the IMDS endpoint to get the
+  managed identity's token, potentially gaining access to cloud resources.
+
+  **What to check:**
+  - Verify that access to the IMDS endpoint from pods is restricted.
+  - Verify that workloads use specific, pod-level identities instead of relying on the node's identity.
+
+  ```bash
+  # Check if specific pod-level identity mechanisms are configured
+  # For example, look for specific annotations or service accounts mapped to workloads
+  kubectl get serviceaccounts -A -o custom-columns="NAMESPACE:.metadata.namespace,NAME:.metadata.name,ANNOTATIONS:.metadata.annotations" | grep -E 'iam.gke.io/gcp-service-account|eks.amazonaws.com/role-arn|azure.workload.identity/client-id'
+  ```
+
+  ```mermaid
+  graph TD
+      A[Compromised Pod] -->|HTTP Request| B(Instance Metadata Service)
+      B -->|Returns Token| A
+      A -->|Use Token| C(Cloud Resources)
+
+      D[Secured Pod] -->|Blocked| B
+      D -->|Use Specific Token| E(Workload Identity)
+      E --> C
+  ```
+mitigations:
+  - "Restrict cloud metadata API access: Configure network policies or cloud provider settings to restrict the access of pods to the Instance Metadata Service (IMDS)."
+  - "Allocate specific identities to pods: Implement workload identity federation or similar mechanisms to allocate specific, scoped identities directly to pods, reducing reliance on node-level identities."
+  - "Apply the principle of least privilege: Ensure that both node-level and pod-level identities have only the minimum permissions necessary for their required functions."
+tags:
+  - cloud
+  - identity
+  - privilege-escalation
+  - rbac
+tools:
+  - title: Prowler
+    url: https://github.com/prowler-cloud/prowler
+  - title: Kyverno
+    url: https://kyverno.io/
+  - title: Checkov
+    url: https://www.checkov.io/
+references:
+  - title: Microsoft Threat Matrix - Access Managed Identity Credentials
+    url: https://microsoft.github.io/Threat-Matrix-for-Kubernetes/techniques/Access%20managed%20identity%20credentials/
+  - title: Microsoft Threat Matrix - Restricting cloud metadata API access
+    url: https://microsoft.github.io/Threat-Matrix-for-Kubernetes/mitigations/MS-M9018%20Restricting%20cloud%20metadata%20API%20access/
+  - title: Microsoft Threat Matrix - Allocate specific identities to pods
+    url: https://microsoft.github.io/Threat-Matrix-for-Kubernetes/mitigations/MS-M9019%20Allocate%20specific%20identities%20to%20pods/

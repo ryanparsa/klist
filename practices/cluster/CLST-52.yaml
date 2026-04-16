@@ -1,0 +1,45 @@
+id: CLST-52
+title: Enable Automatic Kubelet Certificate Rotation
+stage: active
+description: |
+  Kubelets use TLS client certificates to authenticate to the API server. Without automatic
+  rotation, these certificates must be renewed manually. Expired certificates cause the
+  kubelet to lose connectivity to the control plane, taking nodes out of service. Rotation
+  also limits the window of exposure if a certificate is compromised.
+
+  **What to check:** On each node, verify the kubelet configuration:
+
+  ```
+  cat /var/lib/kubelet/config.yaml | grep rotateCertificates
+  ```
+
+  The value must be `rotateCertificates: true`. Also confirm via the process flags:
+
+  ```
+  ps aux | grep kubelet | grep rotate-certificates
+  ```
+
+  The flag `--rotate-certificates=true` should be present, or the config file value should
+  be set.
+mitigations:
+  - |-
+    Set `rotateCertificates: true` in the KubeletConfiguration
+    (`/var/lib/kubelet/config.yaml`). Ensure the API server has the
+    `--cluster-signing-cert-file` and `--cluster-signing-key-file` flags set so it can
+    approve certificate signing requests (CSRs) from kubelets. On managed clusters,
+    certificate rotation is typically enabled by default - verify it is not disabled.
+tags:
+  - kubelet
+  - certificates
+  - tls
+  - hardening
+tools:
+  - title: kube-bench
+    url: https://github.com/aquasecurity/kube-bench
+references:
+  - title: CIS Kubernetes Benchmark 4.2.11
+    url: https://workbench.cisecurity.org/benchmarks/16828
+  - title: Kubernetes Docs - Certificate Rotation
+    url: https://kubernetes.io/docs/tasks/tls/certificate-rotation/
+  - title: NSA/CISA Kubernetes Hardening Guide
+    url: https://media.defense.gov/2022/Aug/29/2003066362/-1/-1/0/CTR_KUBERNETES_HARDENING_GUIDANCE_1.2_20220829.PDF

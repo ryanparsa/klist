@@ -1,0 +1,35 @@
+id: CODE-16
+title: Use Only Approved Domain Names in Ingress Hostnames
+stage: active
+description: |
+  Unauthorized or arbitrary domain names in Ingress manifests can lead to domain hijacking, routing conflicts, or circumvention of corporate DNS policies. Attackers or misconfigured deployments might claim internal tooling domains to inappropriately intercept or redirect traffic.
+
+  **What to check:**
+  ```bash
+  kubectl get ingress -A -o jsonpath='{range .items[*]}{.spec.rules[*].host}{"\n"}{end}'
+  ```
+
+  ```mermaid
+  flowchart TD
+    A[Ingress Creation] --> B{Hostname in Allowlist?}
+    B -->|Yes| C[Allow]
+    B -->|No| D[Reject]
+  ```
+mitigations:
+  - "Define an allowlist of approved domain suffixes (e.g., `*.example.com`, `*.internal.corp`)."
+  - "Deploy a Kyverno or OPA Gatekeeper policy that validates every Ingress hostname against this allowlist and rejects non-conforming entries."
+  - "Store the allowlist as a ConfigMap or policy parameter so it can be updated without redeploying the policy itself."
+tags:
+  - governance
+  - ingress
+  - policy
+tools:
+  - title: Kyverno
+    url: https://kyverno.io/
+  - title: OPA Gatekeeper
+    url: https://open-policy-agent.github.io/gatekeeper/
+references:
+  - title: Open Policy Agent - Kubernetes Ingress Tutorial
+    url: https://www.openpolicyagent.org/docs/latest/kubernetes-tutorial/#4-define-a-policy-and-load-it-into-opa-via-kubernetes
+  - title: Kyverno - Restrict Ingress Host
+    url: https://kyverno.io/policies/ingress/

@@ -1,0 +1,41 @@
+id: CLUD-2
+title: Restrict Network Access to API Server and Kubelet
+stage: active
+description: |
+  Limit network access to sensitive control-plane ports - API Server (6443) and Kubelet (10250)
+  - to authorised sources only, such as internal VPN ranges or bastion hosts. Exposing these
+  ports to the public internet is a critical risk.
+
+  **What to check:** Run a port scan or review security group / firewall rules. Neither port
+  should be reachable from 0.0.0.0/0.
+mitigations:
+  - Restrict inbound rules to known CIDR ranges. Use a VPN or private link
+    service for operator access. Consider AWS PrivateLink / GCP Private Service Connect for
+    managed clusters.
+tags:
+  - network
+  - api-server
+  - kubelet
+  - firewall
+tools:
+  - title: kube-bench
+    url: https://github.com/aquasecurity/kube-bench
+  - title: Prowler
+    url: https://github.com/prowler-cloud/prowler
+  - title: Trivy
+    url: https://trivy.dev/
+references:
+  - title: NSA/CISA Kubernetes Hardening Guide
+    url: https://media.defense.gov/2022/Aug/29/2003066362/-1/-1/0/CTR_KUBERNETES_HARDENING_GUIDANCE_1.2_20220829.PDF
+  - title: HIPAA Transmission Security
+    url: https://www.hhs.gov/hipaa/for-professionals/security/laws-regulations/index.html
+  - title: CIS Kubernetes Benchmark - API Server
+    url: https://workbench.cisecurity.org/benchmarks/16828
+  - title: Microsoft Threat Matrix - Using Cloud Credentials
+    url: https://microsoft.github.io/Threat-Matrix-for-Kubernetes/techniques/Using%20Cloud%20Credentials/
+  - title: Microsoft Threat Matrix - Access Kubelet API
+    url: https://microsoft.github.io/Threat-Matrix-for-Kubernetes/techniques/Access%20Kubelet%20API/
+  - title: Microsoft Threat Matrix - Restrict access to the API server using IP firewall
+    url: https://microsoft.github.io/Threat-Matrix-for-Kubernetes/mitigations/MS-M9002%20Restrict%20access%20to%20the%20API%20server%20using%20IP%20firewall/
+  - title: Microsoft Threat Matrix - Access Kubernetes API Server
+    url: https://microsoft.github.io/Threat-Matrix-for-Kubernetes/techniques/Access%20the%20K8S%20API%20server/

@@ -1,0 +1,126 @@
+id: CONT-29
+title: Enforce Mandatory Access Control on Containers with AppArmor or SELinux
+stage: active
+description: |
+  Mandatory Access Control (MAC) systems - AppArmor and SELinux - enforce kernel-level
+  restrictions on what files, capabilities, and network operations a container process is
+  allowed to perform, regardless of the user identity it runs as. They act as a last line
+  of defence: if an attacker exploits a vulnerability to gain code execution inside a
+  container, the MAC policy limits what they can do next.
+
+  - **AppArmor** (Debian, Ubuntu, SLES nodes): path-based profiles that restrict file
+    access, network operations, and capability use. Profiles run in `enforce` or
+    `complain` mode.
+  - **SELinux** (RHEL, CentOS, Amazon Linux, Fedora nodes): label-based policy that
+    assigns types to every process and file. Container runtimes (containerd, CRI-O) apply
+    the `container_t` type by default; custom `seLinuxOptions` can tighten it further.
+
+  Both systems complement seccomp (which filters syscalls at the call boundary) by
+  additionally restricting *what resources* a process can touch.
+
+  **What to check - AppArmor:**
+
+  ```bash
+  # Verify AppArmor is active on the node
+  cat /sys/module/apparmor/parameters/enabled   # expected: Y
+
+  # Kubernetes 1.30+: check securityContext field
+  kubectl get pods -A -o json | \
+    jq '.items[] | select(
+      .spec.containers[].securityContext.appArmorProfile == null
+    ) | "\(.metadata.namespace)/\(.metadata.name)"'
+
+  # Older clusters: check pod annotation
+  kubectl get pods -A -o json | \
+    jq '.items[] | select(
+      (.metadata.annotations // {}) | keys |
+      map(startswith("container.apparmor.security.beta.kubernetes.io")) | any | not
+    ) | "\(.metadata.namespace)/\(.metadata.name)"'
+  ```
+
+  **What to check - SELinux:**
+
+  ```bash
+  # Verify SELinux is enforcing on the node
+  getenforce   # expected: Enforcing
+
+  # Check pods with custom SELinux options
+  kubectl get pods -A -o json | \
+    jq '.items[] | select(
+      .spec.securityContext.seLinuxOptions == null and
+      (.spec.containers[].securityContext.seLinuxOptions == null)
+    ) | "\(.metadata.namespace)/\(.metadata.name)"'
+  ```
+mitigations:
+  - |-
+    **AppArmor - Kubernetes 1.30+:** Apply `RuntimeDefault` to all containers as a
+    baseline. This uses the runtime's built-in profile, which already blocks the most
+    dangerous operations:
+
+    ```yaml
+    securityContext:
+      appArmorProfile:
+        type: RuntimeDefault
+    ```
+
+    For older clusters, use the annotation per container:
+
+    ```yaml
+    metadata:
+      annotations:
+        container.apparmor.security.beta.kubernetes.io/<container-name>: runtime/default
+    ```
+
+    For sensitive workloads, load a custom `enforce` profile via the Security Profiles
+    Operator (`AppArmorProfile` CRD) to restrict exactly the file paths and capabilities
+    that workload needs.
+  - |-
+    **SELinux:** On SELinux-enabled nodes, the container runtime automatically applies
+    the `container_t` type. Verify it is not being disabled by checking for
+    `seLinuxOptions.type: unconfined_t` in pod specs and removing it:
+
+    ```bash
+    kubectl get pods -A -o json | \
+      jq '.items[] | select(
+        .spec.securityContext.seLinuxOptions.type == "unconfined_t"
+      ) | "\(.metadata.namespace)/\(.metadata.name)"'
+    ```
+
+    For workloads that need tighter confinement, define a custom SELinux type and set
+    it explicitly:
+
+    ```yaml
+    securityContext:
+      seLinuxOptions:
+        level: "s0:c123,c456"
+    ```
+  - |-
+    Use the Security Profiles Operator (SPO) to manage both AppArmor and seccomp
+    profiles as Kubernetes CRDs, keeping profiles version-controlled and automatically
+    distributed to nodes without manual file placement.
+tags:
+  - security
+  - apparmor
+  - selinux
+  - mac
+  - kernel
+  - hardening
+  - container-runtime
+tools:
+  - title: Security Profiles Operator
+    url: https://github.com/kubernetes-sigs/security-profiles-operator
+  - title: Kyverno
+    url: https://kyverno.io/
+references:
+  - title: CIS Kubernetes Benchmark 5.7.3 – 5.7.4
+    url: https://workbench.cisecurity.org/benchmarks/16828
+  - title: Kubernetes Docs - AppArmor
+    url: https://kubernetes.io/docs/tutorials/security/apparmor/
+  - title: Kubernetes Docs - SELinux
+    url: https://kubernetes.io/docs/tasks/configure-pod-container/security-context/#assign-selinux-labels-to-a-container
+  - title: "OWASP Kubernetes Top 10 - K01: Insecure Workload Configurations"
+    url: https://owasp.org/www-project-kubernetes-top-ten/
+  - title: Microsoft Threat Matrix - Escape to Host
+    url: https://microsoft.github.io/Threat-Matrix-for-Kubernetes/techniques/Escape%20to%20host/
+  - title: Microsoft Threat Matrix - Restrict Container Runtime using LSM
+    url: https://microsoft.github.io/Threat-Matrix-for-Kubernetes/mitigations/MS-M9011%20Restrict%20Container%20Runtime%20using%20LSM/

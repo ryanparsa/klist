@@ -1,0 +1,57 @@
+id: CONT-20
+title: Mount Secrets as Volumes Rather Than Environment Variables
+stage: active
+description: |
+  Environment variables can sometimes be inspected via system tools, crash dumps, or error logs, leaking sensitive configurations (credentials, tokens, certificates).
+  Applications might also inadvertently print all environment variables on startup.
+
+  ```mermaid
+  graph TD
+    A[Compromised App] -->|Reads /proc/1/environ| B(Secret Values Leak)
+    C[Admin running kubectl] -->|kubectl exec printenv| B
+  ```
+
+  What to check:
+  Scan pods for environment variables mapped from secrets:
+  ```bash
+  kubectl get pods -A -o custom-columns="NAMESPACE:.metadata.namespace,NAME:.metadata.name,SECRET_ENV:.spec.containers[*].env[*].valueFrom.secretKeyRef.name" | grep -v "<none>"
+  ```
+
+  **What to check:**
+  ```bash
+  kubectl get pods -o yaml | grep envFrom
+  ```
+mitigations:
+  - |-
+    Avoid storing sensitive configurations as environment variables. Always mount Secret objects securely as temporary tmpfs volumes.
+
+    ```yaml
+    volumes:
+      - name: app-secret
+        secret:
+          secretName: my-app-secret
+    ```
+  - |-
+    Update the container spec to mount the volume instead of loading the secret into the environment:
+
+    ```yaml
+    volumeMounts:
+      - name: app-secret
+        mountPath: /etc/secrets
+        readOnly: true
+    ```
+tags:
+  - application-development
+  - secrets
+  - security
+tools:
+  - title: Checkov
+    url: https://www.checkov.io/
+
+references:
+  - title: Kubernetes Docs - Secrets
+    url: https://kubernetes.io/docs/concepts/configuration/secret/
+  - title: CIS Kubernetes Benchmark 5.4.1
+    url: https://workbench.cisecurity.org/benchmarks/16828
+  - title: Microsoft Threat Matrix - Application Credentials in Configuration Files
+    url: https://microsoft.github.io/Threat-Matrix-for-Kubernetes/techniques/Application%20credentials%20in%20configuration%20files/

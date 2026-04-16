@@ -1,0 +1,37 @@
+id: CLST-8
+title: Disable Anonymous Access to the Kubelet API
+stage: active
+description: |
+  The Kubelet exposes an HTTP API on port 10250 for the API server and debugging tools.
+  If anonymous access is enabled, unauthenticated users can execute commands in pods, read
+  logs, and retrieve sensitive runtime information.
+
+  **What to check:** On each node, inspect the kubelet configuration:
+
+  ```
+  cat /var/lib/kubelet/config.yaml | grep -A2 anonymous
+  ```
+
+  `authentication.anonymous.enabled` must be `false`.
+  `authorization.mode` must be `Webhook` (not `AlwaysAllow`).
+mitigations:
+  - |-
+    Set `authentication.anonymous.enabled: false` and
+    `authorization.mode: Webhook` in the KubeletConfiguration. Restart the kubelet.
+tags:
+  - kubelet
+  - authentication
+  - authorization
+  - hardening
+tools:
+  - title: kube-bench
+    url: https://github.com/aquasecurity/kube-bench
+  - title: Trivy
+    url: https://trivy.dev/
+references:
+  - title: "OWASP Kubernetes Top 10 - K09: Misconfigured Cluster Components"
+    url: https://owasp.org/www-project-kubernetes-top-ten/
+  - title: CIS Kubernetes Benchmark 4.2.1
+    url: https://workbench.cisecurity.org/benchmarks/16828
+  - title: Kubernetes Docs - Kubelet Authentication/Authorization
+    url: https://kubernetes.io/docs/reference/access-authn-authz/kubelet-authn-authz/

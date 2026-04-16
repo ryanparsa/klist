@@ -1,0 +1,70 @@
+id: CLUD-22
+title: Plan Network Address Space for Pod-Level Container Networking
+stage: active
+description: |
+  When using VPC-native (non-overlay) CNI plugins, each pod consumes a real IP address
+  from the cluster network. Without careful upfront planning, subnets become exhausted
+  as the cluster grows - resulting in pods stuck in `ContainerCreating` and node
+  scheduling failures that are difficult to recover from without downtime.
+
+  **What to check:**
+  - Are subnets sized for peak pod density? (recommended: /19 or larger per AZ)
+  - Are subnet available-IP alarms in place before exhaustion, not after?
+  - Are IP warm-pool settings tuned to avoid both waste and scheduling delays?
+  - Are secondary CIDRs or prefix delegation enabled for large-scale clusters?
+  - Has IPv6 been evaluated for greenfield clusters to avoid IPv4 exhaustion?
+
+  **AWS EKS:** VPC CNI assigns secondary IPs from node ENIs directly to pods. Tune
+  `WARM_ENI_TARGET`, `WARM_IP_TARGET`, and `MINIMUM_IP_TARGET` in the `aws-node`
+  ConfigMap. Enable prefix delegation (`ENABLE_PREFIX_DELEGATION=true`) to allocate
+  /28 prefixes per ENI slot (up to 110 pods/node cap). Use a secondary CIDR
+  (e.g. `100.64.0.0/10` CG-NAT space) with EKS custom networking (ENIConfig CRDs) to
+  conserve primary RFC1918 addresses for nodes.
+
+  **GKE:** Configure alias IP ranges per node using secondary address ranges on subnets.
+  Size the pod CIDR for: `max-pods-per-node × max-nodes` with buffer.
+
+  **AKS (Azure CNI):** Each pod gets an IP directly from the subnet - the subnet must
+  be large enough for nodes and their pods simultaneously.
+
+mitigations:
+  - |-
+    Size subnets before provisioning: (max nodes per AZ × max pods per node × 1.5 buffer).
+    Use /19 subnets (8190 IPs) per AZ for medium/large clusters; /16+ for very large ones.
+  - |-
+    On EKS, enable prefix delegation to support up to 110 pods/node without exhausting
+    ENI secondary IP slots:
+    ```
+    kubectl set env daemonset aws-node -n kube-system ENABLE_PREFIX_DELEGATION=true
+    ```
+    Update kubelet `--max-pods` to match via a new launch template or nodeadm config.
+  - |-
+    Attach secondary CIDR blocks (e.g. 100.64.0.0/16) to the VPC and route pods to those
+    subnets via EKS custom networking (ENIConfig CRDs) to preserve primary RFC1918 space
+    for nodes and other resources.
+  - |-
+    Set CloudWatch alarms on subnet available IP count. Alert at 30% and 10% remaining
+    capacity so action can be taken before pods fail to schedule.
+
+tags:
+  - networking
+  - capacity-planning
+  - infrastructure
+  - node-networking
+  - vpc-cni
+
+tools:
+  - title: EKS max-pods-calculator
+    url: https://github.com/awslabs/amazon-eks-ami/blob/main/templates/shared/runtime/max-pods-calculator.sh
+
+references:
+  - title: EKS Best Practices - VPC and Subnet Design
+    url: https://docs.aws.amazon.com/eks/latest/best-practices/subnets.html
+  - title: EKS VPC CNI - IP Address Management
+    url: https://docs.aws.amazon.com/eks/latest/userguide/cni-ipam.html
+  - title: EKS - Prefix Delegation
+    url: https://docs.aws.amazon.com/eks/latest/userguide/cni-increase-ip-addresses.html
+  - title: GKE - Alias IP Ranges Overview
+    url: https://cloud.google.com/kubernetes-engine/docs/concepts/alias-ips
+  - title: AKS - Configure Azure CNI Networking
+    url: https://learn.microsoft.com/en-us/azure/aks/configure-azure-cni

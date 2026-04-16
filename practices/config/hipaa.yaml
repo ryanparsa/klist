@@ -1,0 +1,37 @@
+id: hipaa
+label: HIPAA
+type: compliance
+description: >-
+  Controls required to support HIPAA compliance for workloads that store,
+  process, or transmit Protected Health Information (PHI).
+items:
+  required:
+    - CLUD-7
+    - CLUD-9
+    - CLST-6
+    - CLST-11
+    - CLST-18
+    - CLST-31
+    - CLST-46
+    - CONT-3
+    - CONT-7
+    - CODE-3
+    - CODE-7
+    - CONT-32
+  suggested:
+    - CLUD-2
+    - CLUD-3
+    - CLST-10
+    - CLST-15
+    - CLST-38
+    - CLST-54
+    - CLST-58
+    - CONT-9
+    - CONT-11
+    - CONT-12
+    - CONT-13
+    - CONT-21
+    - CONT-29
+    - CODE-2
+    - CODE-5
+    - CODE-17

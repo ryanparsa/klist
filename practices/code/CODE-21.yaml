@@ -1,0 +1,100 @@
+id: CODE-21
+title: Use Progressive Delivery to Reduce Deployment Risk
+stage: active
+description: |
+  A standard rolling deployment replaces all instances of the old version with the new
+  one as fast as the cluster can reschedule pods. If the new version has a bug, 100% of
+  users are exposed to it before the problem is detected. Rollback requires re-deploying
+  the previous image, which takes time - during which the bad version is serving traffic.
+
+  Progressive delivery limits blast radius by routing only a small fraction of traffic
+  (or a subset of users) to the new version first. Promotion to full rollout is gated on
+  automated health checks - error rate, latency, custom business metrics. If a health gate
+  fails, the rollout is automatically halted or rolled back before the majority of users
+  are affected.
+
+  Common strategies:
+
+  - **Canary**: a small percentage of traffic goes to the new version; the rest stays on
+    the old. Promote in steps if metrics stay healthy.
+  - **Blue/Green**: two identical environments; traffic switches atomically after the new
+    version passes verification.
+  - **A/B testing**: different user segments receive different versions based on headers
+    or cookies, often for feature experimentation.
+
+  **What to check:**
+
+  1. Do production deployments use a controlled traffic-shifting mechanism (not plain
+     rolling updates)?
+
+  2. Are promotion gates automated and tied to real metrics (error rate, latency p99)
+     rather than manual approval?
+
+  3. Is automatic rollback configured so a failed gate stops the rollout without manual
+     intervention?
+
+  4. Are deployment metrics observable in a dashboard so on-call engineers can monitor
+     a rollout in real time?
+mitigations:
+  - |-
+    For GitOps-managed clusters, configure a progressive delivery operator to manage
+    rollouts declaratively. Define a canary analysis step that runs for a fixed interval
+    before each traffic increment:
+    ```yaml
+    # Flagger Canary (example)
+    apiVersion: flagger.app/v1beta1
+    kind: Canary
+    metadata:
+      name: my-app
+    spec:
+      targetRef:
+        apiVersion: apps/v1
+        kind: Deployment
+        name: my-app
+      progressDeadlineSeconds: 60
+      service:
+        port: 80
+      analysis:
+        interval: 1m
+        threshold: 5        # max failed checks before rollback
+        maxWeight: 50       # max canary traffic %
+        stepWeight: 10      # increment per interval
+        metrics:
+          - name: request-success-rate
+            threshold: 99   # %
+            interval: 1m
+          - name: request-duration
+            threshold: 500  # ms
+            interval: 1m
+    ```
+  - |-
+    Ensure your ingress controller or service mesh supports traffic weight splitting,
+    which is required for canary deployments. Most major ingress controllers (NGINX,
+    Traefik, Istio, Linkerd) support this natively or via annotations.
+  - |-
+    Start by applying progressive delivery to your most critical or highest-traffic
+    services. Extend to all production deployments once you have confidence in the
+    analysis configuration.
+  - |-
+    Define promotion and rollback runbooks so on-call engineers know how to manually
+    promote or abort a stalled canary outside of business hours.
+tags:
+  - ci-cd
+  - deployment
+  - reliability
+  - canary
+  - progressive-delivery
+tools:
+  - title: Flagger
+    url: https://flagger.app/
+  - title: Argo Rollouts
+    url: https://argoproj.github.io/rollouts/
+references:
+  - title: Flagger - Progressive Delivery for Kubernetes
+    url: https://docs.flagger.app/
+  - title: Argo Rollouts - Concepts
+    url: https://argoproj.github.io/rollouts/concepts/
+  - title: Kubernetes Docs - Deployments
+    url: https://kubernetes.io/docs/concepts/workloads/controllers/deployment/
+  - title: Google SRE Book - Release Engineering
+    url: https://sre.google/sre-book/release-engineering/

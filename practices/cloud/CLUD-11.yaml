@@ -1,0 +1,68 @@
+id: CLUD-11
+title: Use the Cluster Autoscaler for Highly Variable Workloads
+stage: active
+description: |
+  Clusters experiencing highly variable workloads that occasionally outpace available node capacity require dynamic scaling. Without an automated scaling mechanism, Pods may fail to schedule when node capacity is exhausted, or the cluster may be over-provisioned during low-usage periods, wasting resources.
+
+  Effective cluster autoscaling requires careful configuration to balance performance, scalability, cost, and availability.
+
+  ### Key Best Practices
+
+  - **Version Matching**: Ensure the Cluster Autoscaler version matches the Kubernetes major and minor version of the cluster to ensure compatibility and stability.
+  - **Node Group Consistency**: Nodes within a single group or pool must have identical scheduling properties, including labels, taints, and resource capacity (CPU, memory, and accelerators). Inconsistent node groups can lead to simulation failures where the autoscaler assumes a pod can fit on a node that lacks the necessary resources.
+  - **Overprovisioning**: To reduce the latency of scaling out (which can take minutes), use "overprovisioning." This involves deploying low-priority "pause" pods that occupy space. When high-priority workloads need to scale, these pods are preempted, allowing the workload to start immediately while the autoscaler provisions new capacity in the background.
+  - **Protecting Workloads**: Use the `cluster-autoscaler.kubernetes.io/safe-to-evict=false` annotation on pods that are expensive to restart (e.g., long-running batch jobs or big data tasks) to prevent the autoscaler from terminating the node they reside on during scale-down.
+  - **Scalability Tuning**: In large clusters, minimize the number of node groups and increase the `scan-interval` to reduce the load on the Kubernetes API and cloud provider endpoints. A lower scan interval improves responsiveness but increases API rate limiting risks.
+  - **Expanders**: Use expander strategies like `least-waste` for cost optimization or `priority` to prefer specific node groups (e.g., interruptible/Spot instances over on-demand).
+  - **Scaling from Zero**: Ensure the autoscaler can discover the capacity and labels of empty node groups (typically via cloud provider tags or templates) to enable scaling from and to zero nodes.
+
+  **What to check:**
+
+  Verify the autoscaler is running and check its logs for scale-up/down decisions:
+  ```bash
+  kubectl get pods -n kube-system -l app.kubernetes.io/instance=cluster-autoscaler
+  kubectl logs -n kube-system -l app.kubernetes.io/instance=cluster-autoscaler
+  ```
+
+  Check for the existence of overprovisioning priority classes:
+  ```bash
+  kubectl get priorityclasses
+  ```
+
+  ```mermaid
+  flowchart TD
+    A[Pending Pod] --> B{Cluster Autoscaler}
+    B -->|Capacity Needed| C[Provision Node]
+    C --> D[Pod Scheduled]
+    E[Low Priority Pause Pod] -.->|Occupies| F[Spare Capacity]
+    A -->|Preempts| E
+  ```
+mitigations:
+  - "Deploy the Cluster Autoscaler to the cluster and ensure its version matches the Kubernetes control plane."
+  - "Organize nodes into consistent groups with identical labels, taints, and resource specifications."
+  - "Implement overprovisioning using a `PriorityClass` with a negative value and a Deployment of 'pause' pods (e.g., using the `registry.k8s.io/pause` image)."
+  - "Annotate critical or expensive-to-restart workloads with `cluster-autoscaler.kubernetes.io/safe-to-evict=false`."
+  - "Configure the `--expander` flag (e.g., `least-waste`, `priority`) to align with cost and availability goals."
+  - "Set `--scan-interval` and scale-down thresholds (e.g., `--scale-down-utilization-threshold`) to balance responsiveness against API load and stability."
+tags:
+  - application-development
+  - scaling
+  - cluster-autoscaler
+tools:
+  - title: Cluster Autoscaler
+    url: https://github.com/kubernetes/autoscaler/tree/master/cluster-autoscaler
+  - title: Karpenter
+    url: https://karpenter.sh/
+  - title: EC2 Instance Selector
+    url: https://github.com/aws/amazon-ec2-instance-selector
+  - title: AWS Node Termination Handler
+    url: https://github.com/aws/aws-node-termination-handler
+references:
+  - title: GitHub - Cluster Autoscaler FAQ
+    url: https://github.com/kubernetes/autoscaler/blob/master/cluster-autoscaler/FAQ.md
+  - title: Kubernetes Docs - Cluster Management
+    url: https://kubernetes.io/docs/tasks/administer-cluster/cluster-management/
+  - title: AWS EKS Best Practices - Cluster Autoscaler
+    url: https://aws.github.io/aws-eks-best-practices/autoscaling/cluster-autoscaler/
+  - title: Karpenter - Getting Started
+    url: https://karpenter.sh/docs/getting-started/

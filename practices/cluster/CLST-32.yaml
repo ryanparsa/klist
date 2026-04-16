@@ -1,0 +1,53 @@
+id: CLST-32
+title: Enforce Principle of Least Privilege in RBAC Policies
+stage: active
+description: |
+  Granting broad permissions in RBAC policies provides unnecessary API access and poses a significant security risk. The Principle of Least Privilege dictates that an entity should only be granted the absolute minimum permissions required to perform its function.
+
+  Avoid sharing generic, broad RBAC policies across diverse workloads. Use custom, fine-grained roles based on distinct job functions to ensure a compromised service account cannot affect unrelated namespaces or resource types.
+
+  **What to check:**
+  ```bash
+  kubectl get clusterrolebindings -o yaml | grep cluster-admin
+  kubectl get roles -A
+  ```
+
+  ```mermaid
+  flowchart TD
+    A[App A SA] -->|RoleBinding A| B[Role A]
+    C[App B SA] -->|RoleBinding B| D[Role B]
+    B --> E[Specific Resources Allowed]
+    D --> F[Specific Resources Allowed]
+  ```
+mitigations:
+  - "Start with an empty Role and add only the specific API groups, resources, and verbs required."
+  - "Define a Role catalog per team or function (e.g., `viewer`, `developer`, `operator`, `ci-deployer`)."
+  - "Create namespace-scoped Roles rather than ClusterRoles where possible."
+  - "Use `kubectl auth can-i --list` to verify actual permissions."
+  - "Run RBAC Lookup or Krane to identify over-permissioned service accounts and roles."
+  - "Adopt a GitOps approach for RBAC manifests to ensure all permissions are peer-reviewed."
+tags:
+  - governance
+  - rbac
+  - security
+tools:
+  - title: RBAC Lookup
+    url: https://github.com/FairwindsOps/rbac-lookup
+  - title: Krane
+    url: https://github.com/appvia/krane
+  - title: rbac-tool
+    url: https://github.com/alcideio/rbac-tool
+
+references:
+  - title: Kubernetes Docs - RBAC Authorization
+    url: https://kubernetes.io/docs/reference/access-authn-authz/rbac/
+  - title: "OWASP Kubernetes Top 10 - K03: Overly Permissive RBAC"
+    url: https://owasp.org/www-project-kubernetes-top-ten/
+  - title: Zalando - Kubernetes RBAC Roles
+    url: https://kubernetes-on-aws.readthedocs.io/en/latest/dev-guide/arch/access-control/adr-004-roles-and-service-accounts.html
+  - title: Microsoft Threat Matrix - Exec into Container
+    url: https://microsoft.github.io/Threat-Matrix-for-Kubernetes/techniques/Exec%20into%20container/
+  - title: Microsoft Threat Matrix - Cluster-Admin Binding
+    url: https://microsoft.github.io/Threat-Matrix-for-Kubernetes/techniques/Cluster-admin%20binding/
+  - title: Microsoft Threat Matrix - Access Kubernetes API Server
+    url: https://microsoft.github.io/Threat-Matrix-for-Kubernetes/techniques/Access%20the%20K8S%20API%20server/

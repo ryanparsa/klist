@@ -1,0 +1,93 @@
+id: CLST-49
+title: Back Up etcd Regularly for Disaster Recovery
+stage: active
+description: |
+  etcd is the single source of truth for all Kubernetes cluster state - workloads,
+  RBAC, secrets, network policy, and more. A corrupted, lost, or accidentally deleted
+  etcd dataset means losing the entire cluster configuration with no path to recovery
+  short of rebuilding from scratch.
+
+  **What to check:**
+  - Are etcd snapshots taken on a regular schedule (at minimum daily)?
+  - Are snapshots stored outside the cluster (separate bucket, account, or region)?
+  - Is the restore procedure documented and tested at least quarterly?
+  - Are snapshot files encrypted at rest?
+  - Is snapshot age monitored and alerting in place if a snapshot is missed?
+    ```
+    # Take a snapshot manually (run on a control plane node)
+    ETCDCTL_API=3 etcdctl snapshot save /tmp/etcd-snapshot.db \
+      --endpoints=https://127.0.0.1:2379 \
+      --cacert=/etc/kubernetes/pki/etcd/ca.crt \
+      --cert=/etc/kubernetes/pki/etcd/server.crt \
+      --key=/etc/kubernetes/pki/etcd/server.key
+
+    # Verify snapshot integrity
+    ETCDCTL_API=3 etcdctl snapshot status /tmp/etcd-snapshot.db --write-out=table
+    ```
+
+  **Managed clusters (EKS, GKE, AKS):** The control plane, including etcd, is fully
+  managed by the provider. Snapshots are handled internally - you cannot access etcd
+  directly. Disaster recovery on managed clusters relies on application-level backups
+  (Velero for workload state) and infrastructure-as-code (Terraform/Helm) to
+  reconstruct cluster configuration.
+
+mitigations:
+  - |-
+    On self-managed clusters, schedule automated etcd snapshots via a CronJob or
+    systemd timer. Upload the snapshot to an isolated, cross-region object storage
+    bucket immediately after creation:
+    ```
+    ETCDCTL_API=3 etcdctl snapshot save /tmp/etcd-snapshot.db \
+      --endpoints=https://127.0.0.1:2379 \
+      --cacert=/etc/kubernetes/pki/etcd/ca.crt \
+      --cert=/etc/kubernetes/pki/etcd/server.crt \
+      --key=/etc/kubernetes/pki/etcd/server.key
+    aws s3 cp /tmp/etcd-snapshot.db s3://my-etcd-backups/$(date +%Y-%m-%dT%H:%M:%S).db
+    ```
+    Restrict write access to the backup bucket so cluster credentials cannot delete snapshots.
+  - |-
+    Validate the restore path regularly. On a non-production cluster, stop the API server,
+    restore the snapshot, and confirm cluster state comes back intact:
+    ```
+    ETCDCTL_API=3 etcdctl snapshot restore /tmp/etcd-snapshot.db \
+      --data-dir=/var/lib/etcd-restore
+    ```
+    Document the full runbook (snapshot restore → API server restart → verification steps)
+    and keep it accessible outside the cluster.
+  - |-
+    Encrypt snapshot files before storing them. etcd snapshots contain all Secrets in
+    plaintext regardless of at-rest encryption settings in the API server. Use server-side
+    encryption on the storage bucket (SSE-KMS) and restrict key access to a dedicated
+    backup IAM role.
+  - |-
+    On managed clusters (EKS, GKE, AKS), use Velero with object storage to back up
+    all namespaced and cluster-scoped resources. Combine with volume snapshots for
+    PersistentVolumeClaim data. This provides a recoverable application state even if the
+    cluster must be recreated entirely from infrastructure-as-code.
+
+tags:
+  - backup
+  - disaster-recovery
+  - etcd
+  - data-protection
+  - resilience
+
+tools:
+  - title: etcdctl
+    url: https://etcd.io/docs/v3.5/op-guide/maintenance/
+  - title: Velero
+    url: https://velero.io/
+
+references:
+  - title: Microsoft Threat Matrix - Data Destruction
+    url: https://microsoft.github.io/Threat-Matrix-for-Kubernetes/techniques/Data%20destruction/
+  - title: Kubernetes Docs - Operating etcd clusters (Backing up)
+    url: https://kubernetes.io/docs/tasks/administer-cluster/configure-upgrade-etcd/#backing-up-an-etcd-cluster
+  - title: etcd Docs - Disaster Recovery
+    url: https://etcd.io/docs/v3.5/op-guide/recovery/
+  - title: EKS Best Practices - Backup and Restore
+    url: https://docs.aws.amazon.com/eks/latest/best-practices/backup-restore.html
+  - title: GKE - Backup for GKE
+    url: https://cloud.google.com/kubernetes-engine/docs/add-on/backup-for-gke/concepts/backup-for-gke
+  - title: AKS - Backup AKS
+    url: https://learn.microsoft.com/en-us/azure/backup/azure-kubernetes-service-backup-overview

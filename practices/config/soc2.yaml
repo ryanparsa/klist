@@ -1,0 +1,34 @@
+id: soc2
+label: SOC 2
+type: compliance
+description: >-
+  Controls supporting SOC 2 Trust Services Criteria (Security, Availability,
+  Confidentiality) for Kubernetes workloads.
+items:
+  required:
+    - CLUD-3
+    - CLUD-9
+    - CLST-9
+    - CLST-11
+    - CLST-12
+    - CLST-18
+    - CLST-31
+    - CLST-46
+    - CONT-8
+    - CONT-23
+    - CODE-1
+    - CODE-3
+    - CONT-32
+  suggested:
+    - CLST-10
+    - CLST-15
+    - CLST-16
+    - CLST-30
+    - CLST-53
+    - CLST-58
+    - CONT-9
+    - CONT-13
+    - CODE-2
+    - CODE-6
+    - CODE-17
+    - CODE-18

@@ -1,0 +1,74 @@
+id: CONT-30
+title: Isolate Untrusted Workloads with a Sandboxed Container Runtime
+stage: active
+description: |
+  Standard container runtimes share the host kernel across all containers on a node. A
+  container escape vulnerability - whether in the runtime, a misconfigured capability, or
+  a kernel exploit - gives an attacker access to the host and every other workload on it.
+
+  In multi-tenant clusters or environments running user-supplied, third-party, or otherwise
+  untrusted code, this shared-kernel model is a significant blast-radius risk. A sandboxed
+  runtime intercepts system calls and provides each workload with its own kernel boundary,
+  so a successful container escape is contained to the sandbox rather than the host.
+
+  **What to check:** Verify that a `RuntimeClass` resource exists for the sandboxed runtime
+  and that high-risk workloads (user code execution, third-party containers, CI runners)
+  explicitly request it:
+
+  ```
+  kubectl get runtimeclass
+  kubectl get pods -A -o jsonpath='{range .items[*]}{.metadata.name}{"\t"}{.spec.runtimeClassName}{"\n"}{end}' \
+    | grep -v "^$"
+  ```
+
+  Confirm the sandbox runtime daemon is running on all nodes that schedule untrusted workloads:
+
+  ```
+  # gVisor
+  kubectl get pods -n kube-system | grep runsc
+  # Kata Containers
+  kubectl get pods -n kata-containers 2>/dev/null || systemctl status kata-containers 2>/dev/null
+  ```
+mitigations:
+  - |-
+    Install a sandboxed runtime on nodes designated for untrusted workloads. Create a
+    `RuntimeClass` resource to name the handler:
+    ```yaml
+    apiVersion: node.k8s.io/v1
+    kind: RuntimeClass
+    metadata:
+      name: sandboxed
+    handler: runsc   # or kata for Kata Containers
+    ```
+  - |-
+    Apply the `RuntimeClass` to high-risk workloads in their pod spec:
+    ```yaml
+    spec:
+      runtimeClassName: sandboxed
+    ```
+    For multi-tenant platforms where users submit their own workloads, enforce the
+    `RuntimeClass` automatically via an admission policy.
+  - |-
+    Use node taints/labels to route sandboxed workloads to appropriately configured nodes,
+    and standard workloads to nodes without the overhead of a sandboxed runtime.
+tags:
+  - runtime-security
+  - isolation
+  - multi-tenancy
+  - hardening
+tools:
+  - title: gVisor
+    url: https://gvisor.dev/
+  - title: Kata Containers
+    url: https://katacontainers.io/
+references:
+  - title: Kubernetes Docs - Runtime Class
+    url: https://kubernetes.io/docs/concepts/containers/runtime-class/
+  - title: gVisor - What is gVisor?
+    url: https://gvisor.dev/docs/
+  - title: Kata Containers - Architecture
+    url: https://katacontainers.io/learn/
+  - title: NSA/CISA Kubernetes Hardening Guide
+    url: https://media.defense.gov/2022/Aug/29/2003066362/-1/-1/0/CTR_KUBERNETES_HARDENING_GUIDANCE_1.2_20220829.PDF
+  - title: Microsoft Threat Matrix - Escape to Host
+    url: https://microsoft.github.io/Threat-Matrix-for-Kubernetes/techniques/Escape%20to%20host/

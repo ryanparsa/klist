@@ -1,0 +1,68 @@
+id: CLST-55
+title: Enable the EventRateLimit Admission Controller
+stage: active
+description: |
+  Without rate limiting, a single user or compromised workload can flood the Kubernetes API
+  server with object creation requests, exhausting server memory and starving legitimate
+  traffic. The `EventRateLimit` admission controller caps the rate of API requests per
+  user, namespace, or server, providing a defence against accidental and malicious
+  denial-of-service conditions.
+
+  **What to check:**
+
+  ```
+  ps aux | grep kube-apiserver | grep EventRateLimit
+  ```
+
+  The `--enable-admission-plugins` flag must include `EventRateLimit` and an
+  `--admission-control-config-file` must reference a valid `EventRateLimit` configuration.
+
+  Verify the config file is present and contains limits:
+
+  ```
+  cat /etc/kubernetes/admission-config.yaml
+  ```
+mitigations:
+  - |-
+    Create an `EventRateLimit` configuration file, for example:
+
+    ```yaml
+    apiVersion: eventratelimit.admission.k8s.io/v1alpha1
+    kind: Configuration
+    limits:
+      - type: Server
+        qps: 5000
+        burst: 20000
+      - type: Namespace
+        qps: 50
+        burst: 100
+      - type: User
+        qps: 10
+        burst: 50
+    ```
+
+    Reference it from the API server:
+    ```
+    --enable-admission-plugins=...,EventRateLimit
+    --admission-control-config-file=/etc/kubernetes/admission-config.yaml
+    ```
+
+    Tune QPS and burst values based on observed cluster traffic before enforcing
+    in production.
+tags:
+  - api-server
+  - admission-control
+  - denial-of-service
+  - hardening
+tools:
+  - title: kube-bench
+    url: https://github.com/aquasecurity/kube-bench
+references:
+  - title: CIS Kubernetes Benchmark 1.2.9
+    url: https://workbench.cisecurity.org/benchmarks/16828
+  - title: Kubernetes Docs - EventRateLimit Admission Controller
+    url: https://kubernetes.io/docs/reference/access-authn-authz/admission-controllers/#eventratelimit
+  - title: NSA/CISA Kubernetes Hardening Guide
+    url: https://media.defense.gov/2022/Aug/29/2003066362/-1/-1/0/CTR_KUBERNETES_HARDENING_GUIDANCE_1.2_20220829.PDF
+  - title: Microsoft Threat Matrix - Denial of Service
+    url: https://microsoft.github.io/Threat-Matrix-for-Kubernetes/techniques/Denial%20of%20service/

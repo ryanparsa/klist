@@ -1,0 +1,39 @@
+id: CLST-2
+title: Set Authorization Mode to RBAC and Node
+stage: active
+description: |
+  The API server's `--authorization-mode` flag must be set to `RBAC,Node`. The `AlwaysAllow`
+  mode grants every request full access regardless of identity, which is never acceptable
+  in any environment.
+
+  **What to check:**
+
+  ```
+  ps aux | grep kube-apiserver | grep authorization-mode
+  ```
+
+  The value must include `RBAC` and `Node`. It must not include `AlwaysAllow`.
+mitigations:
+  - |-
+    Set `--authorization-mode=Node,RBAC` in the kube-apiserver manifest.
+    Verify all existing RBAC policies are correct before removing AlwaysAllow if it was
+    previously in use.
+tags:
+  - api-server
+  - rbac
+  - authorization
+  - hardening
+tools:
+  - title: kube-bench
+    url: https://github.com/aquasecurity/kube-bench
+  - title: RBAC Lookup
+    url: https://github.com/FairwindsOps/rbac-lookup
+references:
+  - title: CIS Kubernetes Benchmark 1.2.7
+    url: https://workbench.cisecurity.org/benchmarks/16828
+  - title: PCI-DSS Requirement 7 - Restrict Access to System Components
+    url: https://www.pcisecuritystandards.org/document_library/
+  - title: Kubernetes Docs - Authorization Modes
+    url: https://kubernetes.io/docs/reference/access-authn-authz/authorization/
+  - title: Microsoft Threat Matrix - Access Kubernetes API Server
+    url: https://microsoft.github.io/Threat-Matrix-for-Kubernetes/techniques/Access%20the%20K8S%20API%20server/

@@ -1,0 +1,52 @@
+id: CLST-29
+title: Centralise Cluster and Workload Logs
+stage: active
+description: |
+  Logs scattered across ephemeral nodes are lost when those nodes are scaled down, upgraded, or fail. Centralizing logs through an aggregation tool ensures telemetry data persists securely and remains searchable regardless of the underlying infrastructure's lifecycle.
+
+  Complete visibility requires that logs capture essential metadata—such as namespace, pod name, container name, and node name—to allow for effective correlation during incident response or security auditing.
+
+  **What to check:**
+  ```bash
+  kubectl get ds -A -l app.kubernetes.io/component=logging-agent
+  ```
+
+  ```mermaid
+  flowchart TD
+    A[Workload Logs] --> E[Log Collector Agent]
+    B[Node Logs] --> E
+    C[API Audit Logs] --> F[Log Aggregator / SIEM]
+    D[Control Plane Logs] --> F
+    E --> F
+    F --> G[Search & Dashboards]
+  ```
+mitigations:
+  - "Deploy a log collector (e.g., Fluent Bit, Fluentd) as a DaemonSet to capture kubelet, container runtime, and application logs from all nodes."
+  - "Ensure the logging pipeline is configured to enrich every log entry with Kubernetes metadata (namespace, pod, container, and node)."
+  - "Forward all logs (Workload, Node, API Audit, and Control Plane) to a centralised, tamper-resistant store (e.g., Loki, Elasticsearch, or cloud-native logging services)."
+  - "Configure structured log parsing (JSON) to ensure logs are easily queryable and actionable."
+  - "Ensure the aggregation pipeline is highly available and uses persistent buffers to prevent log loss during network backpressure."
+  - "Enable Kubernetes API server audit logging (CLST-11) and, for managed clusters, enable control plane log exports (CLUD-17) to ensure comprehensive cluster visibility."
+tags:
+  - configuration
+  - logging
+  - observability
+  - audit
+tools:
+  - title: Fluentd
+    url: https://www.fluentd.org/
+  - title: Loki
+    url: https://grafana.com/oss/loki/
+  - title: Falco
+    url: https://falco.org/
+references:
+  - title: Kubernetes Docs - Logging Architecture
+    url: https://kubernetes.io/docs/concepts/cluster-administration/logging/
+  - title: NSA/CISA Kubernetes Hardening Guide
+    url: https://media.defense.gov/2022/Aug/29/2003066362/-1/-1/0/CTR_KUBERNETES_HARDENING_GUIDANCE_1.2_20220829.PDF
+  - title: Microsoft Threat Matrix - Delete Kubernetes Events
+    url: https://microsoft.github.io/Threat-Matrix-for-Kubernetes/techniques/Delete%20K8S%20events/
+  - title: Microsoft Threat Matrix - Clear Container Logs
+    url: https://microsoft.github.io/Threat-Matrix-for-Kubernetes/techniques/Clear%20container%20logs/
+  - title: AWS Fluent Bit for CloudWatch Container Insights
+    url: https://docs.aws.amazon.com/AmazonCloudWatch/latest/monitoring/Container-Insights-setup-logs-FluentBit.html

@@ -1,0 +1,69 @@
+id: CODE-18
+title: Run Regular Cluster Penetration Tests
+stage: active
+description: |
+  Static configuration checks (CIS benchmark, Trivy, kube-bench) identify known
+  misconfigurations but cannot simulate an active attacker exploiting a chain of
+  weaknesses. Periodic penetration testing exercises actual attack paths - privilege
+  escalation, lateral movement, container escapes - against the running cluster and
+  reveals issues that passive scanning misses.
+
+  **What to check:**
+
+  1. Has a cluster penetration test been run within the last 12 months?
+  2. Is kube-hunter used for automated baseline scanning?
+
+  ```
+  # Run as a pod inside the cluster for internal perspective
+  kubectl run kube-hunter \
+    --image=aquasec/kube-hunter:latest \
+    --restart=Never \
+    -- --pod
+  kubectl logs kube-hunter
+  ```
+
+  ```
+  # Run externally against the API server endpoint
+  docker run -it aquasec/kube-hunter --remote <api-server-ip>
+  ```
+
+  3. Are Kubescape or similar tools run against the cluster for MITRE ATT&CK coverage?
+
+  ```
+  kubescape scan framework mitre --enable-host-scan
+  ```
+mitigations:
+  - |-
+    Schedule at least one external penetration test per year by a qualified team.
+    Include the following scope: RBAC privilege escalation, container escape paths,
+    exposed endpoints (API server, kubelet, etcd), secret extraction, and network
+    policy bypass.
+  - |-
+    Run kube-hunter in CI or as a periodic cluster Job to catch new attack surface
+    as the cluster evolves. Treat all findings of severity MEDIUM and above as
+    actionable work items.
+  - |-
+    Use Kubescape to scan continuously against MITRE ATT&CK for Containers and
+    NSA/CISA frameworks:
+
+    ```
+    kubescape scan framework nsa --enable-host-scan
+    kubescape scan framework mitre --enable-host-scan
+    ```
+tags:
+  - penetration-testing
+  - security-testing
+  - compliance
+  - threat-detection
+tools:
+  - title: kube-hunter
+    url: https://github.com/aquasecurity/kube-hunter
+  - title: Kubescape
+    url: https://github.com/kubescape/kubescape
+references:
+  - title: MITRE ATT&CK for Containers
+    url: https://attack.mitre.org/matrices/enterprise/containers/
+  - title: NSA/CISA Kubernetes Hardening Guide
+    url: https://media.defense.gov/2022/Aug/29/2003066362/-1/-1/0/CTR_KUBERNETES_HARDENING_GUIDANCE_1.2_20220829.PDF
+  - title: Microsoft Threat Matrix for Kubernetes
+    url: https://microsoft.github.io/Threat-Matrix-for-Kubernetes/

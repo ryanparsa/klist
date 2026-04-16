@@ -1,0 +1,38 @@
+id: CODE-2
+title: Scan Dependencies for Known Vulnerabilities
+stage: active
+description: |
+  Third-party libraries and container base images frequently contain CVEs. Software
+  Composition Analysis (SCA) tools identify vulnerable dependencies before they are shipped
+  to production. The Log4Shell (Log4j) and XZ Utils incidents demonstrated the catastrophic
+  impact of unscanned supply chains.
+
+  **What to check:** Verify an SCA tool is wired into the CI pipeline (e.g., Trivy, Grype,
+  Snyk, Dependabot). Confirm High/Critical CVEs block deployment. Confirm base image scans
+  are included, not just application dependencies.
+mitigations:
+  - |-
+    Add `trivy fs .` or equivalent to the CI workflow. Enable Dependabot or
+    Renovate for automated dependency PRs. Set policy thresholds to block on CVSS ≥ 7.0 (High).
+tags:
+  - ci-cd
+  - sca
+  - dependency-scanning
+  - supply-chain
+  - vulnerability-management
+tools:
+  - title: Trivy
+    url: https://trivy.dev/
+  - title: Grype
+    url: https://github.com/anchore/grype
+  - title: Dependabot
+    url: https://github.com/dependabot
+references:
+  - title: PCI-DSS Requirement 6.2 - Manage Security Vulnerabilities
+    url: https://www.pcisecuritystandards.org/document_library/
+  - title: "OWASP Kubernetes Top 10 - K02: Supply Chain Vulnerabilities"
+    url: https://owasp.org/www-project-kubernetes-top-ten/
+  - title: Trivy - Container and Filesystem Scanner
+    url: https://trivy.dev/
+  - title: Microsoft Threat Matrix - Application Vulnerability
+    url: https://microsoft.github.io/Threat-Matrix-for-Kubernetes/techniques/Application%20Vulnerability/

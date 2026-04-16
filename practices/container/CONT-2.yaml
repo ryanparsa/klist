@@ -1,0 +1,36 @@
+id: CONT-2
+title: Prohibit Privileged Containers
+stage: active
+description: |
+  A container running with `privileged: true` has unrestricted access to the host kernel and
+  devices. It can load kernel modules, modify host networking, and escape the container
+  boundary entirely. No production workload should require privileged mode. Attackers who
+  gain access to a privileged container, or have permissions to create a new privileged
+  container (e.g., by using a compromised pod's service account), can access host resources.
+
+  **What to check:**
+
+  ```
+  kubectl get pods -A -o json | \
+    jq '.items[] | select(.spec.containers[].securityContext.privileged == true) | .metadata.name'
+  ```
+mitigations:
+  - "Remove `privileged: true` from all container security contexts."
+  - "If a workload legitimately needs elevated capabilities, grant only the specific Linux capabilities required via `capabilities.add` rather than full privileged mode."
+  - "Block privileged containers using an admission controller."
+  - "Restrict privileged containers by ensuring pods meet defined Pod Security Standards (PSS) such as Baseline or Restricted profiles."
+  - "Gate images deployed to the Kubernetes cluster by restricting the deployment of new containers to a trusted supply chain."
+tags:
+  - security
+  - privilege-escalation
+  - container-runtime
+tools: []
+references:
+  - title: CIS Kubernetes Benchmark 5.2.1
+    url: https://workbench.cisecurity.org/benchmarks/16828
+  - title: SOC 2 CC6.1 - Logical Access Controls
+    url: https://www.aicpa.org/resources/article/soc-2-trust-service-principles
+  - title: "OWASP Kubernetes Top 10 - K01: Insecure Workload Configurations"
+    url: https://owasp.org/www-project-kubernetes-top-ten/
+  - title: Microsoft Threat Matrix - Privileged Container
+    url: https://microsoft.github.io/Threat-Matrix-for-Kubernetes/techniques/Privileged%20container/

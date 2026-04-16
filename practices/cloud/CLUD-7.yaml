@@ -1,0 +1,34 @@
+id: CLUD-7
+title: Encrypt Node Storage at Rest
+stage: active
+description: |
+  All persistent volumes and node root disks must be encrypted at rest. Unencrypted disks
+  risk exposure of container data, etcd snapshots, and cached secrets if physical media is
+  recovered or cloud snapshots are shared inadvertently.
+
+  **What to check:** In AWS, verify EBS volumes are encrypted (EC2 → Volumes → Encryption).
+  In GCP, verify disk encryption is enabled. Check that the KMS key is customer-managed
+  (CMK) if compliance requires it.
+mitigations:
+  - |-
+    Enable default EBS/persistent disk encryption at the account or project
+    level. Use a Cloud KMS or HSM-backed key for regulated workloads. Rotate encryption keys
+    according to policy.
+tags:
+  - storage
+  - encryption
+  - compliance
+tools:
+  - title: Prowler
+    url: https://github.com/prowler-cloud/prowler
+  - title: Checkov
+    url: https://www.checkov.io/
+  - title: tfsec
+    url: https://github.com/aquasecurity/tfsec
+references:
+  - title: HIPAA Integrity Controls
+    url: https://www.hhs.gov/hipaa/for-professionals/security/laws-regulations/index.html
+  - title: PCI-DSS Requirement 3.5 - Protect Stored Account Data
+    url: https://www.pcisecuritystandards.org/document_library/
+  - title: AWS EKS - Envelope Encryption
+    url: https://docs.aws.amazon.com/eks/latest/userguide/enable-kms.html
