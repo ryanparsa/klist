@@ -4,7 +4,7 @@ stage: active
 description: |
   Kubernetes Secrets are base64-encoded by default, which is not encryption. Anyone with
   read access to etcd can trivially decode all secrets. Without an `EncryptionConfiguration`
-  using a KMS or strong AES provider, Kubernetes writes secrets to disk unencrypted, exposing all cluster credentials.
+  using a KMS or strong AES provider, Kubernetes writes secrets to disk unencrypted, exposing all cluster credentials. This also ensures that etcd backups contain encrypted secrets, providing an essential layer of defense if backups are not separately encrypted or are exfiltrated.
 
   **What to check:**
 
@@ -41,3 +41,5 @@ references:
     url: https://www.pcisecuritystandards.org/document_library/
   - title: Microsoft Threat Matrix - List Kubernetes Secrets
     url: https://microsoft.github.io/Threat-Matrix-for-Kubernetes/techniques/List%20K8S%20secrets/
+  - title: "OWASP Kubernetes Top 10 - K08: Secrets Management (2022)"
+    url: https://owasp.org/www-project-kubernetes-top-ten/

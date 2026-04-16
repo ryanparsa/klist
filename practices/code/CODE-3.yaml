@@ -33,3 +33,5 @@ references:
     url: https://www.iso.org/standard/27001
   - title: GitLeaks - Secret Scanner
     url: https://github.com/gitleaks/gitleaks
+  - title: "OWASP Kubernetes Top 10 - K08: Secrets Management (2022)"
+    url: https://owasp.org/www-project-kubernetes-top-ten/

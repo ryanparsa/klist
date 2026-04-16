@@ -55,3 +55,5 @@ references:
     url: https://workbench.cisecurity.org/benchmarks/16828
   - title: Microsoft Threat Matrix - Application Credentials in Configuration Files
     url: https://microsoft.github.io/Threat-Matrix-for-Kubernetes/techniques/Application%20credentials%20in%20configuration%20files/
+  - title: "OWASP Kubernetes Top 10 - K08: Secrets Management (2022)"
+    url: https://owasp.org/www-project-kubernetes-top-ten/
