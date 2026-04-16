@@ -36,7 +36,7 @@ tools:
   - title: Trivy
     url: https://trivy.dev/
 references:
-  - title: "OWASP Kubernetes Top 10 - K03: Overly Permissive RBAC"
+  - title: "OWASP Kubernetes Top 10 - K02: Overly Permissive Authorization Configurations"
     url: https://owasp.org/www-project-kubernetes-top-ten/
   - title: CIS Kubernetes Benchmark 5.1.6
     url: https://workbench.cisecurity.org/benchmarks/16828

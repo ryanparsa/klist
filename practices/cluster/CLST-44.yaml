@@ -38,6 +38,8 @@ tools:
 references:
   - title: Kubernetes Docs - Secrets
     url: https://kubernetes.io/docs/concepts/configuration/secret/
+  - title: "OWASP Kubernetes Top 10 - K02: Overly Permissive Authorization Configurations"
+    url: https://owasp.org/www-project-kubernetes-top-ten/
   - title: Microsoft Threat Matrix - List Kubernetes Secrets
     url: https://microsoft.github.io/Threat-Matrix-for-Kubernetes/techniques/List%20K8S%20secrets/
   - title: CIS Kubernetes Benchmark 5.4

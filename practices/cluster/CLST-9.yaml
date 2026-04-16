@@ -6,9 +6,15 @@ description: |
   A single compromised service account with wildcard access can read all secrets, modify any
   workload, or escalate privileges cluster-wide.
 
+  **Third-Party Manifests and Helm Charts:**
+  Many third-party applications, Operators, and community-maintained Helm charts provision
+  over-privileged RBAC roles using wildcards to ensure out-of-the-box functionality. This
+  creates a broad blast radius where a compromised application inherits administrative
+  capabilities across the cluster.
+
   **What to check:**
 
-  ```
+  ```bash
   kubectl get clusterrolebindings,rolebindings -A -o json | \
     jq '.items[].rules[]? | select(.verbs[] == "*" or .resources[] == "*")'
   ```
@@ -17,6 +23,7 @@ mitigations:
     Replace wildcard rules with explicit, minimal permissions. Conduct a
     quarterly review of all RoleBindings and ClusterRoleBindings. Remove any bindings that are
     no longer required. Automate detection with tools such as RBAC Lookup, Krane, or Audit2RBAC.
+  - "Before deploying third-party charts or operators, audit their RBAC manifests for wildcard verbs (`*`) or resources (`*`)."
 tags:
   - rbac
   - least-privilege
@@ -33,7 +40,7 @@ references:
     url: https://www.aicpa.org/resources/article/soc-2-trust-service-principles
   - title: PCI-DSS Requirement 7 - Restrict Access
     url: https://www.pcisecuritystandards.org/document_library/
-  - title: "OWASP Kubernetes Top 10 - K03: Overly Permissive RBAC"
+  - title: "OWASP Kubernetes Top 10 - K02: Overly Permissive Authorization Configurations"
     url: https://owasp.org/www-project-kubernetes-top-ten/
   - title: Microsoft Threat Matrix - Exec into Container
     url: https://microsoft.github.io/Threat-Matrix-for-Kubernetes/techniques/Exec%20into%20container/
