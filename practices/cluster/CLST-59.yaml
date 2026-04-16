@@ -1,0 +1,62 @@
+id: CLST-59
+title: Audit and Patch Cluster Add-ons and Platform Components
+stage: active
+description: |
+  A Kubernetes cluster often runs many third-party components to provide essential services
+  like Ingress, Service Mesh, GitOps, observability, and secret management. These
+  components (e.g., Ingress Controllers, ArgoCD, Istio, Prometheus) often run with high
+  privileges and are susceptible to vulnerabilities. Unlike the core Kubernetes binaries
+  or the node OS, these "add-ons" often fall into a management gap where they are neither
+  scanned as application code nor updated as part of the infrastructure OS.
+
+  **What to check:**
+  - Is there a documented inventory of all third-party components running in the cluster?
+  - Are these components independently audited for overly permissive RBAC and high-level
+    kernel access before deployment?
+  - Is there a recurring patch management process specifically for cluster add-ons?
+  - Are security bulletins for critical platform tools (e.g., Ingress-Nginx, Istio, Linkerd)
+    actively monitored?
+  - Do you verify that add-ons are running supported versions and not end-of-life (EOL)?
+
+mitigations:
+  - |-
+    Maintain an accurate inventory of all third-party software, including version numbers
+    and the namespaces they occupy.
+  - |-
+    Audit all third-party manifests or Helm charts before deployment. Specifically, check
+    for `privileged: true`, `hostPath` mounts, and ClusterRoleBindings that grant broader
+    access than required.
+  - |-
+    Subscribe to security mailing lists and disclosure databases for all installed cluster
+    add-ons.
+  - |-
+    Use policy engines to enforce that only approved and scanned versions of add-ons are
+    deployed to the cluster.
+  - |-
+    Establish a regular cadence for updating cluster-wide platform components, ideally
+    ahead of or alongside Kubernetes minor version upgrades.
+
+tags:
+  - vulnerability-management
+  - patch-management
+  - add-ons
+  - supply-chain
+  - platform-engineering
+
+tools:
+  - title: OPA Gatekeeper
+    url: https://open-policy-agent.github.io/gatekeeper/website/docs/
+  - title: Kyverno
+    url: https://kyverno.io/
+  - title: Trivy
+    url: https://trivy.dev/
+
+references:
+  - title: "OWASP Kubernetes Top 10 - K10: Vulnerable Components"
+    url: https://owasp.org/www-project-kubernetes-top-ten/2022/en/src/K10-vulnerable-components.md
+  - title: Kubernetes Security - Disclosure Information
+    url: https://kubernetes.io/docs/reference/issues-security/security/
+  - title: Istio Security Bulletins
+    url: https://istio.io/latest/news/security/
+  - title: ArgoCD CVE Database
+    url: https://www.cvedetails.com/vulnerability-list/vendor_id-11448/product_id-81059/version_id-634305/Linuxfoundation-Argo-cd--.html
