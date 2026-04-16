@@ -1,0 +1,48 @@
+id: CLST-57
+title: Export and Alert on Kubernetes Events
+stage: active
+description: |
+  Kubernetes events are API objects that provide insight into the state changes and operational
+  errors of cluster resources (e.g., Pod scheduling failures, container restarts, OOMKills, or
+  failed image pulls). However, events are ephemeral and are automatically deleted from the API
+  server after a short duration (typically 1 hour).
+
+  Failing to capture these events leads to a "blind spot" in security and operational
+  observability. Attackers may trigger events through malicious activity, and without a
+  mechanism to export and persist them, this evidence is lost before it can be analysed.
+
+  **What to check:**
+  Verify if a mechanism is in place to export events to a central store:
+  ```bash
+  kubectl get pods -A | grep -i event
+  ```
+  Check if events older than 1 hour are available in your central logging or SIEM platform.
+
+  ```mermaid
+  flowchart LR
+    A[K8s API Server] -->|Events Feed| B[Event Exporter]
+    B -->|Forward| C[Centralised Log Store]
+    C -->|Trigger| D[Security Alerts]
+  ```
+mitigations:
+  - "Deploy a dedicated event exporter to watch the Kubernetes API and forward events to a central logging platform."
+  - "Configure event filtering to reduce noise while ensuring critical events (Warning, Failed, BackOff, OOMKilled, Unhealthy) are captured."
+  - "Define alerting rules for high-signal security events, such as multiple 'Failed' authentication attempts or 'Forbidden' access requests recorded in the event stream."
+  - "Persist exported events in a tamper-resistant store for at least 90 days to support incident response and forensic investigations."
+tags:
+  - logging
+  - observability
+  - security
+  - monitoring
+tools:
+  - title: kubernetes-event-exporter
+    url: https://github.com/resmoio/kubernetes-event-exporter
+  - title: Eventrouter
+    url: https://github.com/heptiolabs/eventrouter
+references:
+  - title: Kubernetes Docs - Logging Architecture
+    url: https://kubernetes.io/docs/concepts/cluster-administration/logging/
+  - title: "OWASP Kubernetes Top 10 - K10: Inadequate Logging and Monitoring"
+    url: https://owasp.org/www-project-kubernetes-top-ten/
+  - title: CNCF - Extracting Value from the Kubernetes Events Feed
+    url: https://www.cncf.io/blog/2021/12/21/extracting-value-from-the-kubernetes-events-feed/

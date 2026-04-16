@@ -51,9 +51,10 @@ items:
     - CLST-59
     - CLUD-19
     # K10: Inadequate Logging And Monitoring
-    - CLST-11
     - CLUD-9
     - CLUD-17
+    - CLST-11
+    - CLST-57
   suggested:
     # K01
     - CONT-22
