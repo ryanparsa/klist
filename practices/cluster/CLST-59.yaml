@@ -1,0 +1,42 @@
+id: CLST-59
+title: Avoid Client Certificates for Human Authentication
+stage: active
+description: |
+  Kubernetes supports X.509 client certificates for authentication, but they lack critical security features required for modern identity management. Most importantly, the Kubernetes API server has no mechanism for certificate revocation (such as CRL or OCSP). Once a certificate is issued, it remains valid until it expires, even if the private key is compromised or the user leaves the organization.
+
+  Additionally, client certificates do not support Multi-Factor Authentication (MFA), making them a high-risk credential if leaked or stolen.
+
+  **What to check:**
+  Audit your `kubeconfig` files and API server configuration to ensure that human users are not being issued long-lived client certificates.
+
+  ```bash
+  # Check if the API server is configured with a CA for client certs
+  ps aux | grep kube-apiserver | grep client-ca-file
+  ```
+
+  Check `kubeconfig` files for `client-certificate-data` or `client-key-data`:
+  ```bash
+  kubectl config view --raw
+  ```
+
+mitigations:
+  - "Use OpenID Connect (OIDC) or Cloud-native IAM (e.g., EKS Access Entries, GKE RBAC) for human user authentication."
+  - "Enforce Multi-Factor Authentication (MFA) at the identity provider level."
+  - "Reserve client certificates exclusively for 'break glass' emergency access or for core system components with short-lived, automated rotation."
+  - "If certificates must be used, keep their expiration duration as short as possible."
+tags:
+  - authentication
+  - security
+  - configuration
+tools:
+  - title: Dex
+    url: https://dexidp.io/
+  - title: kubelogin
+    url: https://github.com/int128/kubelogin
+references:
+  - title: "OWASP Kubernetes Top 10 - K09: Broken Authentication Mechanisms"
+    url: https://owasp.org/www-project-kubernetes-top-ten/2025/en/src/K09-broken-authentication-mechanisms
+  - title: Kubernetes Docs - Certificate Revocation
+    url: https://kubernetes.io/docs/setup/best-practices/certificates/#certificate-revocation-list-crl-not-supported
+  - title: Tremolo Security - What the NSA and CISA left out
+    url: https://www.tremolosecurity.com/post/what-the-nsa-and-cisa-left-out-of-their-kubernetes-hardening-guide
