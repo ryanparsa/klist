@@ -1,0 +1,42 @@
+id: CLST-59
+title: Implement Identity-Based Layer 7 Network Segmentation
+stage: active
+description: |
+  Standard Kubernetes NetworkPolicies operate at Layer 3 and Layer 4 (IPs and ports). This
+  approach is often insufficient for complex microservices that require fine-grained
+  control, such as restricting specific HTTP methods (GET vs POST) or paths. Identity-based
+  segmentation allows for cryptographically verified identities (e.g., via SPIFFE) rather
+  than relying on ephemeral IP addresses.
+
+  This provides a foundation for Zero Trust by ensuring all communication is authenticated
+  (mTLS) and authorized based on the application's identity (ServiceAccount).
+
+  **What to check:**
+  - Is mutual TLS (mTLS) enforced for all in-cluster traffic?
+  - Are there authorization policies restricting access to sensitive APIs based on
+    authenticated identity and HTTP metadata?
+  - Are there tools in place to analyze and verify the network security posture and
+    service-to-service communication?
+mitigations:
+  - "Deploy a service mesh to provide a transparent proxy for L7 visibility."
+  - "Enforce strict mTLS cluster-wide or per namespace to ensure all traffic is encrypted and authenticated."
+  - "Define identity-based authorization policies that restrict traffic to specific ServiceAccounts and HTTP methods."
+tags:
+  - network
+  - service-mesh
+  - zero-trust
+  - security
+tools:
+  - title: Istio
+    url: https://istio.io/
+  - title: Linkerd
+    url: https://linkerd.io/
+  - title: HashiCorp Consul
+    url: https://www.consul.io/
+references:
+  - title: "OWASP Kubernetes Top 10 - K07: Network Segmentation"
+    url: https://owasp.org/www-project-kubernetes-top-ten/2022/en/src/K07-network-segmentation
+  - title: Istio - Authorization Policy
+    url: https://istio.io/latest/docs/concepts/security/#authorization-policies
+  - title: Linkerd - Restricting Communication
+    url: https://linkerd.io/2.14/features/server-policy/

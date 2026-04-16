@@ -35,6 +35,8 @@ tools:
   - title: kube-score
     url: https://github.com/zegl/kube-score
 references:
+  - title: "OWASP Kubernetes Top 10 - K07: Network Segmentation"
+    url: https://owasp.org/www-project-kubernetes-top-ten/2022/en/src/K07-network-segmentation
   - title: PCI-DSS Requirement 1.2 - Network Access Controls
     url: https://www.pcisecuritystandards.org/document_library/
   - title: CIS Kubernetes Benchmark 5.3.2

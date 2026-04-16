@@ -33,6 +33,8 @@ tools:
   - title: Calico
     url: https://www.tigera.io/project-calico/
 references:
+  - title: "OWASP Kubernetes Top 10 - K07: Network Segmentation"
+    url: https://owasp.org/www-project-kubernetes-top-ten/2022/en/src/K07-network-segmentation
   - title: Kubernetes Docs - Network Policies
     url: https://kubernetes.io/docs/concepts/services-networking/network-policies/
   - title: Kubernetes Docs - Cluster Networking

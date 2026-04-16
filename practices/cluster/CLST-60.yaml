@@ -1,0 +1,40 @@
+id: CLST-60
+title: Isolate High-Risk Workloads in Dedicated Clusters
+stage: active
+description: |
+  While namespaces and NetworkPolicies provide logical isolation, the cluster itself is
+  the strongest security boundary in Kubernetes. For high-risk workloads, untrusted
+  third-party code, or strict multi-tenant requirements, physical isolation into
+  dedicated clusters provides the best protection against "blast radius" escalation
+  and kernel-level exploits.
+
+  Separating workloads by risk profile (e.g., PCI-DSS compliant vs non-compliant) or
+  environment (Dev vs Prod) ensures that a compromise in one cluster cannot easily
+  spread to another via internal network paths or shared control plane components.
+
+  **What to check:**
+  - Are production and development workloads running on the same cluster?
+  - Are high-risk or public-facing workloads isolated from internal sensitive services?
+  - Review the cluster separation strategy and verify that different contexts are used
+    for distinct risk profiles.
+mitigations:
+  - "Utilize separate clusters for different environments (Development, Staging, Production)."
+  - "Isolate sensitive data-processing workloads in dedicated clusters with hardened configurations."
+  - "For multi-tenant SaaS providers, consider a 'cluster-per-tenant' model for high-value customers to provide absolute network and control plane isolation."
+tags:
+  - multi-cluster
+  - network
+  - blast-radius
+  - isolation
+tools:
+  - title: Cluster API
+    url: https://cluster-api.sigs.k8s.io/
+  - title: Google Anthos
+    url: https://cloud.google.com/anthos
+  - title: Azure Arc
+    url: https://azure.microsoft.com/en-us/products/azure-arc/
+references:
+  - title: "OWASP Kubernetes Top 10 - K07: Network Segmentation"
+    url: https://owasp.org/www-project-kubernetes-top-ten/2022/en/src/K07-network-segmentation
+  - title: "GKE - Cluster multi-tenancy"
+    url: https://cloud.google.com/kubernetes-engine/docs/concepts/multi-tenancy-overview
