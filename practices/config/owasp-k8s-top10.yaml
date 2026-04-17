@@ -24,8 +24,12 @@ items:
     - CLUD-3
     # K03: Secrets Management Failures
     - CLST-6
+    - CLST-44
+    - CLST-61
     - CONT-20
     - CODE-3
+    - CODE-9
+    - CODE-13
     # K04: Lack Of Cluster Level Policy Enforcement
     - CLUD-16
     - CLST-5
@@ -75,7 +79,6 @@ items:
     - CLST-53
     - CLUD-14
     # K03
-    - CLST-44
     - CLST-54
     - CLUD-15
     - CLUD-20

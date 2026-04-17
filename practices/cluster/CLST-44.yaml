@@ -7,11 +7,11 @@ description: |
   Secrets, exposing credentials that enable lateral movement and privilege escalation.
 
   **What to check:**
-  - Audit who can list or get Secrets cluster-wide:
+  - Audit who can list, get, or watch Secrets cluster-wide:
     ```
     kubectl auth can-i list secrets --all-namespaces --as <user-or-sa>
     kubectl get clusterrolebindings,rolebindings -A -o json | \
-      jq '.items[] | select(.rules[]?.resources[]? == "secrets") | .metadata.name'
+      jq '.items[] | select(.rules[]?.resources[]? == "secrets" and (.rules[]?.verbs[] | IN("get", "list", "watch"))) | .metadata.name'
     ```
   - List all Secrets and identify unused ones:
     ```
@@ -19,7 +19,7 @@ description: |
     ```
 mitigations:
   - |-
-    Restrict `list` and `get` on `secrets` to only the service accounts
+    Restrict `list`, `get`, and `watch` on `secrets` to only the service accounts
     that require them. Remove all orphaned secrets (not mounted by any pod or volume).
     Prefer cloud-native secret managers (AWS Secrets Manager, GCP Secret Manager, Azure Key
     Vault) over Kubernetes Secrets for high-value credentials. Rotate leaked secrets immediately.
@@ -36,6 +36,8 @@ tools:
   - title: RBAC Lookup
     url: https://github.com/FairwindsOps/rbac-lookup
 references:
+  - title: "OWASP Kubernetes Top 10 - K03: Secrets Management Failures"
+    url: https://owasp.org/www-project-kubernetes-top-ten/2025/en/src/K03-Secrets-Management-Failures.md
   - title: Kubernetes Docs - Secrets
     url: https://kubernetes.io/docs/concepts/configuration/secret/
   - title: Microsoft Threat Matrix - List Kubernetes Secrets
