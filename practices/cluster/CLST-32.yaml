@@ -6,8 +6,11 @@ description: |
 
   Avoid sharing generic, broad RBAC policies across diverse workloads. Use custom, fine-grained roles based on distinct job functions to ensure a compromised service account cannot affect unrelated namespaces or resource types.
 
+  Be particularly cautious with `list` and `watch` verbs. A `list` response contains full object attributes (including data in Secrets), not just names. Similarly, `watch` allows an account to receive full object details for every change. Only grant these permissions if the account truly needs to see all resource attributes in the given scope.
+
   **What to check:**
   ```bash
+  kubectl auth can-i --list --as <subject>
   kubectl get clusterrolebindings -o yaml | grep cluster-admin
   kubectl get roles -A
   ```
@@ -25,6 +28,7 @@ mitigations:
   - "Create namespace-scoped Roles rather than ClusterRoles where possible."
   - "Use `kubectl auth can-i --list` to verify actual permissions."
   - "Run RBAC Lookup or Krane to identify over-permissioned service accounts and roles."
+  - "Audit RBAC manifests included with third-party or open-source components before deployment."
   - "Adopt a GitOps approach for RBAC manifests to ensure all permissions are peer-reviewed."
 tags:
   - governance
@@ -37,12 +41,18 @@ tools:
     url: https://github.com/appvia/krane
   - title: rbac-tool
     url: https://github.com/alcideio/rbac-tool
+  - title: rbac-police
+    url: https://github.com/PaloAltoNetworks/rbac-police
+  - title: Audit2RBAC
+    url: https://github.com/liggitt/audit2rbac
 
 references:
   - title: Kubernetes Docs - RBAC Authorization
     url: https://kubernetes.io/docs/reference/access-authn-authz/rbac/
   - title: "OWASP Kubernetes Top 10 - K03: Overly Permissive RBAC"
     url: https://owasp.org/www-project-kubernetes-top-ten/
+  - title: Kubernetes Docs - RBAC Good Practices
+    url: https://kubernetes.io/docs/concepts/security/rbac-good-practices/
   - title: Zalando - Kubernetes RBAC Roles
     url: https://kubernetes-on-aws.readthedocs.io/en/latest/dev-guide/arch/access-control/adr-004-roles-and-service-accounts.html
   - title: Microsoft Threat Matrix - Exec into Container
