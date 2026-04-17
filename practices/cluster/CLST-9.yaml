@@ -12,11 +12,16 @@ description: |
   creates a broad blast radius where a compromised application inherits administrative
   capabilities across the cluster.
 
-  **What to check:**
+  **What to check:** Identify roles that use wildcards and the subjects bound to them.
 
   ```bash
+  # List all Roles and ClusterRoles that use wildcards
+  kubectl get clusterroles,roles -A -o json | \
+    jq -r '.items[] | select(.rules[]? | (.verbs[] == "*" or .resources[] == "*")) | .metadata.name'
+
+  # Audit bindings for a specific wildcard role
   kubectl get clusterrolebindings,rolebindings -A -o json | \
-    jq '.items[].rules[]? | select(.verbs[] == "*" or .resources[] == "*")'
+    jq '.items[] | select(.roleRef.name == "<role-name>") | .subjects'
   ```
 mitigations:
   - |-

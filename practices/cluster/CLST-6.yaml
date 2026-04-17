@@ -33,8 +33,6 @@ tools:
     url: https://trivy.dev/
 
 references:
-  - title: "OWASP Kubernetes Top 10 - K03: Secrets Management Failures"
-    url: https://owasp.org/www-project-kubernetes-top-ten/2025/en/src/K03-Secrets-Management-Failures.md
   - title: Kubernetes Docs - Encrypting Secret Data at Rest
     url: https://kubernetes.io/docs/tasks/administer-cluster/encrypt-data/
   - title: HIPAA Integrity Controls
