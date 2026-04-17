@@ -27,8 +27,8 @@ tools:
 references:
   - title: NIST SP 800-218 - Secure Software Development Framework (SSDF)
     url: https://csrc.nist.gov/publications/detail/sp/800-218/final
-  - title: "OWASP Kubernetes Top 10 - K07: Misconfigured And Vulnerable Cluster Components"
-    url: https://owasp.org/www-project-kubernetes-top-ten/2025/en/src/K07-Misconfigured-And-Vulnerable-Cluster-Components.md
+  - title: "OWASP Kubernetes Top 10 - K02: Supply Chain Vulnerabilities"
+    url: https://owasp.org/www-project-kubernetes-top-ten/
   - title: Semgrep - Open Source SAST
     url: https://semgrep.dev/
   - title: Microsoft Threat Matrix - Application Vulnerability

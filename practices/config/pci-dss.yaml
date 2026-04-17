@@ -9,6 +9,7 @@ items:
   required:
     - CLUD-1
     - CLUD-2
+    - CLUD-5
     - CLUD-6
     - CLUD-7
     - CLUD-8
@@ -35,11 +36,8 @@ items:
     - CLST-51
     - CLST-53
     - CLST-55
-    - CLST-57
     - CLST-58
     - CLST-59
-    - CLST-60
-    - CLST-61
     - CONT-2
     - CONT-3
     - CONT-4
@@ -56,9 +54,9 @@ items:
     - CODE-3
     - CODE-4
     - CODE-7
+    - CODE-13
   suggested:
     - CLUD-4
-    - CLUD-5
     - CLST-30
     - CLST-38
     - CLST-54
@@ -67,6 +65,7 @@ items:
     - CODE-5
     - CODE-6
     - CODE-9
-    - CODE-13
+    - CODE-12
+    - CODE-16
     - CODE-17
     - CODE-18

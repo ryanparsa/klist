@@ -6,7 +6,10 @@ description: >-
   process, or transmit Protected Health Information (PHI).
 items:
   required:
+    - CLUD-2
+    - CLUD-3
     - CLUD-7
+    - CLUD-8
     - CLUD-9
     - CLST-6
     - CLST-11
@@ -14,32 +17,33 @@ items:
     - CLST-31
     - CLST-32
     - CLST-46
-    - CLST-61
+    - CLST-48
+    - CLST-59
     - CONT-3
     - CONT-7
     - CONT-8
+    - CONT-21
     - CONT-32
+    - CODE-1
+    - CODE-2
     - CODE-3
     - CODE-7
     - CODE-9
   suggested:
-    - CLUD-2
-    - CLUD-3
     - CLST-10
     - CLST-15
+    - CLST-30
     - CLST-38
     - CLST-54
-    - CLST-57
     - CLST-58
-    - CLST-59
-    - CLST-60
     - CONT-9
+    - CONT-10
     - CONT-11
     - CONT-12
     - CONT-13
-    - CONT-21
     - CONT-29
-    - CODE-1
-    - CODE-2
     - CODE-5
+    - CODE-13
+    - CODE-14
+    - CODE-16
     - CODE-17

@@ -6,6 +6,8 @@ description: >-
   regardless of provider or environment.
 items:
   required:
+    - CLUD-7
+    - CLUD-8
     - CLST-1
     - CLST-2
     - CLST-3
@@ -20,6 +22,7 @@ items:
     - CLST-32
     - CLST-39
     - CLST-47
+    - CLST-48
     - CLST-51
     - CONT-2
     - CONT-3
@@ -38,6 +41,10 @@ items:
   suggested:
     - CLUD-1
     - CLUD-2
+    - CLUD-3
+    - CLUD-4
+    - CLUD-5
+    - CLUD-6
     - CLUD-9
     - CLUD-11
     - CLUD-23
@@ -59,13 +66,11 @@ items:
     - CLST-54
     - CLST-55
     - CLST-56
-    - CLST-57
     - CLST-58
     - CLST-59
-    - CLST-60
-    - CLST-61
     - CONT-5
     - CONT-6
+    - CONT-9
     - CONT-11
     - CONT-12
     - CONT-13
@@ -75,14 +80,18 @@ items:
     - CONT-17
     - CONT-18
     - CONT-19
+    - CONT-20
     - CONT-23
     - CONT-24
     - CONT-29
     - CONT-31
     - CONT-32
+    - CODE-1
+    - CODE-2
     - CODE-3
     - CODE-8
     - CODE-9
+    - CODE-12
     - CODE-14
     - CODE-16
     - CODE-17

@@ -8,6 +8,7 @@ items:
   required:
     - CLUD-1
     - CLUD-2
+    - CLUD-3
     - CLUD-7
     - CLUD-8
     - CLUD-9
@@ -32,11 +33,8 @@ items:
     - CLST-54
     - CLST-55
     - CLST-56
-    - CLST-57
     - CLST-58
     - CLST-59
-    - CLST-60
-    - CLST-61
     - CONT-6
     - CONT-9
     - CONT-10

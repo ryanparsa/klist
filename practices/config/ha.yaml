@@ -9,12 +9,10 @@ items:
     - CLUD-11
     - CLST-11
     - CLST-12
-    - CLST-31
-    - CLST-49
-    - CONT-31
     - CLST-15
     - CLST-16
     - CLST-22
+    - CLST-31
     - CLST-46
     - CLST-49
     - CLST-56
@@ -27,6 +25,7 @@ items:
     - CONT-15
     - CONT-31
     - CODE-8
+    - CODE-13
   suggested:
     - CLUD-8
     - CLUD-9
