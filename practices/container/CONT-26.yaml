@@ -45,6 +45,8 @@ tools:
   - title: Kyverno
     url: https://kyverno.io/
 references:
+  - title: "OWASP Kubernetes Top 10 - K01: Insecure Workload Configurations"
+    url: https://owasp.org/www-project-kubernetes-top-ten/
   - title: Gatekeeper Library - k8spsphostnamespace
     url: https://github.com/open-policy-agent/gatekeeper-library/tree/master/library/pod-security-policy/host-namespaces
   - title: Gatekeeper Library - k8spsphostnetworkingports

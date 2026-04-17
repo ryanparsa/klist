@@ -33,6 +33,8 @@ tags:
   - linux
 tools: []
 references:
+  - title: "OWASP Kubernetes Top 10 - K01: Insecure Workload Configurations"
+    url: https://owasp.org/www-project-kubernetes-top-ten/
   - title: CIS Kubernetes Benchmark 5.7.2
     url: https://workbench.cisecurity.org/benchmarks/16828
   - title: Kubernetes Docs - Seccomp
