@@ -36,7 +36,7 @@ tools:
   - title: Trivy
     url: https://trivy.dev/
 references:
-  - title: "OWASP Kubernetes Top 10 - K02: Overly Permissive Authorization Configurations"
+  - title: "OWASP Kubernetes Top 10 - K01: Insecure Workload Configurations"
     url: https://owasp.org/www-project-kubernetes-top-ten/
   - title: CIS Kubernetes Benchmark 5.1.6
     url: https://workbench.cisecurity.org/benchmarks/16828

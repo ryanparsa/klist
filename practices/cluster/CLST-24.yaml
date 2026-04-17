@@ -1,37 +1,48 @@
 id: CLST-24
-title: Ensure Cluster Passes CIS Benchmark
+title: Harden and Audit Cluster Component Configurations
 stage: active
 description: |
-  Clusters that deviate from established industry security standards natively introduce known configuration vulnerabilities. The Centre for Internet Security (CIS) benchmark provides the canonical baseline for securing Kubernetes clusters against widespread attack vectors.
+  Kubernetes components (API server, scheduler, controller-manager, kubelet, and kube-proxy) often ship with unhardened default settings. Vulnerabilities or misconfigurations in these core components can allow attackers to gain initial access, escalate privileges, or compromise the entire cluster. Regular auditing against established security benchmarks is essential to maintain a hardened posture.
 
   **What to check:**
+  - Audit the cluster against the CIS Kubernetes Benchmark or similar hardening guides.
+  - Check for unpatched vulnerabilities in cluster components and the container runtime.
+  - Verify that default settings have been reviewed and hardened according to the principle of least privilege.
+
   ```bash
+  # Example check using kube-bench
   kube-bench run --targets master,node
   ```
 
   ```mermaid
   flowchart TD
-    A[Kube-bench] --> B[Master Nodes]
-    A --> C[Worker Nodes]
-    B --> D[Compliance Report]
+    A[Hardening Guide / CIS] --> B[Audit Tools]
+    B --> C[Control Plane Components]
+    B --> D[Worker Node Components]
+    C & D --> E[Remediation Plan]
   ```
 mitigations:
-  - "Run `kube-bench` as a Job or DaemonSet on each node."
-  - "Review the output and address all FAIL findings."
-  - "Prioritise Level 1 (must-have) checks before Level 2."
-  - "For managed clusters, remediate worker-node findings only - control-plane checks are the provider's responsibility."
-  - "Re-run after every cluster upgrade."
+  - "Run `kube-bench` or `Kubescape` regularly to audit the cluster configuration."
+  - "Address all 'FAIL' findings, prioritizing critical components and Level 1 checks."
+  - "Harden worker nodes by disabling unnecessary services and ports."
+  - "For managed clusters, focus on worker-node and add-on hardening as the provider manages the control plane."
+  - "Re-audit after every cluster upgrade or significant configuration change."
 tags:
   - configuration
   - security
-  - cis
+  - hardening
+  - compliance
 tools:
   - title: kube-bench
     url: https://github.com/aquasecurity/kube-bench
+  - title: Kubescape
+    url: https://github.com/kubescape/kubescape
   - title: Trivy
     url: https://trivy.dev/
 references:
   - title: CIS Kubernetes Benchmark
     url: https://www.cisecurity.org/benchmark/kubernetes/
+  - title: "OWASP Kubernetes Top 10 - K07: Misconfigured And Vulnerable Cluster Components"
+    url: https://owasp.org/www-project-kubernetes-top-ten/2025/en/src/K07-Misconfigured-And-Vulnerable-Cluster-Components.md
   - title: kube-bench - CIS Kubernetes Benchmark Tool
     url: https://github.com/aquasecurity/kube-bench

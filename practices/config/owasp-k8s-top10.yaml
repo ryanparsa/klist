@@ -5,6 +5,7 @@ description: "Controls mapped to the OWASP Kubernetes Top 10 2025 risks (K01–K
 items:
   required:
     # K01: Insecure Workload Configurations
+    - CLST-10
     - CLST-31
     - CLST-58
     - CONT-2
@@ -13,25 +14,31 @@ items:
     - CONT-5
     - CONT-6
     - CONT-7
+    - CONT-8
+    - CONT-26
     # K02: Overly Permissive Authorization Configurations
     - CLST-2
     - CLST-9
-    - CLST-10
     - CLST-32
     - CLST-42
     - CLUD-3
     # K03: Secrets Management Failures
     - CLST-6
+    - CLST-44
+    - CLST-61
     - CONT-20
     - CODE-3
+    - CODE-9
+    - CODE-13
     # K04: Lack Of Cluster Level Policy Enforcement
-    - CLST-5
     - CLUD-16
+    - CLST-5
+    - CLST-60
     - CODE-22
     # K05: Missing Network Segmentation Controls
-    - CLST-12
     - CLUD-1
     - CLUD-2
+    - CLST-12
     # K06: Overly Exposed Kubernetes Components
     - CLST-1
     - CLST-3
@@ -39,6 +46,12 @@ items:
     - CLST-47
     - CLST-51
     - CLUD-18
+    # K07: Misconfigured And Vulnerable Cluster Components
+    - CLUD-5
+    - CLUD-8
+    - CLST-24
+    - CLST-48
+    - CODE-2
     # K08: Cluster To Cloud Lateral Movement
     - CLUD-4
     - CLUD-10
@@ -46,15 +59,16 @@ items:
     # K09: Broken Authentication Mechanisms
     - CLST-4
     - CLST-26
+    - CLST-59
     - CLUD-19
     # K10: Inadequate Logging And Monitoring
-    - CLST-11
     - CLUD-9
     - CLUD-17
+    - CLST-11
+    - CLST-57
   suggested:
     # K01
     - CONT-22
-    # K01
     - CONT-29
     # K02
     - CLST-59
@@ -66,7 +80,6 @@ items:
     - CLST-53
     - CLUD-14
     # K03
-    - CLST-44
     - CLST-54
     - CLUD-15
     - CLUD-20
@@ -77,11 +90,19 @@ items:
     - CODE-14
     - CODE-17
     # K05
+    - CLUD-4
     - CLST-34
     - CLST-40
+    - CONT-26
     # K06
     - CLST-41
     - CLST-43
+    # K07
+    - CLUD-6
+    - CODE-1
+    - CODE-6
+    - CODE-17
+    - CODE-18
     # K09
     - CODE-7
     # K10

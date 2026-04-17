@@ -38,3 +38,5 @@ references:
     url: https://www.cisa.gov/sbom
   - title: Syft - SBOM Generator
     url: https://github.com/anchore/syft
+  - title: "OWASP Kubernetes Top 10 - K07: Misconfigured And Vulnerable Cluster Components"
+    url: https://owasp.org/www-project-kubernetes-top-ten/2025/en/src/K07-Misconfigured-And-Vulnerable-Cluster-Components.md

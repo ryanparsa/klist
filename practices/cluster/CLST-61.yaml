@@ -1,0 +1,42 @@
+id: CLST-61
+title: Automate the Rotation of Secrets and Certificates
+stage: active
+description: |
+  Long-lived credentials are a primary liability. If a secret or certificate is compromised, the window of exposure remains open until it is manually rotated. Automated rotation reduces the lifespan of credentials and ensures that the system can recover quickly from a compromise.
+
+  **What to check:**
+  Identify secrets and certificates that have not been rotated recently:
+  ```bash
+  kubectl get secrets -A -o custom-columns="NAMESPACE:.metadata.namespace,NAME:.metadata.name,CREATED:.metadata.creationTimestamp"
+  ```
+  Check for the presence of automation tools like cert-manager or External Secrets Operator.
+
+  ```mermaid
+  flowchart TD
+    A[Credential Creation] --> B[Automated Rotation Trigger]
+    B --> C[New Secret Generated]
+    C --> D[App Notified/Reloaded]
+    D --> E[Old Secret Revoked]
+  ```
+mitigations:
+  - "Automate the lifecycle of TLS certificates using tools like cert-manager with ACME or private CA issuers."
+  - "Use the External Secrets Operator or Secrets Store CSI Driver to automate the injection and rotation of secrets from external vaults."
+  - "Prefer short-lived, auto-rotating tokens (e.g., Projected Service Account Tokens) over static credentials."
+  - "Implement application-level logic to reload configuration when secrets are updated on disk."
+tags:
+  - secrets
+  - certificates
+  - automation
+  - security
+tools:
+  - title: cert-manager
+    url: https://cert-manager.io/
+  - title: External Secrets Operator
+    url: https://external-secrets.io/
+  - title: Secrets Store CSI Driver
+    url: https://secrets-store-csi-driver.sigs.k8s.io/
+references:
+  - title: "OWASP Kubernetes Top 10 - K03: Secrets Management Failures"
+    url: https://owasp.org/www-project-kubernetes-top-ten/2025/en/src/K03-Secrets-Management-Failures.md
+  - title: Kubernetes Docs - Secrets Best Practices
+    url: https://kubernetes.io/docs/concepts/security/secrets-good-practices/

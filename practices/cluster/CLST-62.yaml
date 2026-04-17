@@ -1,0 +1,38 @@
+id: CLST-62
+title: Implement Just-In-Time (JIT) Access for Privileged Operations
+stage: active
+description: |
+  Granting permanent elevated privileges (standing privileges) increases the cluster's attack surface and the risk of accidental or malicious misuse. Just-In-Time (JIT) access ensures that privileged roles are only granted when needed, for a specific duration, and through a documented approval process.
+
+  By moving from static RBAC assignments to a dynamic, process-driven architecture, organizations can ensure that every elevated access grant is peer-reviewed, traceable in audit logs, and automatically revoked after the operational task is complete.
+
+  **What to check:**
+  - Audit existing `ClusterRoleBindings` for users with permanent `cluster-admin` or high-privilege access.
+  - Verify if privileged access requires an external approval step (e.g., a ticket or a PR).
+  - Check for the use of short-lived OIDC tokens or ephemeral certificates for administrative tasks.
+
+mitigations:
+  - "Implement Just-In-Time (JIT) access workflows that create and expire RoleBindings on demand."
+  - "Replace permanent admin grants with short-lived kubeconfig files or OIDC tokens with tight expiry times."
+  - "Enforce multi-party verification or granular approval workflows for all requests for elevated access."
+  - "Ensure all JIT access grants and revocations are recorded in an external, immutable change history (e.g., GitOps or a centralized SIEM)."
+  - "For emergency debugging, use 'break-glass' procedures that trigger immediate alerts and require post-incident justification."
+tags:
+  - rbac
+  - operations
+  - security
+  - governance
+tools:
+  - title: Teleport
+    url: https://goteleport.com/
+  - title: Okta Access Gateway
+    url: https://www.okta.com/products/access-gateway/
+  - title: Boundary
+    url: https://www.boundaryproject.io/
+references:
+  - title: "OWASP Kubernetes Top 10 - K02: Overly Permissive Authorization Configurations"
+    url: https://owasp.org/www-project-kubernetes-top-ten/
+  - title: Kubernetes Docs - RBAC Good Practices
+    url: https://kubernetes.io/docs/concepts/security/rbac-good-practices/
+  - title: Google Cloud - Just-in-time privileged access
+    url: https://cloud.google.com/architecture/privileged-access-management-jit-concepts

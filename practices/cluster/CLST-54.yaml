@@ -60,6 +60,8 @@ tools:
   - title: Kyverno
     url: https://kyverno.io/
 references:
+  - title: "OWASP Kubernetes Top 10 - K03: Secrets Management Failures"
+    url: https://owasp.org/www-project-kubernetes-top-ten/2025/en/src/K03-Secrets-Management-Failures.md
   - title: Kubernetes Docs - Bound Service Account Tokens
     url: https://kubernetes.io/docs/reference/access-authn-authz/service-accounts-admin/#bound-service-account-tokens
   - title: CIS Kubernetes Benchmark 5.1.6

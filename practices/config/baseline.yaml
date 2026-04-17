@@ -59,7 +59,11 @@ items:
     - CLST-54
     - CLST-55
     - CLST-56
+    - CLST-57
     - CLST-58
+    - CLST-59
+    - CLST-60
+    - CLST-61
     - CONT-5
     - CONT-6
     - CONT-11
@@ -78,6 +82,7 @@ items:
     - CONT-32
     - CODE-3
     - CODE-8
+    - CODE-9
     - CODE-14
     - CODE-16
     - CODE-17
