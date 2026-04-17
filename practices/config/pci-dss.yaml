@@ -37,7 +37,6 @@ items:
     - CLST-55
     - CLST-57
     - CLST-58
-    - CLST-59
     - CONT-2
     - CONT-3
     - CONT-4
@@ -48,12 +47,12 @@ items:
     - CONT-9
     - CONT-21
     - CONT-22
-    - CONT-32
     - CODE-1
     - CODE-2
     - CODE-3
     - CODE-4
     - CODE-7
+    - CONT-32
   suggested:
     - CLUD-4
     - CLUD-5

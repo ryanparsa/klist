@@ -29,8 +29,8 @@ tools:
   - title: Trivy
     url: https://trivy.dev/
 references:
-  - title: "OWASP Kubernetes Top 10 - K06: Overly Exposed Kubernetes Components"
-    url: https://owasp.org/www-project-kubernetes-top-ten/2025/en/src/K06-Overly-Exposed-Kubernetes-Components.md
+  - title: "OWASP Kubernetes Top 10 - K09: Misconfigured Cluster Components"
+    url: https://owasp.org/www-project-kubernetes-top-ten/
   - title: CIS Kubernetes Benchmark 4.2.1
     url: https://workbench.cisecurity.org/benchmarks/16828
   - title: Kubernetes Docs - Kubelet Authentication/Authorization

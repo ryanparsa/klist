@@ -2,7 +2,7 @@ id: CLST-26
 title: Use OIDC for User Authentication
 stage: active
 description: |
-  Static tokens, basic authentication models, and X.509 client certificates are difficult to rotate, audit, and revoke. Integrating OpenID Connect (OIDC) offloads human user authentication to centralized identity providers (like Google Identity, AWS IAM, or Okta), ensuring the cluster inherits the organization's existing MFA and access lifecycle policies.
+  Static tokens and basic authentication models are difficult to rotate, audit, and revoke. Integrating OpenID Connect (OIDC) offloads human user authentication to centralized identity providers (like Google Identity, AWS IAM, or Okta), ensuring the cluster inherits the organization's existing MFA and access lifecycle policies.
 
   **What to check:**
   ```bash
