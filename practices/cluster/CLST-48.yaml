@@ -80,5 +80,3 @@ references:
     url: https://cloud.google.com/kubernetes-engine/docs/concepts/release-channels
   - title: AKS - Upgrade an AKS Cluster
     url: https://learn.microsoft.com/en-us/azure/aks/upgrade-cluster
-  - title: "OWASP Kubernetes Top 10 - K07: Misconfigured And Vulnerable Cluster Components"
-    url: https://owasp.org/www-project-kubernetes-top-ten/2025/en/src/K07-Misconfigured-And-Vulnerable-Cluster-Components.md

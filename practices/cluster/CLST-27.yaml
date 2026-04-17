@@ -1,0 +1,30 @@
+id: CLST-27
+title: Enable Automatic Kubelet Certificate Rotation
+stage: active
+description: |
+  Kubelets use certificates to authenticate to the API server. By default, these certificates
+  may be long-lived or require manual rotation. Enabling automatic certificate rotation
+  ensures that the kubelet automatically requests a new certificate before the old one
+  expires, reducing the risk of expired credentials disrupting node-to-master communication.
+
+  **What to check:** Verify kubelet configuration for certificate rotation.
+
+  ```bash
+  # Check for RotateKubeletClientCertificate or RotateKubeletServerCertificate
+  ps aux | grep kubelet | grep rotate-certificates
+  ```
+mitigations:
+  - "Enable `RotateKubeletClientCertificate` and `RotateKubeletServerCertificate` in the kubelet configuration."
+  - "Configure the API server to automatically approve kubelet certificate signing requests (CSRs)."
+tags:
+  - kubelet
+  - certificates
+  - hardening
+tools:
+  - title: kube-bench
+    url: https://github.com/aquasecurity/kube-bench
+references:
+  - title: Kubernetes Docs - Certificate Rotation
+    url: https://kubernetes.io/docs/tasks/administer-cluster/kubelet-certificate-rotation/
+  - title: CIS Kubernetes Benchmark 4.2.11
+    url: https://workbench.cisecurity.org/benchmarks/16828

@@ -1,42 +1,38 @@
 id: CLST-59
-title: Avoid Client Certificates for Human Authentication
+title: Implement Just-In-Time (JIT) Access for Privileged Operations
 stage: active
 description: |
-  Kubernetes supports X.509 client certificates for authentication, but they lack critical security features required for modern identity management. Most importantly, the Kubernetes API server has no mechanism for certificate revocation (such as CRL or OCSP). Once a certificate is issued, it remains valid until it expires, even if the private key is compromised or the user leaves the organization.
+  Granting permanent elevated privileges (standing privileges) increases the cluster's attack surface and the risk of accidental or malicious misuse. Just-In-Time (JIT) access ensures that privileged roles are only granted when needed, for a specific duration, and through a documented approval process.
 
-  Additionally, client certificates do not support Multi-Factor Authentication (MFA), making them a high-risk credential if leaked or stolen.
+  By moving from static RBAC assignments to a dynamic, process-driven architecture, organizations can ensure that every elevated access grant is peer-reviewed, traceable in audit logs, and automatically revoked after the operational task is complete.
 
   **What to check:**
-  Audit your `kubeconfig` files and API server configuration to ensure that human users are not being issued long-lived client certificates.
-
-  ```bash
-  # Check if the API server is configured with a CA for client certs
-  ps aux | grep kube-apiserver | grep client-ca-file
-  ```
-
-  Check `kubeconfig` files for `client-certificate-data` or `client-key-data`:
-  ```bash
-  kubectl config view --raw
-  ```
+  - Audit existing `ClusterRoleBindings` for users with permanent `cluster-admin` or high-privilege access.
+  - Verify if privileged access requires an external approval step (e.g., a ticket or a PR).
+  - Check for the use of short-lived OIDC tokens or ephemeral certificates for administrative tasks.
 
 mitigations:
-  - "Use OpenID Connect (OIDC) or Cloud-native IAM (e.g., EKS Access Entries, GKE RBAC) for human user authentication."
-  - "Enforce Multi-Factor Authentication (MFA) at the identity provider level."
-  - "Reserve client certificates exclusively for 'break glass' emergency access or for core system components with short-lived, automated rotation."
-  - "If certificates must be used, keep their expiration duration as short as possible."
+  - "Implement Just-In-Time (JIT) access workflows that create and expire RoleBindings on demand."
+  - "Replace permanent admin grants with short-lived kubeconfig files or OIDC tokens with tight expiry times."
+  - "Enforce multi-party verification or granular approval workflows for all requests for elevated access."
+  - "Ensure all JIT access grants and revocations are recorded in an external, immutable change history (e.g., GitOps or a centralized SIEM)."
+  - "For emergency debugging, use 'break-glass' procedures that trigger immediate alerts and require post-incident justification."
 tags:
-  - authentication
+  - rbac
+  - operations
   - security
-  - configuration
+  - governance
 tools:
-  - title: Dex
-    url: https://dexidp.io/
-  - title: kubelogin
-    url: https://github.com/int128/kubelogin
+  - title: Teleport
+    url: https://goteleport.com/
+  - title: Okta Access Gateway
+    url: https://www.okta.com/products/access-gateway/
+  - title: Boundary
+    url: https://www.boundaryproject.io/
 references:
-  - title: "OWASP Kubernetes Top 10 - K09: Broken Authentication Mechanisms"
-    url: https://owasp.org/www-project-kubernetes-top-ten/2025/en/src/K09-broken-authentication-mechanisms
-  - title: Kubernetes Docs - Certificate Revocation
-    url: https://kubernetes.io/docs/setup/best-practices/certificates/#certificate-revocation-list-crl-not-supported
-  - title: Tremolo Security - What the NSA and CISA left out
-    url: https://www.tremolosecurity.com/post/what-the-nsa-and-cisa-left-out-of-their-kubernetes-hardening-guide
+  - title: "OWASP Kubernetes Top 10 - K02: Overly Permissive Authorization Configurations"
+    url: https://owasp.org/www-project-kubernetes-top-ten/
+  - title: Kubernetes Docs - RBAC Good Practices
+    url: https://kubernetes.io/docs/concepts/security/rbac-good-practices/
+  - title: Google Cloud - Just-in-time privileged access
+    url: https://cloud.google.com/architecture/privileged-access-management-jit-concepts

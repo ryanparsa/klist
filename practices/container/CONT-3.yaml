@@ -4,9 +4,7 @@ stage: active
 description: |
   Containers running as UID 0 (root) can exploit vulnerabilities to gain root access on the
   host node. Setting `runAsNonRoot: true` ensures the container's process runs as an
-  unprivileged user, limiting blast radius if the container is compromised. Alternatively,
-  User Namespaces (available since Kubernetes 1.30) can be used to map the container's root
-  user to a non-privileged user on the host.
+  unprivileged user, limiting blast radius if the container is compromised.
 
   **What to check:**
 
@@ -22,18 +20,12 @@ mitigations:
     Add `securityContext.runAsNonRoot: true` and `securityContext.runAsUser: <non-zero UID>`
     to pod and container specs. Update base images to create and use a non-root user via
     `USER <uid>` in the Dockerfile.
-  - |-
-    Enable User Namespaces by setting `spec.hostUsers: false` in the Pod specification
-    to ensure that even if a container runs as root, it is mapped to a non-privileged
-    user on the node.
 tags:
   - security
   - least-privilege
   - container-runtime
 tools: []
 references:
-  - title: "OWASP Kubernetes Top 10 - K01: Insecure Workload Configurations"
-    url: https://owasp.org/www-project-kubernetes-top-ten/
   - title: CIS Kubernetes Benchmark 5.2.7
     url: https://workbench.cisecurity.org/benchmarks/16828
   - title: Kubernetes Docs - Security Context

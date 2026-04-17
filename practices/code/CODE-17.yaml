@@ -78,7 +78,7 @@ references:
     url: https://slsa.dev/spec/v1.0/
   - title: Sigstore - Provenance
     url: https://docs.sigstore.dev/
-  - title: "OWASP Kubernetes Top 10 - K07: Misconfigured And Vulnerable Cluster Components"
-    url: https://owasp.org/www-project-kubernetes-top-ten/2025/en/src/K07-Misconfigured-And-Vulnerable-Cluster-Components.md
+  - title: "OWASP Kubernetes Top 10 - K02: Supply Chain Vulnerabilities"
+    url: https://owasp.org/www-project-kubernetes-top-ten/
   - title: US Executive Order 14028 - Improving the Nation's Cybersecurity
     url: https://www.whitehouse.gov/briefing-room/presidential-actions/2021/05/12/executive-order-on-improving-the-nations-cybersecurity/

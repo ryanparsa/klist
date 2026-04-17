@@ -31,6 +31,8 @@ tools:
 references:
   - title: Kubernetes Docs - RBAC Authorization
     url: https://kubernetes.io/docs/reference/access-authn-authz/rbac/
+  - title: "OWASP Kubernetes Top 10 - K02: Overly Permissive Authorization Configurations"
+    url: https://owasp.org/www-project-kubernetes-top-ten/
   - title: Microsoft Threat Matrix - Cluster-Admin Binding
     url: https://microsoft.github.io/Threat-Matrix-for-Kubernetes/techniques/Cluster-admin%20binding/
   - title: MITRE ATT&CK - Valid Accounts (T1078.003)
