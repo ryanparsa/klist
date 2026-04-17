@@ -30,3 +30,5 @@ references:
     url: https://bottlerocket.dev/en/os/1.20.x/security/threat-model/
   - title: PCI-DSS Requirement 2.2 - System Configuration Standards
     url: https://www.pcisecuritystandards.org/document_library/
+  - title: "OWASP Kubernetes Top 10 - K07: Misconfigured And Vulnerable Cluster Components"
+    url: https://owasp.org/www-project-kubernetes-top-ten/2025/en/src/K07-Misconfigured-And-Vulnerable-Cluster-Components.md

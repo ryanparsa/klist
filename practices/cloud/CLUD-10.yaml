@@ -33,7 +33,7 @@ tools:
 references:
   - title: CIS Docker Benchmark v1.5
     url: https://www.cisecurity.org/benchmark/docker
-  - title: "OWASP Kubernetes Top 10 - K01: Insecure Workload Configurations"
-    url: https://owasp.org/www-project-kubernetes-top-ten/
+  - title: "OWASP Kubernetes Top 10 - K08: Cluster-To-Cloud Lateral Movement"
+    url: https://owasp.org/www-project-kubernetes-top-ten/2025/en/src/K08-Cluster-To-Cloud-Lateral-Movement.md
   - title: Kubernetes Docs - Volumes / hostPath
     url: https://kubernetes.io/docs/concepts/storage/volumes/#hostpath
