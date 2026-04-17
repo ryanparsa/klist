@@ -1,42 +1,42 @@
 id: CLST-59
-title: Automate the Rotation of Secrets and Certificates
+title: Avoid Client Certificates for Human Authentication
 stage: active
 description: |
-  Long-lived credentials are a primary liability. If a secret or certificate is compromised, the window of exposure remains open until it is manually rotated. Automated rotation reduces the lifespan of credentials and ensures that the system can recover quickly from a compromise.
+  Kubernetes supports X.509 client certificates for authentication, but they lack critical security features required for modern identity management. Most importantly, the Kubernetes API server has no mechanism for certificate revocation (such as CRL or OCSP). Once a certificate is issued, it remains valid until it expires, even if the private key is compromised or the user leaves the organization.
+
+  Additionally, client certificates do not support Multi-Factor Authentication (MFA), making them a high-risk credential if leaked or stolen.
 
   **What to check:**
-  Identify secrets and certificates that have not been rotated recently:
-  ```bash
-  kubectl get secrets -A -o custom-columns="NAMESPACE:.metadata.namespace,NAME:.metadata.name,CREATED:.metadata.creationTimestamp"
-  ```
-  Check for the presence of automation tools like cert-manager or External Secrets Operator.
+  Audit your `kubeconfig` files and API server configuration to ensure that human users are not being issued long-lived client certificates.
 
-  ```mermaid
-  flowchart TD
-    A[Credential Creation] --> B[Automated Rotation Trigger]
-    B --> C[New Secret Generated]
-    C --> D[App Notified/Reloaded]
-    D --> E[Old Secret Revoked]
+  ```bash
+  # Check if the API server is configured with a CA for client certs
+  ps aux | grep kube-apiserver | grep client-ca-file
   ```
+
+  Check `kubeconfig` files for `client-certificate-data` or `client-key-data`:
+  ```bash
+  kubectl config view --raw
+  ```
+
 mitigations:
-  - "Automate the lifecycle of TLS certificates using tools like cert-manager with ACME or private CA issuers."
-  - "Use the External Secrets Operator or Secrets Store CSI Driver to automate the injection and rotation of secrets from external vaults."
-  - "Prefer short-lived, auto-rotating tokens (e.g., Projected Service Account Tokens) over static credentials."
-  - "Implement application-level logic to reload configuration when secrets are updated on disk."
+  - "Use OpenID Connect (OIDC) or Cloud-native IAM (e.g., EKS Access Entries, GKE RBAC) for human user authentication."
+  - "Enforce Multi-Factor Authentication (MFA) at the identity provider level."
+  - "Reserve client certificates exclusively for 'break glass' emergency access or for core system components with short-lived, automated rotation."
+  - "If certificates must be used, keep their expiration duration as short as possible."
 tags:
-  - secrets
-  - certificates
-  - automation
+  - authentication
   - security
+  - configuration
 tools:
-  - title: cert-manager
-    url: https://cert-manager.io/
-  - title: External Secrets Operator
-    url: https://external-secrets.io/
-  - title: Secrets Store CSI Driver
-    url: https://secrets-store-csi-driver.sigs.k8s.io/
+  - title: Dex
+    url: https://dexidp.io/
+  - title: kubelogin
+    url: https://github.com/int128/kubelogin
 references:
-  - title: "OWASP Kubernetes Top 10 - K03: Secrets Management Failures"
-    url: https://owasp.org/www-project-kubernetes-top-ten/2025/en/src/K03-Secrets-Management-Failures.md
-  - title: Kubernetes Docs - Secrets Best Practices
-    url: https://kubernetes.io/docs/concepts/security/secrets-good-practices/
+  - title: "OWASP Kubernetes Top 10 - K09: Broken Authentication Mechanisms"
+    url: https://owasp.org/www-project-kubernetes-top-ten/2025/en/src/K09-broken-authentication-mechanisms
+  - title: Kubernetes Docs - Certificate Revocation
+    url: https://kubernetes.io/docs/setup/best-practices/certificates/#certificate-revocation-list-crl-not-supported
+  - title: Tremolo Security - What the NSA and CISA left out
+    url: https://www.tremolosecurity.com/post/what-the-nsa-and-cisa-left-out-of-their-kubernetes-hardening-guide

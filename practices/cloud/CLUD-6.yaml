@@ -30,3 +30,5 @@ references:
     url: https://www.pcisecuritystandards.org/document_library/
   - title: CIS Benchmark - General Server Hardening
     url: https://www.cisecurity.org/cis-benchmarks
+  - title: "OWASP Kubernetes Top 10 - K07: Misconfigured And Vulnerable Cluster Components"
+    url: https://owasp.org/www-project-kubernetes-top-ten/2025/en/src/K07-Misconfigured-And-Vulnerable-Cluster-Components.md
