@@ -59,3 +59,4 @@ dist
 .pnp.*
 .idea
 check_ascii.py
+scripts/jules_delete_sessions.py
