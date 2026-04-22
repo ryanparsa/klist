@@ -8,6 +8,12 @@ Checks are organised around the **4C model** (Cloud, Cluster, Container, Code) a
 
 **Live:** [ryanparsa.github.io/klist](https://ryanparsa.github.io/klist/)
 
+## Related Projects
+
+- [kubernetes-project-baseline](https://github.com/ryanparsa/kubernetes-project-baseline) - Production-ready Kubernetes namespace/service baseline
+- [kubernetes-certification](https://github.com/ryanparsa/kubernetes-certification) - CKA/KCNA/KCSA certification training scenarios
+
+
 ![klist dashboard](klist.png)
 
 ---

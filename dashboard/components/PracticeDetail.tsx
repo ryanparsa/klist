@@ -31,6 +31,23 @@ export const PracticeDetail = memo(function PracticeDetail({ practice }: Practic
     <div className="border-t border-border bg-muted/10 px-6 py-6">
       <div className="mx-auto max-w-3xl space-y-8">
 
+        {/* Stage banner — only for non-active stages */}
+        {practice.stage === 'draft' && (
+          <div className="rounded-md border border-zinc-200 bg-zinc-50 px-4 py-3 text-sm text-zinc-600 dark:border-zinc-700 dark:bg-zinc-900 dark:text-zinc-400">
+            <span className="font-semibold">Draft</span> — This practice is a work in progress and has not been finalized yet.
+          </div>
+        )}
+        {practice.stage === 'review' && (
+          <div className="rounded-md border border-blue-200 bg-blue-50 px-4 py-3 text-sm text-blue-700 dark:border-blue-800 dark:bg-blue-950 dark:text-blue-400">
+            <span className="font-semibold">Under Review</span> — This practice is being reviewed and may change before it is marked active.
+          </div>
+        )}
+        {practice.stage === 'deprecated' && (
+          <div className="rounded-md border border-orange-200 bg-orange-50 px-4 py-3 text-sm text-orange-700 dark:border-orange-800 dark:bg-orange-950 dark:text-orange-400">
+            <span className="font-semibold">Deprecated</span> — This practice is no longer recommended and is kept for reference only.
+          </div>
+        )}
+
         {/* Description */}
         <div
           ref={ref}

@@ -39,6 +39,8 @@ tools:
     url: https://grafana.com/oss/loki/
   - title: Falco
     url: https://falco.org/
+  - title: Retina
+    url: https://retina.sh/
 references:
   - title: Kubernetes Docs - Logging Architecture
     url: https://kubernetes.io/docs/concepts/cluster-administration/logging/

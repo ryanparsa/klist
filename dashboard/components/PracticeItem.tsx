@@ -20,6 +20,12 @@ const PRIORITY_BADGE: Record<Priority, string> = {
   optional: 'bg-muted text-muted-foreground',
 }
 
+const STAGE_BADGE: Record<string, string> = {
+  draft: 'bg-zinc-100 text-zinc-500 dark:bg-zinc-800 dark:text-zinc-400',
+  review: 'bg-blue-100 text-blue-600 dark:bg-blue-900/30 dark:text-blue-400',
+  deprecated: 'bg-orange-100 text-orange-600 dark:bg-orange-900/30 dark:text-orange-400',
+}
+
 const CATEGORY_COLOR: Record<string, string> = {
   cloud: 'bg-sky-100 text-sky-700 dark:bg-sky-900/30 dark:text-sky-400',
   cluster: 'bg-violet-100 text-violet-700 dark:bg-violet-900/30 dark:text-violet-400',
@@ -110,6 +116,18 @@ export function PracticeItem({
         >
           {practice.title}
         </button>
+
+        {/* Stage badge — only for non-active stages */}
+        {practice.stage !== 'active' && (
+          <span
+            className={cn(
+              'flex-shrink-0 rounded-full px-2 py-0.5 text-xs font-medium capitalize',
+              STAGE_BADGE[practice.stage] ?? 'bg-muted text-muted-foreground',
+            )}
+          >
+            {practice.stage}
+          </span>
+        )}
 
         {/* Priority badge */}
         <span

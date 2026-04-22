@@ -52,7 +52,7 @@ const practices = defineCollection({
     .object({
       id: s.string(),
       title: s.string(),
-      stage: s.string(),
+      stage: s.enum(['draft', 'review', 'active', 'deprecated']),
       description: s.markdown({
         rehypePlugins: [
           rehypeMermaid,
