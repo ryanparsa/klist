@@ -26,8 +26,8 @@ tools:
   - title: RBAC Lookup
     url: https://github.com/FairwindsOps/rbac-lookup
 references:
-  - title: "OWASP Kubernetes Top 10 - K02: Overly Permissive Authorization Configurations"
-    url: https://owasp.org/www-project-kubernetes-top-ten/2025/en/src/K02-Overly-Permissive-Authorization-Configurations.md
+  - title: "OWASP Kubernetes Top 10 - K08: Secrets Management Failures"
+    url: https://owasp.org/www-project-kubernetes-top-ten/
   - title: AWS IAM Best Practices
     url: https://docs.aws.amazon.com/IAM/latest/UserGuide/best-practices.html
   - title: SOC 2 CC6.1 - Logical Access Controls

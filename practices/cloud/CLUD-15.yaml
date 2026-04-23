@@ -39,8 +39,6 @@ tools:
   - title: Trivy
     url: https://trivy.dev/
 references:
-  - title: "OWASP Kubernetes Top 10 - K03: Secrets Management Failures"
-    url: https://owasp.org/www-project-kubernetes-top-ten/2025/en/src/K03-Secrets-Management-Failures.md
   - title: Kubernetes Secrets Store CSI Driver
     url: https://secrets-store-csi-driver.sigs.k8s.io/
   - title: Microsoft Threat Matrix - Application Credentials in Configuration Files

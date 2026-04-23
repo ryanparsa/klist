@@ -1,0 +1,29 @@
+id: CLST-33
+title: Use Granular RBAC Roles Instead of Built-in Defaults
+stage: active
+description: |
+  Built-in ClusterRoles like `view`, `edit`, and `admin` provide broad permissions that
+  often exceed the requirements of specific workloads or users. Using these roles increases
+  the risk of privilege escalation or accidental resource modification.
+
+  **What to check:** Identify bindings that use generic built-in ClusterRoles.
+
+  ```bash
+  kubectl get clusterrolebindings,rolebindings -A -o json | \
+    jq '.items[] | select(.roleRef.name == "view" or .roleRef.name == "edit" or .roleRef.name == "admin")'
+  ```
+mitigations:
+  - "Create custom Roles and ClusterRoles that contain only the specific API groups, resources, and verbs required."
+  - "Avoid binding service accounts to built-in roles in production namespaces."
+tags:
+  - rbac
+  - least-privilege
+  - security
+tools:
+  - title: RBAC Lookup
+    url: https://github.com/FairwindsOps/rbac-lookup
+references:
+  - title: Kubernetes Docs - RBAC Authorization
+    url: https://kubernetes.io/docs/reference/access-authn-authz/rbac/
+  - title: "OWASP Kubernetes Top 10 - K02: Overly Permissive Authorization Configurations"
+    url: https://owasp.org/www-project-kubernetes-top-ten/

@@ -30,8 +30,8 @@ tools:
 references:
   - title: PCI-DSS Requirement 6.2 - Manage Security Vulnerabilities
     url: https://www.pcisecuritystandards.org/document_library/
-  - title: "OWASP Kubernetes Top 10 - K07: Misconfigured And Vulnerable Cluster Components"
-    url: https://owasp.org/www-project-kubernetes-top-ten/2025/en/src/K07-Misconfigured-And-Vulnerable-Cluster-Components.md
+  - title: "OWASP Kubernetes Top 10 - K02: Supply Chain Vulnerabilities"
+    url: https://owasp.org/www-project-kubernetes-top-ten/
   - title: Trivy - Container and Filesystem Scanner
     url: https://trivy.dev/
   - title: Microsoft Threat Matrix - Application Vulnerability
